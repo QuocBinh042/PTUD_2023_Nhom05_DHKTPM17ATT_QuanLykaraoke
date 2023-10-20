@@ -20,13 +20,12 @@ public class Phong extends JPanel {
 
 	public Phong() {
 
+		JPanel pnlLeft = new JPanel(new BorderLayout());
+		JPanel pnlRight = new JPanel(new BorderLayout());
+
 		// WEST
 		Box bLeft = Box.createVerticalBox(), bRight = Box.createVerticalBox();
-		bLeft.setOpaque(true);
-		bLeft.setBackground(Color.decode("#cccccc"));
 		Box b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16;
-
-		bLeft.setBorder(BorderFactory.createTitledBorder("Thông tin phòng"));
 
 		bLeft.add(b1 = Box.createHorizontalBox());
 		bLeft.add(Box.createVerticalStrut(15));
@@ -121,7 +120,7 @@ public class Phong extends JPanel {
 		btnLamMoi.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnLamMoi.getMinimumSize().height));
 
 		add(bLeft);
-		
+
 		bLeft.add(b10 = Box.createHorizontalBox());
 		b10.add(Box.createVerticalStrut(20));
 		b10.add(Box.createHorizontalStrut(5));
@@ -136,12 +135,7 @@ public class Phong extends JPanel {
 		b11.add(btnThoat = new JButton("Thoát"));
 		btnThoat.setBackground(Color.decode("#6fa8dc"));
 		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThoat.getMinimumSize().height));
-		bLeft.add(Box.createVerticalStrut(50));
-
-		// Add box bRight vao giua bang
-		bRight.setOpaque(true);
-		bRight.setBackground(Color.decode("#e6dbd1"));
-		add(bRight, BorderLayout.CENTER);
+		bLeft.add(Box.createVerticalStrut(150));
 
 		Box aNorth = Box.createHorizontalBox(), aCenter = Box.createVerticalBox();
 		Box a, a1, a2;
@@ -199,6 +193,17 @@ public class Phong extends JPanel {
 
 		// add box aa vao bang
 		bRight.add(aCenter);
+
+		//
+		pnlLeft.setBackground(Color.decode("#cccccc"));
+		pnlRight.setBackground(Color.decode("#e6dbd1"));
+		pnlLeft.setBorder(BorderFactory.createTitledBorder("Thông tin phòng"));
+		pnlLeft.add(bLeft, BorderLayout.WEST);
+		pnlRight.add(bRight, BorderLayout.CENTER);
+
+		this.setLayout(new BorderLayout());
+		add(pnlLeft, BorderLayout.WEST);
+		add(pnlRight, BorderLayout.CENTER);
 
 	}
 
