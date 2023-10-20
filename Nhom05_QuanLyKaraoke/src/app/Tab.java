@@ -26,11 +26,11 @@ public class Tab extends JFrame{
 		tp.add("Đặt Phòng", dp);
 		tp.add("Phòng",phong);
 		tp.add("Dịch Vụ", dv);
-		tp.add("Khách Hàng", nv);
-		tp.add("Nhân Viên", kh);
+		tp.add("Khách Hàng", kh);
+		tp.add("Nhân Viên", nv);
 		tp.add("Hóa Đơn", hd);
-		tp.add("Khuyến mãi",km);
-		tp.add("Thông Kê", tk);
+		tp.add("Khuyến Mãi",km);
+		tp.add("Thống Kê", tk);
 		tp.add("Trợ Giúp", tg);
 		
 		this.getContentPane().add(tp);
