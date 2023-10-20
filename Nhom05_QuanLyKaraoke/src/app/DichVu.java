@@ -7,11 +7,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DichVu extends JFrame implements ActionListener {
+public class DichVu extends JPanel {
 
-	private JLabel lblMaDichVu, lblTenDichVu, lblDonGiaNhap, lblDonGiaBan, lblDonViTinh, lblSoLuong, lblTinhTrang, lblLocTinhTrang,
-			lblTimDV;
-	private JTextField txtMaDichVu, txtTenDichVu, txtDonGiaNhap, txtDonGiaBan, txtDonViTinh, txtSoLuong, txtTimDV, txtThongBaoLoi;
+	private JLabel lblMaDichVu, lblTenDichVu, lblDonGiaNhap, lblDonGiaBan, lblDonViTinh, lblSoLuong, lblTinhTrang,
+			lblLocTinhTrang, lblTimDV;
+	private JTextField txtMaDichVu, txtTenDichVu, txtDonGiaNhap, txtDonGiaBan, txtDonViTinh, txtSoLuong, txtTimDV,
+			txtThongBaoLoi;
 	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnTim;
 	private JComboBox cbTinhTrang;
 	private JTable table;
@@ -19,33 +20,17 @@ public class DichVu extends JFrame implements ActionListener {
 	private Box bLeft, bRight;
 
 	public DichVu() {
-		createGUI();
-	}
 
-	public static void main(String[] args) {
-		new DichVu().setVisible(true);
+		JPanel pnlLeft = new JPanel(new BorderLayout());
+		JPanel pnlRight = new JPanel(new BorderLayout());
 
-	}
-
-	public void createGUI() {
-		setTitle("Quản lý dịch vụ");
-		setSize(1300, 700);
-		setLocationRelativeTo(null);
-		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-		
 		// WEST
 		bLeft = Box.createVerticalBox();
 		bRight = Box.createVerticalBox();
-		
-		bLeft.setOpaque(true);
-		bLeft.setBackground(Color.decode("#cccccc"));
-		add(bLeft, BorderLayout.WEST);
-		
+
 		Box b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, bDVT;
 
-		bLeft.setBorder(BorderFactory.createTitledBorder("Thông tin dịch vụ"));
+//		bLeft.setBorder(BorderFactory.createTitledBorder("Thông tin dịch vụ"));
 
 		bLeft.add(Box.createVerticalStrut(10));
 		bLeft.add(b1 = Box.createHorizontalBox());
@@ -84,7 +69,7 @@ public class DichVu extends JFrame implements ActionListener {
 		bLeft.add(Box.createVerticalStrut(15));
 		bDVT.add(lblDonViTinh = new JLabel("Đơn vị tính"));
 		bDVT.add(txtDonViTinh = new JTextField());
-		
+
 		bLeft.add(b7 = Box.createHorizontalBox());
 		bLeft.add(Box.createVerticalStrut(15));
 		b7.add(txtThongBaoLoi = new JTextField());
@@ -128,23 +113,17 @@ public class DichVu extends JFrame implements ActionListener {
 		b10.add(btnThoat = new JButton("Thoát"));
 		btnThoat.setBackground(Color.decode("#6fa8dc"));
 		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThoat.getMinimumSize().height));
-		
-		bLeft.add(Box.createVerticalStrut(150));
+
+		bLeft.add(Box.createVerticalStrut(250));
 		bLeft.add(Box.createHorizontalStrut(220));
 
-		// Add box bRight vao giua bang  e6dbd1
-		bRight.setOpaque(true);
-		bRight.setBackground(Color.decode("#e6dbd1"));
-		add(bRight, BorderLayout.CENTER);
-		
-
+		pnlRight.add(bRight);
 		Box aNorth = Box.createHorizontalBox(), aCenter = Box.createVerticalBox();
 		Box a, a1, a2;
-		
-		
+
 //		aNorth.setBorder(BorderFactory.createTitledBorder(""));
 		aNorth.setMaximumSize(new Dimension(Integer.MAX_VALUE, aNorth.getMinimumSize().height));
-		
+
 		aNorth.add(Box.createVerticalStrut(80));
 		aNorth.add(a = Box.createVerticalBox());
 		a.add(Box.createHorizontalStrut(200));
@@ -160,7 +139,7 @@ public class DichVu extends JFrame implements ActionListener {
 		aNorth.add(Box.createHorizontalStrut(100));
 
 		aNorth.add(a2 = Box.createVerticalBox());
-//		a2.setBorder(BorderFactory.createTitledBorder(""));
+		a2.setBorder(BorderFactory.createTitledBorder(""));
 		a2.add(lblTimDV = new JLabel("Tên dịch vụ"));
 		a2.add(Box.createVerticalStrut(10));
 		aNorth.add(Box.createHorizontalStrut(100));
@@ -187,36 +166,18 @@ public class DichVu extends JFrame implements ActionListener {
 
 		// add bang aCenter vao bRight
 		bRight.add(aCenter);
-		
 
-		
-		
-		// add su kien
-		btnThoat.addActionListener(this);
-		btnLamMoi.addActionListener(this);
+		//
+		pnlLeft.setBorder(BorderFactory.createTitledBorder("Thông tin dịch vụ"));
+		pnlLeft.setBackground(Color.decode("#cccccc"));
+		pnlRight.setBackground(Color.decode("#e6dbd1"));
 
-	}
+		pnlLeft.add(bLeft, BorderLayout.WEST);
+		pnlRight.add(bRight, BorderLayout.CENTER);
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		Object o = e.getSource();
-		if (o.equals(btnThoat)) {
-			System.exit(0);
-		}
-		if(o.equals(btnLamMoi)) {
-			xoaTrang();
-		}
-	}
+		this.setLayout(new BorderLayout());
+		add(pnlLeft, BorderLayout.WEST);
+		add(pnlRight, BorderLayout.CENTER);
 
-	private void xoaTrang() {
-		txtMaDichVu.setText("");
-		txtTenDichVu.setText("");
-		txtDonGiaNhap.setText("");
-		txtDonGiaBan.setText("");
-		txtSoLuong.setText("");
-		txtDonViTinh.setText("");
-		cbTinhTrang.setSelectedIndex(0);
-		
 	}
 }
