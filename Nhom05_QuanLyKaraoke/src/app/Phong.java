@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class QLPhong extends JFrame implements ActionListener {
+public class Phong extends JPanel {
 
 	private JLabel lblMaPhong, lblTenPhong, lblLoaiPhong, lblSucChua, lblGiaPhong, lblMoTa, lblTimMaPhong, lblTinhTrang,
 			lblMaLoaiPhong, lblMaGiaPhong;
@@ -18,51 +18,12 @@ public class QLPhong extends JFrame implements ActionListener {
 	private JTable table;
 	private DefaultTableModel tableModel;
 
-	public QLPhong() {
-		createGUI();
-	}
-
-	public static void main(String[] args) {
-		new QLPhong().setVisible(true);
-
-	}
-
-	public void createGUI() {
-		setTitle("Quản lý phòng");
-		setSize(1300, 700);
-		setLocationRelativeTo(null);
-		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-//		//Thanh tabbar
-//		JTabbedPane tabbedPane = new JTabbedPane();
-//	
-//		// Tab dịch vụ
-//		JPanel pnlDichVu = new JPanel();
-//		tabbedPane.addTab("Dịch vụ", pnlDichVu);
-//		// Tab nhân viên
-//		JPanel pnlNhanVien = new JPanel();
-//		tabbedPane.addTab("Nhân viên", pnlNhanVien);
-//		// Tab khách hàng
-//		JPanel pnlKhachHang = new JPanel();
-//		tabbedPane.addTab("Khách hàng", pnlKhachHang);
-//		// Tab hóa đơn
-//		JPanel pnlHoaDon = new JPanel();
-//		tabbedPane.addTab("Hóa đơn", pnlHoaDon);
-//		// Tab thông kê
-//		JPanel pnlThongKe = new JPanel();
-//		tabbedPane.addTab("Đặt phòng", pnlThongKe);
-//		// Tab trợ giúp
-//		JPanel pnlTroGiup = new JPanel();
-//		tabbedPane.addTab("Trợ giúp", pnlTroGiup);
-//		
-//		add(tabbedPane, BorderLayout.NORTH);
+	public Phong() {
 
 		// WEST
 		Box bLeft = Box.createVerticalBox(), bRight = Box.createVerticalBox();
 		bLeft.setOpaque(true);
 		bLeft.setBackground(Color.decode("#cccccc"));
-		add(bLeft, BorderLayout.WEST);
 		Box b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16;
 
 		bLeft.setBorder(BorderFactory.createTitledBorder("Thông tin phòng"));
@@ -96,7 +57,7 @@ public class QLPhong extends JFrame implements ActionListener {
 		b5.add(lblSucChua = new JLabel("Sức chứa"));
 		b5.add(txtSucChua = new JTextField());
 		txtSucChua.setEditable(false);
-		
+
 		bLeft.add(b15 = Box.createHorizontalBox());
 		bLeft.add(Box.createVerticalStrut(15));
 		b15.add(lblGiaPhong = new JLabel("Giá phòng"));
@@ -111,7 +72,6 @@ public class QLPhong extends JFrame implements ActionListener {
 		cbMaGiaPhong.addItem("GP002");
 		cbMaGiaPhong.addItem("GP001");
 
-	
 		bLeft.add(b16 = Box.createHorizontalBox());
 		bLeft.add(Box.createVerticalStrut(15));
 		b16.add(lblMoTa = new JLabel("Mô tả"));
@@ -160,6 +120,8 @@ public class QLPhong extends JFrame implements ActionListener {
 		btnLamMoi.setBackground(Color.decode("#6fa8dc"));
 		btnLamMoi.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnLamMoi.getMinimumSize().height));
 
+		add(bLeft);
+		
 		bLeft.add(b10 = Box.createHorizontalBox());
 		b10.add(Box.createVerticalStrut(20));
 		b10.add(Box.createHorizontalStrut(5));
@@ -183,7 +145,7 @@ public class QLPhong extends JFrame implements ActionListener {
 
 		Box aNorth = Box.createHorizontalBox(), aCenter = Box.createVerticalBox();
 		Box a, a1, a2;
-		
+
 		aNorth.add(a = Box.createHorizontalBox());
 		aNorth.setMaximumSize(new Dimension(Integer.MAX_VALUE, aNorth.getMinimumSize().height));
 		a.add(Box.createHorizontalStrut(100));
@@ -196,8 +158,7 @@ public class QLPhong extends JFrame implements ActionListener {
 		b12.add(lblTinhTrang = new JLabel("Tình trạng"));
 		b12.add(Box.createHorizontalStrut(50));
 		b12.add(cbTinhTrang = new JComboBox<>());
-		
-		
+
 		a1.add(Box.createVerticalStrut(20));
 		a1.add(b13 = Box.createHorizontalBox());
 		b13.add(Box.createVerticalStrut(10));
@@ -207,7 +168,6 @@ public class QLPhong extends JFrame implements ActionListener {
 		a1.add(Box.createVerticalStrut(20));
 		a1.setMaximumSize(new Dimension(Integer.MAX_VALUE, a1.getMinimumSize().height));
 		a1.add(Box.createHorizontalStrut(300));
-
 
 		aNorth.add(Box.createHorizontalStrut(150));
 		aNorth.add(a2 = Box.createVerticalBox());
@@ -240,92 +200,6 @@ public class QLPhong extends JFrame implements ActionListener {
 		// add box aa vao bang
 		bRight.add(aCenter);
 
-		// Event
-		btnThoat.addActionListener(this);
-		btnLamMoi.addActionListener(this);
-
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		Object o = e.getSource();
-		if (o.equals(btnThoat)) {
-			System.exit(0);
-		}
-		if(o.equals(btnLamMoi)) {
-			xoaTrang();
-		}
-	}
-	public void xoaTrang() {
-		txtMaPhong.setText("");
-		txtTenPhong.setText("");
-		cbMaLoaiPhong.setSelectedIndex(0);
-		txtLoaiPhong.setText("");
-		txtSucChua.setText("");
-		txtGiaPhong.setText("");
-		cbMaGiaPhong.setSelectedIndex(0);
-		txtMoTa.setText("");
-	}
 }
-
-//// Tab bar
-//JTabbedPane tabbedPane = new JTabbedPane();
-//// Tab trang chủ
-//JPanel pnlTrangChu = new JPanel();
-//pnlTrangChu.add(new JLabel("Giao diện trang chủ"));
-//tabbedPane.addTab("Trang chủ", pnlTrangChu);
-//// Tab đặt phòng
-//JPanel pnlDatPhong = new JPanel();
-//pnlDatPhong.add(new JLabel("Giao diện đặt phòng"));
-//tabbedPane.addTab("Đặt phòng", pnlDatPhong);
-//// Tab phòng
-////JPanel pnlPhong = new JPanel();
-////pnlPhong.add(new JLabel("Giao diện phòng"));
-////tabbedPane.addTab("Phòng", pnlPhong);
-////JInternalFrame jInternalFrame = new JInternalFrame();
-////jMenuBar = new javax.swing.JMenuBar();
-////jMenu1 = new JMenu("Save");
-////jMenu2 = new JMenu("Open");
-////jMenuBar.add(jMenu1);
-////jMenuBar.add(jMenu2);
-////jInternalFrame.setJMenuBar(jMenuBar);
-////tabbedPane.addTab("Phòng", jInternalFrame);
-//
-//JMenuBar menuBar = new JMenuBar();
-//JMenu menu = new JMenu("JTabbedPane");
-//JMenuItem menuItem = new JMenuItem("Create new tab");
-//JMenuItem menuItem2 = new JMenuItem("Item2");
-//JMenuItem menuItem3 = new JMenuItem("Item3");
-//menu.add(menuItem);
-//menu.add(menuItem2);
-//menu.add(menuItem3);
-//menuBar.add(menu);
-//tabbedPane.add("Phòng",menuBar);
-//
-//// Tab dịch vụ
-//JPanel pnlDichVu = new JPanel();
-//pnlDichVu.add(new JLabel("Giao diện dịch vụ"));
-//tabbedPane.addTab("Dịch vụ", pnlDichVu);
-//// Tab nhân viên
-//JPanel pnlNhanVien = new JPanel();
-//pnlNhanVien.add(new JLabel("Giao diện nhân viên"));
-//tabbedPane.addTab("Nhân viên", pnlNhanVien);
-//// Tab khách hàng
-//JPanel pnlKhachHang = new JPanel();
-//pnlKhachHang.add(new JLabel("Giao diện khách hàng"));
-//tabbedPane.addTab("Khách hàng", pnlKhachHang);
-//// Tab hóa đơn
-//JPanel pnlHoaDon = new JPanel();
-//pnlHoaDon.add(new JLabel("Giao diện hóa đơn"));
-//tabbedPane.addTab("Hóa đơn", pnlHoaDon);
-//// Tab thông kê
-//JPanel pnlThongKe = new JPanel();
-//pnlThongKe.add(new JLabel("Giao diện thống kê"));
-//tabbedPane.addTab("Đặt phòng", pnlThongKe);
-//// Tab trợ giúp
-//JPanel pnlTroGiup = new JPanel();
-//pnlTroGiup.add(new JLabel("Giao diện trợ giúp"));
-//tabbedPane.addTab("Trợ giúp", pnlTroGiup);
-//
-//add(tabbedPane, BorderLayout.CENTER);
