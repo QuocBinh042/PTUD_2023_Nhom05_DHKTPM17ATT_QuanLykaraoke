@@ -32,6 +32,7 @@ public class DichVu extends JPanel {
 		Icon img_edit = new ImageIcon("src/img/edit.png");
 		Icon img_out = new ImageIcon("src/img/out.png");
 		Icon img_search = new ImageIcon("src/img/search2.png");
+		
 
 		// WEST
 		bLeft = Box.createVerticalBox();
@@ -45,42 +46,49 @@ public class DichVu extends JPanel {
 		bLeft.add(b1 = Box.createHorizontalBox());
 		bLeft.add(Box.createVerticalStrut(15));
 		b1.add(lblMaDichVu = new JLabel("Mã dịch vụ"));
+		b1.add(Box.createHorizontalStrut(20));
 		b1.add(txtMaDichVu = new JTextField());
 		txtMaDichVu.setEditable(false);
 
 		bLeft.add(b2 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(15));
+		bLeft.add(Box.createVerticalStrut(20));
 		b2.add(lblTenDichVu = new JLabel("Tên dịch vụ"));
+		b2.add(Box.createHorizontalStrut(20));
 		b2.add(txtTenDichVu = new JTextField());
 
 		bLeft.add(b3 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(15));
+		bLeft.add(Box.createVerticalStrut(20));
 		b3.add(lblDonGiaNhap = new JLabel("Đơn giá nhập"));
+		b3.add(Box.createHorizontalStrut(20));
 		b3.add(txtDonGiaNhap = new JTextField());
 
 		bLeft.add(b4 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(15));
+		bLeft.add(Box.createVerticalStrut(20));
 		b4.add(lblDonGiaBan = new JLabel("Đơn giá bán"));
+		b4.add(Box.createHorizontalStrut(20));
 		b4.add(txtDonGiaBan = new JTextField());
 
 		bLeft.add(b5 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(15));
+		bLeft.add(Box.createVerticalStrut(20));
 		b5.add(lblSoLuong = new JLabel("Số lượng"));
+		b5.add(Box.createHorizontalStrut(20));
 		b5.add(txtSoLuong = new JTextField());
 
 		bLeft.add(b6 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(15));
+		bLeft.add(Box.createVerticalStrut(20));
 		b6.add(lblTinhTrang = new JLabel("Tình trạng"));
+		b6.add(Box.createHorizontalStrut(20));
 		b6.add(cbTinhTrang = new JComboBox<>());
 		cbTinhTrang.addItem("Còn trống"); // add vao combobox
 
 		bLeft.add(bDVT = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(15));
+		bLeft.add(Box.createVerticalStrut(20));
 		bDVT.add(lblDonViTinh = new JLabel("Đơn vị tính"));
+		bDVT.add(Box.createHorizontalStrut(20));
 		bDVT.add(txtDonViTinh = new JTextField());
 
 		bLeft.add(b7 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(15));
+		bLeft.add(Box.createVerticalStrut(20));
 		b7.add(txtThongBaoLoi = new JTextField());
 		txtThongBaoLoi.setEditable(false);
 		txtThongBaoLoi.setBorder(null);
@@ -99,38 +107,43 @@ public class DichVu extends JPanel {
 		b8.add(Box.createHorizontalStrut(5));
 		b8.add(btnThemMoi = new JButton("Thêm mới", img_add));
 		btnThemMoi.setBackground(Color.decode("#6fa8dc"));
-		btnThemMoi.setBorder(new RoundedBorder(5));
-		
+		btnThemMoi.setBorder(new RoundedBorder(7));
 		btnThemMoi.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThemMoi.getMinimumSize().height));
+		bLeft.add(Box.createVerticalStrut(5));
+		
 		b8.add(Box.createHorizontalStrut(25));
 		b8.add(btnCapNhat = new JButton("Cập nhật", img_edit));
-		btnCapNhat.setBorder(new RoundedBorder(5));
+		btnCapNhat.setBorder(new RoundedBorder(7));
 		btnCapNhat.setBackground(Color.decode("#6fa8dc"));
 		btnCapNhat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnCapNhat.getMinimumSize().height));
+		bLeft.add(Box.createVerticalStrut(5));
 
 		bLeft.add(b9 = Box.createHorizontalBox());
 		b9.add(Box.createVerticalStrut(70));
 		b9.add(Box.createHorizontalStrut(5));
 		b9.add(btnXoa = new JButton("     Xóa       ", img_del));
-		btnXoa.setBorder(new RoundedBorder(5));
+		btnXoa.setBorder(new RoundedBorder(7));
 		btnXoa.setBackground(Color.decode("#6fa8dc"));
 		btnXoa.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnXoa.getMinimumSize().height));
+		bLeft.add(Box.createVerticalStrut(5));
+		
 		b9.add(Box.createHorizontalStrut(25));
 		b9.add(btnLamMoi = new JButton("Làm mới", img_reset));
-		btnLamMoi.setBorder(new RoundedBorder(5));
+		btnLamMoi.setBorder(new RoundedBorder(7));
 		btnLamMoi.setBackground(Color.decode("#6fa8dc"));
 		btnLamMoi.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnLamMoi.getMinimumSize().height));
+		bLeft.add(Box.createVerticalStrut(5));
 
 		bLeft.add(b10 = Box.createHorizontalBox());
 		b10.add(Box.createVerticalStrut(20));
 		b10.add(Box.createHorizontalStrut(5));
 		b10.add(btnThoat = new JButton("Thoát", img_out));
-		btnThoat.setBorder(new RoundedBorder(5));
+		btnThoat.setBorder(new RoundedBorder(7));
 		btnThoat.setBackground(Color.decode("#6fa8dc"));
 		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThoat.getMinimumSize().height));
 
 		bLeft.add(Box.createVerticalStrut(400));
-		bLeft.add(Box.createHorizontalStrut(220));
+		bLeft.add(Box.createHorizontalStrut(300));
 
 		pnlRight.add(bRight);
 		Box aNorth = Box.createHorizontalBox(), aCenter = Box.createVerticalBox();
@@ -164,7 +177,7 @@ public class DichVu extends JPanel {
 		a2.add(b12 = Box.createHorizontalBox());
 		b12.add(txtTimDV = new JTextField());
 		b12.add(Box.createHorizontalStrut(30));
-		b12.add(btnTim = new JButton("Tìm  ", img_search));
+		b12.add(btnTim = new JButton(" Tìm  ", img_search));
 		btnTim.setBorder(new RoundedBorder(3));
 		btnTim.setBackground(Color.decode("#6fa8dc"));
 		a2.add(Box.createVerticalStrut(10));
