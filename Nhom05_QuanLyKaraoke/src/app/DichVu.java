@@ -1,6 +1,8 @@
 package app;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.*;
@@ -23,15 +25,22 @@ public class DichVu extends JPanel {
 
 		JPanel pnlLeft = new JPanel(new BorderLayout());
 		JPanel pnlRight = new JPanel(new BorderLayout());
+		
+		Icon img_add = new ImageIcon("src/img/add2.png");
+		Icon img_del = new ImageIcon("src/img/del.png");
+		Icon img_reset = new ImageIcon("src/img/refresh.png");
+		Icon img_edit = new ImageIcon("src/img/edit.png");
+		Icon img_out = new ImageIcon("src/img/out.png");
+		Icon img_search = new ImageIcon("src/img/search2.png");
 
 		// WEST
 		bLeft = Box.createVerticalBox();
 		bRight = Box.createVerticalBox();
+		Border line = BorderFactory.createLineBorder(Color.BLACK);
 
-		Box b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, bDVT;
+		Box b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, bDVT;
 
-//		bLeft.setBorder(BorderFactory.createTitledBorder("Thông tin dịch vụ"));
-
+		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin dịch vụ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.PLAIN, 13), Color.BLACK));
 		bLeft.add(Box.createVerticalStrut(10));
 		bLeft.add(b1 = Box.createHorizontalBox());
 		bLeft.add(Box.createVerticalStrut(15));
@@ -88,47 +97,55 @@ public class DichVu extends JPanel {
 
 		bLeft.add(b8 = Box.createHorizontalBox());
 		b8.add(Box.createHorizontalStrut(5));
-		b8.add(btnThemMoi = new JButton("Thêm mới"));
+		b8.add(btnThemMoi = new JButton("Thêm mới", img_add));
 		btnThemMoi.setBackground(Color.decode("#6fa8dc"));
+		btnThemMoi.setBorder(new RoundedBorder(5));
+		
 		btnThemMoi.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThemMoi.getMinimumSize().height));
 		b8.add(Box.createHorizontalStrut(25));
-		b8.add(btnCapNhat = new JButton("Cập nhật"));
+		b8.add(btnCapNhat = new JButton("Cập nhật", img_edit));
+		btnCapNhat.setBorder(new RoundedBorder(5));
 		btnCapNhat.setBackground(Color.decode("#6fa8dc"));
 		btnCapNhat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnCapNhat.getMinimumSize().height));
 
 		bLeft.add(b9 = Box.createHorizontalBox());
 		b9.add(Box.createVerticalStrut(70));
 		b9.add(Box.createHorizontalStrut(5));
-		b9.add(btnXoa = new JButton("     Xóa       "));
+		b9.add(btnXoa = new JButton("     Xóa       ", img_del));
+		btnXoa.setBorder(new RoundedBorder(5));
 		btnXoa.setBackground(Color.decode("#6fa8dc"));
 		btnXoa.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnXoa.getMinimumSize().height));
 		b9.add(Box.createHorizontalStrut(25));
-		b9.add(btnLamMoi = new JButton("Làm mới"));
+		b9.add(btnLamMoi = new JButton("Làm mới", img_reset));
+		btnLamMoi.setBorder(new RoundedBorder(5));
 		btnLamMoi.setBackground(Color.decode("#6fa8dc"));
 		btnLamMoi.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnLamMoi.getMinimumSize().height));
 
 		bLeft.add(b10 = Box.createHorizontalBox());
 		b10.add(Box.createVerticalStrut(20));
 		b10.add(Box.createHorizontalStrut(5));
-		b10.add(btnThoat = new JButton("Thoát"));
+		b10.add(btnThoat = new JButton("Thoát", img_out));
+		btnThoat.setBorder(new RoundedBorder(5));
 		btnThoat.setBackground(Color.decode("#6fa8dc"));
 		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThoat.getMinimumSize().height));
 
-		bLeft.add(Box.createVerticalStrut(250));
+		bLeft.add(Box.createVerticalStrut(400));
 		bLeft.add(Box.createHorizontalStrut(220));
 
 		pnlRight.add(bRight);
 		Box aNorth = Box.createHorizontalBox(), aCenter = Box.createVerticalBox();
 		Box a, a1, a2;
 
-//		aNorth.setBorder(BorderFactory.createTitledBorder(""));
 		aNorth.setMaximumSize(new Dimension(Integer.MAX_VALUE, aNorth.getMinimumSize().height));
+		
 
 		aNorth.add(Box.createVerticalStrut(80));
 		aNorth.add(a = Box.createVerticalBox());
-		a.add(Box.createHorizontalStrut(200));
+		a.add(Box.createHorizontalStrut(300));
 		aNorth.add(a1 = Box.createVerticalBox());
-		a1.setBorder(BorderFactory.createTitledBorder("Lọc"));
+		
+		a1.setBorder(BorderFactory.createTitledBorder(line, "Lọc", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.PLAIN, 13), Color.BLACK));
+		
 		a1.add(Box.createVerticalStrut(10));
 		a1.add(b12 = Box.createHorizontalBox());
 		b12.add(lblTinhTrang = new JLabel("Tình trạng"));
@@ -136,24 +153,28 @@ public class DichVu extends JPanel {
 		b12.add(cbTinhTrang = new JComboBox<>());
 		a1.add(Box.createVerticalStrut(10));
 		a1.setMaximumSize(new Dimension(Integer.MAX_VALUE, a1.getMinimumSize().height));
-		aNorth.add(Box.createHorizontalStrut(100));
+		aNorth.add(Box.createHorizontalStrut(400));
 
 		aNorth.add(a2 = Box.createVerticalBox());
-		a2.setBorder(BorderFactory.createTitledBorder(""));
-		a2.add(lblTimDV = new JLabel("Tên dịch vụ"));
-		a2.add(Box.createVerticalStrut(10));
-		aNorth.add(Box.createHorizontalStrut(100));
+		a2.add(b13 = Box.createHorizontalBox());
+		
+		b13.add(lblTimDV = new JLabel("Tên dịch vụ"));
+		b13.add(Box.createVerticalStrut(30));
+		
 		a2.add(b12 = Box.createHorizontalBox());
 		b12.add(txtTimDV = new JTextField());
 		b12.add(Box.createHorizontalStrut(30));
-		b12.add(btnTim = new JButton("Tìm"));
+		b12.add(btnTim = new JButton("Tìm  ", img_search));
+		btnTim.setBorder(new RoundedBorder(3));
 		btnTim.setBackground(Color.decode("#6fa8dc"));
+		a2.add(Box.createVerticalStrut(10));
+		aNorth.add(Box.createHorizontalStrut(200));
 		a2.setMaximumSize(new Dimension(Integer.MAX_VALUE, a2.getMinimumSize().height));
 
 		// add bang aNorth vao bRight
 		bRight.add(aNorth);
 
-		aCenter.setBorder(BorderFactory.createTitledBorder("Danh sách dịch vụ"));
+		aCenter.setBorder(BorderFactory.createTitledBorder(line, "Danh sách dịch vụ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.PLAIN, 13), Color.BLACK));
 		String[] headers = "Mã dịch vụ;Tên dịch vụ;Đơn giá nhập;Đơn giá bán;Đơn vị tính;Số lượng;Tình trạng".split(";");
 		tableModel = new DefaultTableModel(headers, 0);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -168,7 +189,6 @@ public class DichVu extends JPanel {
 		bRight.add(aCenter);
 
 		//
-		pnlLeft.setBorder(BorderFactory.createTitledBorder("Thông tin dịch vụ"));
 		pnlLeft.setBackground(Color.decode("#cccccc"));
 		pnlRight.setBackground(Color.decode("#e6dbd1"));
 
@@ -179,5 +199,29 @@ public class DichVu extends JPanel {
 		add(pnlLeft, BorderLayout.WEST);
 		add(pnlRight, BorderLayout.CENTER);
 
+	}
+	private static class RoundedBorder implements Border {
+
+	    private int radius;
+
+
+	    RoundedBorder(int radius) {
+	        this.radius = radius;
+	    }
+
+
+	    public Insets getBorderInsets(Component c) {
+	        return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
+	    }
+
+
+	    public boolean isBorderOpaque() {
+	        return true;
+	    }
+
+
+	    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+	        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+	    }
 	}
 }
