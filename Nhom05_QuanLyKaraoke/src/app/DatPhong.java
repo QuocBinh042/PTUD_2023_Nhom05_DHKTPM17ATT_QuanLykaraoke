@@ -20,10 +20,12 @@ public class DatPhong extends JPanel {
 	public DatPhong() {
 		Icon imgAdd = new ImageIcon("src/img/add2.png");
 		Icon imgDel = new ImageIcon("src/img/del.png");
-		Icon imgReset = new ImageIcon("src/img/refresh.png");
+		Icon imgReset = new ImageIcon("src/img/refresh16.png");
 		Icon imgEdit = new ImageIcon("src/img/edit.png");
 		Icon imgOut = new ImageIcon("src/img/out.png");
-		Icon imgSearch = new ImageIcon("src/img/search2.png");
+		Icon imgSearch = new ImageIcon("src/img/search.png");
+		Icon imgCheck = new ImageIcon("src/img/check16.png");
+		Icon imgCancel = new ImageIcon("src/img/cancel16.png");	
 		
 		JLabel tinhTrangLb, soNguoiLb, loaiPLb, phongLb, giaPLb, locTinhTrangLb, sdtLb;
 		JPanel mainPane, leftPane, rightPane, timePane, btnPane, panePhong, panePDP, paneBtnPhong, paneBtnPDP, paneTraCuuP;
@@ -252,9 +254,9 @@ public class DatPhong extends JPanel {
 		//Box nút hủy, nhận phòng
 		Box btnNhanHuyBox = Box.createHorizontalBox();
 		btnNhanHuyBox.add(Box.createHorizontalStrut(1000));
-		btnNhanHuyBox.add(huyPBtn = new JButton("Hủy"));
+		btnNhanHuyBox.add(huyPBtn = new JButton("Hủy", imgCancel));
 		btnNhanHuyBox.add(Box.createHorizontalStrut(40));
-		btnNhanHuyBox.add(nhanPBtn = new JButton("Nhận"));
+		btnNhanHuyBox.add(nhanPBtn = new JButton("Nhận", imgCheck));
 		
 		JPanel paneForBtnNhanHuyBox = new JPanel();
 		paneForBtnNhanHuyBox.add(btnNhanHuyBox);
