@@ -20,6 +20,7 @@ public class DatPhong extends JPanel {
 	private DigitalClock clock;
 	private ThuePhong thuePhong;
 	private DatTruocPhong datTruocPhong;
+	private ChuyenPhong chuyenPhong;
 	public DatPhong() {
 		Icon imgAdd = new ImageIcon("src/img/add2.png");
 		Icon imgDel = new ImageIcon("src/img/del.png");
@@ -284,6 +285,7 @@ public class DatPhong extends JPanel {
 		
 		thuePBtn.addActionListener(e -> xuLyThuePhong());
 		datPBtn.addActionListener(e -> xyLyDatPhong());
+		chuyenPBtn.addActionListener(e -> xyLyChuyenPhong());
 	}
 	
 	private void xuLyThuePhong() {
@@ -298,5 +300,12 @@ public class DatPhong extends JPanel {
 		datTruocPhong.setVisible(true);
 		datTruocPhong.setAlwaysOnTop(true);
 		datTruocPhong.setLocationRelativeTo(null);
+	}
+	
+	private void xyLyChuyenPhong() {
+		chuyenPhong = new ChuyenPhong();
+		chuyenPhong.setVisible(true);
+		chuyenPhong.setAlwaysOnTop(true);
+		chuyenPhong.setLocationRelativeTo(null);
 	}
 }
