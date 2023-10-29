@@ -3,6 +3,7 @@ package app;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.*;
@@ -17,6 +18,8 @@ public class DatPhong extends JPanel {
 	private JTable phongTable, phieuDatPTable;
 	private DefaultTableModel phongModel, phieuDatPModel;
 	private DigitalClock clock;
+	private ThuePhong thuePhong;
+	private DatTruocPhong datTruocPhong;
 	public DatPhong() {
 		Icon imgAdd = new ImageIcon("src/img/add2.png");
 		Icon imgDel = new ImageIcon("src/img/del.png");
@@ -252,14 +255,16 @@ public class DatPhong extends JPanel {
 		panePDP.setBackground(Color.decode("#e6dbd1"));
 		
 		//Box nút hủy, nhận phòng
-		Box btnNhanHuyBox = Box.createHorizontalBox();
-		btnNhanHuyBox.add(Box.createHorizontalStrut(1000));
-		btnNhanHuyBox.add(huyPBtn = new JButton("Hủy", imgCancel));
-		btnNhanHuyBox.add(Box.createHorizontalStrut(40));
-		btnNhanHuyBox.add(nhanPBtn = new JButton("Nhận", imgCheck));
+//		Box btnNhanHuyBox = Box.createHorizontalBox();
+//		btnNhanHuyBox.add(Box.createHorizontalStrut(1000));
+//		btnNhanHuyBox.add(huyPBtn = new JButton("Hủy", imgCancel));
+//		btnNhanHuyBox.add(Box.createHorizontalStrut(40));
+//		btnNhanHuyBox.add(nhanPBtn = new JButton("Nhận", imgCheck));
 		
-		JPanel paneForBtnNhanHuyBox = new JPanel();
-		paneForBtnNhanHuyBox.add(btnNhanHuyBox);
+		JPanel paneForBtnNhanHuyBox = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		paneForBtnNhanHuyBox.add(huyPBtn = new JButton("Hủy", imgCancel));
+		paneForBtnNhanHuyBox.add(Box.createHorizontalStrut(50));
+		paneForBtnNhanHuyBox.add(nhanPBtn = new JButton("Nhận", imgCheck));
 		paneForBtnNhanHuyBox.setBackground(Color.decode("#cccccc"));
 		panePDP.add(paneForBtnNhanHuyBox, BorderLayout.SOUTH);
 		
@@ -270,8 +275,28 @@ public class DatPhong extends JPanel {
 		rightBox.add(panePhong);
 		rightBox.add(panePDP);
 		
+		phongTable.setRowHeight(25);
+		phieuDatPTable.setRowHeight(25);
+		
 		this.setLayout(new BorderLayout());
 		this.add(leftPane, BorderLayout.WEST);
 		this.add(rightBox, BorderLayout.CENTER);
+		
+		thuePBtn.addActionListener(e -> xuLyThuePhong());
+		datPBtn.addActionListener(e -> xyLyDatPhong());
+	}
+	
+	private void xuLyThuePhong() {
+		thuePhong = new ThuePhong();
+		thuePhong.setVisible(true);
+		thuePhong.setAlwaysOnTop(true);
+		thuePhong.setLocationRelativeTo(null);
+	}
+	
+	private void xyLyDatPhong() {
+		datTruocPhong = new DatTruocPhong();
+		datTruocPhong.setVisible(true);
+		datTruocPhong.setAlwaysOnTop(true);
+		datTruocPhong.setLocationRelativeTo(null);
 	}
 }
