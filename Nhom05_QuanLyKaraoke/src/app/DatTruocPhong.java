@@ -30,7 +30,7 @@ public class DatTruocPhong extends JFrame{
 	private JDateChooser ngayDatF;
 	private TimePicker gioNhanF;
 	public DatTruocPhong() {
-		setSize(600, 400);
+		setSize(650, 400);
 		
 		Icon imgDel = new ImageIcon("src/img/del.png");
 		Icon imgReset = new ImageIcon("src/img/refresh16.png");

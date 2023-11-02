@@ -8,7 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="libs/sqljdbc42.jar"/>
-	<classpathentry kind="lib" path="C:/Users/dangn/Desktop/workspace/PTUD_2023_Nhom05_DHKTPM17ATT_QuanLykaraoke(3)/Nhom05_QuanLyKaraoke/libs/LGoodDatePicker-11.2.1.jar"/>
 	<classpathentry kind="lib" path="libs/LGoodDatePicker-11.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
