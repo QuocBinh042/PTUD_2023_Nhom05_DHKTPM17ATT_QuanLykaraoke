@@ -22,6 +22,8 @@ public class DatPhong extends JPanel {
 	private DatTruocPhong datTruocPhong;
 	private ChuyenPhong chuyenPhong;
 	private ChiTietPhong chiTietPhong;
+	private DichVuPhong dichVuPhong;
+	private TinhTien tinhTien;
 	public DatPhong() {
 		Icon imgAdd = new ImageIcon("src/img/add2.png");
 		Icon imgDel = new ImageIcon("src/img/del.png");
@@ -288,6 +290,8 @@ public class DatPhong extends JPanel {
 		datPBtn.addActionListener(e -> xyLyDatPhong());
 		chuyenPBtn.addActionListener(e -> xyLyChuyenPhong());
 		chiTietPBtn.addActionListener(e -> xuLyChiTietPhong());
+		dichVuPBtn.addActionListener(e -> xuLyDichVuPhong());
+		tinhTienPBtn.addActionListener(e -> xuLyTinhTien());
 	}
 	
 	private void xuLyThuePhong() {
@@ -316,5 +320,19 @@ public class DatPhong extends JPanel {
 		chiTietPhong.setVisible(true);
 		chiTietPhong.setAlwaysOnTop(true);
 		chiTietPhong.setLocationRelativeTo(null);
+	}
+	
+	private void xuLyDichVuPhong() {
+		dichVuPhong = new DichVuPhong();
+		dichVuPhong.setVisible(true);
+		dichVuPhong.setAlwaysOnTop(true);
+		dichVuPhong.setLocationRelativeTo(null);
+	}
+	
+	private void xuLyTinhTien() {
+		tinhTien = new TinhTien();
+		tinhTien.setVisible(true);
+		tinhTien.setAlwaysOnTop(true);
+		tinhTien.setLocationRelativeTo(null);
 	}
 }
