@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
@@ -37,25 +38,27 @@ public class KhuyenMai extends JPanel {
 	private JTextArea txaMoTa, txaMoTa2;
 	private JTextField txtMaKM, txtPhanTramGiam, txtNgayBatDau, txtNgayKetThuc, txtThongBaoLoi, txtTimKM, txtTimPhong,
 			txtMaKM2, txtPhanTramGiam2, txtNgayBatDau2, txtNgayKetThuc2, txtTrangThai;
-	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnApDung, btnHuy;
+//	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnApDung, btnHuy;
 	private JComboBox<String> cbTrangThai, cbLoaiPhong;
 	private JDateChooser dateBD, dateKT;
+	private app.ButtonGradient btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnApDung, btnHuy;
 
 	public KhuyenMai() {
 		// Khai báo
-		Icon img_add = new ImageIcon("src/img/add2.png");
-		Icon img_del = new ImageIcon("src/img/del.png");
-		Icon img_reset = new ImageIcon("src/img/refresh.png");
-		Icon img_edit = new ImageIcon("src/img/edit.png");
+		Icon img_add = new ImageIcon("src/img/add16.png");
+		Icon img_del = new ImageIcon("src/img/delete16.png");
+		Icon img_reset = new ImageIcon("src/img/refresh16.png");
+		Icon img_edit = new ImageIcon("src/img/edit16.png");
 		Icon img_out = new ImageIcon("src/img/out.png");
 		Icon img_search = new ImageIcon("src/img/search.png");
-		Icon img_forbidden = new ImageIcon("src/img/forbidden.png");
-		Icon img_check = new ImageIcon("src/img/check.png");
+		Icon img_forbidden = new ImageIcon("src/img/forbidden16.png");
+		Icon img_check = new ImageIcon("src/img/check16.png");
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
 		Box bb, bLeft, bRight, bTacVuKM, bLeft2, bRight2, bTacVuPhong;
 		Box b1, b2, b3, b4, b5, b6, b7, b8, b9, b12, b22, b32, b42, b52, b62, b82, b92;
 		JPanel pnlTop, pnlBottom;
 		Dimension dimension = new Dimension(170, 25);
+
 		// BỐ CỤC
 		bb = Box.createVerticalBox();
 		pnlTop = new JPanel();
@@ -76,106 +79,97 @@ public class KhuyenMai extends JPanel {
 		this.add(bb, BorderLayout.CENTER);
 
 		// TOP
+		JPanel pnlNort = new JPanel();
+//		pnlNort.add(img_check);
 		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
 		bLeft.add(Box.createVerticalStrut(5));
 		bLeft.add(b1 = Box.createHorizontalBox());
-		JPanel pnlMaKM = new JPanel();
-		pnlMaKM.add(lblMaKM = new JLabel("Mã khuyến mãi"));
-		pnlMaKM.add(txtMaKM = new JTextField(15));
-		b1.add(pnlMaKM);
-		txtMaKM.setEditable(false);
-
 		JPanel pnlPhanTramGiam = new JPanel();
 		pnlPhanTramGiam.add(lblPhanTramGiam = new JLabel("Phần trăm giảm"));
 		pnlPhanTramGiam.add(txtPhanTramGiam = new JTextField(15));
-		bLeft.add(b2 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(5));
-		b2.add(pnlPhanTramGiam);
+		bLeft.add(pnlPhanTramGiam);
 
 		JPanel pnlNgayBatDau = new JPanel();
 		pnlNgayBatDau.add(lblNgayBatDau = new JLabel("Ngày bắt đầu"));
 		pnlNgayBatDau.add(dateBD = new JDateChooser());
 		dateBD.setPreferredSize(dimension);
-		bLeft.add(b3 = Box.createHorizontalBox());
+		bLeft.add(pnlNgayBatDau);
 		bLeft.add(Box.createVerticalStrut(5));
-		b3.add(pnlNgayBatDau);
 
 		JPanel pnlNgayKetThuc = new JPanel();
 		pnlNgayKetThuc.add(lblNgayKetThuc = new JLabel("Ngày kết thúc"));
 		pnlNgayKetThuc.add(dateKT = new JDateChooser());
 		dateKT.setPreferredSize(dimension);
-		bLeft.add(b4 = Box.createHorizontalBox());
+		bLeft.add(pnlNgayKetThuc);
 		bLeft.add(Box.createVerticalStrut(5));
-		b4.add(pnlNgayKetThuc);
-
-		JPanel pnlTrangThai = new JPanel();
-		pnlTrangThai.add(lblTrangThai = new JLabel("Trạng thái"));
-		pnlTrangThai.add(cbTrangThai = new JComboBox<>());
-		
-		cbTrangThai.setPreferredSize(dimension);
-		bLeft.add(b5 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(5));
-		b5.add(pnlTrangThai);
-		cbTrangThai.addItem("Đang học động");
 
 		JPanel pnlMoTa = new JPanel();
 		pnlMoTa.add(lblMoTa = new JLabel("Mô tả"));
-		pnlMoTa.add(txaMoTa = new JTextArea(2, 15));
+		pnlMoTa.add(txaMoTa = new JTextArea(5, 15));
 		txaMoTa.setBorder(line);
-		bLeft.add(b6 = Box.createHorizontalBox());
+		bLeft.add(pnlMoTa);
 		bLeft.add(Box.createVerticalStrut(5));
-		b6.add(pnlMoTa);
 
-		lblMaKM.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblNgayBatDau.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblNgayKetThuc.setPreferredSize(lblPhanTramGiam.getPreferredSize());
-		lblTrangThai.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblMoTa.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 
-		bLeft.add(b8 = Box.createHorizontalBox());
-		b8.add(Box.createHorizontalStrut(5));
-		b8.add(btnThemMoi = new JButton("Thêm mới", img_add));
-		btnThemMoi.setBorder(new RoundedBorder(2));
-		btnThemMoi.setBackground(Color.decode("#6fa8dc"));
-		b8.add(Box.createHorizontalStrut(25));
-		b8.add(btnCapNhat = new JButton("Cập nhật", img_edit));
-		btnCapNhat.setBorder(new RoundedBorder(2));
-		btnCapNhat.setBackground(Color.decode("#6fa8dc"));
-		bLeft.add(Box.createVerticalStrut(5));
-		bLeft.add(b9 = Box.createHorizontalBox());
+		JPanel pnlKM = new JPanel();
+		GridLayout gridKM = new GridLayout(2, 2);
+		pnlKM.setLayout(gridKM);
+		gridKM.setHgap(30);
+		gridKM.setVgap(10);
+//		pnlKM.add(btnThemMoi = new JButton("Thêm mới", img_add));
+//		pnlKM.add(btnCapNhat = new JButton("Cập nhật", img_edit));
+//		pnlKM.add(btnXoa = new JButton("Xóa", img_del));
+//		pnlKM.add(btnLamMoi = new JButton("Làm mới", img_reset));
+		pnlKM.add(btnThemMoi = new ButtonGradient());
+		btnThemMoi.setText("Thêm mới");
+		btnThemMoi.setIcon(img_add);
 
-		b9.add(Box.createHorizontalStrut(5));
-		b9.add(btnXoa = new JButton("     Xóa       ", img_del));
-		btnXoa.setBorder(new RoundedBorder(2));
-		btnXoa.setBackground(Color.decode("#6fa8dc"));
-		b9.add(Box.createHorizontalStrut(25));
-		b9.add(btnLamMoi = new JButton("Làm mới", img_reset));
-		btnLamMoi.setBorder(new RoundedBorder(2));
-		btnLamMoi.setBackground(Color.decode("#6fa8dc"));
+		pnlKM.add(btnCapNhat = new ButtonGradient());
+		btnCapNhat.setText("Cập nhật");
+		btnCapNhat.setIcon(img_reset);
+
+		pnlKM.add(btnXoa = new ButtonGradient());
+		btnXoa.setText("Làm mới");
+		btnXoa.setIcon(img_reset);
+
+		pnlKM.add(btnThemMoi = new ButtonGradient());
+		btnThemMoi.setText("Làm mới");
+		btnThemMoi.setIcon(img_reset);
+
+		bLeft.add(pnlKM);
 
 		bTacVuKM = Box.createHorizontalBox();
+		bTacVuKM.add(Box.createHorizontalStrut(10));
 		JPanel pnlLocKM = new JPanel();
 		JPanel pnlTimKM = new JPanel();
 		bTacVuKM.add(pnlLocKM);
+		bTacVuKM.add(Box.createHorizontalStrut(100));
 		bTacVuKM.add(pnlTimKM);
 		bRight.add(bTacVuKM);
 
+		GridLayout gridLocKM = new GridLayout(1, 5);
+		pnlLocKM.setLayout(gridLocKM);
+		gridLocKM.setHgap(15);
 		pnlLocKM.setBorder(BorderFactory.createTitledBorder(line, "Lọc theo thời gian"));
 		pnlLocKM.add(lblNgayBatDau = new JLabel("Ngày bắt đầu"));
 		pnlLocKM.add(dateBD = new JDateChooser());
 		dateBD.setPreferredSize(dimension);
-		pnlLocKM.add(Box.createHorizontalStrut(5));
+		pnlLocKM.add(lblNgayKetThuc = new JLabel("Ngày kết thúc"));
 		pnlLocKM.add(dateKT = new JDateChooser());
 		dateKT.setPreferredSize(dimension);
 		pnlLocKM.add(new JButton("Lọc", img_search));
 
+		pnlTimKM.setLayout(gridLocKM);
 		pnlTimKM.setBorder(BorderFactory.createTitledBorder(line, "Tra cứu"));
 		pnlTimKM.add(lblMaKM = new JLabel("Mã khuyến mãi"));
 		pnlTimKM.add(txtTimKM = new JTextField(10));
 		pnlTimKM.add(new JButton("Tìm", img_search));
 
 		tableModel = new DefaultTableModel(headers, 0);
-		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBorder(BorderFactory.createTitledBorder(line, "Danh sách khuyến mãi"));
 		scroll.setViewportView(table = new JTable(tableModel));
@@ -253,7 +247,7 @@ public class KhuyenMai extends JPanel {
 		cbLoaiPhong.setPreferredSize(dimension);
 		pnlTimPhong.add(new JLabel("Mã phòng"));
 		pnlTimPhong.add(txtTimPhong = new JTextField(10));
-		pnlTimPhong.add(new JButton("Tìm", img_search ));
+		pnlTimPhong.add(new JButton("Tìm", img_search));
 
 		lblMaKM.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblNgayBatDau.setPreferredSize(lblPhanTramGiam.getPreferredSize());
@@ -261,21 +255,31 @@ public class KhuyenMai extends JPanel {
 		lblTrangThai.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblMoTa.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 
-		bLeft2.add(b82 = Box.createHorizontalBox());
-		b82.add(Box.createHorizontalStrut(5));
-		b82.add(btnApDung = new JButton("Áp dụng", img_check));
-		btnApDung.setBorder(new RoundedBorder(2));
-		btnApDung.setBackground(Color.decode("#6fa8dc"));
-		b82.add(Box.createHorizontalStrut(25));
-		b82.add(btnHuy = new JButton("Huỷ", img_forbidden));
-		btnHuy.setBorder(new RoundedBorder(2));
-		btnHuy.setBackground(Color.decode("#6fa8dc"));
+		JPanel pnlADKM = new JPanel();
+		GridLayout gridADKM = new GridLayout(1, 2);
+		pnlADKM.setLayout(gridADKM);
+		gridADKM.setHgap(30);
+		gridADKM.setVgap(10);
+		
+		pnlADKM.add(btnApDung = new ButtonGradient());
+		btnApDung.setText("Áp dụng");
+		btnApDung.setIcon(img_check);
+
+		pnlADKM.add(btnHuy = new ButtonGradient());
+		btnHuy.setText("Huỷ");
+		btnHuy.setIcon(img_forbidden);
+		
+		bLeft2.add(pnlADKM);
 		bLeft2.add(Box.createVerticalStrut(5));
 		bLeft2.add(b92 = Box.createHorizontalBox());
 		b92.add(Box.createVerticalStrut(20));
 		b92.add(Box.createHorizontalStrut(3));
-		b92.add(btnThoat = new JButton("Thoát", img_out));
-		btnThoat.setBorder(new RoundedBorder(3));
+		
+//		b92.add(btnThoat = new JButton("Thoát", img_out));
+		b92.add(btnThoat = new ButtonGradient());
+		btnThoat.setText("Thoát");
+		btnThoat.setIcon(img_out);
+		
 		btnThoat.setBackground(Color.decode("#6fa8dc"));
 		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThoat.getMinimumSize().height));
 
@@ -288,15 +292,6 @@ public class KhuyenMai extends JPanel {
 		table2.setAutoCreateRowSorter(true);
 		table2.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		bRight2.add(scroll2);
-
-		// Set kích thước button
-		Dimension maxButtonSize = new Dimension(Integer.MAX_VALUE, btnCapNhat.getPreferredSize().height);
-		btnThemMoi.setMaximumSize(maxButtonSize);
-		btnCapNhat.setMaximumSize(maxButtonSize);
-		btnApDung.setMaximumSize(maxButtonSize);
-		btnHuy.setMaximumSize(maxButtonSize);
-		btnLamMoi.setMaximumSize(maxButtonSize);
-		btnXoa.setMaximumSize(maxButtonSize);
 
 	}
 
