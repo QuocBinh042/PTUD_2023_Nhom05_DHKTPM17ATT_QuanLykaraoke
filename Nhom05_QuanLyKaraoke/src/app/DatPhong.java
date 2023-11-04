@@ -47,19 +47,19 @@ public class DatPhong extends JPanel {
 		//Pane left các chức năng 
 		Box btnBox = Box.createVerticalBox();
 		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(thuePBtn = new JButton("Thuê Phòng"));
+		btnBox.add(thuePBtn = new ButtonGradient("Thuê Phòng"));
 		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(datPBtn = new JButton("Đặt Phòng"));
+		btnBox.add(datPBtn = new ButtonGradient("Đặt Phòng"));
 		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(chuyenPBtn = new JButton("Chuyển phòng"));
+		btnBox.add(chuyenPBtn = new ButtonGradient("Chuyển phòng"));
 		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(chiTietPBtn = new JButton("Chi tiết phòng"));
+		btnBox.add(chiTietPBtn = new ButtonGradient("Chi tiết phòng"));
 		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(dichVuPBtn = new JButton("Dịch vụ"));
+		btnBox.add(dichVuPBtn = new ButtonGradient("Dịch vụ"));
 		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(tinhTienPBtn = new JButton("Tính tiền"));
+		btnBox.add(tinhTienPBtn = new ButtonGradient("Tính tiền"));
 		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(thoatBtn = new JButton("Thoát"));
+		btnBox.add(thoatBtn = new ButtonGradient("Thoát"));
 		btnBox.add(Box.createVerticalStrut(35));
 		thuePBtn.setFont(new Font("Sanserif", Font.BOLD, 20));
 		thuePBtn.setBackground(Color.decode("#6fa8dc"));
@@ -129,7 +129,7 @@ public class DatPhong extends JPanel {
 		panePhongF.add(phongF = new JTextField(15));
 		traCuuB1.add(panePhongF);
 		
-		traCuuB1.add(timKiemPBtn = new JButton("Tìm kiếm", imgSearch));
+		traCuuB1.add(timKiemPBtn = new ButtonGradient("Tìm kiếm", imgSearch));
 		
 		JPanel paneGiaLb = new JPanel();
 		paneGiaLb.setBackground(Color.decode("#cccccc"));
@@ -141,7 +141,7 @@ public class DatPhong extends JPanel {
 		paneGiaPhongF.add(giaPhongF = new JTextField(15));
 		traCuuB2.add(paneGiaPhongF);
 		
-		traCuuB2.add(lamMoiBtn = new JButton("Làm mới", imgReset));		
+		traCuuB2.add(lamMoiBtn = new ButtonGradient("Làm mới", imgReset));		
 		
 		traCuuB.add(traCuuB1);
 		traCuuB.add(Box.createVerticalStrut(10));
@@ -244,7 +244,7 @@ public class DatPhong extends JPanel {
 		paneForSdtF.add(sdtF = new JTextField(15));
 		paneForSdtF.setBackground(Color.decode("#cccccc"));
 		sdtBox.add(paneForSdtF);
-		sdtBox.add(timKiemSDTBtn = new JButton("Tìm kiếm", imgSearch));
+		sdtBox.add(timKiemSDTBtn = new ButtonGradient("Tìm kiếm", imgSearch));
 		timKiemSDTBtn.setBackground(Color.decode("#6fa8dc"));
 		
 		JPanel paneForSdtBox = new JPanel();
@@ -266,9 +266,9 @@ public class DatPhong extends JPanel {
 //		btnNhanHuyBox.add(nhanPBtn = new JButton("Nhận", imgCheck));
 		
 		JPanel paneForBtnNhanHuyBox = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		paneForBtnNhanHuyBox.add(huyPBtn = new JButton("Hủy", imgCancel));
+		paneForBtnNhanHuyBox.add(huyPBtn = new ButtonGradient("Hủy", imgCancel));
 		paneForBtnNhanHuyBox.add(Box.createHorizontalStrut(50));
-		paneForBtnNhanHuyBox.add(nhanPBtn = new JButton("Nhận", imgCheck));
+		paneForBtnNhanHuyBox.add(nhanPBtn = new ButtonGradient("Nhận", imgCheck));
 		paneForBtnNhanHuyBox.setBackground(Color.decode("#cccccc"));
 		panePDP.add(paneForBtnNhanHuyBox, BorderLayout.SOUTH);
 		

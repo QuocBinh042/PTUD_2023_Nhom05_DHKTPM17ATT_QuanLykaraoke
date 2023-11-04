@@ -58,6 +58,74 @@ public class ButtonGradient extends JButton {
 	public void setColor2(Color color2) {
 		this.color2 = color2;
 	}
+	
+	public ButtonGradient(String text) {
+		setText(text);
+		setContentAreaFilled(false);
+		setForeground(Color.BLACK);
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+		setBorder(new EmptyBorder(10, 20, 10, 20));
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent me) {
+				mouseOver = true;
+				timer.start();
+			}
+
+			@Override
+			public void mouseExited(MouseEvent me) {
+				mouseOver = false;
+				timer.start();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent me) {
+				pressedSize = 0;
+				alphaPressed = 0.5f;
+				pressed = true;
+				pressedLocation = me.getPoint();
+				timerPressed.setDelay(0);
+				timerPressed.start();
+			}
+		});
+		timer = new Timer(40, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				if (mouseOver) {
+					if (alpha < 0.6f) {
+						alpha += 0.05f;
+						repaint();
+					} else {
+						alpha = 0.6f;
+						timer.stop();
+						repaint();
+					}
+				} else {
+					if (alpha > 0.3f) {
+						alpha -= 0.05f;
+						repaint();
+					} else {
+						alpha = 0.3f;
+						timer.stop();
+						repaint();
+					}
+				}
+			}
+		});
+		timerPressed = new Timer(0, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				pressedSize += getSizeSpeed();
+				if (alphaPressed <= 0) {
+					pressed = false;
+					timerPressed.stop();
+				} else {
+					repaint();
+				}
+			}
+		});
+	}
+
 
 	public ButtonGradient(String text, Icon img) {
 		setText(text);

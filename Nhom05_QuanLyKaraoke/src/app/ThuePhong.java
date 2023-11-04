@@ -119,7 +119,7 @@ public class ThuePhong extends JFrame{
 		sdtKhachPane.setBackground(Color.decode("#cccccc"));
 		sdtKhachBox.add(sdtKhachPane);
 		sdtKhachBox.add(Box.createHorizontalStrut(5));
-		sdtKhachBox.add(kiemTraBtn = new JButton("Kiểm tra", imgCheck));
+		sdtKhachBox.add(kiemTraBtn = new ButtonGradient("Kiểm tra", imgCheck));
 		kiemTraBtn.setBackground(Color.decode("#6fa8dc"));
 		
 		Box tenKhachBox = Box.createHorizontalBox();
@@ -163,8 +163,8 @@ public class ThuePhong extends JFrame{
 		
 //		set Bottom pane
 		
-		bottomPanelLeft.add(quayLaiBtn = new JButton("Quay lại", imgBack));
-		bottomPanelRight.add(thuePhongBtn = new JButton("Thuê phòng", imgCheck));
+		bottomPanelLeft.add(quayLaiBtn = new ButtonGradient("Quay lại", imgBack));
+		bottomPanelRight.add(thuePhongBtn = new ButtonGradient("Thuê phòng", imgCheck));
 		bottomPanelRight.setBackground(Color.decode("#e6dbd1"));
 		bottomPanelLeft.setBackground(Color.decode("#e6dbd1"));
 		bottomPanel.add(bottomPanelLeft);

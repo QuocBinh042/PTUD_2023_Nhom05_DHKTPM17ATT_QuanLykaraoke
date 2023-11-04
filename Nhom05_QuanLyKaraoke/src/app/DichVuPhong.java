@@ -94,7 +94,7 @@ public class DichVuPhong extends JFrame {
 		
 		JPanel paneForBackBtn = new JPanel();
 		paneForBackBtn.setBackground(Color.decode("#cccccc"));
-		paneForBackBtn.add(btnQuayLai = new JButton("Quay Lại", imgBack));
+		paneForBackBtn.add(btnQuayLai = new ButtonGradient("Quay Lại", imgBack));
 		btnQuayLai.setBackground(Color.decode("#6fa8dc"));
 		
 		thongTinPane.add(boxForThongTin, BorderLayout.CENTER);
@@ -117,7 +117,7 @@ public class DichVuPhong extends JFrame {
 		paneForTimKiemDV1.add(tfTimKiemDV1 = new JTextField(15));
 		boxForPaneForBtnTableDV.add(paneForTimKiemDV1);
 		boxForPaneForBtnTableDV.add(Box.createHorizontalStrut(100));
-		boxForPaneForBtnTableDV.add(btnThem = new JButton("Thêm", imgAdd));
+		boxForPaneForBtnTableDV.add(btnThem = new ButtonGradient("Thêm", imgAdd));
 		btnThem.setBackground(Color.decode("#6fa8dc"));
 		paneForBtnTableDV.add(boxForPaneForBtnTableDV);
 		paneForBtnTableDV.setBackground(Color.decode("#cccccc"));
@@ -143,7 +143,7 @@ public class DichVuPhong extends JFrame {
 		paneForTimKiemDV2.setBackground(Color.decode("#cccccc"));
 		boxForPaneForBtnTableDVP.add(paneForTimKiemDV2);
 		boxForPaneForBtnTableDVP.add(Box.createHorizontalStrut(100));
-		boxForPaneForBtnTableDVP.add(btnXoa = new JButton("Xóa", imgDel));
+		boxForPaneForBtnTableDVP.add(btnXoa = new ButtonGradient("Xóa", imgDel));
 		btnXoa.setBackground(Color.decode("#6fa8dc"));
 		paneForBtnTableDVP.add(boxForPaneForBtnTableDVP);
 		paneForBtnTableDVP.setBackground(Color.decode("#cccccc"));

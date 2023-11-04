@@ -269,11 +269,11 @@ public class ChiTietPhong extends JFrame {
 		btnPane = new JPanel();
 		Box boxForBtnPane = Box.createVerticalBox();
 		boxForBtnPane.add(Box.createVerticalStrut(10));
-		boxForBtnPane.add(btnThemDV = new JButton("Thêm dịch vụ", imgAdd));
+		boxForBtnPane.add(btnThemDV = new ButtonGradient("Thêm dịch vụ", imgAdd));
 		boxForBtnPane.add(Box.createVerticalStrut(20));
-		boxForBtnPane.add(btnChuyenPhong = new JButton("Chuyển phòng", imgChange));
+		boxForBtnPane.add(btnChuyenPhong = new ButtonGradient("Chuyển phòng", imgChange));
 		boxForBtnPane.add(Box.createVerticalStrut(20));
-		boxForBtnPane.add(btnQuayLai = new JButton("Quay lại", imgBack));
+		boxForBtnPane.add(btnQuayLai = new ButtonGradient("Quay lại", imgBack));
 		boxForBtnPane.add(Box.createVerticalStrut(10));
 		btnPane.add(boxForBtnPane);
 		btnPane.setBackground(Color.decode("#e6dbd1"));

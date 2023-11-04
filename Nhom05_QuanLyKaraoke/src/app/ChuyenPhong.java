@@ -175,7 +175,7 @@ public class ChuyenPhong extends JFrame {
 		panePhongF.add(tfPhong = new JTextField(15));
 		traCuuB1.add(panePhongF);
 		
-		traCuuB1.add(btnTimKiem = new JButton("Tìm kiếm", imgSearch));
+		traCuuB1.add(btnTimKiem = new ButtonGradient("Tìm kiếm", imgSearch));
 		
 		JPanel paneGiaLb = new JPanel();
 		paneGiaLb.setBackground(Color.decode("#cccccc"));
@@ -187,7 +187,7 @@ public class ChuyenPhong extends JFrame {
 		paneGiaPhongF.add(tfGiaPhong = new JTextField(15));
 		traCuuB2.add(paneGiaPhongF);
 		
-		traCuuB2.add(btnLamMoi = new JButton("Làm mới", imgReset));		
+		traCuuB2.add(btnLamMoi = new ButtonGradient("Làm mới", imgReset));		
 		
 		traCuuB.add(traCuuB1);
 		traCuuB.add(Box.createVerticalStrut(10));
@@ -221,12 +221,12 @@ public class ChuyenPhong extends JFrame {
 		
 		bottomPaneRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		bottomPaneRight.setBackground(Color.decode("#cccccc"));
-		bottomPaneRight.add(btnChuyenPhong = new JButton("Chuyển phòng", imgChange));
+		bottomPaneRight.add(btnChuyenPhong = new ButtonGradient("Chuyển phòng", imgChange));
 		btnChuyenPhong.setBackground(Color.decode("#6fa8dc"));
 		
 		bottomPaneLeft = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		bottomPaneLeft.setBackground(Color.decode("#cccccc"));
-		bottomPaneLeft.add(btnQuayLai = new JButton("Quay lại", imgBack));
+		bottomPaneLeft.add(btnQuayLai = new ButtonGradient("Quay lại", imgBack));
 		btnQuayLai.setBackground(Color.decode("#6fa8dc"));
 		
 		bottomPane.add(bottomPaneLeft);

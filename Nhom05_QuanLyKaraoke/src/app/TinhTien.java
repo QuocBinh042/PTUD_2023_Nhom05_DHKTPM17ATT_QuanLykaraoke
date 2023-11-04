@@ -187,7 +187,7 @@ public class TinhTien extends JFrame{
 		
 		JPanel paneForBtnBack = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		paneForBtnBack.setBackground(Color.white);
-		paneForBtnBack.add(btnQuayLai = new JButton("Quay lại", imgBack));
+		paneForBtnBack.add(btnQuayLai = new ButtonGradient("Quay lại", imgBack));
 		btnQuayLai.setBackground(Color.decode("#6fa8dc"));
 		
 		JPanel paneForBoxForTienNhanThua = new JPanel();
@@ -254,10 +254,10 @@ public class TinhTien extends JFrame{
 		
 		JPanel paneForBtnThanhToan = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		paneForBtnThanhToan.setBackground(Color.white);
-		paneForBtnThanhToan.add(btnInHD = new JButton("In Hóa Đơn"));
+		paneForBtnThanhToan.add(btnInHD = new ButtonGradient("In Hóa Đơn"));
 		btnInHD.setBackground(Color.decode("#6fa8dc"));
 		paneForBtnThanhToan.add(Box.createHorizontalStrut(20));
-		paneForBtnThanhToan.add(btnThanhToan = new JButton("Thanh Toán"));
+		paneForBtnThanhToan.add(btnThanhToan = new ButtonGradient("Thanh Toán"));
 		btnThanhToan.setBackground(Color.decode("#6fa8dc"));
 		
 		JPanel paneForBoxForRight = new JPanel();
