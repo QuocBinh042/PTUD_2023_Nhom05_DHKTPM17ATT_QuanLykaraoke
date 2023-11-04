@@ -14,29 +14,32 @@ public class KhachHang extends JPanel {
 	private JLabel lblTenKhachHang, lblGioiTinh, lblSoDienThoai, lblEmail,lblGhiChu, lblLoaiKhachHang;
 	private JTextField txtTenKhachHang, txtSoDienThoai, txtEmail;
 	private JTextArea txaGhiChu;
-	private JButton btnThemMoi, btnCapNhat,  btnLamMoi, btnThoat, btnTraCuu;
-	private JComboBox cbLoaiKhachHang;
-	private JRadioButton radNam, radNu;
+	private JButton btnThemMoi, btnCapNhat,  btnLamMoi, btnThoat, btnTim;
+	private JComboBox cbLoaiKhachHang, cbGioiTinh;
+	private String[] headers = { "Mã khách hàng", "Tên khách hàng", "Loại khách hàng", "Giới tính", "Số điện thoại", "Email",
+			"Số giờ đã thuê", "Ghi chú"};
 	private JTable table;
 	private DefaultTableModel tableModel;
 
 	public KhachHang() {
 		Icon img_add = new ImageIcon("src/img/add2.png");
+		Icon img_del = new ImageIcon("src/img/del.png");
 		Icon img_reset = new ImageIcon("src/img/refresh.png");
 		Icon img_edit = new ImageIcon("src/img/edit.png");
 		Icon img_out = new ImageIcon("src/img/out.png");
 		Icon img_search = new ImageIcon("src/img/search2.png");
-	
-		
+
 		JPanel pnlLeft = new JPanel(new BorderLayout());
 		JPanel pnlRight = new JPanel(new BorderLayout());
 
-		Box bLeft = Box.createVerticalBox(); 
+		Box bLeft = Box.createVerticalBox();
 		Box bRight = Box.createVerticalBox();
-		Box b1, b2, b3, b4, b5, b6, b7, b8, b9, b10;
-
+		Box b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17, b92, bLoc, bTacVu, bTim, bTim1,
+				bTim2, bLoc1, bLoc2;
+		Dimension dimension = new Dimension(170, 25);
+		Dimension dimension2 = new Dimension(120, 20);
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
-		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khách hàng", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.PLAIN, 13), Color.BLACK));
+		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khách hàng"));
 		bLeft.add(b1 = Box.createHorizontalBox());
 		bLeft.add(Box.createVerticalStrut(15));
 		b1.add(lblTenKhachHang = new JLabel("Tên khách hàng"));
@@ -46,15 +49,10 @@ public class KhachHang extends JPanel {
 		bLeft.add(b2 = Box.createHorizontalBox());
 		bLeft.add(Box.createVerticalStrut(15));
 		b2.add(lblGioiTinh = new JLabel("Giới tính"));
-		b2.add(Box.createHorizontalStrut(60));
-		ButtonGroup bg = new ButtonGroup();
-		radNam = new JRadioButton("Nam");
-		radNu = new JRadioButton("Nữ");
-		b2.add(radNam);
-		b2.add(radNu);
-		b2.add(radNam);
-		b2.add(Box.createHorizontalStrut(80));
-		b2.add(radNu);
+		b2.add(Box.createHorizontalStrut(20));
+		b2.add(cbGioiTinh = new JComboBox<>());
+		cbGioiTinh.addItem("Nam");
+		cbGioiTinh.addItem("Nữ");
 	
 		bLeft.add(b3 = Box.createHorizontalBox());
 		bLeft.add(Box.createVerticalStrut(15));
@@ -69,7 +67,7 @@ public class KhachHang extends JPanel {
 		b4.add(txtEmail = new JTextField());
 
 		bLeft.add(b5 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(15));
+		bLeft.add(Box.createVerticalStrut(50));
 		b5.add(lblGhiChu = new JLabel("Ghi chú"));
 		b5.add(Box.createHorizontalStrut(20));
 		b5.add(txaGhiChu = new JTextArea(5, 15));
@@ -77,143 +75,115 @@ public class KhachHang extends JPanel {
 		
 		lblTenKhachHang.setPreferredSize(lblTenKhachHang.getPreferredSize());
 		lblSoDienThoai.setPreferredSize(lblTenKhachHang.getPreferredSize());
+		lblGioiTinh.setPreferredSize(lblTenKhachHang.getPreferredSize());
 		lblEmail.setPreferredSize(lblTenKhachHang.getPreferredSize());
 		lblGhiChu.setPreferredSize(lblTenKhachHang.getPreferredSize());
 		
+		JPanel pnlKH = new JPanel();
+		GridLayout gridKH = new GridLayout(2, 2);
+		pnlKH.setLayout(gridKH);
+		gridKH.setHgap(30);
+		gridKH.setVgap(10);
+		pnlKH.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
+		pnlKH.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
+		pnlKH.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
+		pnlKH.add(btnThoat = new ButtonGradient("Thoát", img_reset));
+		pnlKH.setBackground(Color.decode("#cccccc"));
+		bLeft.add(pnlKH);
+		bLeft.add(Box.createVerticalStrut(340));
 		
-		bLeft.add(b6 = Box.createHorizontalBox());
-		b6.add(Box.createHorizontalStrut(5));
-		b6.add(btnThemMoi = new JButton("Thêm mới", img_add));
-		btnThemMoi.setBorder(new RoundedBorder(7));
-		btnThemMoi.setBackground(Color.decode("#6fa8dc"));
-		btnThemMoi.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThemMoi.getMinimumSize().height));
-		bLeft.add(Box.createVerticalStrut(5));
+		//Loc
+		bRight.add(bTacVu = Box.createHorizontalBox());
+		bTacVu.add(Box.createHorizontalStrut(100));
 		
-		b6.add(Box.createHorizontalStrut(20));
-		b6.add(btnCapNhat = new JButton("Cập nhật", img_edit));
-		btnCapNhat.setBorder(new RoundedBorder(7));
-		btnCapNhat.setBackground(Color.decode("#6fa8dc"));
-		btnCapNhat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnCapNhat.getMinimumSize().height));
-		bLeft.add(Box.createVerticalStrut(5));
+		bLoc = Box.createVerticalBox();
+		JPanel pnlLblLoaiKhachHang = new JPanel();	
+		JPanel pnlCbLoaiKhachHang = new JPanel();
+		pnlLblLoaiKhachHang.setBackground((Color.decode("#e6dbd1")));
+		pnlCbLoaiKhachHang.setBackground((Color.decode("#e6dbd1")));
+		
+		
+		pnlLblLoaiKhachHang.add(lblLoaiKhachHang = new JLabel("Loại khách hàng:"));
+		pnlCbLoaiKhachHang.add(cbLoaiKhachHang = new JComboBox<>());
+		cbLoaiKhachHang.addItem("Tất cả");
+		cbLoaiKhachHang.addItem("Thường");
+		cbLoaiKhachHang.addItem("VIP");
+		
+		bLoc.add(bLoc1 = Box.createHorizontalBox());
+		bLoc1.add(pnlLblLoaiKhachHang);
+		bLoc1.add(pnlCbLoaiKhachHang);
+		
+		JPanel pnlLoc = new JPanel();
+		pnlLoc.add(bLoc);
+	    pnlLoc.setBackground((Color.decode("#e6dbd1")));
+		//pnlLoc.setBorder(BorderFactory.createTitledBorder(line, "Lọc"));
+		bTacVu.add(pnlLoc);
+		
+		bTacVu.add(Box.createHorizontalStrut(100));
+		
+		//Tim
+		bTim = Box.createVerticalBox();
+		JPanel pnlLblTenKhachHang = new JPanel();
+		JPanel pnlTxtTenKhachHang = new JPanel();
+		JPanel pnlLblSoDienThoai = new JPanel();
+		JPanel pnlTxtSoDienThoai = new JPanel();		
+		pnlLblTenKhachHang.setBackground((Color.decode("#cccccc")));
+		pnlLblSoDienThoai.setBackground((Color.decode("#cccccc")));
+		pnlTxtTenKhachHang.setBackground((Color.decode("#cccccc")));
+		pnlTxtSoDienThoai.setBackground((Color.decode("#cccccc")));
+		pnlLblTenKhachHang.add(lblTenKhachHang = new JLabel("Tên khách hàng:"));
+		pnlTxtTenKhachHang.add(txtTenKhachHang = new JTextField(10));
+		pnlLblSoDienThoai.add(lblSoDienThoai = new JLabel("Số điện thoại:"));
+		pnlTxtSoDienThoai.add(txtSoDienThoai = new JTextField(10));
+		
+		bTim.add(bTim1 = Box.createHorizontalBox());
+		bTim1.add(pnlLblTenKhachHang);
+		bTim1.add(pnlTxtTenKhachHang);
+		bTim1.add(btnTim = new ButtonGradient("Tìm", img_search));
+		bTim.add(Box.createVerticalStrut(10));
+		bTim.add(bTim2 = Box.createHorizontalBox());
+		bTim2.add(pnlLblSoDienThoai);
+		bTim2.add(pnlTxtSoDienThoai);
+		bTim2.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
+		bTacVu.add(Box.createVerticalStrut(10));
+		JPanel pnlTim = new JPanel();
+		pnlTim.add(bTim);
+		pnlTim.setBackground((Color.decode("#cccccc")));
+		pnlTim.setBorder(BorderFactory.createTitledBorder(line, "Tra cứu"));
+		bTacVu.add(pnlTim);
+		
+		bTacVu.add(Box.createHorizontalStrut(100));
+		
+		//
+		lblSoDienThoai.setPreferredSize(lblTenKhachHang.getPreferredSize());
+		cbLoaiKhachHang.setPreferredSize(dimension);
+		txtTenKhachHang.setPreferredSize(dimension);
+		txtSoDienThoai.setPreferredSize(dimension);
+		btnTim.setPreferredSize(dimension2);
+		btnLamMoi.setPreferredSize(dimension2);
 
-	
-		bLeft.add(b7 = Box.createHorizontalBox());
-		b7.add(Box.createHorizontalStrut(5));
-		b7.add(btnLamMoi = new JButton("Làm mới", img_reset));
-		btnLamMoi.setBorder(new RoundedBorder(7));
-		btnLamMoi.setBackground(Color.decode("#6fa8dc"));
-		btnLamMoi.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnLamMoi.getMinimumSize().height));
-		bLeft.add(Box.createVerticalStrut(5));
-		
-		b7.add(Box.createHorizontalStrut(20));
-		b7.add(btnThoat = new JButton("Thoát", img_out));
-		btnThoat.setBorder(new RoundedBorder(7));
-		btnThoat.setBackground(Color.decode("#6fa8dc"));
-		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnCapNhat.getMinimumSize().height));
-		bLeft.add(Box.createVerticalStrut(400)); 
-
-
-		Box aNorth = Box.createHorizontalBox(), aCenter = Box.createVerticalBox();
-		Box a, a1, a2;
-
-		aNorth.add(a = Box.createHorizontalBox());
-		aNorth.setMaximumSize(new Dimension(Integer.MAX_VALUE, aNorth.getMinimumSize().height));
-		aNorth.add(Box.createHorizontalStrut(200));
-
-		aNorth.add(a1 = Box.createVerticalBox());
-		
-		aNorth.add(Box.createVerticalStrut(20));
-		a1.add(b8 = Box.createHorizontalBox());
-		
-		b8.add(Box.createVerticalStrut(20));
-		b8.add(lblLoaiKhachHang = new JLabel("Loại khách hàng"));
-		b8.add(Box.createHorizontalStrut(10));
-		b8.add(cbLoaiKhachHang = new JComboBox<>());
-		a1.add(Box.createVerticalStrut(10));
-		a1.setMaximumSize(new Dimension(Integer.MAX_VALUE, a1.getMinimumSize().height));
-		aNorth.add(Box.createHorizontalStrut(300));
-		
-		
-        aNorth.add(a2 = Box.createVerticalBox());
-		
-		a2.setBorder(BorderFactory.createTitledBorder(line, "Tra cứu", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.PLAIN, 13), Color.BLACK));
-		aNorth.add(Box.createVerticalStrut(30));
-		a2.add(b9 = Box.createHorizontalBox());
-		
-		b9.add(Box.createVerticalStrut(20));
-		b9.add(lblTenKhachHang = new JLabel("Tên khách hàng"));
-		b9.add(Box.createHorizontalStrut(20));
-		b9.add(txtTenKhachHang = new JTextField());
-		b9.add(Box.createHorizontalStrut(30));
-		b9.add(btnTraCuu = new JButton("  Tìm  ", img_search));
-		btnTraCuu.setBorder(new RoundedBorder(1));
-	    btnTraCuu.setBackground(Color.decode("#6fa8dc"));
-		a2.add(Box.createVerticalStrut(22));
-		lblTenKhachHang.setPreferredSize(lblTenKhachHang.getPreferredSize());
-		
-		a2.add(b10 = Box.createHorizontalBox());
-		b10.add(Box.createVerticalStrut(20));
-		b10.add(lblSoDienThoai = new JLabel("Số điện thoại"));
-		b10.add(Box.createHorizontalStrut(20));
-		b10.add(txtSoDienThoai = new JTextField());
-		b10.add(Box.createHorizontalStrut(30));
-		b10.add(btnTraCuu = new JButton("Làm mới", img_reset));
-		btnTraCuu.setBorder(new RoundedBorder(1));
-	    btnTraCuu.setBackground(Color.decode("#6fa8dc"));
-	    a2.setMaximumSize(new Dimension(Integer.MAX_VALUE, a2.getMinimumSize().height));
-	    lblSoDienThoai.setPreferredSize(lblTenKhachHang.getPreferredSize());
-	    aNorth.add(Box.createHorizontalStrut(150));
-
-	
-		
-	    bRight.add(aNorth);
-		aCenter.setBorder(BorderFactory.createTitledBorder(line, "Danh sách khách hàng", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.PLAIN, 13), Color.BLACK));
-		String[] headers = "Mã khách hàng;Tên khách hàng;Loại khách hàng;Giới tính;Số điện thoại;Email;Số giờ đã thuê;Ghi chú"
-				.split(";");
+		// Table - Center
 		tableModel = new DefaultTableModel(headers, 0);
-		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setBorder(BorderFactory.createTitledBorder(line, "Danh sách khách hàng"));
 		scroll.setViewportView(table = new JTable(tableModel));
-		table.setRowHeight(25);
+		table.setRowHeight(50);
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		aCenter.add(scroll);
-		bRight.add(aCenter);
-
+		bRight.add(scroll);
 		
+		//
 		pnlLeft.setBackground(Color.decode("#cccccc"));
 		pnlRight.setBackground(Color.decode("#e6dbd1"));
+
+		pnlRight.setLayout(new BorderLayout());
+		pnlRight.add(bTacVu, BorderLayout.NORTH);
 		pnlLeft.add(bLeft, BorderLayout.WEST);
 		pnlRight.add(bRight, BorderLayout.CENTER);
-
 		this.setLayout(new BorderLayout());
 		add(pnlLeft, BorderLayout.WEST);
 		add(pnlRight, BorderLayout.CENTER);
-
-	}
-	private static class RoundedBorder implements Border {
-
-	    private int radius;
-
-
-	    RoundedBorder(int radius) {
-	        this.radius = radius;
-	    }
-
-
-	    public Insets getBorderInsets(Component c) {
-	        return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
-	    }
-
-
-	    public boolean isBorderOpaque() {
-	        return true;
-	    }
-
-
-	    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-	        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
-	    }
 	}
 
 }
