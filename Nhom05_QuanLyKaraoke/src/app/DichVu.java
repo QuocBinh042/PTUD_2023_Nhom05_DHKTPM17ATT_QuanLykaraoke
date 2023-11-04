@@ -11,10 +11,9 @@ import java.awt.event.ActionListener;
 
 public class DichVu extends JPanel {
 
-	private JLabel lblMaDichVu, lblTenDichVu, lblDonGiaNhap, lblDonGiaBan, lblDonViTinh, lblSoLuong, lblTinhTrang,
-			lblLocTinhTrang, lblTimDV;
-	private JTextField txtMaDichVu, txtTenDichVu, txtDonGiaNhap, txtDonGiaBan, txtDonViTinh, txtSoLuong, txtTimDV,
-			txtThongBaoLoi;
+	private JLabel lblTenDichVu, lblDonGiaNhap, lblDonGiaBan, lblDonVi, lblSoLuong, lblTinhTrang, lblLocTinhTrang,
+			lblTimDV;
+	private JTextField txtTenDichVu, txtDonGiaNhap, txtDonGiaBan, txtDonVi, txtSoLuong, txtTimDV, txtThongBaoLoi;
 	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnTim;
 	private JComboBox cbTinhTrang;
 	private JTable table;
@@ -23,172 +22,132 @@ public class DichVu extends JPanel {
 
 	public DichVu() {
 
-		JPanel pnlLeft = new JPanel(new BorderLayout());
-		JPanel pnlRight = new JPanel(new BorderLayout());
-		
 		Icon img_add = new ImageIcon("src/img/add2.png");
 		Icon img_del = new ImageIcon("src/img/del.png");
 		Icon img_reset = new ImageIcon("src/img/refresh.png");
 		Icon img_edit = new ImageIcon("src/img/edit.png");
 		Icon img_out = new ImageIcon("src/img/out.png");
-		Icon img_search = new ImageIcon("src/img/search2.png");
-		
+		Icon img_search = new ImageIcon("src/img/search.png");
 
-		// WEST
+		Box b1, b2, b3, b4, b5;
+		Box bLeft, bRight;
+		Border line = BorderFactory.createLineBorder(Color.BLACK);
+		Dimension dimension = new Dimension(110, 25);
+
+		JPanel pnlLeft = new JPanel();
+		JPanel pnlRight = new JPanel();
+
 		bLeft = Box.createVerticalBox();
 		bRight = Box.createVerticalBox();
-		Border line = BorderFactory.createLineBorder(Color.BLACK);
+		pnlLeft.add(bLeft);
+		pnlRight.add(bRight);
 
-		Box b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, bDVT;
-
-		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin dịch vụ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.PLAIN, 13), Color.BLACK));
-		bLeft.add(Box.createVerticalStrut(10));
+		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin dịch vụ"));
+		bLeft.add(Box.createVerticalStrut(5));
+		JPanel pnlTenDV = new JPanel();
+		pnlTenDV.setBackground(Color.decode("#cccccc"));
+		pnlTenDV.add(lblTenDichVu = new JLabel("Tên dịch vụ"));
+		pnlTenDV.add(txtTenDichVu = new JTextField(15));
 		bLeft.add(b1 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(15));
-		b1.add(lblMaDichVu = new JLabel("Mã dịch vụ"));
-		b1.add(Box.createHorizontalStrut(20));
-		b1.add(txtMaDichVu = new JTextField());
-		txtMaDichVu.setEditable(false);
+		b1.add(pnlTenDV);
+		bLeft.add(Box.createVerticalStrut(10));
 
+		JPanel pnlDonVi = new JPanel();
+		pnlDonVi.setBackground(Color.decode("#cccccc"));
+		pnlDonVi.add(lblDonVi = new JLabel("Đơn vị"));
+		pnlDonVi.add(txtDonVi = new JTextField(15));
 		bLeft.add(b2 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(20));
-		b2.add(lblTenDichVu = new JLabel("Tên dịch vụ"));
-		b2.add(Box.createHorizontalStrut(20));
-		b2.add(txtTenDichVu = new JTextField());
+		b2.add(pnlDonVi);
+		bLeft.add(Box.createVerticalStrut(10));
 
+		JPanel pnlDonGiaNhap = new JPanel();
+		pnlDonGiaNhap.setBackground(Color.decode("#cccccc"));
+		pnlDonGiaNhap.add(lblDonGiaNhap = new JLabel("Đơn giá nhập"));
+		pnlDonGiaNhap.add(txtDonGiaNhap = new JTextField(15));
+		txtDonGiaNhap.setEditable(false);
 		bLeft.add(b3 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(20));
-		b3.add(lblDonGiaNhap = new JLabel("Đơn giá nhập"));
-		b3.add(Box.createHorizontalStrut(20));
-		b3.add(txtDonGiaNhap = new JTextField());
+		b3.add(pnlDonGiaNhap);
+		bLeft.add(Box.createVerticalStrut(10));
 
+		JPanel pnlDonGiaBan = new JPanel();
+		pnlDonGiaBan.setBackground(Color.decode("#cccccc"));
+		pnlDonGiaBan.add(lblDonGiaBan = new JLabel("Đơn giá bán"));
+		pnlDonGiaBan.add(txtDonGiaBan = new JTextField(15));
+		txtDonGiaNhap.setEditable(false);
 		bLeft.add(b4 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(20));
-		b4.add(lblDonGiaBan = new JLabel("Đơn giá bán"));
-		b4.add(Box.createHorizontalStrut(20));
-		b4.add(txtDonGiaBan = new JTextField());
+		b4.add(pnlDonGiaBan);
+		bLeft.add(Box.createVerticalStrut(10));
 
+		JPanel pnlSoLuong = new JPanel();
+		pnlSoLuong.setBackground(Color.decode("#cccccc"));
+		pnlSoLuong.add(lblSoLuong = new JLabel("Giá phòng"));
+		pnlSoLuong.add(txtSoLuong = new JTextField(15));
+		txtSoLuong.setEditable(false);
 		bLeft.add(b5 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(20));
-		b5.add(lblSoLuong = new JLabel("Số lượng"));
-		b5.add(Box.createHorizontalStrut(20));
-		b5.add(txtSoLuong = new JTextField());
+		b5.add(pnlSoLuong);
+		bLeft.add(Box.createVerticalStrut(10));
 
-		bLeft.add(b6 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(20));
-		b6.add(lblTinhTrang = new JLabel("Tình trạng"));
-		b6.add(Box.createHorizontalStrut(20));
-		b6.add(cbTinhTrang = new JComboBox<>());
-		cbTinhTrang.addItem("Còn trống"); // add vao combobox
-
-		bLeft.add(bDVT = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(20));
-		bDVT.add(lblDonViTinh = new JLabel("Đơn vị tính"));
-		bDVT.add(Box.createHorizontalStrut(20));
-		bDVT.add(txtDonViTinh = new JTextField());
-
-		bLeft.add(b7 = Box.createHorizontalBox());
-		bLeft.add(Box.createVerticalStrut(20));
-		b7.add(txtThongBaoLoi = new JTextField());
-		txtThongBaoLoi.setEditable(false);
-		txtThongBaoLoi.setBorder(null);
-		txtThongBaoLoi.setBackground(Color.decode("#cccccc"));
-		txtThongBaoLoi.setForeground(Color.red);
-		txtThongBaoLoi.setFont(new Font("Times new roman", ABORT, 13));
-
-		lblMaDichVu.setPreferredSize(lblDonGiaNhap.getPreferredSize());
 		lblTenDichVu.setPreferredSize(lblDonGiaNhap.getPreferredSize());
 		lblDonGiaBan.setPreferredSize(lblDonGiaNhap.getPreferredSize());
+		lblDonVi.setPreferredSize(lblDonGiaNhap.getPreferredSize());
 		lblSoLuong.setPreferredSize(lblDonGiaNhap.getPreferredSize());
-		lblTinhTrang.setPreferredSize(lblDonGiaNhap.getPreferredSize());
-		lblDonViTinh.setPreferredSize(lblDonGiaNhap.getPreferredSize());
+		txtTenDichVu.setPreferredSize(dimension);
+		txtDonGiaNhap.setPreferredSize(dimension);
+		txtDonGiaBan.setPreferredSize(dimension);
+		txtSoLuong.setPreferredSize(dimension);
+		txtDonVi.setPreferredSize(dimension);
 
-		bLeft.add(b8 = Box.createHorizontalBox());
-		b8.add(Box.createHorizontalStrut(5));
-		b8.add(btnThemMoi = new JButton("Thêm mới", img_add));
-		btnThemMoi.setBackground(Color.decode("#6fa8dc"));
-		btnThemMoi.setBorder(new RoundedBorder(7));
-		btnThemMoi.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThemMoi.getMinimumSize().height));
-		bLeft.add(Box.createVerticalStrut(5));
-		
-		b8.add(Box.createHorizontalStrut(25));
-		b8.add(btnCapNhat = new JButton("Cập nhật", img_edit));
-		btnCapNhat.setBorder(new RoundedBorder(7));
-		btnCapNhat.setBackground(Color.decode("#6fa8dc"));
-		btnCapNhat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnCapNhat.getMinimumSize().height));
-		bLeft.add(Box.createVerticalStrut(5));
+		bLeft.add(Box.createVerticalStrut(50));
 
-		bLeft.add(b9 = Box.createHorizontalBox());
-		b9.add(Box.createVerticalStrut(70));
-		b9.add(Box.createHorizontalStrut(5));
-		b9.add(btnXoa = new JButton("     Xóa       ", img_del));
-		btnXoa.setBorder(new RoundedBorder(7));
-		btnXoa.setBackground(Color.decode("#6fa8dc"));
-		btnXoa.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnXoa.getMinimumSize().height));
-		bLeft.add(Box.createVerticalStrut(5));
-		
-		b9.add(Box.createHorizontalStrut(25));
-		b9.add(btnLamMoi = new JButton("Làm mới", img_reset));
-		btnLamMoi.setBorder(new RoundedBorder(7));
-		btnLamMoi.setBackground(Color.decode("#6fa8dc"));
-		btnLamMoi.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnLamMoi.getMinimumSize().height));
-		bLeft.add(Box.createVerticalStrut(5));
+		JPanel pnlKM = new JPanel();
+		pnlKM.setBackground(Color.decode("#cccccc"));
+		GridLayout gridKM = new GridLayout(5, 1);
+		pnlKM.setLayout(gridKM);
+		gridKM.setVgap(20);
+		pnlKM.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
+		pnlKM.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
+		pnlKM.add(btnXoa = new ButtonGradient("     Xóa    ", img_del));
+		pnlKM.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
+		pnlKM.add(btnThoat = new ButtonGradient(" Thoát ", img_out));
+		bLeft.add(pnlKM);
 
-		bLeft.add(b10 = Box.createHorizontalBox());
-		b10.add(Box.createVerticalStrut(20));
-		b10.add(Box.createHorizontalStrut(5));
-		b10.add(btnThoat = new JButton("Thoát", img_out));
-		btnThoat.setBorder(new RoundedBorder(7));
-		btnThoat.setBackground(Color.decode("#6fa8dc"));
-		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThoat.getMinimumSize().height));
+		// Right box
+		Box bTacVu = Box.createHorizontalBox();
+		JPanel pnlTacVu = new JPanel();
+		pnlTacVu.add(bTacVu);
+		bTacVu.setOpaque(true);
+		bTacVu.setBackground(Color.decode("#e6dbd1"));
+		bTacVu.add(Box.createHorizontalStrut(200));
+		// Panel Loc
+		JPanel pnlLoc = new JPanel();
+		pnlLoc.setBackground(Color.decode("#cccccc"));
+		pnlLoc.setBorder(BorderFactory.createTitledBorder(line, "Lọc"));
+		pnlLoc.add(lblTinhTrang = new JLabel("Tình trạng"));
+		pnlLoc.add(Box.createHorizontalStrut(30));
+		pnlLoc.add(cbTinhTrang = new JComboBox<>());
+		cbTinhTrang.setPreferredSize(new Dimension(150, 25));
+		bTacVu.add(pnlLoc);
+		bTacVu.add(Box.createHorizontalStrut(150));
 
-		bLeft.add(Box.createVerticalStrut(400));
-		bLeft.add(Box.createHorizontalStrut(300));
+		// Panel Tra cuu
+		JPanel pnlTim = new JPanel();
+		pnlTim.setBackground(Color.decode("#cccccc"));
+		pnlTim.add(Box.createVerticalStrut(25));
+		pnlTim.setBorder(BorderFactory.createTitledBorder(line, "Tra cứu"));
+		pnlTim.add(lblTenDichVu = new JLabel("Tên dịch vụ"));
+		pnlTim.add(Box.createHorizontalStrut(30));
+		pnlTim.add(txtTimDV = new JTextField(20));
+		txtTimDV.setPreferredSize(dimension);
+		pnlTim.add(Box.createHorizontalStrut(30));
+		pnlTim.add(btnTim = new JButton("Tìm", img_search));
+		btnTim.setPreferredSize(new Dimension(80, 25));
+		bTacVu.add(pnlTim);
+		bTacVu.add(Box.createHorizontalStrut(100));
 
-		pnlRight.add(bRight);
-		Box aNorth = Box.createHorizontalBox(), aCenter = Box.createVerticalBox();
-		Box a, a1, a2;
-
-		aNorth.setMaximumSize(new Dimension(Integer.MAX_VALUE, aNorth.getMinimumSize().height));
-		
-
-		aNorth.add(Box.createVerticalStrut(80));
-		aNorth.add(a = Box.createVerticalBox());
-		a.add(Box.createHorizontalStrut(300));
-		aNorth.add(a1 = Box.createVerticalBox());
-		
-		a1.setBorder(BorderFactory.createTitledBorder(line, "Lọc", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.PLAIN, 13), Color.BLACK));
-		
-		a1.add(Box.createVerticalStrut(10));
-		a1.add(b12 = Box.createHorizontalBox());
-		b12.add(lblTinhTrang = new JLabel("Tình trạng"));
-		b12.add(Box.createHorizontalStrut(30));
-		b12.add(cbTinhTrang = new JComboBox<>());
-		a1.add(Box.createVerticalStrut(10));
-		a1.setMaximumSize(new Dimension(Integer.MAX_VALUE, a1.getMinimumSize().height));
-		aNorth.add(Box.createHorizontalStrut(400));
-
-		aNorth.add(a2 = Box.createVerticalBox());
-		a2.add(b13 = Box.createHorizontalBox());
-		
-		b13.add(lblTimDV = new JLabel("Tên dịch vụ"));
-		b13.add(Box.createVerticalStrut(30));
-		
-		a2.add(b12 = Box.createHorizontalBox());
-		b12.add(txtTimDV = new JTextField());
-		b12.add(Box.createHorizontalStrut(30));
-		b12.add(btnTim = new JButton(" Tìm  ", img_search));
-		btnTim.setBorder(new RoundedBorder(3));
-		btnTim.setBackground(Color.decode("#6fa8dc"));
-		a2.add(Box.createVerticalStrut(10));
-		aNorth.add(Box.createHorizontalStrut(200));
-		a2.setMaximumSize(new Dimension(Integer.MAX_VALUE, a2.getMinimumSize().height));
-
-		// add bang aNorth vao bRight
-		bRight.add(aNorth);
-
-		aCenter.setBorder(BorderFactory.createTitledBorder(line, "Danh sách dịch vụ", TitledBorder.LEFT, TitledBorder.TOP, new Font("Arial", Font.PLAIN, 13), Color.BLACK));
-		String[] headers = "Mã dịch vụ;Tên dịch vụ;Đơn giá nhập;Đơn giá bán;Đơn vị tính;Số lượng;Tình trạng".split(";");
+		// Table
+		Box table1 = Box.createVerticalBox();
+		table1.setBorder(BorderFactory.createTitledBorder(line, "Danh sách dịch vụ"));
+		String[] headers = "Mã dịch vụ;Tên dịch vụ;Đơn giá nhập;Đơn giá bán;Đơn vị;Số lượng;Tình trạng".split(";");
 		tableModel = new DefaultTableModel(headers, 0);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -196,45 +155,40 @@ public class DichVu extends JPanel {
 		table.setRowHeight(25);
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		aCenter.add(scroll);
+		table1.add(scroll);
 
-		// add bang aCenter vao bRight
-		bRight.add(aCenter);
-
-		//
+		// set color
+		pnlTacVu.setBackground(Color.decode("#e6dbd1"));
 		pnlLeft.setBackground(Color.decode("#cccccc"));
 		pnlRight.setBackground(Color.decode("#e6dbd1"));
-
-		pnlLeft.add(bLeft, BorderLayout.WEST);
-		pnlRight.add(bRight, BorderLayout.CENTER);
+		pnlRight.setLayout(new BorderLayout());
+		pnlRight.add(pnlTacVu, BorderLayout.NORTH);
+		pnlRight.add(table1, BorderLayout.CENTER);
 
 		this.setLayout(new BorderLayout());
-		add(pnlLeft, BorderLayout.WEST);
-		add(pnlRight, BorderLayout.CENTER);
+		this.add(pnlLeft, BorderLayout.WEST);
+		this.add(pnlRight, BorderLayout.CENTER);
 
 	}
+
 	private static class RoundedBorder implements Border {
 
-	    private int radius;
+		private int radius;
 
+		RoundedBorder(int radius) {
+			this.radius = radius;
+		}
 
-	    RoundedBorder(int radius) {
-	        this.radius = radius;
-	    }
+		public Insets getBorderInsets(Component c) {
+			return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+		}
 
+		public boolean isBorderOpaque() {
+			return true;
+		}
 
-	    public Insets getBorderInsets(Component c) {
-	        return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
-	    }
-
-
-	    public boolean isBorderOpaque() {
-	        return true;
-	    }
-
-
-	    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-	        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
-	    }
+		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+			g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+		}
 	}
 }
