@@ -64,7 +64,6 @@ public class DichVu extends JPanel {
 		pnlDonGiaNhap.setBackground(Color.decode("#cccccc"));
 		pnlDonGiaNhap.add(lblDonGiaNhap = new JLabel("Đơn giá nhập"));
 		pnlDonGiaNhap.add(txtDonGiaNhap = new JTextField(15));
-		txtDonGiaNhap.setEditable(false);
 		bLeft.add(b3 = Box.createHorizontalBox());
 		b3.add(pnlDonGiaNhap);
 		bLeft.add(Box.createVerticalStrut(10));
@@ -73,16 +72,14 @@ public class DichVu extends JPanel {
 		pnlDonGiaBan.setBackground(Color.decode("#cccccc"));
 		pnlDonGiaBan.add(lblDonGiaBan = new JLabel("Đơn giá bán"));
 		pnlDonGiaBan.add(txtDonGiaBan = new JTextField(15));
-		txtDonGiaNhap.setEditable(false);
 		bLeft.add(b4 = Box.createHorizontalBox());
 		b4.add(pnlDonGiaBan);
 		bLeft.add(Box.createVerticalStrut(10));
 
 		JPanel pnlSoLuong = new JPanel();
 		pnlSoLuong.setBackground(Color.decode("#cccccc"));
-		pnlSoLuong.add(lblSoLuong = new JLabel("Giá phòng"));
+		pnlSoLuong.add(lblSoLuong = new JLabel("Số lượng"));
 		pnlSoLuong.add(txtSoLuong = new JTextField(15));
-		txtSoLuong.setEditable(false);
 		bLeft.add(b5 = Box.createHorizontalBox());
 		b5.add(pnlSoLuong);
 		bLeft.add(Box.createVerticalStrut(10));
@@ -169,6 +166,16 @@ public class DichVu extends JPanel {
 		this.add(pnlLeft, BorderLayout.WEST);
 		this.add(pnlRight, BorderLayout.CENTER);
 
+		// add event button
+		btnLamMoi.addActionListener(e -> xuLyLamMoi());
+	}
+
+	private void xuLyLamMoi() {
+		txtTenDichVu.setText("");
+		txtDonVi.setText("");
+		txtDonGiaNhap.setText("");
+		txtDonGiaBan.setText("");
+		txtSoLuong.setText("");
 	}
 
 	private static class RoundedBorder implements Border {
