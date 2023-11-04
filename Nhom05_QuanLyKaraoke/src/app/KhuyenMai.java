@@ -38,7 +38,6 @@ public class KhuyenMai extends JPanel {
 	private JTextArea txaMoTa, txaMoTa2;
 	private JTextField txtMaKM, txtPhanTramGiam, txtNgayBatDau, txtNgayKetThuc, txtThongBaoLoi, txtTimKM, txtTimPhong,
 			txtMaKM2, txtPhanTramGiam2, txtNgayBatDau2, txtNgayKetThuc2, txtTrangThai;
-//	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnApDung, btnHuy;
 	private JComboBox<String> cbTrangThai, cbLoaiPhong;
 	private JDateChooser dateBD, dateKT;
 	private app.ButtonGradient btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnApDung, btnHuy;
@@ -46,7 +45,7 @@ public class KhuyenMai extends JPanel {
 	public KhuyenMai() {
 		// Khai báo
 		Icon img_add = new ImageIcon("src/img/add16.png");
-		Icon img_del = new ImageIcon("src/img/delete16.png");
+		Icon img_del = new ImageIcon("src/img/bin.png");
 		Icon img_reset = new ImageIcon("src/img/refresh16.png");
 		Icon img_edit = new ImageIcon("src/img/edit16.png");
 		Icon img_out = new ImageIcon("src/img/out.png");
@@ -79,16 +78,12 @@ public class KhuyenMai extends JPanel {
 		this.add(bb, BorderLayout.CENTER);
 
 		// TOP
-		JPanel pnlNort = new JPanel();
-//		pnlNort.add(img_check);
 		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
-		bLeft.add(Box.createVerticalStrut(5));
 		bLeft.add(b1 = Box.createHorizontalBox());
 		JPanel pnlPhanTramGiam = new JPanel();
 		pnlPhanTramGiam.add(lblPhanTramGiam = new JLabel("Phần trăm giảm"));
 		pnlPhanTramGiam.add(txtPhanTramGiam = new JTextField(15));
 		bLeft.add(pnlPhanTramGiam);
-
 		JPanel pnlNgayBatDau = new JPanel();
 		pnlNgayBatDau.add(lblNgayBatDau = new JLabel("Ngày bắt đầu"));
 		pnlNgayBatDau.add(dateBD = new JDateChooser());
@@ -119,26 +114,10 @@ public class KhuyenMai extends JPanel {
 		pnlKM.setLayout(gridKM);
 		gridKM.setHgap(30);
 		gridKM.setVgap(10);
-//		pnlKM.add(btnThemMoi = new JButton("Thêm mới", img_add));
-//		pnlKM.add(btnCapNhat = new JButton("Cập nhật", img_edit));
-//		pnlKM.add(btnXoa = new JButton("Xóa", img_del));
-//		pnlKM.add(btnLamMoi = new JButton("Làm mới", img_reset));
-		pnlKM.add(btnThemMoi = new ButtonGradient());
-		btnThemMoi.setText("Thêm mới");
-		btnThemMoi.setIcon(img_add);
-
-		pnlKM.add(btnCapNhat = new ButtonGradient());
-		btnCapNhat.setText("Cập nhật");
-		btnCapNhat.setIcon(img_reset);
-
-		pnlKM.add(btnXoa = new ButtonGradient());
-		btnXoa.setText("Làm mới");
-		btnXoa.setIcon(img_reset);
-
-		pnlKM.add(btnThemMoi = new ButtonGradient());
-		btnThemMoi.setText("Làm mới");
-		btnThemMoi.setIcon(img_reset);
-
+		pnlKM.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
+		pnlKM.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
+		pnlKM.add(btnXoa = new ButtonGradient("Xóa", img_del));
+		pnlKM.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
 		bLeft.add(pnlKM);
 
 		bTacVuKM = Box.createHorizontalBox();
@@ -178,10 +157,10 @@ public class KhuyenMai extends JPanel {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		bRight.add(scroll);
 
+
 		// BOTTOM
 		pnlBottom.setBorder(BorderFactory.createTitledBorder(line, "ÁP DỤNG KHUYẾN MÃI"));
 		bLeft2.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
-		bLeft2.add(Box.createVerticalStrut(5));
 		bLeft2.add(b12 = Box.createHorizontalBox());
 		JPanel pnlMaKM2 = new JPanel();
 		pnlMaKM2.add(lblMaKM = new JLabel("Mã khuyến mãi"));
@@ -228,7 +207,7 @@ public class KhuyenMai extends JPanel {
 
 		JPanel pnlMoTa2 = new JPanel();
 		pnlMoTa2.add(lblMoTa = new JLabel("Mô tả"));
-		pnlMoTa2.add(txaMoTa2 = new JTextArea(2, 15));
+		pnlMoTa2.add(txaMoTa2 = new JTextArea(5, 15));
 		txaMoTa2.setBorder(null);
 		txaMoTa2.setEditable(false);
 		bLeft2.add(b62 = Box.createHorizontalBox());
@@ -260,27 +239,14 @@ public class KhuyenMai extends JPanel {
 		pnlADKM.setLayout(gridADKM);
 		gridADKM.setHgap(30);
 		gridADKM.setVgap(10);
-		
-		pnlADKM.add(btnApDung = new ButtonGradient());
-		btnApDung.setText("Áp dụng");
-		btnApDung.setIcon(img_check);
-
-		pnlADKM.add(btnHuy = new ButtonGradient());
-		btnHuy.setText("Huỷ");
-		btnHuy.setIcon(img_forbidden);
-		
+		pnlADKM.add(btnApDung = new ButtonGradient("Áp dụng", img_check));
+		pnlADKM.add(btnHuy = new ButtonGradient("Huỷ", img_forbidden));
 		bLeft2.add(pnlADKM);
 		bLeft2.add(Box.createVerticalStrut(5));
 		bLeft2.add(b92 = Box.createHorizontalBox());
 		b92.add(Box.createVerticalStrut(20));
 		b92.add(Box.createHorizontalStrut(3));
-		
-//		b92.add(btnThoat = new JButton("Thoát", img_out));
-		b92.add(btnThoat = new ButtonGradient());
-		btnThoat.setText("Thoát");
-		btnThoat.setIcon(img_out);
-		
-		btnThoat.setBackground(Color.decode("#6fa8dc"));
+		b92.add(btnThoat = new ButtonGradient("Thoát", img_out));		
 		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThoat.getMinimumSize().height));
 
 		tableModel2 = new DefaultTableModel(headers2, 0);
