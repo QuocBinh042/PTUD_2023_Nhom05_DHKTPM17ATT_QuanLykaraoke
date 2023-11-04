@@ -46,13 +46,12 @@ public class ThongKe extends JPanel {
 		Icon img_check = new ImageIcon("src/img/check.png");
 		Icon img_refresh = new ImageIcon("src/img/refresh16.png");
 		Icon img_detail = new ImageIcon("src/img/detail16.png");
-		Box b, bCenter;
+		Box b, bCenter, bTim, bTim1, bTim2;
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
 		Dimension dimension = new Dimension(110, 25);
 
 		// Bố cục
 		b = Box.createHorizontalBox();
-		b.add(Box.createHorizontalStrut(20));
 		JPanel pnlThongKe = new JPanel();
 		GridLayout gridThongKe = new GridLayout(2, 5);
 		gridThongKe.setHgap(10);
@@ -63,14 +62,16 @@ public class ThongKe extends JPanel {
 		pnlThongKe.add(dateBD = new JDateChooser());
 		pnlThongKe.add(lblLoaiPhong = new JLabel("Loại phòng:"));
 		pnlThongKe.add(cbLoaiPhong = new JComboBox<>());
-		pnlThongKe.add(btnLoc = new JButton("Lọc", img_search));
+		pnlThongKe.add(btnTim = new ButtonGradient("Tìm", img_search));
 		pnlThongKe.add(lblNgayKetThuc = new JLabel("Ngày kết thúc:"));
 		pnlThongKe.add(dateKT = new JDateChooser());
 		pnlThongKe.add(lblPhong = new JLabel("Phòng:"));
 		pnlThongKe.add(txtPhong = new JTextField(10));
-		pnlThongKe.add(btnLamMoi = new JButton("Làm mới", img_refresh));
+		pnlThongKe.add(btnLamMoi = new ButtonGradient("Làm mới", img_refresh));
 		b.add(pnlThongKe);
 		b.add(Box.createHorizontalStrut(100));
+
+		//
 		JPanel pnlKetQua = new JPanel();
 		GridLayout gridKetQua = new GridLayout(2, 2);
 		gridKetQua.setHgap(10);
@@ -83,7 +84,7 @@ public class ThongKe extends JPanel {
 		pnlKetQua.add(txtSoLuotSD = new JTextField(10));
 		b.add(pnlKetQua);
 		b.add(Box.createHorizontalStrut(100));
-		b.add(btnThoat = new JButton("Thoát", img_out));
+		b.add(btnThoat = new ButtonGradient("Thoát", img_out));
 		b.add(Box.createHorizontalStrut(50));
 
 		
