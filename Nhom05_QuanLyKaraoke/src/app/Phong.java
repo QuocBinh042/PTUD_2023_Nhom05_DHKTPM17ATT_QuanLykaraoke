@@ -19,6 +19,7 @@ public class Phong extends JPanel {
 	private JComboBox cbLoaiPhong, cbTinhTrang, cbMaLoaiPhong;
 	private JTable table;
 	private DefaultTableModel tableModel;
+	private QuanLyLoaiPhong quanlyLP;
 
 	public Phong() {
 		Icon img_add = new ImageIcon("src/img/add2.png");
@@ -133,7 +134,7 @@ public class Phong extends JPanel {
 		GridLayout gridKM2 = new GridLayout(2, 1);
 		pnlKM2.setLayout(gridKM2);
 		gridKM2.setVgap(20);
-		pnlKM2.add(btnCapNhat = new ButtonGradient("Quản lý loại phòng", img_transfer));
+		pnlKM2.add(btnQuanLyChiTiet = new ButtonGradient("Quản lý loại phòng", img_transfer));
 		pnlKM2.add(btnThemMoi = new ButtonGradient("Thoát", img_out));
 		bLeft.add(pnlKM2);
 
@@ -206,7 +207,28 @@ public class Phong extends JPanel {
 		this.setLayout(new BorderLayout());
 		this.add(pnlLeft, BorderLayout.WEST);
 		this.add(pnlRight, BorderLayout.CENTER);
+		// add event button
+		btnQuanLyChiTiet.addActionListener(e -> xuLyQLLP());
+		btnLamMoi.addActionListener(e -> xuLyLamMoi());
 
+	}
+
+	private void xuLyLamMoi() {
+		txtTenPhong.setText("");
+		txtLoaiPhong.setText("");
+		txtGiaPhong.setText("");
+		txtSucChua.setText("");
+		txtaMoTa.setText("");
+		cbMaLoaiPhong.setSelectedIndex(0);
+		;
+	}
+
+	private void xuLyQLLP() {
+		// TODO Auto-generated method stub
+		quanlyLP = new QuanLyLoaiPhong();
+		quanlyLP.setVisible(true);
+		quanlyLP.setAlwaysOnTop(true);
+		quanlyLP.setLocationRelativeTo(null);
 	}
 
 	private static class RoundedBorder implements Border {
