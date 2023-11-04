@@ -8,7 +8,8 @@ public class Tab extends JFrame{
 	JTabbedPane tp = new JTabbedPane();
 	public Tab() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setSize(1350, 700);
 		setLocationRelativeTo(null);
 		
 		TrangChu tc = new TrangChu();

@@ -29,7 +29,7 @@ public class TinhTien extends JFrame{
 	
 	public TinhTien() {
 		// TODO Auto-generated constructor stub
-		setSize(900, 800);
+		setSize(580, 700);
 		setLocationRelativeTo(null);
 		
 		Icon imgDel = new ImageIcon("src/img/del.png");
@@ -62,7 +62,7 @@ public class TinhTien extends JFrame{
 		//Thông tin hóa đơn
 		thongTinHDPane = new JPanel();
 		Box box = Box.createVerticalBox();
-		Box boxForThongTinHD = Box.createHorizontalBox();
+		JPanel paneForThongTinHD = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
 		Box boxForThongTinHDLeft = Box.createVerticalBox();
 		Box boxForMaHD = Box.createHorizontalBox();
@@ -115,11 +115,11 @@ public class TinhTien extends JFrame{
 		tfSDTKhach.setBorder(null); tfSDTKhach.setEditable(false); tfSDTKhach.setBackground(Color.white);
 		tfGioThanhToan.setBorder(null); tfGioThanhToan.setEditable(false); tfGioThanhToan.setBackground(Color.white);
 		
-		boxForThongTinHD.add(boxForThongTinHDLeft);
-		boxForThongTinHD.add(Box.createHorizontalStrut(40));
-		boxForThongTinHD.add(boxForThongTinHDRight);
+		paneForThongTinHD.setBackground(Color.white);
+		paneForThongTinHD.add(boxForThongTinHDLeft);
+		paneForThongTinHD.add(boxForThongTinHDRight);
 		thongTinHDPane.setBackground(Color.white);
-		thongTinHDPane.add(boxForThongTinHD);
+		thongTinHDPane.add(paneForThongTinHD);
 		
 		//Thông tin Phòng
 		tablePhongPane = new JPanel(new BorderLayout());
@@ -128,10 +128,12 @@ public class TinhTien extends JFrame{
 		lbTablePhong = new JLabel("Thông tin chi tiết sử dụng phòng");
 		lbTablePhong.setFont(new Font("sanserif", Font.PLAIN, 18));
 		titleTablePhongPane.add(lbTablePhong);
-		String[] headerTablePhong = {"STT", "Tên Phòng", "Loại Phòng", "Giờ Nhận", "Giờ Trả", "Thời Lượng (phút)", "Giá Phòng", "Thành Tiền (VND)"};
+		String[] headerTablePhong = {"Tên Phòng", "Loại Phòng", "Giờ Nhận", "Giờ Trả", "Thời Lượng", "Giá Phòng", "Thành Tiền"};
 		modelPhong = new DefaultTableModel(headerTablePhong, 0);
 		tablePhong = new JTable(modelPhong);
 		tablePhong.setRowHeight(25);
+		Object[] data = {"1", "P001", "P001", "1", "1", "1", "1", "1"};
+		modelPhong.addRow(data);
 		JScrollPane scrollTablePhong = new JScrollPane(tablePhong, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		tablePhongPane.add(scrollTablePhong, BorderLayout.CENTER);
 		tablePhongPane.add(titleTablePhongPane, BorderLayout.NORTH);
@@ -143,7 +145,7 @@ public class TinhTien extends JFrame{
 		lbTableDichVu = new JLabel("Thông tin chi tiết dịch vụ");
 		lbTableDichVu.setFont(new Font("sanserif", Font.PLAIN, 18));
 		titleTableDVPane.add(lbTableDichVu);
-		String[] headerTableDV = {"STT", "Tên Phòng", "Đơn Vị", "Số Lượng", "Đơn Giá", "Thành Tiền (VND)"};
+		String[] headerTableDV = {"STT", "Tên Phòng", "Đơn Vị", "Số Lượng", "Đơn Giá", "Thành Tiền"};
 		modelDichVu = new DefaultTableModel(headerTableDV, 0);
 		tableDichVu = new JTable(modelDichVu);
 		tableDichVu.setRowHeight(25);

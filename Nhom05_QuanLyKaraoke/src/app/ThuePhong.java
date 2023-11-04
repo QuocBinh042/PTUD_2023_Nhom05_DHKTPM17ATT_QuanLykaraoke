@@ -26,7 +26,7 @@ public class ThuePhong extends JFrame{
 	private JTextArea ghiChuA;
 	private JButton kiemTraBtn, quayLaiBtn, thuePhongBtn;
 	public ThuePhong() {
-		setSize(600, 400);
+		setSize(650, 400);
 		
 		Icon imgDel = new ImageIcon("src/img/del.png");
 		Icon imgReset = new ImageIcon("src/img/refresh16.png");

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -24,6 +25,7 @@ public class DatPhong extends JPanel {
 	private ChiTietPhong chiTietPhong;
 	private DichVuPhong dichVuPhong;
 	private TinhTien tinhTien;
+	private JLabel lbPhongTrong, lbPhongCho, lbPhongDangThue;
 	public DatPhong() {
 		Icon imgAdd = new ImageIcon("src/img/add2.png");
 		Icon imgDel = new ImageIcon("src/img/del.png");
@@ -45,22 +47,17 @@ public class DatPhong extends JPanel {
 		btnPane = new JPanel();
 		
 		//Pane left các chức năng 
-		Box btnBox = Box.createVerticalBox();
-		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(thuePBtn = new ButtonGradient("Thuê Phòng"));
-		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(datPBtn = new ButtonGradient("Đặt Phòng"));
-		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(chuyenPBtn = new ButtonGradient("Chuyển phòng"));
-		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(chiTietPBtn = new ButtonGradient("Chi tiết phòng"));
-		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(dichVuPBtn = new ButtonGradient("Dịch vụ"));
-		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(tinhTienPBtn = new ButtonGradient("Tính tiền"));
-		btnBox.add(Box.createVerticalStrut(35));
-		btnBox.add(thoatBtn = new ButtonGradient("Thoát"));
-		btnBox.add(Box.createVerticalStrut(35));
+		GridLayout grid = new GridLayout(7, 0);
+		grid.setVgap(15);
+		JPanel btnMainPane = new JPanel(grid);
+		btnMainPane.setBackground(Color.decode("#cccccc"));
+		btnMainPane.add(thuePBtn = new ButtonGradient("Thuê Phòng"));
+		btnMainPane.add(datPBtn = new ButtonGradient("Đặt Phòng"));
+		btnMainPane.add(chuyenPBtn = new ButtonGradient("Chuyển phòng"));
+		btnMainPane.add(chiTietPBtn = new ButtonGradient("Chi tiết phòng"));
+		btnMainPane.add(dichVuPBtn = new ButtonGradient("Dịch vụ"));
+		btnMainPane.add(tinhTienPBtn = new ButtonGradient("Tính tiền"));
+		btnMainPane.add(thoatBtn = new ButtonGradient("Thoát"));
 		thuePBtn.setFont(new Font("Sanserif", Font.BOLD, 20));
 		thuePBtn.setBackground(Color.decode("#6fa8dc"));
 		thuePBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, thuePBtn.getMinimumSize().height));
@@ -82,15 +79,25 @@ public class DatPhong extends JPanel {
 		thoatBtn.setFont(new Font("Sanserif", Font.BOLD, 20));
 		thoatBtn.setBackground(Color.decode("#6fa8dc"));
 		thoatBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, thoatBtn.getMinimumSize().height));
-		
-		btnPane.add(btnBox);
+	
+		btnPane.add(btnMainPane);
 		btnPane.setBorder(border);
 		btnPane.setBackground(Color.decode("#cccccc"));
+		
+		GridLayout gridForPane = new GridLayout(3, 0);
+		gridForPane.setVgap(2);
+		JPanel pane = new JPanel(gridForPane);
+		pane.add(lbPhongCho = new JLabel("Phòng Chờ ()"));
+		pane.add(lbPhongTrong = new JLabel("Phòng Trống ()"));
+		pane.add(lbPhongDangThue = new JLabel("Phòng Đang Thuê ()"));
+		pane.setBackground(Color.decode("#e6dbd1"));
 		
 		Box leftBox = Box.createVerticalBox();
 		leftBox.add(clock = new DigitalClock());
 		leftBox.add(Box.createVerticalStrut(10));
 		leftBox.add(btnPane);
+		leftBox.add(Box.createVerticalStrut(5));
+		leftBox.add(pane);
 		leftPane.add(leftBox);
 		leftPane.setBackground(Color.decode("#e6dbd1"));
 		
