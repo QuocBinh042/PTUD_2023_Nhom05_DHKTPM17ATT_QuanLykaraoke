@@ -187,7 +187,7 @@ public class Phong extends JPanel implements MouseListener {
 		// Table
 		Box table1 = Box.createVerticalBox();
 		table1.setBorder(BorderFactory.createTitledBorder(line, "Danh sách phòng"));
-		String[] headers = "Mã phòng;Tên phòng;Mã loại phòng;Mã giá phòng;Loại phòng;Sức chứa;Giá phòng;Tình trạng;Mô tả"
+		String[] headers = "Mã phòng;Tên phòng;Mã loại phòng;Loại phòng;Sức chứa;Giá phòng;Tình trạng;Mô tả"
 				.split(";");
 		tableModel = new DefaultTableModel(headers, 0);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -197,6 +197,12 @@ public class Phong extends JPanel implements MouseListener {
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table1.add(scroll);
+		String[] row = "P001;Phòng gia đình;LP001;LP001;15;200000;Còn trống;Phòng có âm thanh 5.0".split(";");
+		String[] row1 = "P002;Phòng gia đình;LP002;LP002;15;200000;Còn trống;Phòng có âm thanh 5.0".split(";");
+		String[] row2 = "P003;Phòng gia đình;LP003;LP002;15;200000;Còn trống;Phòng có âm thanh 5.0".split(";");
+		tableModel.addRow(row);
+		tableModel.addRow(row1);
+		tableModel.addRow(row2);
 
 		// set color
 		pnlTacVu.setBackground(Color.decode("#e6dbd1"));
@@ -216,6 +222,7 @@ public class Phong extends JPanel implements MouseListener {
 		btnXoa.addActionListener(e -> xuLyXoa());
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
 		btnThoat.addActionListener(e -> xuLyThoat());
+		btnTim.addActionListener(e -> xuLyTimKiem());
 		table.addMouseListener(this);
 
 	}
@@ -236,12 +243,12 @@ public class Phong extends JPanel implements MouseListener {
 	private void xuLyCapNhat() {
 		int r = table.getSelectedRow();
 		if (r != -1) {
-			String tenLP = txtTenPhong.getText();
+			String tenP = txtTenPhong.getText();
 			String maLP = cbMaLoaiPhong.getSelectedItem().toString();
 			String moTa = txtaMoTa.getText();
-			table.setValueAt(tenLP, r, 1);
+			table.setValueAt(tenP, r, 1);
 			table.setValueAt(maLP, r, 2);
-			table.setValueAt(moTa, r, 8);
+			table.setValueAt(moTa, r, 7);
 
 		} else {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ cần cập nhật!");
@@ -282,6 +289,23 @@ public class Phong extends JPanel implements MouseListener {
 		System.exit(0);
 	}
 
+	//
+	private void xuLyTimKiem() {
+		String maPTim = txtTimMaPhong.getText();
+		int n = 0;
+		for (int i = 0; i < table.getRowCount(); i++) {
+			if (table.getValueAt(i, 0).equals(maPTim)) {
+				table.setRowSelectionInterval(i, i);
+				n = 1;
+			}
+		}
+		if (n == 1) {
+			JOptionPane.showMessageDialog(null, "Mã phòng được tìm thấy!");
+		} else if(n != 1) {
+			JOptionPane.showMessageDialog(null, "Mã phòng không tồn tại!");
+		}
+	}
+
 	// Xu ly bo tron button
 	private static class RoundedBorder implements Border {
 
@@ -316,10 +340,10 @@ public class Phong extends JPanel implements MouseListener {
 		int row = table.getSelectedRow();
 		txtTenPhong.setText(table.getValueAt(row, 1).toString());
 		cbMaLoaiPhong.setSelectedItem(table.getValueAt(row, 2).toString());
-		txtLoaiPhong.setText(table.getValueAt(row, 4).toString());
-		txtSucChua.setText(table.getValueAt(row, 5).toString());
-		txtGiaPhong.setText(table.getValueAt(row, 6).toString());
-		txtaMoTa.setText(table.getValueAt(row, 8).toString());
+		txtLoaiPhong.setText(table.getValueAt(row, 3).toString());
+		txtSucChua.setText(table.getValueAt(row, 4).toString());
+		txtGiaPhong.setText(table.getValueAt(row, 5).toString());
+		txtaMoTa.setText(table.getValueAt(row, 7).toString());
 
 	}
 

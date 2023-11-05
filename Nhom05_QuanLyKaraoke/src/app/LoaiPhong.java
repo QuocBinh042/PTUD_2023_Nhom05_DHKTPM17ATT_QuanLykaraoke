@@ -35,6 +35,7 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		setSize(780, 350);
 		setTitle("Quản lý loại phòng");
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		Icon img_add = new ImageIcon("src/img/add16.png");
 		Icon img_back = new ImageIcon("src/img/back16.png");
@@ -57,11 +58,13 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin loại phòng"));
 		bLeft.add(Box.createVerticalStrut(5));
 
-		JPanel pnlTenLP = new JPanel();
+		JPanel pnlTenLP = new JPanel(); 
 		pnlTenLP.setBackground(Color.decode("#cccccc"));
 		pnlTenLP.add(lblTenLP = new JLabel("Tên loại phòng"));
 		pnlTenLP.add(cbTenLP = new JComboBox<>());
 		cbTenLP.addItem("Tất cả");
+		cbTenLP.addItem("Phòng thường");
+		cbTenLP.addItem("Phòng VIP");
 		bLeft.add(b2 = Box.createHorizontalBox());
 		b2.add(pnlTenLP);
 		bLeft.add(Box.createVerticalStrut(10));
@@ -134,6 +137,18 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table1.add(scroll);
+		String []row1 = "LP001;Phòng thường;10;100000".split(";");
+		String []row2 = "LP002;Phòng thường;15;120000".split(";");
+		String []row3 = "LP003;Phòng thường;20;150000".split(";");
+		String []row4 = "LP004;Phòng thường;20;150000".split(";");
+		String []row5 = "LP005;Phòng VIP;15;200000".split(";");
+		String []row6 = "LP006;Phòng VIP;20;250000".split(";");
+		tableModel.addRow(row1);
+		tableModel.addRow(row2);
+		tableModel.addRow(row3);
+		tableModel.addRow(row4);
+		tableModel.addRow(row5);
+		tableModel.addRow(row6);
 
 		// set color
 		pnlTacVu.setBackground(Color.decode("#e6dbd1"));
@@ -161,7 +176,7 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		String tenLP = cbTenLP.getSelectedItem().toString();
 		String giaLP = txtGiaLP.getText();
 		String sucChua = txtSucChua.getText();
-		int soLP = +1;
+		int soLP = 0;
 		String maLP = "LP00" + (soLP + "");
 		String[] row = { maLP, tenLP, giaLP, sucChua };
 		tableModel.addRow(row);
