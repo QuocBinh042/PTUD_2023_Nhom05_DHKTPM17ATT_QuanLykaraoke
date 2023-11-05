@@ -8,8 +8,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class DichVu extends JPanel {
+public class DichVu extends JPanel implements MouseListener {
 
 	private JLabel lblTenDichVu, lblDonGiaNhap, lblDonGiaBan, lblDonVi, lblSoLuong, lblTinhTrang, lblLocTinhTrang,
 			lblTimDV;
@@ -167,9 +169,46 @@ public class DichVu extends JPanel {
 		this.add(pnlRight, BorderLayout.CENTER);
 
 		// add event button
+		table.addMouseListener(this);
+		btnThemMoi.addActionListener(e -> xuLyThemMoi());
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
+		btnXoa.addActionListener(e -> xuLyXoa());
+		btnCapNhat.addActionListener(e -> xuLyCapNhat());
+		btnThoat.addActionListener(e -> xuLyThoat());
 	}
 
+	// Xu ly them moi
+	private void xuLyThemMoi() {
+		String tenDV = txtTenDichVu.getText();
+		String donVi = txtDonVi.getText();
+		String donGiaNhap = txtDonGiaNhap.getText();
+		String donGiaBan = txtDonGiaBan.getText();
+		String soLuong = txtSoLuong.getText();
+		String[] row3 = { "DV001", tenDV, donGiaNhap, donGiaBan, donVi, soLuong, "Đang hoạt động" };
+		tableModel.addRow(row3);
+	}
+
+	// Xu ly cap nhat
+	private void xuLyCapNhat() {
+		int r = table.getSelectedRow();
+		if (r != -1) {
+			String tenDV = txtTenDichVu.getText();
+			String donVi = txtDonVi.getText();
+			String donGiaNhap = txtDonGiaNhap.getText();
+			String donGiaBan = txtDonGiaBan.getText();
+			String soLuong = txtSoLuong.getText();
+			table.setValueAt(tenDV, r, 1);
+			table.setValueAt(donGiaNhap, r, 2);
+			table.setValueAt(donGiaBan, r, 3);
+			table.setValueAt(donVi, r, 4);
+			table.setValueAt(soLuong, r, 5);
+
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ cần cập nhật!");
+		}
+	}
+
+	// Xu ly lam moi
 	private void xuLyLamMoi() {
 		txtTenDichVu.setText("");
 		txtDonVi.setText("");
@@ -178,6 +217,25 @@ public class DichVu extends JPanel {
 		txtSoLuong.setText("");
 	}
 
+	// Xu ly xoa
+	private void xuLyXoa() {
+		int row = table.getSelectedRow();
+		if (row != -1) {
+			int i = JOptionPane.showConfirmDialog(null, "Chắc chắn xóa không", "Chú ý", JOptionPane.YES_NO_OPTION);
+			if (i == JOptionPane.YES_OPTION) {
+				tableModel.removeRow(row);
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ cần xóa");
+		}
+	}
+
+	// Xu ly thoat
+	private void xuLyThoat() {
+		System.exit(0);
+	}
+
+	// Xu ly bo tron button
 	private static class RoundedBorder implements Border {
 
 		private int radius;
@@ -197,5 +255,40 @@ public class DichVu extends JPanel {
 		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
 			g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
 		}
+	}
+
+	// Xu ly mouseclick
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		int row = table.getSelectedRow();
+		txtTenDichVu.setText(table.getValueAt(row, 1).toString());
+		txtDonGiaNhap.setText(table.getValueAt(row, 2).toString());
+		txtDonGiaBan.setText(table.getValueAt(row, 3).toString());
+		txtDonVi.setText(table.getValueAt(row, 4).toString());
+		txtSoLuong.setText(table.getValueAt(row, 5).toString());
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 }
