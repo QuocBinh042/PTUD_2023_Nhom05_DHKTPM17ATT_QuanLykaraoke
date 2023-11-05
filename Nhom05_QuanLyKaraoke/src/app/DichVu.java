@@ -155,6 +155,12 @@ public class DichVu extends JPanel implements MouseListener {
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table1.add(scroll);
+		String[] row1 = "DV001;Khăn lạnh;3000;5000;Cái;200;Còn hàng".split(";");
+		String[] row2 = "DV002;Khô gà;30000;50000;Gói;100;Còn hàng".split(";");
+		String[] row3 = "DV003;Nước lọc;4000;10000;Chai;200;Còn hàng".split(";");
+		tableModel.addRow(row1);
+		tableModel.addRow(row2);
+		tableModel.addRow(row3);
 
 		// set color
 		pnlTacVu.setBackground(Color.decode("#e6dbd1"));
@@ -175,6 +181,7 @@ public class DichVu extends JPanel implements MouseListener {
 		btnXoa.addActionListener(e -> xuLyXoa());
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
 		btnThoat.addActionListener(e -> xuLyThoat());
+		btnTim.addActionListener(e -> xuLyTimKiem());
 	}
 
 	// Xu ly them moi
@@ -184,7 +191,7 @@ public class DichVu extends JPanel implements MouseListener {
 		String donGiaNhap = txtDonGiaNhap.getText();
 		String donGiaBan = txtDonGiaBan.getText();
 		String soLuong = txtSoLuong.getText();
-		String[] row3 = { "DV001", tenDV, donGiaNhap, donGiaBan, donVi, soLuong, "Đang hoạt động" };
+		String[] row3 = { "DV001", tenDV, donGiaNhap, donGiaBan, donVi, soLuong, "Còn hàng" };
 		tableModel.addRow(row3);
 	}
 
@@ -233,6 +240,24 @@ public class DichVu extends JPanel implements MouseListener {
 	// Xu ly thoat
 	private void xuLyThoat() {
 		System.exit(0);
+	}
+
+	// Xu ly tim kiem
+	private void xuLyTimKiem() {
+		String maDVTim = txtTimDV.getText();
+		int n = 0;
+		String d = "";
+		for (int i = 0; i < table.getRowCount(); i++) {
+			if (table.getValueAt(i, 0).toString().equalsIgnoreCase(maDVTim)) {
+				table.setRowSelectionInterval(i, i);
+				n = 1;
+			}
+		}
+		if (n == 1) {
+			JOptionPane.showMessageDialog(null, "Tìm thấy mã dịch vụ!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Mã dịch vụ không tồn tại!");
+		}
 	}
 
 	// Xu ly bo tron button
