@@ -8,12 +8,14 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class Phong extends JPanel {
+public class Phong extends JPanel implements MouseListener {
 
 	private JLabel lblTenPhong, lblLoaiPhong, lblSucChua, lblGiaPhong, lblMoTa, lblTimMaPhong, lblTinhTrang,
 			lblMaLoaiPhong;
-	private JTextField txtTenPhong, txtSucChua, txtGiaPhong, txtTimMaPhong, txtThongBaoLoi, txtLoaiPhong;
+	private JTextField txtTenPhong, txtSucChua, txtGiaPhong, txtTimMaPhong, txtLoaiPhong;
 	private JTextArea txtaMoTa;
 	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnQuanLyChiTiet, btnThoat, btnTim;
 	private JComboBox cbLoaiPhong, cbTinhTrang, cbMaLoaiPhong;
@@ -135,7 +137,7 @@ public class Phong extends JPanel {
 		pnlKM2.setLayout(gridKM2);
 		gridKM2.setVgap(20);
 		pnlKM2.add(btnQuanLyChiTiet = new ButtonGradient("Quản lý loại phòng", img_transfer));
-		pnlKM2.add(btnThemMoi = new ButtonGradient("Thoát", img_out));
+		pnlKM2.add(btnThoat = new ButtonGradient("Thoát", img_out));
 		bLeft.add(pnlKM2);
 
 		// Set size
@@ -208,11 +210,45 @@ public class Phong extends JPanel {
 		this.add(pnlLeft, BorderLayout.WEST);
 		this.add(pnlRight, BorderLayout.CENTER);
 		// add event button
-		btnQuanLyChiTiet.addActionListener(e -> xuLyQLLP());
+		btnQuanLyChiTiet.addActionListener(e -> xuLyChuyen());
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
+		btnThemMoi.addActionListener(e -> xuLyThemMoi());
+		btnXoa.addActionListener(e -> xuLyXoa());
+		btnCapNhat.addActionListener(e -> xuLyCapNhat());
+		btnThoat.addActionListener(e -> xuLyThoat());
+		table.addMouseListener(this);
 
 	}
 
+	// Xu ly them moi
+	private void xuLyThemMoi() {
+		String tenLP = txtTenPhong.getText();
+		String maLP = cbMaLoaiPhong.getSelectedItem().toString();
+		String loaiP = txtLoaiPhong.getText();
+		String sucChua = txtSucChua.getText();
+		String giaP = txtGiaPhong.getText();
+		String moTa = txtaMoTa.getText();
+		String[] row3 = { "P003", tenLP, maLP, "", loaiP, sucChua, giaP, "", moTa };
+		tableModel.addRow(row3);
+	}
+
+	// Xu ly cap nhat
+	private void xuLyCapNhat() {
+		int r = table.getSelectedRow();
+		if (r != -1) {
+			String tenLP = txtTenPhong.getText();
+			String maLP = cbMaLoaiPhong.getSelectedItem().toString();
+			String moTa = txtaMoTa.getText();
+			table.setValueAt(tenLP, r, 1);
+			table.setValueAt(maLP, r, 2);
+			table.setValueAt(moTa, r, 8);
+
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ cần cập nhật!");
+		}
+	}
+
+	// Xu ly lam moi
 	private void xuLyLamMoi() {
 		txtTenPhong.setText("");
 		txtLoaiPhong.setText("");
@@ -220,17 +256,33 @@ public class Phong extends JPanel {
 		txtSucChua.setText("");
 		txtaMoTa.setText("");
 		cbMaLoaiPhong.setSelectedIndex(0);
-		;
 	}
 
-	private void xuLyQLLP() {
-		// TODO Auto-generated method stub
+	// Xu ly xoa
+	private void xuLyXoa() {
+		int row = table.getSelectedRow();
+		int i = JOptionPane.showConfirmDialog(null, "Chắc chắn xóa không", "Chú ý", JOptionPane.YES_NO_OPTION);
+		if (row != -1) {
+			if (i == JOptionPane.YES_OPTION) {
+				tableModel.removeRow(row);
+			}
+		}
+	}
+
+	// Xu ly chuyen giao dien
+	private void xuLyChuyen() {
 		quanlyLP = new LoaiPhong();
 		quanlyLP.setVisible(true);
 		quanlyLP.setAlwaysOnTop(true);
 		quanlyLP.setLocationRelativeTo(null);
 	}
 
+	// Xu ly thoat
+	private void xuLyThoat() {
+		System.exit(0);
+	}
+
+	// Xu ly bo tron button
 	private static class RoundedBorder implements Border {
 
 		private int radius;
@@ -250,6 +302,43 @@ public class Phong extends JPanel {
 		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
 			g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
 		}
+	}
+
+	// Xu ly mouseclick
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		int row = table.getSelectedRow();
+		txtTenPhong.setText(table.getValueAt(row, 1).toString());
+		cbMaLoaiPhong.setSelectedItem(table.getValueAt(row, 2).toString());
+		txtLoaiPhong.setText(table.getValueAt(row, 4).toString());
+		txtSucChua.setText(table.getValueAt(row, 5).toString());
+		txtGiaPhong.setText(table.getValueAt(row, 6).toString());
+		txtaMoTa.setText(table.getValueAt(row, 8).toString());
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
