@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,16 +23,16 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
-public class LoaiPhong extends JFrame {
-	private JTextField txtMaLP, txtSucChua, txtGiaLP;
-	private JLabel lblmaLP, lblTenLP, lblsucChua, lblGiaLP, lblLocTenLP, lblLocSC;
+public class LoaiPhong extends JFrame implements MouseListener {
+	private JTextField txtSucChua, txtGiaLP;
+	private JLabel lblTenLP, lblsucChua, lblGiaLP, lblLocTenLP, lblLocSC;
 	private JButton btnThem, btnCapNhat, btnLamMoi, btnQuayLai;
 	private JComboBox cbTenLP, cbSucChua, cbLocTP;
 	private JTable table;
 	private DefaultTableModel tableModel;
 
 	public LoaiPhong() {
-		setSize(800, 450);
+		setSize(780, 350);
 		setTitle("Quản lý loại phòng");
 		setLocationRelativeTo(null);
 
@@ -53,15 +56,6 @@ public class LoaiPhong extends JFrame {
 
 		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin loại phòng"));
 		bLeft.add(Box.createVerticalStrut(5));
-
-		JPanel pnlMaLP = new JPanel();
-		pnlMaLP.setBackground(Color.decode("#cccccc"));
-		pnlMaLP.add(lblmaLP = new JLabel("Mã loại phòng"));
-		pnlMaLP.add(txtMaLP = new JTextField(15));
-		txtMaLP.setEditable(false);
-		bLeft.add(b1 = Box.createHorizontalBox());
-		b1.add(pnlMaLP);
-		bLeft.add(Box.createVerticalStrut(10));
 
 		JPanel pnlTenLP = new JPanel();
 		pnlTenLP.setBackground(Color.decode("#cccccc"));
@@ -88,47 +82,45 @@ public class LoaiPhong extends JFrame {
 		b4.add(pnlGiaLP);
 		bLeft.add(Box.createVerticalStrut(10));
 
-		lblmaLP.setPreferredSize(lblTenLP.getPreferredSize());
 		lblsucChua.setPreferredSize(lblTenLP.getPreferredSize());
 		lblGiaLP.setPreferredSize(lblTenLP.getPreferredSize());
-		txtMaLP.setPreferredSize(dimension);
 		txtSucChua.setPreferredSize(dimension);
 		txtGiaLP.setPreferredSize(dimension);
-		cbTenLP.setPreferredSize(new Dimension(125, 25));
+		cbTenLP.setPreferredSize(new Dimension(155, 25));
+		
 		// button
-		bLeft.add(Box.createVerticalStrut(50));
+		bLeft.add(Box.createVerticalStrut(10));
 		JPanel pnlKM = new JPanel();
 		pnlKM.setBackground(Color.decode("#cccccc"));
-		GridLayout gridKM = new GridLayout(4, 1);
+		GridLayout gridKM = new GridLayout(2, 2);
 		pnlKM.setLayout(gridKM);
-		gridKM.setVgap(25);
+		gridKM.setVgap(20);
+		gridKM.setHgap(20);
 		pnlKM.add(btnThem = new ButtonGradient("Thêm mới", img_add));
 		pnlKM.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
 		pnlKM.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
 		pnlKM.add(btnQuayLai = new ButtonGradient("Quay lại", img_back));
 		bLeft.add(pnlKM);
+		bLeft.add(Box.createVerticalStrut(35));
 
 		// Right box
-		Box bTacVu = Box.createHorizontalBox();
 		JPanel pnlTacVu = new JPanel();
-		pnlTacVu.add(bTacVu);
-		bTacVu.setOpaque(true);
-		bTacVu.setBackground(Color.decode("#e6dbd1"));
+		pnlTacVu.setBackground(Color.decode("#e6dbd1"));
+		GridLayout gridTV = new GridLayout(1, 2);
+		pnlTacVu.setLayout(gridTV);
 		// Panel Loc
 		JPanel pnlLoc = new JPanel();
-		pnlLoc.setBackground(Color.decode("#cccccc"));
-		pnlLoc.setBorder(BorderFactory.createTitledBorder(line, "Lọc"));
+		pnlLoc.setBackground(Color.decode("#e6dbd1"));
 		pnlLoc.add(lblLocTenLP = new JLabel("Tên loại phòng"));
-		pnlLoc.add(Box.createHorizontalStrut(30));
+		pnlLoc.add(Box.createHorizontalStrut(20));
 		pnlLoc.add(cbLocTP = new JComboBox<>());
-		cbLocTP.setPreferredSize(new Dimension(80, 25));
-		pnlLoc.add(Box.createHorizontalStrut(100));
+		cbLocTP.setPreferredSize(new Dimension(100, 25));
+		pnlLoc.add(Box.createHorizontalStrut(40));
 		pnlLoc.add(lblLocSC = new JLabel("Sức chứa"));
-		pnlLoc.add(Box.createHorizontalStrut(30));
+		pnlLoc.add(Box.createHorizontalStrut(20));
 		pnlLoc.add(cbSucChua = new JComboBox<>());
-		cbSucChua.setPreferredSize(new Dimension(80, 25));
-
-		bTacVu.add(pnlLoc);
+		cbSucChua.setPreferredSize(new Dimension(100, 25));
+		pnlTacVu.add(pnlLoc);
 
 		// Table
 		Box table1 = Box.createVerticalBox();
@@ -154,6 +146,85 @@ public class LoaiPhong extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.add(pnlLeft, BorderLayout.WEST);
 		this.add(pnlRight, BorderLayout.CENTER);
+
+		// add event
+		btnLamMoi.addActionListener(e -> xuLyLamMoi());
+		btnThem.addActionListener(e -> xuLyThemMoi());
+		btnQuayLai.addActionListener(e -> xuLyQuayLai());
+		btnCapNhat.addActionListener(e -> xuLyCapNhat());
+		table.addMouseListener(this);
+
+	}
+
+	// Xu ly them moi
+	private void xuLyThemMoi() {
+		String tenLP = cbTenLP.getSelectedItem().toString();
+		String giaLP = txtGiaLP.getText();
+		String sucChua = txtSucChua.getText();
+		int soLP = +1;
+		String maLP = "LP00" + (soLP + "");
+		String[] row = { maLP, tenLP, giaLP, sucChua };
+		tableModel.addRow(row);
+	}
+
+	// Xu ly cap nhat
+	private void xuLyCapNhat() {
+		int r = table.getSelectedRow();
+		if (r != -1) {
+			String tenLP = cbTenLP.getSelectedItem().toString();
+			String giaLP = txtGiaLP.getText();
+			String sucChua = txtSucChua.getText();
+			table.setValueAt(tenLP, r, 1);
+			table.setValueAt(sucChua, r, 2);
+			table.setValueAt(giaLP, r, 3);
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn loại phòng cần cập nhật!");
+		}
+	}
+
+	// Xu ly lam moi
+	private void xuLyLamMoi() {
+		cbTenLP.setSelectedIndex(0);
+		txtGiaLP.setText("");
+		txtSucChua.setText("");
+	}
+
+	// Xu ly quay lai
+	private void xuLyQuayLai() {
+		this.setVisible(false);
+	}
+
+	// Xu ly mouseclick
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		int row = table.getSelectedRow();
+		cbTenLP.setSelectedItem(table.getValueAt(row, 1).toString());
+		txtSucChua.setText(table.getValueAt(row, 2).toString());
+		txtGiaLP.setText(table.getValueAt(row, 3).toString());
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 }
