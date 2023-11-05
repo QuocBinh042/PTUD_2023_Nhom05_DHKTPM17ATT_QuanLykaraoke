@@ -2,12 +2,8 @@ package app;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -26,8 +22,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
-import app.KhuyenMai.RoundedBorder;
-
 public class KhuyenMai extends JPanel {
 	private JTable table, table2;
 	private DefaultTableModel tableModel, tableModel2;
@@ -40,7 +34,8 @@ public class KhuyenMai extends JPanel {
 			txtMaKM2, txtPhanTramGiam2, txtNgayBatDau2, txtNgayKetThuc2, txtTrangThai;
 	private JComboBox<String> cbTrangThai, cbLoaiPhong;
 	private JDateChooser dateBD, dateKT;
-	private app.ButtonGradient btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnApDung, btnHuy;
+	private app.ButtonGradient btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnApDung, btnHuy, btnLoc, btnTimKM,
+			btnTimPhong;
 
 	public KhuyenMai() {
 		// Khai báo
@@ -61,18 +56,27 @@ public class KhuyenMai extends JPanel {
 		// BỐ CỤC
 		bb = Box.createVerticalBox();
 		pnlTop = new JPanel();
+		pnlTop.setBackground(Color.decode("#e6dbd1"));
 		pnlBottom = new JPanel();
+		pnlBottom.setBackground(Color.decode("#e6dbd1"));
 		pnlTop.setLayout(new BorderLayout());
 		pnlBottom.setLayout(new BorderLayout());
 		bb.add(pnlTop);
 		bb.add(pnlBottom);
 		bLeft = Box.createVerticalBox();
 		bRight = Box.createVerticalBox();
-		pnlTop.add(bLeft, BorderLayout.WEST);
+		
+		JPanel pnlLeft = new JPanel();
+		pnlLeft.add(bLeft);
+		pnlLeft.setBackground(Color.decode("#cccccc"));
+		pnlTop.add(pnlLeft, BorderLayout.WEST);
 		pnlTop.add(bRight, BorderLayout.CENTER);
-		bLeft2 = Box.createVerticalBox();
+		
+		JPanel pnlLeft2 = new JPanel();
+		pnlLeft2.add(bLeft2 = Box.createVerticalBox());
+		pnlLeft2.setBackground(Color.decode("#cccccc"));		
 		bRight2 = Box.createVerticalBox();
-		pnlBottom.add(bLeft2, BorderLayout.WEST);
+		pnlBottom.add(pnlLeft2, BorderLayout.WEST);
 		pnlBottom.add(bRight2, BorderLayout.CENTER);
 		this.setLayout(new BorderLayout());
 		this.add(bb, BorderLayout.CENTER);
@@ -81,26 +85,29 @@ public class KhuyenMai extends JPanel {
 		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
 		bLeft.add(b1 = Box.createHorizontalBox());
 		JPanel pnlPhanTramGiam = new JPanel();
+		pnlPhanTramGiam.setBackground(Color.decode("#cccccc"));
 		pnlPhanTramGiam.add(lblPhanTramGiam = new JLabel("Phần trăm giảm"));
 		pnlPhanTramGiam.add(txtPhanTramGiam = new JTextField(15));
 		bLeft.add(pnlPhanTramGiam);
+		
 		JPanel pnlNgayBatDau = new JPanel();
+		pnlNgayBatDau.setBackground(Color.decode("#cccccc"));
 		pnlNgayBatDau.add(lblNgayBatDau = new JLabel("Ngày bắt đầu"));
 		pnlNgayBatDau.add(dateBD = new JDateChooser());
 		dateBD.setPreferredSize(dimension);
 		bLeft.add(pnlNgayBatDau);
-		bLeft.add(Box.createVerticalStrut(5));
 
 		JPanel pnlNgayKetThuc = new JPanel();
+		pnlNgayKetThuc.setBackground(Color.decode("#cccccc"));
 		pnlNgayKetThuc.add(lblNgayKetThuc = new JLabel("Ngày kết thúc"));
 		pnlNgayKetThuc.add(dateKT = new JDateChooser());
 		dateKT.setPreferredSize(dimension);
 		bLeft.add(pnlNgayKetThuc);
-		bLeft.add(Box.createVerticalStrut(5));
 
 		JPanel pnlMoTa = new JPanel();
+		pnlMoTa.setBackground(Color.decode("#cccccc"));
 		pnlMoTa.add(lblMoTa = new JLabel("Mô tả"));
-		pnlMoTa.add(txaMoTa = new JTextArea(5, 15));
+		pnlMoTa.add(txaMoTa = new JTextArea(4, 15));
 		txaMoTa.setBorder(line);
 		bLeft.add(pnlMoTa);
 		bLeft.add(Box.createVerticalStrut(5));
@@ -110,20 +117,24 @@ public class KhuyenMai extends JPanel {
 		lblMoTa.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 
 		JPanel pnlKM = new JPanel();
+		pnlKM.setBackground(Color.decode("#cccccc"));
 		GridLayout gridKM = new GridLayout(2, 2);
 		pnlKM.setLayout(gridKM);
 		gridKM.setHgap(30);
-		gridKM.setVgap(10);
+		gridKM.setVgap(5);
 		pnlKM.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
 		pnlKM.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
 		pnlKM.add(btnXoa = new ButtonGradient("Xóa", img_del));
 		pnlKM.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
 		bLeft.add(pnlKM);
 
+		//Tac vu khuyen mai
 		bTacVuKM = Box.createHorizontalBox();
 		bTacVuKM.add(Box.createHorizontalStrut(10));
 		JPanel pnlLocKM = new JPanel();
+		pnlLocKM.setBackground(Color.decode("#cccccc"));	
 		JPanel pnlTimKM = new JPanel();
+		pnlTimKM.setBackground(Color.decode("#cccccc"));	
 		bTacVuKM.add(pnlLocKM);
 		bTacVuKM.add(Box.createHorizontalStrut(100));
 		bTacVuKM.add(pnlTimKM);
@@ -139,13 +150,13 @@ public class KhuyenMai extends JPanel {
 		pnlLocKM.add(lblNgayKetThuc = new JLabel("Ngày kết thúc"));
 		pnlLocKM.add(dateKT = new JDateChooser());
 		dateKT.setPreferredSize(dimension);
-		pnlLocKM.add(new JButton("Lọc", img_search));
+		pnlLocKM.add(btnLoc = new ButtonGradient("Lọc", img_search));
 
 		pnlTimKM.setLayout(gridLocKM);
 		pnlTimKM.setBorder(BorderFactory.createTitledBorder(line, "Tra cứu"));
 		pnlTimKM.add(lblMaKM = new JLabel("Mã khuyến mãi"));
 		pnlTimKM.add(txtTimKM = new JTextField(10));
-		pnlTimKM.add(new JButton("Tìm", img_search));
+		pnlTimKM.add(btnTimKM = new ButtonGradient("Tìm", img_search));
 
 		tableModel = new DefaultTableModel(headers, 0);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -157,21 +168,24 @@ public class KhuyenMai extends JPanel {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		bRight.add(scroll);
 
-
 		// BOTTOM
 		pnlBottom.setBorder(BorderFactory.createTitledBorder(line, "ÁP DỤNG KHUYẾN MÃI"));
 		bLeft2.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
 		bLeft2.add(b12 = Box.createHorizontalBox());
 		JPanel pnlMaKM2 = new JPanel();
+		pnlMaKM2.setBackground(Color.decode("#cccccc"));	
 		pnlMaKM2.add(lblMaKM = new JLabel("Mã khuyến mãi"));
 		pnlMaKM2.add(txtMaKM2 = new JTextField(15));
+		txtMaKM2.setBackground(Color.decode("#cccccc"));
 		b12.add(pnlMaKM2);
 		txtMaKM2.setBorder(null);
 		txtMaKM2.setEditable(false);
 
 		JPanel pnlPhanTramGiam2 = new JPanel();
+		pnlPhanTramGiam2.setBackground(Color.decode("#cccccc"));	
 		pnlPhanTramGiam2.add(lblPhanTramGiam = new JLabel("Phần trăm giảm"));
 		pnlPhanTramGiam2.add(txtPhanTramGiam2 = new JTextField(15));
+		txtPhanTramGiam2.setBackground(Color.decode("#cccccc"));
 		bLeft2.add(b22 = Box.createHorizontalBox());
 		bLeft2.add(Box.createVerticalStrut(5));
 		txtPhanTramGiam2.setBorder(null);
@@ -179,8 +193,10 @@ public class KhuyenMai extends JPanel {
 		b22.add(pnlPhanTramGiam2);
 
 		JPanel pnlNgayBatDau2 = new JPanel();
+		pnlNgayBatDau2.setBackground(Color.decode("#cccccc"));	
 		pnlNgayBatDau2.add(lblNgayBatDau = new JLabel("Ngày bắt đầu"));
 		pnlNgayBatDau2.add(txtNgayBatDau2 = new JTextField(15));
+		txtNgayBatDau2.setBackground(Color.decode("#cccccc"));
 		bLeft2.add(b32 = Box.createHorizontalBox());
 		bLeft2.add(Box.createVerticalStrut(5));
 		txtNgayBatDau2.setBorder(null);
@@ -188,8 +204,10 @@ public class KhuyenMai extends JPanel {
 		b32.add(pnlNgayBatDau2);
 
 		JPanel pnlNgayKetThuc2 = new JPanel();
+		pnlNgayKetThuc2.setBackground(Color.decode("#cccccc"));	
 		pnlNgayKetThuc2.add(lblNgayKetThuc = new JLabel("Ngày kết thúc"));
 		pnlNgayKetThuc2.add(txtNgayKetThuc2 = new JTextField(15));
+		txtNgayKetThuc2.setBackground(Color.decode("#cccccc"));
 		bLeft2.add(b42 = Box.createHorizontalBox());
 		bLeft2.add(Box.createVerticalStrut(5));
 		txtNgayKetThuc2.setBorder(null);
@@ -197,8 +215,10 @@ public class KhuyenMai extends JPanel {
 		b42.add(pnlNgayKetThuc2);
 
 		JPanel pnlTrangThai2 = new JPanel();
+		pnlTrangThai2.setBackground(Color.decode("#cccccc"));	
 		pnlTrangThai2.add(lblTrangThai = new JLabel("Trạng thái"));
 		pnlTrangThai2.add(txtTrangThai = new JTextField(15));
+		txtTrangThai.setBackground(Color.decode("#cccccc"));
 		bLeft2.add(b52 = Box.createHorizontalBox());
 		bLeft2.add(Box.createVerticalStrut(5));
 		txtTrangThai.setBorder(null);
@@ -206,8 +226,10 @@ public class KhuyenMai extends JPanel {
 		b52.add(pnlTrangThai2);
 
 		JPanel pnlMoTa2 = new JPanel();
+		pnlMoTa2.setBackground(Color.decode("#cccccc"));	
 		pnlMoTa2.add(lblMoTa = new JLabel("Mô tả"));
-		pnlMoTa2.add(txaMoTa2 = new JTextArea(5, 15));
+		pnlMoTa2.add(txaMoTa2 = new JTextArea(4, 15));
+		txaMoTa2.setBackground(Color.decode("#cccccc"));
 		txaMoTa2.setBorder(null);
 		txaMoTa2.setEditable(false);
 		bLeft2.add(b62 = Box.createHorizontalBox());
@@ -216,7 +238,9 @@ public class KhuyenMai extends JPanel {
 
 		bTacVuPhong = Box.createHorizontalBox();
 		JPanel pnlLocPhong = new JPanel();
+		pnlLocPhong.setBackground(Color.decode("#e6dbd1"));	
 		JPanel pnlTimPhong = new JPanel();
+		pnlTimPhong.setBackground(Color.decode("#e6dbd1"));	
 		bTacVuPhong.add(pnlLocPhong);
 		bTacVuPhong.add(pnlTimPhong);
 		bRight2.add(bTacVuPhong);
@@ -226,7 +250,7 @@ public class KhuyenMai extends JPanel {
 		cbLoaiPhong.setPreferredSize(dimension);
 		pnlTimPhong.add(new JLabel("Mã phòng"));
 		pnlTimPhong.add(txtTimPhong = new JTextField(10));
-		pnlTimPhong.add(new JButton("Tìm", img_search));
+		pnlTimPhong.add(btnTimPhong = new ButtonGradient("Tìm", img_search));
 
 		lblMaKM.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblNgayBatDau.setPreferredSize(lblPhanTramGiam.getPreferredSize());
@@ -235,6 +259,7 @@ public class KhuyenMai extends JPanel {
 		lblMoTa.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 
 		JPanel pnlADKM = new JPanel();
+		pnlADKM.setBackground(Color.decode("#cccccc"));
 		GridLayout gridADKM = new GridLayout(1, 2);
 		pnlADKM.setLayout(gridADKM);
 		gridADKM.setHgap(30);
@@ -246,7 +271,7 @@ public class KhuyenMai extends JPanel {
 		bLeft2.add(b92 = Box.createHorizontalBox());
 		b92.add(Box.createVerticalStrut(20));
 		b92.add(Box.createHorizontalStrut(3));
-		b92.add(btnThoat = new ButtonGradient("Thoát", img_out));		
+		b92.add(btnThoat = new ButtonGradient("Thoát", img_out));
 		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThoat.getMinimumSize().height));
 
 		tableModel2 = new DefaultTableModel(headers2, 0);
@@ -261,24 +286,4 @@ public class KhuyenMai extends JPanel {
 
 	}
 
-	public static class RoundedBorder implements Border {
-
-		private int radius;
-
-		RoundedBorder(int radius) {
-			this.radius = radius;
-		}
-
-		public Insets getBorderInsets(Component c) {
-			return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
-		}
-
-		public boolean isBorderOpaque() {
-			return true;
-		}
-
-		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-			g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
-		}
-	}
 }

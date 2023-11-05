@@ -69,6 +69,7 @@ public class ThongKe extends JPanel {
 		pnlThongKe.add(txtPhong = new JTextField(10));
 		pnlThongKe.add(btnLamMoi = new ButtonGradient("Làm mới", img_refresh));
 		b.add(pnlThongKe);
+//		pnlThongKe.setBackground(Color.decode("#cccccc"));
 		b.add(Box.createHorizontalStrut(100));
 
 		//
@@ -83,6 +84,7 @@ public class ThongKe extends JPanel {
 		pnlKetQua.add(lblSoLuotSD = new JLabel("Số lượt sử dụng phòng: "));
 		pnlKetQua.add(txtSoLuotSD = new JTextField(10));
 		b.add(pnlKetQua);
+//		pnlKetQua.setBackground(Color.decode("#cccccc"));
 		b.add(Box.createHorizontalStrut(100));
 		b.add(btnThoat = new ButtonGradient("Thoát", img_out));
 		b.add(Box.createHorizontalStrut(50));
@@ -96,7 +98,7 @@ public class ThongKe extends JPanel {
 		table.setRowHeight(50);
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		this.setLayout(new BorderLayout());
+		
 		
 		CategoryDataset dataset = createDataset();
 
@@ -105,34 +107,26 @@ public class ThongKe extends JPanel {
 				"Tháng", // Category axis
 				"Doanh thu (VNĐ)", // Value axis
 				dataset, PlotOrientation.VERTICAL, true, true, false);
-
-		ChartPanel panel = new ChartPanel(chart);
-		
+		ChartPanel panel = new ChartPanel(chart);		
 		bCenter = Box.createHorizontalBox();
 		bCenter.add(scroll);
-		bCenter.add(panel);
-		
-		
+		bCenter.add(panel);		
+		this.setLayout(new BorderLayout());
 		this.add(b, BorderLayout.NORTH);		
 		this.add(bCenter, BorderLayout.CENTER);
-		
-		
-		
+//		this.setBackground(Color.decode("#e6dbd1"));		
 	}
 	
 	private CategoryDataset createDataset() {
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();	
 		
 		dataset.addValue(10000, "Tiền phòng", "Tháng 1");
 		dataset.addValue(15000, "Tiền dịch vụ", "Tháng 1");
 		dataset.addValue(25000, "Tổng hoá đơn", "Tháng 1");
-
 		
 		dataset.addValue(15000, "Tiền phòng", "Tháng 2");
 		dataset.addValue(20000, "Tiền dịch vụ", "Tháng 2");
 		dataset.addValue(35000, "Tổng hoá đơn", "Tháng 2");
-
 		
 		dataset.addValue(20000, "Tiền phòng", "Tháng 3");
 		dataset.addValue(25000, "Tiền dịch vụ", "Tháng 3");

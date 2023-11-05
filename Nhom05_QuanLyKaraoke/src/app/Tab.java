@@ -9,7 +9,7 @@ public class Tab extends JFrame{
 	public Tab() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setSize(1350, 700);
+		setSize(1370, 720);
 		setLocationRelativeTo(null);
 		
 		TrangChu tc = new TrangChu();

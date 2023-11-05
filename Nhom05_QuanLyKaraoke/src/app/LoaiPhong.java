@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
-public class QuanLyLoaiPhong extends JFrame {
+public class LoaiPhong extends JFrame {
 	private JTextField txtMaLP, txtSucChua, txtGiaLP;
 	private JLabel lblmaLP, lblTenLP, lblsucChua, lblGiaLP, lblLocTenLP, lblLocSC;
 	private JButton btnThem, btnCapNhat, btnLamMoi, btnQuayLai;
@@ -28,8 +28,8 @@ public class QuanLyLoaiPhong extends JFrame {
 	private JTable table;
 	private DefaultTableModel tableModel;
 
-	public QuanLyLoaiPhong() {
-		setSize(1300, 700);
+	public LoaiPhong() {
+		setSize(800, 450);
 		setTitle("Quản lý loại phòng");
 		setLocationRelativeTo(null);
 
@@ -94,7 +94,7 @@ public class QuanLyLoaiPhong extends JFrame {
 		txtMaLP.setPreferredSize(dimension);
 		txtSucChua.setPreferredSize(dimension);
 		txtGiaLP.setPreferredSize(dimension);
-		cbTenLP.setPreferredSize(new Dimension(155, 25));
+		cbTenLP.setPreferredSize(new Dimension(125, 25));
 		// button
 		bLeft.add(Box.createVerticalStrut(50));
 		JPanel pnlKM = new JPanel();
@@ -121,12 +121,12 @@ public class QuanLyLoaiPhong extends JFrame {
 		pnlLoc.add(lblLocTenLP = new JLabel("Tên loại phòng"));
 		pnlLoc.add(Box.createHorizontalStrut(30));
 		pnlLoc.add(cbLocTP = new JComboBox<>());
-		cbLocTP.setPreferredSize(new Dimension(120, 25));
+		cbLocTP.setPreferredSize(new Dimension(80, 25));
 		pnlLoc.add(Box.createHorizontalStrut(100));
 		pnlLoc.add(lblLocSC = new JLabel("Sức chứa"));
 		pnlLoc.add(Box.createHorizontalStrut(30));
 		pnlLoc.add(cbSucChua = new JComboBox<>());
-		cbSucChua.setPreferredSize(new Dimension(120, 25));
+		cbSucChua.setPreferredSize(new Dimension(80, 25));
 
 		bTacVu.add(pnlLoc);
 

@@ -19,7 +19,7 @@ public class Phong extends JPanel {
 	private JComboBox cbLoaiPhong, cbTinhTrang, cbMaLoaiPhong;
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private QuanLyLoaiPhong quanlyLP;
+	private LoaiPhong quanlyLP;
 
 	public Phong() {
 		Icon img_add = new ImageIcon("src/img/add2.png");
@@ -225,7 +225,7 @@ public class Phong extends JPanel {
 
 	private void xuLyQLLP() {
 		// TODO Auto-generated method stub
-		quanlyLP = new QuanLyLoaiPhong();
+		quanlyLP = new LoaiPhong();
 		quanlyLP.setVisible(true);
 		quanlyLP.setAlwaysOnTop(true);
 		quanlyLP.setLocationRelativeTo(null);

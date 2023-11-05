@@ -29,7 +29,7 @@ public class TinhTien extends JFrame{
 	
 	public TinhTien() {
 		// TODO Auto-generated constructor stub
-		setSize(580, 700);
+		setSize(650, 700);
 		setLocationRelativeTo(null);
 		
 		Icon imgDel = new ImageIcon("src/img/del.png");

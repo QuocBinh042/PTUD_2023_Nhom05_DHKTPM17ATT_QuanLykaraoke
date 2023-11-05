@@ -23,46 +23,46 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 public class ChuyenPhong extends JFrame {
-	private JLabel lbTenPhong, lbTenKhach, lbNgayThue, lbGioThue, lbGioHienTai, lbThoiGianSuDung, lbPhong, lbGiaPhong, lbLoaiPhong, lbSucChua;
-	private JTextField tfTenPhong, tfTenKhach, tfNgayThue, tfGioThue, tfGioHienTai, tfThoiGianSuDung, tfPhong, tfGiaPhong;
+	private JLabel lbTenPhong, lbTenKhach, lbNgayThue, lbGioThue, lbGioHienTai, lbThoiGianSuDung, lbPhong, lbGiaPhong,
+			lbLoaiPhong, lbSucChua;
+	private JTextField tfTenPhong, tfTenKhach, tfNgayThue, tfGioThue, tfGioHienTai, tfThoiGianSuDung, tfPhong,
+			tfGiaPhong;
 	private JComboBox<String> cbLoaiPhong, cbSucChua;
 	private JButton btnTimKiem, btnLamMoi, btnQuayLai, btnChuyenPhong;
 	private JTable tablePhongTrong;
 	private DefaultTableModel modelPhongTrong;
-	
+
 	public ChuyenPhong() {
 		// TODO Auto-generated constructor stub
-		setSize(1000, 450);
+		setSize(1050, 500);
 		setLocationRelativeTo(null);
-		
 		Icon imgDel = new ImageIcon("src/img/del.png");
 		Icon imgReset = new ImageIcon("src/img/refresh16.png");
 		Icon imgEdit = new ImageIcon("src/img/edit.png");
 		Icon imgOut = new ImageIcon("src/img/out.png");
 		Icon imgSearch = new ImageIcon("src/img/search.png");
 		Icon imgCheck = new ImageIcon("src/img/check16.png");
-		Icon imgCancel = new ImageIcon("src/img/cancel16.png");	
+		Icon imgCancel = new ImageIcon("src/img/cancel16.png");
 		Icon imgBack = new ImageIcon("src/img/back16.png");
 		Icon imgAdd = new ImageIcon("src/img/add16.png");
 		Icon imgChange = new ImageIcon("src/img/change16.png");
-		
+
 		JPanel mainPane, topPane, leftPane, rightPane, bottomPane, bottomPaneRight, bottomPaneLeft;
 		JLabel lbTieuDe;
-		String[] headersSoNguoi = {"Tất cả", "7", "10", "15"};
-		String[] headersLoaiPhong = {"Tất cả", "Vip", "Thường"};
-		String[] headersTable = {"Mã Phòng", "Tên Phòng", "Loại Phòng", "Sức Chứa", "Giá Phòng"};
+		String[] headersSoNguoi = { "Tất cả", "7", "10", "15" };
+		String[] headersLoaiPhong = { "Tất cả", "Vip", "Thường" };
+		String[] headersTable = { "Mã Phòng", "Tên Phòng", "Loại Phòng", "Sức Chứa", "Giá Phòng" };
 		Font font = new Font("Arial", Font.BOLD, 14);
-		
-		mainPane = new JPanel(new BorderLayout()); 
-		
-		//set top pane
+
+		mainPane = new JPanel(new BorderLayout());
+
+		// set top pane
 		topPane = new JPanel();
 		topPane.setBackground(Color.decode("#6fa8dc"));
 		topPane.add(lbTieuDe = new JLabel("CHUYỂN PHÒNG"));
 		lbTieuDe.setFont(new Font("Arial", Font.BOLD, 24));
-		
-		
-		//set left pane
+
+		// set left pane
 		leftPane = new JPanel();
 		leftPane.setBackground(Color.decode("#cccccc"));
 		leftPane.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.black), "Phòng đang sử dụng"));
@@ -77,7 +77,7 @@ public class ChuyenPhong extends JFrame {
 		lbTenPhong.setFont(font);
 		box.add(boxPhong);
 		box.add(Box.createVerticalStrut(15));
-		
+
 		Box boxKhach = Box.createHorizontalBox();
 		boxKhach.add(lbTenKhach = new JLabel("Tên Khách Hàng:"));
 		boxKhach.add(Box.createHorizontalStrut(5));
@@ -88,7 +88,7 @@ public class ChuyenPhong extends JFrame {
 		lbTenKhach.setFont(font);
 		box.add(boxKhach);
 		box.add(Box.createVerticalStrut(15));
-		
+
 		Box boxNgayThue = Box.createHorizontalBox();
 		boxNgayThue.add(lbNgayThue = new JLabel("Ngày Thuê:"));
 		boxNgayThue.add(Box.createHorizontalStrut(5));
@@ -99,7 +99,7 @@ public class ChuyenPhong extends JFrame {
 		lbNgayThue.setFont(font);
 		box.add(boxNgayThue);
 		box.add(Box.createVerticalStrut(15));
-		
+
 		Box boxGioThue = Box.createHorizontalBox();
 		boxGioThue.add(lbGioThue = new JLabel("Giờ Thuê Phòng:"));
 		boxGioThue.add(Box.createHorizontalStrut(5));
@@ -110,7 +110,7 @@ public class ChuyenPhong extends JFrame {
 		lbGioThue.setFont(font);
 		box.add(boxGioThue);
 		box.add(Box.createVerticalStrut(15));
-		
+
 		Box boxGioHienTai = Box.createHorizontalBox();
 		boxGioHienTai.add(lbGioHienTai = new JLabel("Giờ Hiện Tại:"));
 		boxGioHienTai.add(Box.createHorizontalStrut(5));
@@ -121,7 +121,7 @@ public class ChuyenPhong extends JFrame {
 		lbGioHienTai.setFont(font);
 		box.add(boxGioHienTai);
 		box.add(Box.createVerticalStrut(15));
-		
+
 		Box boxThoiGianSuDung = Box.createHorizontalBox();
 		boxThoiGianSuDung.add(lbThoiGianSuDung = new JLabel("Thời Gian Sử Dụng:"));
 		boxThoiGianSuDung.add(Box.createHorizontalStrut(5));
@@ -132,9 +132,9 @@ public class ChuyenPhong extends JFrame {
 		lbThoiGianSuDung.setFont(font);
 		box.add(boxThoiGianSuDung);
 		box.add(Box.createVerticalStrut(15));
-		
+
 		leftPane.add(box);
-		//set pane right
+		// set pane right
 		rightPane = new JPanel(new BorderLayout());
 		rightPane.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.black), "Danh sách phòng trống"));
 		Box boxBtn = Box.createHorizontalBox();
@@ -147,7 +147,7 @@ public class ChuyenPhong extends JFrame {
 		paneForLoaiPhong.add(boxLoaiPhong);
 		boxBtn.add(paneForLoaiPhong);
 		boxBtn.add(Box.createHorizontalStrut(40));
-		
+
 		Box boxSucChua = Box.createVerticalBox();
 		boxSucChua.add(lbSucChua = new JLabel("Sức Chứa"));
 		boxSucChua.add(Box.createVerticalStrut(5));
@@ -158,85 +158,85 @@ public class ChuyenPhong extends JFrame {
 		paneForSucChua.add(boxSucChua);
 		boxBtn.add(paneForSucChua);
 		boxBtn.add(Box.createHorizontalStrut(40));
-		
-		//pane tra cuu
+
+		// pane tra cuu
 		JPanel paneTraCuuP = new JPanel();
 		Box traCuuB = Box.createVerticalBox();
 		Box traCuuB1 = Box.createHorizontalBox();
 		Box traCuuB2 = Box.createHorizontalBox();
-		
+
 		JPanel panePhongLb = new JPanel();
 		panePhongLb.setBackground(Color.decode("#cccccc"));
 		panePhongLb.add(lbPhong = new JLabel("Phòng"));
 		traCuuB1.add(panePhongLb);
-		
+
 		JPanel panePhongF = new JPanel();
 		panePhongF.setBackground(Color.decode("#cccccc"));
 		panePhongF.add(tfPhong = new JTextField(15));
 		traCuuB1.add(panePhongF);
-		
+
 		traCuuB1.add(btnTimKiem = new ButtonGradient("Tìm kiếm", imgSearch));
-		
+
 		JPanel paneGiaLb = new JPanel();
 		paneGiaLb.setBackground(Color.decode("#cccccc"));
 		paneGiaLb.add(lbGiaPhong = new JLabel("Giá phòng"));
 		traCuuB2.add(paneGiaLb);
-		
+
 		JPanel paneGiaPhongF = new JPanel();
 		paneGiaPhongF.setBackground(Color.decode("#cccccc"));
 		paneGiaPhongF.add(tfGiaPhong = new JTextField(15));
 		traCuuB2.add(paneGiaPhongF);
-		
-		traCuuB2.add(btnLamMoi = new ButtonGradient("Làm mới", imgReset));		
-		
+
+		traCuuB2.add(btnLamMoi = new ButtonGradient("Làm mới", imgReset));
+
 		traCuuB.add(traCuuB1);
 		traCuuB.add(Box.createVerticalStrut(10));
 		traCuuB.add(traCuuB2);
 		paneTraCuuP.add(traCuuB);
 		paneTraCuuP.setBackground(Color.decode("#cccccc"));
 		paneTraCuuP.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.black), "Tra cứu"));
-		
+
 		btnLamMoi.setBackground(Color.decode("#6fa8dc"));
 		btnTimKiem.setBackground(Color.decode("#6fa8dc"));
 		lbPhong.setPreferredSize(lbGiaPhong.getPreferredSize());
 		btnLamMoi.setPreferredSize(btnTimKiem.getPreferredSize());
-		
+
 		boxBtn.add(paneTraCuuP);
 		JPanel paneForBoxBtn = new JPanel();
 		paneForBoxBtn.setBackground(Color.decode("#cccccc"));
 		paneForBoxBtn.add(boxBtn);
 		rightPane.add(paneForBoxBtn, BorderLayout.NORTH);
-		
-		
-		//Table
+
+		// Table
 		modelPhongTrong = new DefaultTableModel(headersTable, 20);
 		tablePhongTrong = new JTable(modelPhongTrong);
 		tablePhongTrong.setRowHeight(25);
-		JScrollPane scroll = new JScrollPane(tablePhongTrong, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane scroll = new JScrollPane(tablePhongTrong, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		rightPane.add(scroll, BorderLayout.CENTER);
-		
-		//Bottom Pane
+
+		// Bottom Pane
 		bottomPane = new JPanel(new GridLayout(1, 2));
 		bottomPane.setBackground(Color.decode("#cccccc"));
-		
+
 		bottomPaneRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		bottomPaneRight.setBackground(Color.decode("#cccccc"));
 		bottomPaneRight.add(btnChuyenPhong = new ButtonGradient("Chuyển phòng", imgChange));
 		btnChuyenPhong.setBackground(Color.decode("#6fa8dc"));
-		
+
 		bottomPaneLeft = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		bottomPaneLeft.setBackground(Color.decode("#cccccc"));
 		bottomPaneLeft.add(btnQuayLai = new ButtonGradient("Quay lại", imgBack));
 		btnQuayLai.setBackground(Color.decode("#6fa8dc"));
-		
+
 		bottomPane.add(bottomPaneLeft);
 		bottomPane.add(bottomPaneRight);
-		
+
 		mainPane.add(topPane, BorderLayout.NORTH);
 		mainPane.add(leftPane, BorderLayout.WEST);
 		mainPane.add(rightPane, BorderLayout.CENTER);
 		mainPane.add(bottomPane, BorderLayout.SOUTH);
-		
+
 		this.getContentPane().add(mainPane);
 	}
 }
