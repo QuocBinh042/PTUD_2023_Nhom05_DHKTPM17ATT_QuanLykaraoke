@@ -8,13 +8,17 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.ParseException;
+import java.util.Date;
 
-public class KhachHang extends JPanel {
+public class KhachHang extends JPanel implements MouseListener {
 
 	private JLabel lblTenKhachHang, lblGioiTinh, lblSoDienThoai, lblEmail,lblGhiChu, lblLoaiKhachHang;
-	private JTextField txtTenKhachHang, txtSoDienThoai, txtEmail;
+	private JTextField txtTenKhachHang, txtSoDienThoai, txtEmail, txtTimSDT, txtTimTenKH;
 	private JTextArea txaGhiChu;
-	private JButton btnThemMoi, btnCapNhat,  btnLamMoi, btnThoat, btnTim;
+	private JButton btnThemMoi, btnCapNhat,  btnLamMoi, btnThoat, btnTim, btnLamMoiKH;
 	private JComboBox cbLoaiKhachHang, cbGioiTinh;
 	private String[] headers = { "Mã khách hàng", "Tên khách hàng", "Loại khách hàng", "Giới tính", "Số điện thoại", "Email",
 			"Số giờ đã thuê", "Ghi chú"};
@@ -86,8 +90,8 @@ public class KhachHang extends JPanel {
 		gridKH.setVgap(10);
 		pnlKH.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
 		pnlKH.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
-		pnlKH.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
-		pnlKH.add(btnThoat = new ButtonGradient("Thoát", img_reset));
+		pnlKH.add(btnLamMoiKH = new ButtonGradient("Làm mới", img_reset));
+		pnlKH.add(btnThoat = new ButtonGradient("Thoát", img_out));
 		pnlKH.setBackground(Color.decode("#cccccc"));
 		bLeft.add(pnlKH);
 		bLeft.add(Box.createVerticalStrut(340));
@@ -132,9 +136,9 @@ public class KhachHang extends JPanel {
 		pnlTxtTenKhachHang.setBackground((Color.decode("#cccccc")));
 		pnlTxtSoDienThoai.setBackground((Color.decode("#cccccc")));
 		pnlLblTenKhachHang.add(lblTenKhachHang = new JLabel("Tên khách hàng:"));
-		pnlTxtTenKhachHang.add(txtTenKhachHang = new JTextField(10));
+		pnlTxtTenKhachHang.add(txtTimTenKH = new JTextField(10));
 		pnlLblSoDienThoai.add(lblSoDienThoai = new JLabel("Số điện thoại:"));
-		pnlTxtSoDienThoai.add(txtSoDienThoai = new JTextField(10));
+		pnlTxtSoDienThoai.add(txtTimSDT = new JTextField(10));
 		
 		bTim.add(bTim1 = Box.createHorizontalBox());
 		bTim1.add(pnlLblTenKhachHang);
@@ -168,7 +172,7 @@ public class KhachHang extends JPanel {
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBorder(BorderFactory.createTitledBorder(line, "Danh sách khách hàng"));
 		scroll.setViewportView(table = new JTable(tableModel));
-		table.setRowHeight(50);
+		table.setRowHeight(25);
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		bRight.add(scroll);
@@ -184,6 +188,106 @@ public class KhachHang extends JPanel {
 		this.setLayout(new BorderLayout());
 		add(pnlLeft, BorderLayout.WEST);
 		add(pnlRight, BorderLayout.CENTER);
+		
+		btnLamMoiKH.addActionListener(e -> xuLyLamMoi());
+		btnThemMoi.addActionListener(e -> xuLyThemMoi());
+		btnCapNhat.addActionListener(e -> xuLyCapNhat());
+		btnThoat.addActionListener(e -> System.exit(0));
+		btnTim.addActionListener(e -> xuLyTimKiem());
+		table.addMouseListener((MouseListener) this);
+		
+		String[] row = { "KH001", "tenKH", "", "", "sdt", "email", "5", ""};
+		tableModel.addRow(row); 
 	}
+	
+	// Xu ly them moi
+	private void xuLyThemMoi() {
+		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn thêm thông tin khách hàng không?", "Chú ý",
+				JOptionPane.YES_NO_OPTION);
+		if (luaChon == JOptionPane.YES_OPTION) {
+			String tenKH = txtTenKhachHang.getText();
+			String gioiTinh = cbGioiTinh.getSelectedItem().toString();
+			String sdt = txtSoDienThoai.getText();
+			String email = txtEmail.getText();
+			String ghichu = txaGhiChu.getText();
+			String[] row = { "KH001", tenKH, "", gioiTinh, sdt, email, "", ghichu };
+			tableModel.addRow(row);
+		}
+	}
+	
+	private Object xuLyCapNhat() {
+		// TODO Auto-generated method stub
+		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn muốn cập nhật thông tin khách hàng không?",
+				"Chú ý", JOptionPane.YES_NO_OPTION);
+		if (luaChon == JOptionPane.YES_OPTION) {
+			String tenKH = txtTenKhachHang.getText();
+			String gioiTinh = cbGioiTinh.getSelectedItem().toString();
+			String sdt = txtSoDienThoai.getText();
+			String email = txtEmail.getText();
+			String ghichu = txaGhiChu.getText();
+			int viTri = table.getSelectedRow();
+			tableModel.removeRow(viTri);
+			String[] row = { "KH001", tenKH, "", gioiTinh, sdt, email, "", ghichu };
+			tableModel.insertRow(viTri, row);
+		}
+		return null;
+	}
+	
+	
+	private Object xuLyLamMoi() {
+		// TODO Auto-generated method stub
+		txtTenKhachHang.setText("");
+		cbGioiTinh.setSelectedIndex(-1);
+		txtSoDienThoai.setText("");
+		txtEmail.setText("");
+		txaGhiChu.setText("");
+		return null;
+	}
+	
+	
+	private Object xuLyTimKiem() {
+		// TODO Auto-generated method stub
+
+		return null;
+
+	}
+
+	
+	
+	// Xu ly mouseclick
+	    @Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	    @Override
+		public void mousePressed(MouseEvent e) {
+			int row = table.getSelectedRow();
+			txtTenKhachHang.setText(table.getValueAt(row, 1).toString());
+			cbGioiTinh.setSelectedItem(table.getValueAt(row, 3).toString());
+			txtSoDienThoai.setText(table.getValueAt(row, 4).toString());
+			txtEmail.setText(table.getValueAt(row, 5).toString());
+			txaGhiChu.setText(table.getValueAt(row, 7).toString());
+		}
+
+	    @Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+	    @Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	    @Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+	
+	
 
 }
