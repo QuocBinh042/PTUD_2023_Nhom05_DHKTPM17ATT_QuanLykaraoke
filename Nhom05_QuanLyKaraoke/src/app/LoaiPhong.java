@@ -58,7 +58,7 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin loại phòng"));
 		bLeft.add(Box.createVerticalStrut(5));
 
-		JPanel pnlTenLP = new JPanel(); 
+		JPanel pnlTenLP = new JPanel();
 		pnlTenLP.setBackground(Color.decode("#cccccc"));
 		pnlTenLP.add(lblTenLP = new JLabel("Tên loại phòng"));
 		pnlTenLP.add(cbTenLP = new JComboBox<>());
@@ -90,7 +90,7 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		txtSucChua.setPreferredSize(dimension);
 		txtGiaLP.setPreferredSize(dimension);
 		cbTenLP.setPreferredSize(new Dimension(155, 25));
-		
+
 		// button
 		bLeft.add(Box.createVerticalStrut(10));
 		JPanel pnlKM = new JPanel();
@@ -137,12 +137,12 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table1.add(scroll);
-		String []row1 = "LP001;Phòng thường;10;100000".split(";");
-		String []row2 = "LP002;Phòng thường;15;120000".split(";");
-		String []row3 = "LP003;Phòng thường;20;150000".split(";");
-		String []row4 = "LP004;Phòng thường;20;150000".split(";");
-		String []row5 = "LP005;Phòng VIP;15;200000".split(";");
-		String []row6 = "LP006;Phòng VIP;20;250000".split(";");
+		String[] row1 = "LP001;Phòng thường;10;100000".split(";");
+		String[] row2 = "LP002;Phòng thường;15;120000".split(";");
+		String[] row3 = "LP003;Phòng thường;20;150000".split(";");
+		String[] row4 = "LP004;Phòng thường;20;150000".split(";");
+		String[] row5 = "LP005;Phòng VIP;15;200000".split(";");
+		String[] row6 = "LP006;Phòng VIP;20;250000".split(";");
 		tableModel.addRow(row1);
 		tableModel.addRow(row2);
 		tableModel.addRow(row3);
@@ -185,16 +185,13 @@ public class LoaiPhong extends JFrame implements MouseListener {
 	// Xu ly cap nhat
 	private void xuLyCapNhat() {
 		int r = table.getSelectedRow();
-		if (r != -1) {
-			String tenLP = cbTenLP.getSelectedItem().toString();
-			String giaLP = txtGiaLP.getText();
-			String sucChua = txtSucChua.getText();
-			table.setValueAt(tenLP, r, 1);
-			table.setValueAt(sucChua, r, 2);
-			table.setValueAt(giaLP, r, 3);
-		} else {
-			JOptionPane.showMessageDialog(null, "Vui lòng chọn loại phòng cần cập nhật!");
-		}
+		String tenLP = cbTenLP.getSelectedItem().toString();
+		String giaLP = txtGiaLP.getText();
+		String sucChua = txtSucChua.getText();
+		table.setValueAt(tenLP, r, 1);
+		table.setValueAt(sucChua, r, 2);
+		table.setValueAt(giaLP, r, 3);
+
 	}
 
 	// Xu ly lam moi
@@ -207,6 +204,16 @@ public class LoaiPhong extends JFrame implements MouseListener {
 	// Xu ly quay lai
 	private void xuLyQuayLai() {
 		this.setVisible(false);
+	}
+
+	// Xu ly kiem tra thong tin
+	private int kiemTraThongTin() {
+		String sucChua = txtSucChua.getText();
+		String giaLP = txtGiaLP.getText();
+		if (sucChua.equals("") || giaLP.equals("")) {
+			return -1;
+		}
+		return 1;
 	}
 
 	// Xu ly mouseclick

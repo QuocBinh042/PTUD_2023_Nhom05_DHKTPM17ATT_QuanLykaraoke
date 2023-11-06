@@ -236,20 +236,38 @@ public class Phong extends JPanel implements MouseListener {
 		String giaP = txtGiaPhong.getText();
 		String moTa = txtaMoTa.getText();
 		String[] row3 = { "P003", tenLP, maLP, "", loaiP, sucChua, giaP, "", moTa };
-		tableModel.addRow(row3);
+		int kt = kiemTraThongTin();
+		if (kt == 1) {
+			int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thêm mới phòng?", "Chú ý!",
+					JOptionPane.YES_NO_OPTION);
+			if (i == JOptionPane.YES_OPTION) {
+				tableModel.addRow(row3);
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin phòng!");
+		}
+
 	}
 
 	// Xu ly cap nhat
 	private void xuLyCapNhat() {
 		int r = table.getSelectedRow();
+		int kt = kiemTraThongTin();
 		if (r != -1) {
-			String tenP = txtTenPhong.getText();
-			String maLP = cbMaLoaiPhong.getSelectedItem().toString();
-			String moTa = txtaMoTa.getText();
-			table.setValueAt(tenP, r, 1);
-			table.setValueAt(maLP, r, 2);
-			table.setValueAt(moTa, r, 7);
-
+			if (kt == 1) {
+				int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật phòng?", "Chú ý!",
+						JOptionPane.YES_NO_OPTION);
+				if (i == JOptionPane.YES_OPTION) {
+					String tenP = txtTenPhong.getText();
+					String maLP = cbMaLoaiPhong.getSelectedItem().toString();
+					String moTa = txtaMoTa.getText();
+					table.setValueAt(tenP, r, 1);
+					table.setValueAt(maLP, r, 2);
+					table.setValueAt(moTa, r, 7);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin phòng!");
+			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ cần cập nhật!");
 		}
@@ -268,11 +286,14 @@ public class Phong extends JPanel implements MouseListener {
 	// Xu ly xoa
 	private void xuLyXoa() {
 		int row = table.getSelectedRow();
-		int i = JOptionPane.showConfirmDialog(null, "Chắc chắn xóa không", "Chú ý", JOptionPane.YES_NO_OPTION);
 		if (row != -1) {
+			int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa phòng không?", "Chú ý!",
+					JOptionPane.YES_NO_OPTION);
 			if (i == JOptionPane.YES_OPTION) {
 				tableModel.removeRow(row);
 			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn phòng cần xóa!");
 		}
 	}
 
@@ -286,7 +307,11 @@ public class Phong extends JPanel implements MouseListener {
 
 	// Xu ly thoat
 	private void xuLyThoat() {
-		System.exit(0);
+		int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thoát không?", "Chú ý!",
+				JOptionPane.YES_NO_OPTION);
+		if (i == JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}
 	}
 
 	//
@@ -301,9 +326,22 @@ public class Phong extends JPanel implements MouseListener {
 		}
 		if (n == 1) {
 			JOptionPane.showMessageDialog(null, "Mã phòng được tìm thấy!");
-		} else if(n != 1) {
+		} else if (n != 1) {
 			JOptionPane.showMessageDialog(null, "Mã phòng không tồn tại!");
 		}
+	}
+
+	// Xu ly kiem tra day du thong tin
+	private int kiemTraThongTin() {
+		String tenLP = txtTenPhong.getText();
+		String loaiP = txtLoaiPhong.getText();
+		String sucChua = txtSucChua.getText();
+		String giaP = txtGiaPhong.getText();
+		String moTa = txtaMoTa.getText();
+		if (tenLP.equals("") || loaiP.equals("") || sucChua.equals("") || giaP.equals("") || moTa.equals("")) {
+			return -1;
+		}
+		return 1;
 	}
 
 	// Xu ly bo tron button

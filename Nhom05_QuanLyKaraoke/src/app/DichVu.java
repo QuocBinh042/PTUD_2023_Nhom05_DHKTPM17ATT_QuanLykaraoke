@@ -192,23 +192,42 @@ public class DichVu extends JPanel implements MouseListener {
 		String donGiaBan = txtDonGiaBan.getText();
 		String soLuong = txtSoLuong.getText();
 		String[] row3 = { "DV001", tenDV, donGiaNhap, donGiaBan, donVi, soLuong, "Còn hàng" };
-		tableModel.addRow(row3);
+		int kt = kiemTraThongTin();
+		if (kt == 1) {
+			int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thêm mới dịch vụ không ?", "Chú ý!",
+					JOptionPane.YES_OPTION);
+			if (i == JOptionPane.YES_OPTION) {
+				tableModel.addRow(row3);
+			}
+
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin dịch vụ!");
+		}
 	}
 
 	// Xu ly cap nhat
 	private void xuLyCapNhat() {
 		int r = table.getSelectedRow();
+		int kt = kiemTraThongTin();
 		if (r != -1) {
-			String tenDV = txtTenDichVu.getText();
-			String donVi = txtDonVi.getText();
-			String donGiaNhap = txtDonGiaNhap.getText();
-			String donGiaBan = txtDonGiaBan.getText();
-			String soLuong = txtSoLuong.getText();
-			table.setValueAt(tenDV, r, 1);
-			table.setValueAt(donGiaNhap, r, 2);
-			table.setValueAt(donGiaBan, r, 3);
-			table.setValueAt(donVi, r, 4);
-			table.setValueAt(soLuong, r, 5);
+			if (kt == 1) {
+				int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật dịch vụ không ?", "Chú ý!",
+						JOptionPane.YES_NO_OPTION);
+				if (i == JOptionPane.YES_OPTION) {
+					String tenDV = txtTenDichVu.getText();
+					String donVi = txtDonVi.getText();
+					String donGiaNhap = txtDonGiaNhap.getText();
+					String donGiaBan = txtDonGiaBan.getText();
+					String soLuong = txtSoLuong.getText();
+					table.setValueAt(tenDV, r, 1);
+					table.setValueAt(donGiaNhap, r, 2);
+					table.setValueAt(donGiaBan, r, 3);
+					table.setValueAt(donVi, r, 4);
+					table.setValueAt(soLuong, r, 5);
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin dịch vụ!");
+			}
 
 		} else {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ cần cập nhật!");
@@ -228,18 +247,22 @@ public class DichVu extends JPanel implements MouseListener {
 	private void xuLyXoa() {
 		int row = table.getSelectedRow();
 		if (row != -1) {
-			int i = JOptionPane.showConfirmDialog(null, "Chắc chắn xóa không", "Chú ý", JOptionPane.YES_NO_OPTION);
+			int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa dịch vụ này không ?", "Chú ý!", JOptionPane.YES_NO_OPTION);
 			if (i == JOptionPane.YES_OPTION) {
 				tableModel.removeRow(row);
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ cần xóa");
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ cần xóa!");
 		}
 	}
 
 	// Xu ly thoat
 	private void xuLyThoat() {
-		System.exit(0);
+		int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắc muốn thoát không ?", "Chú ý!",
+				JOptionPane.YES_OPTION);
+		if (i == JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}
 	}
 
 	// Xu ly tim kiem
@@ -258,6 +281,20 @@ public class DichVu extends JPanel implements MouseListener {
 		} else {
 			JOptionPane.showMessageDialog(null, "Mã dịch vụ không tồn tại!");
 		}
+	}
+
+	// Xu ly kiem tra thong tin day du
+	private int kiemTraThongTin() {
+		String tenDV = txtTenDichVu.getText();
+		String donVi = txtDonVi.getText();
+		String donGiaNhap = txtDonGiaNhap.getText();
+		String donGiaBan = txtDonGiaBan.getText();
+		String soLuong = txtSoLuong.getText();
+		if (tenDV.equals("") || donVi.equals("") || donGiaNhap.equals("") || donGiaBan.equals("")
+				|| soLuong.equals("")) {
+			return -1;
+		}
+		return 1;
 	}
 
 	// Xu ly bo tron button
