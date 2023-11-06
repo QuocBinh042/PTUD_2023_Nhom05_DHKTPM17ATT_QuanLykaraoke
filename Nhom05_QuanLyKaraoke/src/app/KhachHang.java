@@ -38,7 +38,7 @@ public class KhachHang extends JPanel implements MouseListener {
 
 		Box bLeft = Box.createVerticalBox();
 		Box bRight = Box.createVerticalBox();
-		Box b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16, b17, b92, bLoc, bTacVu, bTim, bTim1,
+		Box b1, b2, b3, b4, b5, bLoc, bTacVu, bTim, bTim1,
 				bTim2, bLoc1, bLoc2;
 		Dimension dimension = new Dimension(170, 25);
 		Dimension dimension2 = new Dimension(120, 20);
