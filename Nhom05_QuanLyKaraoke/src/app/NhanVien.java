@@ -11,27 +11,33 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class NhanVien extends JPanel {
+public class NhanVien extends JPanel implements MouseListener {
 
 	private JLabel lblTenNhanVien, lblNamSinh, lblGioiTinh, lblSoDienThoai, lblCCCD, lblChucVu, lblMatKhau,
 			lblTinhTrang;
-	private JTextField txtTenNhanVien, txtNamSinh, txtSoDienThoai, txtCCCD, txtMatKhau, txtTimNhanVien, txtTimSDT;
-	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnTim;
-	private JComboBox cbChucVu, cbTinhTrang, cbGioiTinh;
+	private JTextField txtTenNhanVien, txtSoDienThoai, txtCCCD, txtMatKhau, txtTimNhanVien, txtTimSDT;
+	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoiNV, btnThoat, btnTim, btnLamMoi;
+	private JComboBox cbChucVu, cbTinhTrang, cbGioiTinh, cbTimChucVu;
 	private String[] headers = { "Mã nhân viên", "Tên nhân viên", "Năm sinh", "Giới tính", "Số điện thoại", "CCCD",
 			"Chức vụ", "Mật khẩu", "Tình trạng" };
 	private JDateChooser dateNamSinh;
 	private JTable table;
 	private DefaultTableModel tableModel;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 	public NhanVien() {
 		Icon img_add = new ImageIcon("src/img/add2.png");
 		Icon img_del = new ImageIcon("src/img/del.png");
-		Icon img_reset = new ImageIcon("src/img/refresh.png");
+		Icon img_reset = new ImageIcon("src/img/refresh16.png");
 		Icon img_edit = new ImageIcon("src/img/edit.png");
 		Icon img_out = new ImageIcon("src/img/out.png");
-		Icon img_search = new ImageIcon("src/img/search2.png");
+		Icon img_search = new ImageIcon("src/img/search.png");
 
 		JPanel pnlLeft = new JPanel(new BorderLayout());
 		JPanel pnlRight = new JPanel(new BorderLayout());
@@ -108,7 +114,7 @@ public class NhanVien extends JPanel {
 		pnlNV.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
 		pnlNV.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
 		pnlNV.add(btnXoa = new ButtonGradient("Xóa", img_del));
-		pnlNV.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
+		pnlNV.add(btnLamMoiNV = new ButtonGradient("Làm mới", img_reset));
 		pnlNV.setBackground(Color.decode("#cccccc"));
 		bLeft.add(pnlNV);
 		bLeft.add(Box.createVerticalStrut(20));
@@ -119,58 +125,58 @@ public class NhanVien extends JPanel {
 		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThoat.getMinimumSize().height));
 		bLeft.add(Box.createVerticalStrut(270));
 
-		//Loc
+		// Loc
 		bRight.add(bTacVu = Box.createHorizontalBox());
 		bTacVu.add(Box.createHorizontalStrut(100));
-		
+
 		bLoc = Box.createVerticalBox();
 		JPanel pnlLblChucVu = new JPanel();
 		JPanel pnlCbChucVu = new JPanel();
 		JPanel pnlLblTinhTrang = new JPanel();
-		JPanel pnlCbTinhTrang = new JPanel();		
+		JPanel pnlCbTinhTrang = new JPanel();
 		pnlLblChucVu.setBackground((Color.decode("#cccccc")));
 		pnlCbChucVu.setBackground((Color.decode("#cccccc")));
 		pnlLblTinhTrang.setBackground((Color.decode("#cccccc")));
 		pnlCbTinhTrang.setBackground((Color.decode("#cccccc")));
-		
+
 		pnlLblChucVu.add(lblChucVu = new JLabel("Chức vụ:"));
-		pnlCbChucVu.add(cbChucVu = new JComboBox<>());
+		pnlCbChucVu.add(cbTimChucVu = new JComboBox<>());
 		pnlLblTinhTrang.add(lblTinhTrang = new JLabel("Tình trạng:"));
 		pnlCbTinhTrang.add(cbTinhTrang = new JComboBox<>());
 		cbTinhTrang.addItem("Tất cả");
 		cbTinhTrang.addItem("Đang làm");
 		cbTinhTrang.addItem("Nghỉ việc");
-		
+
 		bLoc.add(bLoc1 = Box.createHorizontalBox());
 		bLoc.add(bLoc2 = Box.createHorizontalBox());
 		bLoc1.add(pnlLblChucVu);
 		bLoc1.add(pnlCbChucVu);
 		bLoc2.add(pnlLblTinhTrang);
 		bLoc2.add(pnlCbTinhTrang);
-		
+
 		JPanel pnlLoc = new JPanel();
 		pnlLoc.add(bLoc);
 		pnlLoc.setBackground((Color.decode("#cccccc")));
 		pnlLoc.setBorder(BorderFactory.createTitledBorder(line, "Lọc"));
 		bTacVu.add(pnlLoc);
-		
+
 		bTacVu.add(Box.createHorizontalStrut(100));
-		
-		//Tim
+
+		// Tim
 		bTim = Box.createVerticalBox();
 		JPanel pnlLblTenNV = new JPanel();
 		JPanel pnlTxtTenNV = new JPanel();
 		JPanel pnlLblSdt = new JPanel();
-		JPanel pnlTxtSdt = new JPanel();		
+		JPanel pnlTxtSdt = new JPanel();
 		pnlLblTenNV.setBackground((Color.decode("#cccccc")));
 		pnlLblSdt.setBackground((Color.decode("#cccccc")));
 		pnlTxtSdt.setBackground((Color.decode("#cccccc")));
 		pnlTxtTenNV.setBackground((Color.decode("#cccccc")));
 		pnlLblTenNV.add(lblTenNhanVien = new JLabel("Tên nhân viên:"));
-		pnlTxtTenNV.add(txtTenNhanVien = new JTextField(10));
+		pnlTxtTenNV.add(txtTimNhanVien = new JTextField(10));
 		pnlLblSdt.add(lblSoDienThoai = new JLabel("Số điện thoại:"));
-		pnlTxtSdt.add(txtSoDienThoai = new JTextField(10));
-		
+		pnlTxtSdt.add(txtTimSDT = new JTextField(10));
+
 		bTim.add(bTim1 = Box.createHorizontalBox());
 		bTim1.add(pnlLblTenNV);
 		bTim1.add(pnlTxtTenNV);
@@ -186,14 +192,15 @@ public class NhanVien extends JPanel {
 		pnlTim.setBackground((Color.decode("#cccccc")));
 		pnlTim.setBorder(BorderFactory.createTitledBorder(line, "Tra cứu"));
 		bTacVu.add(pnlTim);
-		
+
 		bTacVu.add(Box.createHorizontalStrut(100));
-		
+
 		//
 		lblChucVu.setPreferredSize(lblTinhTrang.getPreferredSize());
 		lblSoDienThoai.setPreferredSize(lblTenNhanVien.getPreferredSize());
 		cbChucVu.setPreferredSize(dimension);
 		cbTinhTrang.setPreferredSize(dimension);
+		cbTimChucVu.setPreferredSize(dimension);
 		txtTenNhanVien.setPreferredSize(dimension);
 		txtSoDienThoai.setPreferredSize(dimension);
 		btnTim.setPreferredSize(dimension2);
@@ -205,7 +212,7 @@ public class NhanVien extends JPanel {
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBorder(BorderFactory.createTitledBorder(line, "Danh sách nhân viên"));
 		scroll.setViewportView(table = new JTable(tableModel));
-		table.setRowHeight(50);
+		table.setRowHeight(25);
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		bRight.add(scroll);
@@ -221,6 +228,136 @@ public class NhanVien extends JPanel {
 		this.setLayout(new BorderLayout());
 		add(pnlLeft, BorderLayout.WEST);
 		add(pnlRight, BorderLayout.CENTER);
+
+		btnLamMoiNV.addActionListener(e -> xuLyLamMoi());
+		btnThemMoi.addActionListener(e -> xuLyThemMoi());
+		btnXoa.addActionListener(e -> xuLyXoa());
+		btnCapNhat.addActionListener(e -> xuLyCapNhat());
+		btnThoat.addActionListener(e -> System.exit(0));
+		btnTim.addActionListener(e -> xuLyTimKiem());
+		table.addMouseListener((MouseListener) this);
+
+		String[] row = { "NV001", "tenNV", "06/11/2023", "", "sdt", "cccd", "", "matkhau", "" };
+		tableModel.addRow(row);
+	}
+
+	
+	
+	// Xu ly them moi
+	private void xuLyThemMoi() {
+		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn thêm thông tin nhân viên không?", "Chú ý",
+				JOptionPane.YES_NO_OPTION);
+		if (luaChon == JOptionPane.YES_OPTION) {
+			String tenNV = txtTenNhanVien.getText();
+			String namSinh = dateFormat.format(dateNamSinh.getDate());
+			String gioiTinh = cbGioiTinh.getSelectedItem().toString();
+			String sdt = txtSoDienThoai.getText();
+			String cccd = txtCCCD.getText();
+			String chucVu = cbChucVu.getSelectedItem().toString();
+			String matKhau = txtMatKhau.getText();
+			String[] row = { "NV003", tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
+			tableModel.addRow(row);
+		}
+	}
+	
+	
+	private Object xuLyXoa() {
+		// TODO Auto-generated method stub
+		int row = table.getSelectedRow();
+		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn xóa thông tin nhân viên không?", "Chú ý",
+				JOptionPane.YES_NO_OPTION);
+		if (row != -1) {
+			if (luaChon == JOptionPane.YES_OPTION) {
+				tableModel.removeRow(row);
+			}
+		}
+		return null;
+	}
+	
+
+	private Object xuLyCapNhat() {
+		// TODO Auto-generated method stub
+		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn muốn cập nhật thông tin nhân viên không?",
+				"Chú ý", JOptionPane.YES_NO_OPTION);
+		if (luaChon == JOptionPane.YES_OPTION) {
+			String tenNV = txtTenNhanVien.getText();
+			String namSinh = dateFormat.format(dateNamSinh.getDate());
+			String gioiTinh = cbGioiTinh.getSelectedItem().toString();
+			String sdt = txtSoDienThoai.getText();
+			String cccd = txtCCCD.getText();
+			String chucVu = cbChucVu.getSelectedItem().toString();
+			String matKhau = txtMatKhau.getText();
+			int viTri = table.getSelectedRow();
+			tableModel.removeRow(viTri);
+			String[] row = { "NV003", tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
+			tableModel.insertRow(viTri, row);
+		}
+		return null;
+	}
+
+	
+	private Object xuLyLamMoi() {
+		// TODO Auto-generated method stub
+		txtTenNhanVien.setText("");
+		((JTextField) dateNamSinh.getDateEditor().getUiComponent()).setText("");
+		txtSoDienThoai.setText("");
+		txtCCCD.setText("");
+		txtMatKhau.setText("");
+		cbChucVu.setSelectedIndex(-1);
+		cbGioiTinh.setSelectedIndex(-1);
+		return null;
+	}
+
+	private Object xuLyTimKiem() {
+		// TODO Auto-generated method stub
+
+		return null;
+
+	}
+
+
+
+	// Xu ly mouseclick
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		int row = table.getSelectedRow();
+		txtTenNhanVien.setText(table.getValueAt(row, 1).toString());
+		Date date = null;
+		try {
+			date = dateFormat.parse(table.getValueAt(row, 2).toString());
+			dateNamSinh.setDate(date);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		cbGioiTinh.setSelectedItem(table.getValueAt(row, 3).toString());
+		txtSoDienThoai.setText(table.getValueAt(row, 4).toString());
+		txtCCCD.setText(table.getValueAt(row, 5).toString());
+		cbChucVu.setSelectedItem(table.getValueAt(row, 6).toString());
+		txtMatKhau.setText(table.getValueAt(row, 7).toString());
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 
