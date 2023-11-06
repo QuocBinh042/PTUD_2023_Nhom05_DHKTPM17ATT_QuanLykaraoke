@@ -89,17 +89,15 @@ public class ThongKe extends JPanel {
 		b.add(btnThoat = new ButtonGradient("Thoát", img_out));
 		b.add(Box.createHorizontalStrut(50));
 
-		
 		tableModel = new DefaultTableModel(headers, 0);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBorder(BorderFactory.createTitledBorder(line, "Danh sách phòng"));
 		scroll.setViewportView(table = new JTable(tableModel));
-		table.setRowHeight(50);
+		table.setRowHeight(25);
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		
-		
+
 		CategoryDataset dataset = createDataset();
 
 		// Create chart
@@ -107,27 +105,49 @@ public class ThongKe extends JPanel {
 				"Tháng", // Category axis
 				"Doanh thu (VNĐ)", // Value axis
 				dataset, PlotOrientation.VERTICAL, true, true, false);
-		ChartPanel panel = new ChartPanel(chart);		
+		ChartPanel panel = new ChartPanel(chart);
 		bCenter = Box.createHorizontalBox();
 		bCenter.add(scroll);
-		bCenter.add(panel);		
+		bCenter.add(panel);
 		this.setLayout(new BorderLayout());
-		this.add(b, BorderLayout.NORTH);		
+		this.add(b, BorderLayout.NORTH);
 		this.add(bCenter, BorderLayout.CENTER);
-//		this.setBackground(Color.decode("#e6dbd1"));		
+//		this.setBackground(Color.decode("#e6dbd1"));	
+
+		// Sự kiện
+		String[] row = "HDOO1; 2022/11/21; 13:34:26; 0394109819; 150000; 100000; 250000".split(";");
+		cbLoaiPhong.addItem("VIP");
+		tableModel.addRow(row);
+		btnTim.addActionListener(e -> xuLyThongKe());
+		btnLamMoi.addActionListener(e -> xuLyLamMoi());
+		btnThoat.addActionListener(e -> System.exit(0));
 	}
-	
+
+	private Object xuLyLamMoi() {
+		// TODO Auto-generated method stub
+		txtPhong.setText("");
+		cbLoaiPhong.setSelectedIndex(-1);
+		((JTextField) dateBD.getDateEditor().getUiComponent()).setText("");
+		((JTextField) dateKT.getDateEditor().getUiComponent()).setText("");
+		return null;
+	}
+
+	private Object xuLyThongKe() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private CategoryDataset createDataset() {
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();	
-		
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
 		dataset.addValue(10000, "Tiền phòng", "Tháng 1");
 		dataset.addValue(15000, "Tiền dịch vụ", "Tháng 1");
 		dataset.addValue(25000, "Tổng hoá đơn", "Tháng 1");
-		
+
 		dataset.addValue(15000, "Tiền phòng", "Tháng 2");
 		dataset.addValue(20000, "Tiền dịch vụ", "Tháng 2");
 		dataset.addValue(35000, "Tổng hoá đơn", "Tháng 2");
-		
+
 		dataset.addValue(20000, "Tiền phòng", "Tháng 3");
 		dataset.addValue(25000, "Tiền dịch vụ", "Tháng 3");
 		dataset.addValue(45000, "Tổng hoá đơn", "Tháng 3");
