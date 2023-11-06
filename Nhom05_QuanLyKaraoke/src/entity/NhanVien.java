@@ -1,18 +1,19 @@
 package entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class NhanVien implements Serializable {
 	private String tenNV;
-	private String namSinh;
+	private LocalDate namSinh;
 	private String gioiTinh;
 	private String sdthoai;
 	private String cccd;
 	private String chucVu;
 	private String matKhau;
 
-	public NhanVien(String tenNV, String namSinh, String gioiTinh, String sdthoai, String cccd, 
+	public NhanVien(String tenNV, LocalDate  namSinh, String gioiTinh, String sdthoai, String cccd, 
 			String chucVu, String matKhau) {
 		super();
 		this.tenNV = tenNV;
@@ -26,7 +27,7 @@ public class NhanVien implements Serializable {
 	}
 
 	public NhanVien() {
-		this("", "", "", "", "", "", "");
+		this("Tên nhân viên", LocalDate.now(), "Giới tính", "Số điện thoại", "CCCD", "Chức vụ", "Mật khẩu");
 	}
 
 	@Override
@@ -54,11 +55,12 @@ public class NhanVien implements Serializable {
 		this.tenNV = tenNV;
 	}
 
-	public String getNamSinh() {
+	
+	public LocalDate getNamSinh() {
 		return namSinh;
 	}
 
-	public void setNamSinh(String namSinh) {
+	public void setNamSinh(LocalDate namSinh) {
 		this.namSinh = namSinh;
 	}
 
@@ -107,5 +109,6 @@ public class NhanVien implements Serializable {
 		return "NhanVien [tenNV=" + tenNV + ", namSinh=" + namSinh + ", gioiTinh=" + gioiTinh + ", sdthoai=" + sdthoai
 				+ ", cccd=" + cccd + ", chucVu=" + chucVu + ", matKhau=" + matKhau + "]";
 	}
+
 	
 }
