@@ -255,7 +255,7 @@ public class NhanVien extends JPanel implements MouseListener {
 			String cccd = txtCCCD.getText();
 			String chucVu = cbChucVu.getSelectedItem().toString();
 			String matKhau = txtMatKhau.getText();
-			String[] row = { "NV003", tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
+			String[] row = { "NV001", tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
 			tableModel.addRow(row);
 		}
 	}
@@ -289,7 +289,7 @@ public class NhanVien extends JPanel implements MouseListener {
 			String matKhau = txtMatKhau.getText();
 			int viTri = table.getSelectedRow();
 			tableModel.removeRow(viTri);
-			String[] row = { "NV003", tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
+			String[] row = { "NV001", tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
 			tableModel.insertRow(viTri, row);
 		}
 		return null;
