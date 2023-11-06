@@ -238,5 +238,32 @@ public class ChuyenPhong extends JFrame {
 		mainPane.add(bottomPane, BorderLayout.SOUTH);
 
 		this.getContentPane().add(mainPane);
+		
+		btnQuayLai.addActionListener(e -> this.dispose());
+		btnLamMoi.addActionListener(e -> {
+			tfPhong.setText("");
+			tfTenPhong.setText("");
+			tfPhong.requestFocus();
+		});
+		btnTimKiem.addActionListener(e -> xuLyTimKiem());
+		btnChuyenPhong.addActionListener(e -> xuLyChuyenPhong());
+		cbLoaiPhong.addActionListener(e -> xuLyLocTheoLoaiPhong());
+		cbSucChua.addActionListener(e -> xuLyLocTheoSucChua());
+	}
+	
+	private void xuLyTimKiem() {
+		
+	}
+	
+	private void xuLyChuyenPhong() {
+		
+	}
+	
+	private void xuLyLocTheoLoaiPhong() {
+		
+	}
+	
+	private void xuLyLocTheoSucChua() {
+		
 	}
 }

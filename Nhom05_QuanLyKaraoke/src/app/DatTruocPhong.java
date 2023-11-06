@@ -26,7 +26,7 @@ import com.toedter.calendar.JDateChooser;
 public class DatTruocPhong extends JFrame{
 	private JTextField tenPhongF, loaiPhongF, giaPhongF, sucChuaF, tinhTrangF, sdtKhachF, tenKhachF;
 	private JTextArea ghiChuA;
-	private JButton kiemTraBtn, quayLaiBtn, thuePhongBtn;
+	private JButton kiemTraBtn, quayLaiBtn, datPhongBtn;
 	private JDateChooser ngayDatF;
 	private TimePicker gioNhanF;
 	public DatTruocPhong() {
@@ -94,6 +94,12 @@ public class DatTruocPhong extends JFrame{
 		tinhTrangBox.add(tinhTrangF = new JTextField(10));
 		tinhTrangF.setBorder(null);
 		tinhTrangF.setEditable(false);
+		
+		tenPhongF.setBackground(Color.decode("#cccccc"));
+		loaiPhongF.setBackground(Color.decode("#cccccc"));
+		giaPhongF.setBackground(Color.decode("#cccccc"));
+		sucChuaF.setBackground(Color.decode("#cccccc"));
+		tinhTrangF.setBackground(Color.decode("#cccccc"));
 		
 		thongTinPhongBox.add(tenPhongBox);
 		thongTinPhongBox.add(Box.createVerticalStrut(25));
@@ -166,7 +172,7 @@ public class DatTruocPhong extends JFrame{
 //		set Bottom pane
 		
 		bottomPanelLeft.add(quayLaiBtn = new ButtonGradient("Quay lại", imgBack));
-		bottomPanelRight.add(thuePhongBtn = new ButtonGradient("Đặt phòng", imgAdd));
+		bottomPanelRight.add(datPhongBtn = new ButtonGradient("Đặt phòng", imgAdd));
 		bottomPanelRight.setBackground(Color.decode("#e6dbd1"));
 		bottomPanelLeft.setBackground(Color.decode("#e6dbd1"));
 		bottomPanel.add(bottomPanelLeft);
@@ -174,7 +180,7 @@ public class DatTruocPhong extends JFrame{
 		
 		quayLaiBtn.setHorizontalAlignment(SwingConstants.RIGHT);
 		quayLaiBtn.setBackground(Color.decode("#6fa8dc"));
-		thuePhongBtn.setBackground(Color.decode("#6fa8dc"));
+		datPhongBtn.setBackground(Color.decode("#6fa8dc"));
 
 		//set tiêu đề
 		titlePanel.setBackground(Color.decode("#6fa8dc"));
@@ -187,5 +193,17 @@ public class DatTruocPhong extends JFrame{
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 		this.getContentPane().add(mainPanel);
 		this.setBackground(Color.decode("#e6dbd1"));
+		
+		quayLaiBtn.addActionListener(e -> this.dispose());
+		kiemTraBtn.addActionListener(e -> xuLyKiemTraSDT());
+		datPhongBtn.addActionListener(e -> xuLyDatPhongTruoc());
+	}
+	
+	private void xuLyKiemTraSDT() {
+		
+	}
+	
+	private void xuLyDatPhongTruoc() {
+		
 	}
 }

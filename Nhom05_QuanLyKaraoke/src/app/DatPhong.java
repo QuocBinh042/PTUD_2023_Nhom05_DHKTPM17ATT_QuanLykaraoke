@@ -299,6 +299,52 @@ public class DatPhong extends JPanel {
 		chiTietPBtn.addActionListener(e -> xuLyChiTietPhong());
 		dichVuPBtn.addActionListener(e -> xuLyDichVuPhong());
 		tinhTienPBtn.addActionListener(e -> xuLyTinhTien());
+		thoatBtn.addActionListener(e -> System.exit(0));
+		timKiemPBtn.addActionListener(e -> xuLyTimKiemPhong());
+		lamMoiBtn.addActionListener(e -> {
+			phongF.setText("");
+			giaPhongF.setText("");
+			phongF.requestFocus();
+		});
+		timKiemSDTBtn.addActionListener(e -> xuLyTimKiemSDT());
+		huyPBtn.addActionListener(e -> xyLyHuyPhongCho());
+		nhanPBtn.addActionListener(e -> xuLyNhanPhong());
+		tinhTrangB.addActionListener(e -> xuLyLocTheoTinhTrangPhong());
+		soNguoiB.addActionListener(e -> xuLyLocTheoSoNguoi());
+		loaiPhongB.addActionListener(e -> xuLyLocTheoLoaiPhong());
+		tinhTrangPhieuB.addActionListener(e -> xuLyLocTheoTinhTrangPDP());
+	}
+	
+	private void xuLyLocTheoTinhTrangPDP() {
+		
+	}
+	
+	private void xuLyLocTheoLoaiPhong() {
+		
+	}
+	
+	private void xuLyLocTheoSoNguoi() {
+		
+	}
+	
+	private void xuLyLocTheoTinhTrangPhong() {
+		
+	}
+	
+	private void xyLyHuyPhongCho() {
+		
+	}
+	
+	private void xuLyNhanPhong() {
+		
+	}
+	
+	private void xuLyTimKiemSDT () {
+		
+	}
+	
+	private void xuLyTimKiemPhong() {
+		
 	}
 	
 	private void xuLyThuePhong() {

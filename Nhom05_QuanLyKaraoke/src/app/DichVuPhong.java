@@ -169,5 +169,19 @@ public class DichVuPhong extends JFrame {
 		mainPane.add(topPane, BorderLayout.NORTH);
 		mainPane.add(bottomPane, BorderLayout.CENTER);
 		this.getContentPane().add(mainPane);
+		
+		btnQuayLai.addActionListener(e -> this.dispose());
+		btnThem.addActionListener(e -> xuLyThemDVPhong());
+		btnXoa.addActionListener(e -> xuLyXoaDVPhong());
 	}
+	
+	private void xuLyThemDVPhong() {
+		
+	}
+	
+	private void xuLyXoaDVPhong() {
+		
+	}
+ 	
+	
 }

@@ -277,5 +277,17 @@ public class TinhTien extends JFrame{
 		mainPane.add(topPane, BorderLayout.NORTH);
 		mainPane.add(bottomPane, BorderLayout.CENTER);
 		this.getContentPane().add(mainPane);
+		
+		btnQuayLai.addActionListener(e -> this.dispose());
+		btnThanhToan.addActionListener(e -> xuLyThanhToan());
+		btnInHD.addActionListener(e -> xuLyInHD());
+	}
+	
+	private void xuLyThanhToan() {
+		
+	}
+	
+	private void xuLyInHD() {
+		
 	}
 }

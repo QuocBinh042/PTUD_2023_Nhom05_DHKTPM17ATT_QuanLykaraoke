@@ -91,6 +91,12 @@ public class ThuePhong extends JFrame{
 		tinhTrangF.setBorder(null);
 		tinhTrangF.setEditable(false);
 		
+		tenPhongF.setBackground(Color.decode("#cccccc"));
+		loaiPhongF.setBackground(Color.decode("#cccccc"));
+		giaPhongF.setBackground(Color.decode("#cccccc"));
+		sucChuaF.setBackground(Color.decode("#cccccc"));
+		tinhTrangF.setBackground(Color.decode("#cccccc"));
+		
 		thongTinPhongBox.add(tenPhongBox);
 		thongTinPhongBox.add(Box.createVerticalStrut(25));
 		thongTinPhongBox.add(loaiPhongBox);
@@ -185,5 +191,17 @@ public class ThuePhong extends JFrame{
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 		this.getContentPane().add(mainPanel);
 		this.setBackground(Color.decode("#e6dbd1"));
+		
+		kiemTraBtn.addActionListener(e -> xuLyKiemTraSDT());
+		thuePhongBtn.addActionListener(e -> xuLyThuePhong());
+		quayLaiBtn.addActionListener(e -> this.dispose());
+	}
+	
+	private void xuLyKiemTraSDT() {
+		
+	}
+	
+	private void xuLyThuePhong() {
+		
 	}
 }

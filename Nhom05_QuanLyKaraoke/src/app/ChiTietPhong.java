@@ -322,5 +322,17 @@ public class ChiTietPhong extends JFrame {
 		mainPane.add(bottomPane, BorderLayout.CENTER);
 		mainPane.setBackground(Color.decode("#6fa8dc"));
 		this.getContentPane().add(mainPane);
+		
+		btnQuayLai.addActionListener(e -> this.dispose());
+		btnChuyenPhong.addActionListener(e -> xuLyChuyenPhong());
+		btnThemDV.addActionListener(e -> xuLyThemDVPhong());
+	}
+	
+	private void xuLyChuyenPhong() {
+		
+	}
+	
+	private void xuLyThemDVPhong() {
+		
 	}
 }
