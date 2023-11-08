@@ -156,6 +156,25 @@ INSERT INTO DichVu values(N'DV019', N'Chả giò', 30000, 40000, N'Dĩa', 70, 2)
 INSERT INTO DichVu values(N'DV020', N'6 lon bia Heineken Silver 330ml', 120000, 150000, N'Lốc', 40, 1)
 --Xem toan bo DichVu
 select *from DichVu
+--Insert DichVu
+insert into DichVu (MaDV,TenDV,DonGiaNhap,DonGiaBan,DonViTinh,SoLuongTonKho,TinhTrangDV) values(N'DV021',N'Trái cây dĩa',50000,70000,N'Dĩa',100,1)
+insert into DichVu values(N'DV021',N'Trái cây dĩa',50000,70000,N'Dĩa',100,1)
+--Update DichVu
+update DichVu 
+set TenDV = N'Khăn giấy', DonGiaNhap = 2000, DonGiaBan = 5000, DonViTinh = N'Cái', SoLuongTonKho = 100
+where MaDV = N'DV001'
+--Delete DichVu
+delete from DichVu where MaDV = N'DV021'
+--Loc theo tinh trang (0: het, 1: sap het; 2: con; 3 da xoa)
+select *from DichVu
+where TinhTrangDV != 3
+-- Tim dich vu theo ten
+select *from DichVu
+where TenDV like N'Bia'
+--Xoa dich vu
+delete from DichVu where MaDV = N'DV022'
+--Lay toan bo ten dich vu
+select TenDV from DichVu
 
 
 --------------------------------KHACH HANG-----------------------------------------------
