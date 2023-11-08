@@ -5,24 +5,41 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import connectDB.ConnectDB;
+import dao.daoDichVu;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class DichVu extends JPanel implements MouseListener {
 
 	private JLabel lblTenDichVu, lblDonGiaNhap, lblDonGiaBan, lblDonVi, lblSoLuong, lblTinhTrang, lblLocTinhTrang,
 			lblTimDV;
-	private JTextField txtTenDichVu, txtDonGiaNhap, txtDonGiaBan, txtDonVi, txtSoLuong, txtTimDV, txtThongBaoLoi;
+	private JTextField txtTenDichVu, txtDonGiaNhap, txtDonGiaBan, txtDonVi, txtSoLuong, txtTimDV;
 	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnTim;
 	private JComboBox cbTinhTrang;
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private Box bLeft, bRight;
+	private ArrayList<entity.DichVu> dsDichVu;
+	private daoDichVu daoDV;
+	private DecimalFormat formatter = new DecimalFormat("###,###,###");
+	private static int maDVTT = 0;
 
 	public DichVu() {
+
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		daoDV = new daoDichVu();
 
 		Icon img_add = new ImageIcon("src/img/add2.png");
 		Icon img_del = new ImageIcon("src/img/del.png");
@@ -119,11 +136,12 @@ public class DichVu extends JPanel implements MouseListener {
 		bTacVu.add(Box.createHorizontalStrut(200));
 		// Panel Loc
 		JPanel pnlLoc = new JPanel();
+		String []cbTT = {"Tất cả", "Còn hàng", "Hết", "Sắp hết", "Đã xóa"};
 		pnlLoc.setBackground(Color.decode("#cccccc"));
 		pnlLoc.setBorder(BorderFactory.createTitledBorder(line, "Lọc"));
 		pnlLoc.add(lblTinhTrang = new JLabel("Tình trạng"));
 		pnlLoc.add(Box.createHorizontalStrut(30));
-		pnlLoc.add(cbTinhTrang = new JComboBox<>());
+		pnlLoc.add(cbTinhTrang = new JComboBox<>(cbTT));
 		cbTinhTrang.setPreferredSize(new Dimension(150, 25));
 		bTacVu.add(pnlLoc);
 		bTacVu.add(Box.createHorizontalStrut(150));
@@ -155,12 +173,6 @@ public class DichVu extends JPanel implements MouseListener {
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table1.add(scroll);
-		String[] row1 = "DV001;Khăn lạnh;3000;5000;Cái;200;Còn hàng".split(";");
-		String[] row2 = "DV002;Khô gà;30000;50000;Gói;100;Còn hàng".split(";");
-		String[] row3 = "DV003;Nước lọc;4000;10000;Chai;200;Còn hàng".split(";");
-		tableModel.addRow(row1);
-		tableModel.addRow(row2);
-		tableModel.addRow(row3);
 
 		// set color
 		pnlTacVu.setBackground(Color.decode("#e6dbd1"));
@@ -175,6 +187,7 @@ public class DichVu extends JPanel implements MouseListener {
 		this.add(pnlRight, BorderLayout.CENTER);
 
 		// add event button
+		layToanBoDV();
 		table.addMouseListener(this);
 		btnThemMoi.addActionListener(e -> xuLyThemMoi());
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
@@ -182,22 +195,45 @@ public class DichVu extends JPanel implements MouseListener {
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
 		btnThoat.addActionListener(e -> xuLyThoat());
 		btnTim.addActionListener(e -> xuLyTimKiem());
+		cbTinhTrang.addActionListener(e -> xuLyCBTinhTrang());
+		txtTimDV.addActionListener(e -> xuLyGoiY());
 	}
 
-	// Xu ly them moi
-	private void xuLyThemMoi() {
+	// Xu ly kiem tra thong tin day du
+	private boolean kiemTraThongTin() {
 		String tenDV = txtTenDichVu.getText();
 		String donVi = txtDonVi.getText();
 		String donGiaNhap = txtDonGiaNhap.getText();
 		String donGiaBan = txtDonGiaBan.getText();
 		String soLuong = txtSoLuong.getText();
-		String[] row3 = { "DV001", tenDV, donGiaNhap, donGiaBan, donVi, soLuong, "Còn hàng" };
-		int kt = kiemTraThongTin();
-		if (kt == 1) {
+		if (tenDV.trim().equals("") || donVi.trim().equals("") || donGiaNhap.trim().equals("")
+				|| donGiaBan.trim().equals("") || soLuong.trim().equals("")) {
+			return false;
+		}
+		return true;
+	}
+
+	// Xu ly them moi
+	private void xuLyThemMoi() {
+		if (kiemTraThongTin()) {
+			maDVTT = daoDV.getAllDichVu().size() + 1;
+			String maDV = "DV0" + maDVTT;
+			String tenDV = txtTenDichVu.getText();
+			String donVi = txtDonVi.getText();
+			double donGiaNhap = Double.valueOf(txtDonGiaNhap.getText());
+			double donGiaBan = Double.valueOf(txtDonGiaBan.getText());
+			int soLuong = Integer.valueOf(txtSoLuong.getText());
+			int tinhTrang = 1;
+			entity.DichVu dv = new entity.DichVu(maDV, tenDV, donGiaNhap, donGiaBan, donVi, soLuong, tinhTrang);
 			int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thêm mới dịch vụ không ?", "Chú ý!",
 					JOptionPane.YES_OPTION);
 			if (i == JOptionPane.YES_OPTION) {
-				tableModel.addRow(row3);
+				if (daoDV.add(dv)) {
+					String[] row = { maDV, tenDV, donGiaNhap + "", donGiaBan + "", donVi, soLuong + "",
+							tinhTrang + "" };
+					tableModel.addRow(row);
+					JOptionPane.showMessageDialog(null, "Thêm mới dịch vụ thành công!");
+				}
 			}
 
 		} else {
@@ -205,27 +241,40 @@ public class DichVu extends JPanel implements MouseListener {
 		}
 	}
 
-	// Xu ly cap nhat
+	// Xu ly cap nhat(0: het, 1: sap het; 2: con; 3 da xoa)
 	private void xuLyCapNhat() {
 		int r = table.getSelectedRow();
-		int kt = kiemTraThongTin();
+		int tinhTrang = 0;
+		if (table.getValueAt(r, 6).equals("Còn hàng")) {
+			tinhTrang = 2;
+		} else if (table.getValueAt(r, 6).equals("Hết")) {
+			tinhTrang = 0;
+		} else if (table.getValueAt(r, 6).equals("Sắp hết")) {
+			tinhTrang = 1;
+		} else if (table.getValueAt(r, 6).equals("Đã xóa")) {
+			tinhTrang = 3;
+		}
 		if (r != -1) {
-			if (kt == 1) {
+			if (kiemTraThongTin()) {
 				int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật dịch vụ không ?", "Chú ý!",
 						JOptionPane.YES_NO_OPTION);
 				if (i == JOptionPane.YES_OPTION) {
 					String tenDV = txtTenDichVu.getText();
 					String donVi = txtDonVi.getText();
-					String donGiaNhap = txtDonGiaNhap.getText();
-					String donGiaBan = txtDonGiaBan.getText();
-					String soLuong = txtSoLuong.getText();
+					double donGiaNhap = Double.valueOf(txtDonGiaNhap.getText());
+					double donGiaBan = Double.valueOf(txtDonGiaBan.getText());
+					int soLuong = Integer.valueOf(txtSoLuong.getText());
 					table.setValueAt(tenDV, r, 1);
 					table.setValueAt(donGiaNhap, r, 2);
 					table.setValueAt(donGiaBan, r, 3);
 					table.setValueAt(donVi, r, 4);
 					table.setValueAt(soLuong, r, 5);
+					entity.DichVu dv = new entity.DichVu((String) table.getValueAt(r, 0), tenDV, donGiaNhap, donGiaBan,
+							donVi, soLuong, tinhTrang);
+					daoDV.updateGia(dv);
+					JOptionPane.showMessageDialog(null, "Cập nhật thông tin dịch vụ thành công!");
 				}
-			}else {
+			} else {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin dịch vụ!");
 			}
 
@@ -241,15 +290,20 @@ public class DichVu extends JPanel implements MouseListener {
 		txtDonGiaNhap.setText("");
 		txtDonGiaBan.setText("");
 		txtSoLuong.setText("");
+		txtTimDV.setText("");
+		cbTinhTrang.setSelectedIndex(0);
 	}
 
 	// Xu ly xoa
 	private void xuLyXoa() {
 		int row = table.getSelectedRow();
 		if (row != -1) {
-			int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa dịch vụ này không ?", "Chú ý!", JOptionPane.YES_NO_OPTION);
+			int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa dịch vụ này không ?", "Chú ý!",
+					JOptionPane.YES_NO_OPTION);
 			if (i == JOptionPane.YES_OPTION) {
+				daoDV.delete(table.getValueAt(row, 0).toString());
 				tableModel.removeRow(row);
+				JOptionPane.showMessageDialog(null, "Xóa dịch vụ thành công!");
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ cần xóa!");
@@ -271,51 +325,96 @@ public class DichVu extends JPanel implements MouseListener {
 		int n = 0;
 		String d = "";
 		for (int i = 0; i < table.getRowCount(); i++) {
-			if (table.getValueAt(i, 0).toString().equalsIgnoreCase(maDVTim)) {
+			if (table.getValueAt(i, 1).toString().equalsIgnoreCase(maDVTim)) {
 				table.setRowSelectionInterval(i, i);
 				n = 1;
 			}
 		}
 		if (n == 1) {
-			JOptionPane.showMessageDialog(null, "Tìm thấy mã dịch vụ!");
+			JOptionPane.showMessageDialog(null, "Dịch vụ được tìm thấy!");
 		} else {
-			JOptionPane.showMessageDialog(null, "Mã dịch vụ không tồn tại!");
+			JOptionPane.showMessageDialog(null, "Dịch vụ không tồn tại!");
 		}
 	}
 
-	// Xu ly kiem tra thong tin day du
-	private int kiemTraThongTin() {
-		String tenDV = txtTenDichVu.getText();
-		String donVi = txtDonVi.getText();
-		String donGiaNhap = txtDonGiaNhap.getText();
-		String donGiaBan = txtDonGiaBan.getText();
-		String soLuong = txtSoLuong.getText();
-		if (tenDV.equals("") || donVi.equals("") || donGiaNhap.equals("") || donGiaBan.equals("")
-				|| soLuong.equals("")) {
-			return -1;
+	// Lay toan bo dich vu
+	private void layToanBoDV() {
+		dsDichVu = daoDV.getAllDichVu();
+		for (entity.DichVu dv : dsDichVu) {
+			String tinhTrang = ""; // (0: het, 1: sap het; 2: con; 3 da xoa)
+			if (dv.getTinhTrang() == 0) {
+				tinhTrang = "Hết";
+			} else if (dv.getTinhTrang() == 1) {
+				tinhTrang = "Sắp hết";
+			} else if (dv.getTinhTrang() == 2) {
+				tinhTrang = "Còn hàng";
+			} else if (dv.getTinhTrang() == 3) {
+				tinhTrang = "Đã xóa";
+			}
+			tableModel.addRow(
+					new Object[] { dv.getMaDichVu(), dv.getTenDichVu(), formatter.format(dv.getDonGiaNhap()) + " VNĐ",
+							formatter.format(dv.getDonGiaBan()) + " VNĐ", dv.getDonVi(), dv.getSoLuong(), tinhTrang });
+			locDVDaXoa();
 		}
-		return 1;
 	}
 
-	// Xu ly bo tron button
-	private static class RoundedBorder implements Border {
+	// Loc dich vu trang thai da xoa
+	private void locDVDaXoa() {
+		for (int i = 0; i < tableModel.getRowCount(); i++) {
+			String tt = table.getValueAt(i, 6).toString();
+			if (tt.equalsIgnoreCase("Đã xóa")) {
+				tableModel.removeRow(i);
+			}
+		}
+	}
 
-		private int radius;
-
-		RoundedBorder(int radius) {
-			this.radius = radius;
+	// Xoa toan bo dich vu
+	private void xoaToanBoDV() {
+		DefaultTableModel dm = (DefaultTableModel) table.getModel();
+		while (dm.getRowCount() > 0) {
+			dm.removeRow(0);
 		}
 
-		public Insets getBorderInsets(Component c) {
-			return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+	}
+
+	// Xu ly combo tinh trang
+	private void xuLyCBTinhTrang() {
+		xoaToanBoDV();
+		String tt = cbTinhTrang.getSelectedItem().toString();
+		dsDichVu = daoDV.getDichVuCB(tt);
+		for (entity.DichVu dv : dsDichVu) {
+			String tinhTrang = ""; // (0: het, 1: sap het; 2: con; 3 da xoa)
+			if (dv.getTinhTrang() == 0) {
+				tinhTrang = "Hết";
+			} else if (dv.getTinhTrang() == 1) {
+				tinhTrang = "Sắp hết";
+			} else if (dv.getTinhTrang() == 2) {
+				tinhTrang = "Còn hàng";
+			} else if (dv.getTinhTrang() == 3) {
+				tinhTrang = "Đã xóa";
+			}
+			tableModel.addRow(
+					new Object[] { dv.getMaDichVu(), dv.getTenDichVu(), formatter.format(dv.getDonGiaNhap()) + " VNĐ",
+							formatter.format(dv.getDonGiaBan()) + " VNĐ", dv.getDonVi(), dv.getSoLuong(), tinhTrang });
 		}
 
-		public boolean isBorderOpaque() {
-			return true;
-		}
+	}
 
-		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-			g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+	// Xu ly goi y
+	private void xuLyGoiY() {
+		dsDichVu = daoDV.getAllDichVu();
+		String tenDV = "";
+		for (entity.DichVu dv : dsDichVu) {
+			tenDV += dv.getTenDichVu().toString() + ";";
+		}
+		String[] data = tenDV.split(";");
+		String searchTerm = txtTimDV.getText().toLowerCase();
+		txtTimDV.setText(""); // Xóa gợi ý trước đó
+		for (String suggestion : data) {
+			if (suggestion.toLowerCase().contains(searchTerm)) {
+				txtTimDV.setText(suggestion);
+				break; // Dừng sau khi tìm thấy một dòng gợi ý
+			}
 		}
 	}
 
