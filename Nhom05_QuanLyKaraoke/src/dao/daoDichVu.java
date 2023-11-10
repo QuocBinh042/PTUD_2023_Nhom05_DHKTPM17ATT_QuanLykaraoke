@@ -23,7 +23,7 @@ public class daoDichVu {
 			ResultSet rs = statement.executeQuery(sql);
 			while (rs.next()) {
 				dsDichVu.add(new DichVu(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4),
-						rs.getString(5), rs.getInt(6), rs.getInt(7)));
+						rs.getString(5), rs.getInt(6), rs.getString(7)));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -37,16 +37,16 @@ public class daoDichVu {
 		ConnectDB.getInstance();
 		Connection connect = ConnectDB.getConnection();
 		String sql = "";
-		if (tinhTrang.equalsIgnoreCase("Hết")) {
-			sql = "select *from DichVu\r\n" + "where TinhTrangDV = 0";
-		} else if (tinhTrang.equalsIgnoreCase("Sắp hết")) {
-			sql = "select *from DichVu\r\n" + "where TinhTrangDV = 1";
+		if (tinhTrang.equalsIgnoreCase("Hết hàng")) {
+			sql = "select *from DichVu\r\n" + "where TinhTrangDV like N'Hết hàng'";
+		} else if (tinhTrang.equalsIgnoreCase("Sắp hết hàng")) {
+			sql = "select *from DichVu\r\n" + "where TinhTrangDV like N'Sắp hết hàng'";
 		} else if (tinhTrang.equalsIgnoreCase("Còn hàng")) {
-			sql = "select *from DichVu\r\n" + "where TinhTrangDV = 2";
+			sql = "select *from DichVu\r\n" + "where TinhTrangDV like N'Còn hàng'";
 		} else if (tinhTrang.equalsIgnoreCase("Đã xóa")) {
-			sql = "select *from DichVu\r\n" + "where TinhTrangDV = 3";
+			sql = "select *from DichVu\r\n" + "where TinhTrangDV like N'Đã xóa'";
 		} else if (tinhTrang.equalsIgnoreCase("Tất cả")) {
-			sql = "select *from DichVu\r\n" + "where TinhTrangDV != 3";
+			sql = "select *from DichVu\r\n" + "where TinhTrangDV not like N'Đã xóa'";
 		}
 		try {
 
@@ -54,7 +54,7 @@ public class daoDichVu {
 			ResultSet rs = statement.executeQuery(sql);
 			while (rs.next()) {
 				dsDichVu.add(new DichVu(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4),
-						rs.getString(5), rs.getInt(6), rs.getInt(7)));
+						rs.getString(5), rs.getInt(6), rs.getString(7)));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,7 +77,7 @@ public class daoDichVu {
 			stm.setDouble(4, dv.getDonGiaBan());
 			stm.setString(5, dv.getDonVi());
 			stm.setInt(6, dv.getSoLuong());
-			stm.setInt(7, dv.getTinhTrang());
+			stm.setString(7, dv.getTinhTrang());
 			System.out.println(stm);
 			stm.executeUpdate();
 		} catch (Exception e) {
