@@ -9,14 +9,14 @@ public class DichVu {
 	private double donGiaBan;
 	private String donVi;
 	private int soLuong;
-	private int tinhTrang; // (0: het, 1: sap het; 2: con; 3 da xoa)
+	private String tinhTrang; // (0: het, 1: sap het; 2: con; 3 da xoa)
 
 	public DichVu() {
-		this("", "", 0, 0, "", 0, 0);
+		this("", "", 0, 0, "", 0, "");
 	}
 
 	public DichVu(String maDichVu, String tenDichVu, double donGiaNhap, double donGiaBan, String donVi, int soLuong,
-			int tinhTrang) {
+			String tinhTrang) {
 		this.maDichVu = maDichVu;
 		this.tenDichVu = tenDichVu;
 		this.donGiaNhap = donGiaNhap;
@@ -74,11 +74,11 @@ public class DichVu {
 		this.soLuong = soLuong;
 	}
 
-	public int getTinhTrang() {
+	public String getTinhTrang() {
 		return tinhTrang;
 	}
 
-	public void setTinhTrang(int tinhTrang) {
+	public void setTinhTrang(String tinhTrang) {
 		this.tinhTrang = tinhTrang;
 	}
 
