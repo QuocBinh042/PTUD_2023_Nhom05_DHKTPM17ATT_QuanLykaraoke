@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -23,6 +25,9 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+import connectDB.ConnectDB;
+import dao.daoLoaiPhong;
+
 public class LoaiPhong extends JFrame implements MouseListener {
 	private JTextField txtSucChua, txtGiaLP;
 	private JLabel lblTenLP, lblsucChua, lblGiaLP, lblLocTenLP, lblLocSC;
@@ -30,8 +35,19 @@ public class LoaiPhong extends JFrame implements MouseListener {
 	private JComboBox cbTenLP, cbSucChua, cbLocTP;
 	private JTable table;
 	private DefaultTableModel tableModel;
+	private ArrayList<entity.LoaiPhong> dsLP;
+	private daoLoaiPhong daoLP;
+	private DecimalFormat formatter = new DecimalFormat("###,###,###");
 
 	public LoaiPhong() {
+		
+		try {
+			ConnectDB.getInstance().connect();;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		daoLP = new daoLoaiPhong();
+		
 		setSize(780, 350);
 		setTitle("Quản lý loại phòng");
 		setLocationRelativeTo(null);
@@ -137,18 +153,6 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table1.add(scroll);
-		String[] row1 = "LP001;Phòng thường;10;100000".split(";");
-		String[] row2 = "LP002;Phòng thường;15;120000".split(";");
-		String[] row3 = "LP003;Phòng thường;20;150000".split(";");
-		String[] row4 = "LP004;Phòng thường;20;150000".split(";");
-		String[] row5 = "LP005;Phòng VIP;15;200000".split(";");
-		String[] row6 = "LP006;Phòng VIP;20;250000".split(";");
-		tableModel.addRow(row1);
-		tableModel.addRow(row2);
-		tableModel.addRow(row3);
-		tableModel.addRow(row4);
-		tableModel.addRow(row5);
-		tableModel.addRow(row6);
 
 		// set color
 		pnlTacVu.setBackground(Color.decode("#e6dbd1"));
@@ -163,6 +167,7 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		this.add(pnlRight, BorderLayout.CENTER);
 
 		// add event
+		layToanBoLP();
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
 		btnThem.addActionListener(e -> xuLyThemMoi());
 		btnQuayLai.addActionListener(e -> xuLyQuayLai());
@@ -170,6 +175,13 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		table.addMouseListener(this);
 
 	}
+	//Lay toan bo loai phong
+			private void layToanBoLP() {
+				dsLP = daoLP.getAllLoaiPhong();
+				for(entity.LoaiPhong lp : dsLP) {
+					tableModel.addRow(new Object[] {lp.getMaLoaiPhong(), lp.getTenLoaiPhong(), lp.getSucChua(), formatter.format(lp.getGiaLoaiPhong())+" VNĐ"});
+				}
+			}
 
 	// Xu ly them moi
 	private void xuLyThemMoi() {
