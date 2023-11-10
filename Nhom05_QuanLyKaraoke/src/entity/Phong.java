@@ -9,15 +9,15 @@ public class Phong {
 	private String loaiPhong;
 	private int sucChua;
 	private double giaPhong;
-	private int tinhTrang; // (0: con trong, 1: dang thue, 2: da dat truoc, 3: da xoa)
+	private String tinhTrang; // (0: con trong, 1: dang thue, 2: da dat truoc, 3: da xoa)
 	private String moTa;
 
 	public Phong() {
-		this("", "", "", "", 0, 0, 0, "");
+		this("", "", "", "", 0, 0, "", "");
 	}
 
 	public Phong(String maPhong, String tenPhong, String maLP, String loaiPhong, int sucChua, double giaPhong,
-			int tinhTrang, String moTa) {
+			String tinhTrang, String moTa) {
 		this.maPhong = maPhong;
 		this.tenPhong = tenPhong;
 		this.maLP = maLP;
@@ -76,11 +76,11 @@ public class Phong {
 		this.giaPhong = giaPhong;
 	}
 
-	public int getTinhTrang() {
+	public String getTinhTrang() {
 		return tinhTrang;
 	}
 
-	public void setTinhTrang(int tinhTrang) {
+	public void setTinhTrang(String tinhTrang) {
 		this.tinhTrang = tinhTrang;
 	}
 
