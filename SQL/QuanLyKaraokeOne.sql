@@ -14,7 +14,7 @@ create table DichVu(
 	DonGiaBan float not null,
 	DonViTinh nvarchar(20),
 	SoLuongTonKho int,
-	--TinhTrangDV (0: het, 1: sap het; 2: con; 3 da xoa)
+	--TinhTrangDV (Co 4 loai: Con hang(SL>10), sap het hang(10>SL>0), het hang(SL=0), da xoa(SL=0))
 	TinhTrangDV nvarchar(20) not null
 )
 go
@@ -178,27 +178,27 @@ select *from Phong
 
 --------------------------------DICH VU-----------------------------------------------
 --INSERT INTO DichVu(MaDV, TenDV, DonGiaNhap, DonGiaBan, DonViTinh, SoLuongTonKho, TinhTrangDV) 
---TinhTrangDV (0: het, 1: sap het; 2: con; 3 da xoa)
-INSERT INTO DichVu values(N'DV001', N'Khăn giấy', 3000, 5000, N'Bịch', 200, N'Còn')
-INSERT INTO DichVu values(N'DV002', N'Bia Heineken 330ml', 21000, 26000, N'Lon', 50, N'Sắp hết')
-INSERT INTO DichVu values(N'DV003', N'Coca cola', 10000, 15000, N'Lon', 70, N'Sắp hết')
-INSERT INTO DichVu values(N'DV004', N'Trái cây dĩa', 60000, 70000, N'Dĩa', 1, N'Hết')
-INSERT INTO DichVu values(N'DV005', N'Khăn giấy ướt', 5000, 8000, N'Bịch', 100, N'Còn')
-INSERT INTO DichVu values(N'DV006', N'Cocktail', 40000, 50000, N'Lon', 2, N'Còn')
-INSERT INTO DichVu values(N'DV007', N'Cà phê sữa đá', 15000, 18000, N'Ly', 100, N'Còn')
-INSERT INTO DichVu values(N'DV008', N'Đậu phộng', 16000, 20000, N'Bịch', 45, N'Sắp hết')
-INSERT INTO DichVu values(N'DV009', N'Bia Tiger 500ml ', 27000, 35000, N'Lon', 60, N'Sắp hết')
-INSERT INTO DichVu values(N'DV010', N'Cơm chiên hải sản', 30000, 40000, N'Dĩa', 1, N'Hết')
+--TinhTrangDV (Co 4 loai: Con hang(SL>10), sap het hang(10>SL>0), het hang(SL=0), da xoa(SL=0))
+INSERT INTO DichVu values(N'DV001', N'Khăn giấy', 3000, 5000, N'Bịch', 200, N'Còn hàng')
+INSERT INTO DichVu values(N'DV002', N'Bia Heineken 330ml', 21000, 26000, N'Lon', 100, N'Còn hàng')
+INSERT INTO DichVu values(N'DV003', N'Coca cola', 10000, 15000, N'Lon', 7, N'Sắp hết hàng')
+INSERT INTO DichVu values(N'DV004', N'Trái cây dĩa', 60000, 70000, N'Dĩa', 0, N'Hết hàng')
+INSERT INTO DichVu values(N'DV005', N'Khăn giấy ướt', 5000, 8000, N'Bịch', 100, N'Còn hàng')
+INSERT INTO DichVu values(N'DV006', N'Cocktail', 40000, 50000, N'Lon', 50, N'Còn hàng')
+INSERT INTO DichVu values(N'DV007', N'Cà phê sữa đá', 15000, 18000, N'Ly', 70, N'Còn hàng')
+INSERT INTO DichVu values(N'DV008', N'Đậu phộng', 16000, 20000, N'Bịch', 5, N'Sắp hết')
+INSERT INTO DichVu values(N'DV009', N'Bia Tiger 500ml ', 27000, 35000, N'Lon', 100, N'Còn hàng')
+INSERT INTO DichVu values(N'DV010', N'Cơm chiên hải sản', 30000, 40000, N'Dĩa', 3, N'Sắp hết hàng')
 INSERT INTO DichVu values(N'DV011', N'Sụn gà rang muối', 35000, 40000, N'Dĩa', 0, N'Đã xóa')
-INSERT INTO DichVu values(N'DV012', N'Nước suối Aquafina 500ml', 4000, 7000, N'Chai', 150, N'Còn')
-INSERT INTO DichVu values(N'DV013', N'Mì xào hải sản', 30000, 40000, N'Dĩa', 20, N'Sắp hết')
-INSERT INTO DichVu values(N'DV014', N'Thùng 24 lon bia Hà Nội 330ml', 282000, 315000, N'Thùng', 30, N'Sắp hết')
+INSERT INTO DichVu values(N'DV012', N'Nước suối Aquafina 500ml', 4000, 7000, N'Chai', 150, N'Còn hàng')
+INSERT INTO DichVu values(N'DV013', N'Mì xào hải sản', 30000, 40000, N'Dĩa', 8, N'Sắp hết hàng')
+INSERT INTO DichVu values(N'DV014', N'Thùng 24 lon bia Hà Nội 330ml', 282000, 315000, N'Thùng', 30, N'Còn hàng')
 INSERT INTO DichVu values(N'DV015', N'Đậu hũ xóc tỏi ớt', 25000, 35000, N'Dĩa', 30, N'Sắp hết')
-INSERT INTO DichVu values(N'DV016', N'Bia Sài Gòn Chill 330ml dạng lốc 6 lon', 102000, 130000, N'Lốc', 1, N'Hết')
-INSERT INTO DichVu values(N'DV017', N'Xúc xích nướng tiêu', 35000, 45000, N'Dĩa', 100, N'Còn')
+INSERT INTO DichVu values(N'DV016', N'Bia Sài Gòn Chill 330ml dạng lốc 6 lon', 102000, 130000, N'Lốc', 0, N'Hết hàng')
+INSERT INTO DichVu values(N'DV017', N'Xúc xích nướng tiêu', 35000, 45000, N'Dĩa', 100, N'Còn hàng')
 INSERT INTO DichVu values(N'DV018', N'Bia Huda 330ml', 11000, 15000, N'Lon', 0, N'Đã xóa')
-INSERT INTO DichVu values(N'DV019', N'Chả giò', 30000, 40000, N'Dĩa', 70, N'Còn')
-INSERT INTO DichVu values(N'DV020', N'6 lon bia Heineken Silver 330ml', 120000, 150000, N'Lốc', 40, N'Sắp hết')
+INSERT INTO DichVu values(N'DV019', N'Chả giò', 30000, 40000, N'Dĩa', 20, N'Còn hàng')
+INSERT INTO DichVu values(N'DV020', N'6 lon bia Heineken Silver 330ml', 120000, 150000, N'Lốc', 40, N'Còn hàng')
 --Xem toan bo DichVu
 select *from DichVu
 --Insert DichVu
@@ -212,7 +212,7 @@ where MaDV = N'DV001'
 delete from DichVu where MaDV = N'DV021'
 --Loc theo tinh trang (0: het, 1: sap het; 2: con; 3 da xoa)
 select *from DichVu
-where TinhTrangDV != 3
+where TinhTrangDV not like N'Đã xóa'
 -- Tim dich vu theo ten
 select *from DichVu
 where TenDV like N'Bia'
