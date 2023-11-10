@@ -5,11 +5,16 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import connectDB.ConnectDB;
+import dao.daoLoaiPhong;
+import dao.daoPhong;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class Phong extends JPanel implements MouseListener {
 
@@ -22,8 +27,22 @@ public class Phong extends JPanel implements MouseListener {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private LoaiPhong quanlyLP;
+	private daoPhong daoPhong;
+	private ArrayList<entity.Phong> dsPhong;
+	private ArrayList<entity.LoaiPhong> dsLP;
+	private daoLoaiPhong daoLP;
 
 	public Phong() {
+
+		try {
+			ConnectDB.getInstance().connect();
+			;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		daoPhong = new daoPhong();
+		daoLP = new daoLoaiPhong();
+
 		Icon img_add = new ImageIcon("src/img/add2.png");
 		Icon img_del = new ImageIcon("src/img/del.png");
 		Icon img_reset = new ImageIcon("src/img/refresh.png");
@@ -56,11 +75,16 @@ public class Phong extends JPanel implements MouseListener {
 		bLeft.add(Box.createVerticalStrut(10));
 
 		JPanel pnlMaLP = new JPanel();
+		// Lay danh sach MaLP do vao comboBox
+		String ds = "";
+		dsLP = daoLP.getAllLoaiPhong();
+		for (entity.LoaiPhong lp : dsLP) {
+			ds += lp.getMaLoaiPhong().toString() + ";";
+		}
+		String[] cb = ds.split(";");
 		pnlMaLP.setBackground(Color.decode("#cccccc"));
 		pnlMaLP.add(lblMaLoaiPhong = new JLabel("Mã loại phòng"));
-		pnlMaLP.add(cbMaLoaiPhong = new JComboBox<>());
-		cbMaLoaiPhong.addItem("LP001");
-		cbMaLoaiPhong.addItem("LP002");
+		pnlMaLP.add(cbMaLoaiPhong = new JComboBox<>(cb));
 		bLeft.add(b2 = Box.createHorizontalBox());
 		b2.add(pnlMaLP);
 		bLeft.add(Box.createVerticalStrut(10));
@@ -152,6 +176,8 @@ public class Phong extends JPanel implements MouseListener {
 		bTacVu.add(Box.createHorizontalStrut(200));
 		// Panel Loc
 		JPanel pnlLoc = new JPanel();
+		String cbtt[] = {"Tất cả","Còn trống","Đã đặt trước","Đang thuê", "Đã xóa"};
+		String cblp[] = {"Tất cả","Thường","VIP"};
 		pnlLoc.setBackground(Color.decode("#cccccc"));
 		GridLayout gridLoc = new GridLayout(2, 2);
 		Dimension dmsBtnLoc = new Dimension(120, 25);
@@ -159,12 +185,10 @@ public class Phong extends JPanel implements MouseListener {
 		pnlLoc.setLayout(gridLoc);
 		pnlLoc.setBorder(BorderFactory.createTitledBorder(line, "Lọc"));
 		pnlLoc.add(lblTinhTrang = new JLabel("Tình trạng"));
-		pnlLoc.add(cbTinhTrang = new JComboBox<>());
-		cbTinhTrang.addItem("Còn trống");
+		pnlLoc.add(cbTinhTrang = new JComboBox<>(cbtt));
 		cbTinhTrang.setPreferredSize(dmsBtnLoc);
 		pnlLoc.add(lblLoaiPhong = new JLabel("Loại phòng"));
-		pnlLoc.add(cbLoaiPhong = new JComboBox<>());
-		cbLoaiPhong.addItem("VIP");
+		pnlLoc.add(cbLoaiPhong = new JComboBox<>(cblp));
 		cbLoaiPhong.setPreferredSize(dmsBtnLoc);
 		bTacVu.add(pnlLoc);
 		bTacVu.add(Box.createHorizontalStrut(200));
@@ -197,12 +221,6 @@ public class Phong extends JPanel implements MouseListener {
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table1.add(scroll);
-		String[] row = "P001;Phòng gia đình;LP001;LP001;15;200000;Còn trống;Phòng có âm thanh 5.0".split(";");
-		String[] row1 = "P002;Phòng gia đình;LP002;LP002;15;200000;Còn trống;Phòng có âm thanh 5.0".split(";");
-		String[] row2 = "P003;Phòng gia đình;LP003;LP002;15;200000;Còn trống;Phòng có âm thanh 5.0".split(";");
-		tableModel.addRow(row);
-		tableModel.addRow(row1);
-		tableModel.addRow(row2);
 
 		// set color
 		pnlTacVu.setBackground(Color.decode("#e6dbd1"));
@@ -215,7 +233,10 @@ public class Phong extends JPanel implements MouseListener {
 		this.setLayout(new BorderLayout());
 		this.add(pnlLeft, BorderLayout.WEST);
 		this.add(pnlRight, BorderLayout.CENTER);
+		
+		
 		// add event button
+		layToanBoPhong();
 		btnQuanLyChiTiet.addActionListener(e -> xuLyChuyen());
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
 		btnThemMoi.addActionListener(e -> xuLyThemMoi());
@@ -226,7 +247,26 @@ public class Phong extends JPanel implements MouseListener {
 		table.addMouseListener(this);
 
 	}
+	//Lay toan bo phong tu loai phong
+	private void layToanBoPhong() {
+		dsPhong = daoPhong.getAllPhong();
+		for (entity.Phong p : dsPhong) {
+			tableModel.addRow(new Object[] { p.getMaPhong(), p.getTenPhong(), p.getMaLP(), p.getLoaiPhong(),
+					p.getSucChua(), p.getGiaPhong(), p.getTinhTrang(), p.getMoTa() });
+		}
+		locPhongDaXoa();
+	}
 
+	// Loc dich vu trang thai da xoa
+	private void locPhongDaXoa() {
+		for (int i = 0; i < tableModel.getRowCount(); i++) {
+			String tt = table.getValueAt(i, 6).toString();
+			if (tt.equalsIgnoreCase("Đã xóa")) {
+				tableModel.removeRow(i);
+			}
+		}
+	}
+	
 	// Xu ly them moi
 	private void xuLyThemMoi() {
 		String tenLP = txtTenPhong.getText();
