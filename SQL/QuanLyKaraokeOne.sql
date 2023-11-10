@@ -133,6 +133,31 @@ go
 -----------Insert data
 
 
+----------------------------KHUYEN MAI---------------------------------------------------
+--INSERT INTO KhuyenMai(MaKhuyenMai, PhanTramGiam, NgayBatDau, NgayKetThuc, MoTa, TrangThaiKM)
+INSERT INTO KhuyenMai values(N'KM001', 20, '2022/06/20', '2022/06/26', '', 1)
+INSERT INTO KhuyenMai values(N'KM002', 10, '2022/03/15', '2022/03/18', '', 1)
+INSERT INTO KhuyenMai values(N'KM003', 15, '2022/10/15', '2022/10/20', '', 1)
+INSERT INTO KhuyenMai values(N'KM004', 10, '2022/07/04', '2022/07/06', '', 0)
+INSERT INTO KhuyenMai values(N'KM005', 20, '2022/09/18', '2022/09/22', '', 1)
+INSERT INTO KhuyenMai values(N'KM006', 5, '2022/11/13', '2022/11/17', '', 0)
+INSERT INTO KhuyenMai values(N'KM007', 15, '2022/05/22', '2022/05/25', '', 1)
+INSERT INTO KhuyenMai values(N'KM008', 20, '2022/12/07', '2022/12/12', '', 1)
+INSERT INTO KhuyenMai values(N'KM009', 10, '2022/04/06', '2022/04/10', '', 0)
+INSERT INTO KhuyenMai values(N'KM010', 5, '2022/08/24', '2022/08/28', '', 0)
+INSERT INTO KhuyenMai values(N'KM011', 15, '2023/04/05', '2023/04/09', '', 1)
+INSERT INTO KhuyenMai values(N'KM012', 10, '2023/07/16', '2023/07/20', '', 1)
+INSERT INTO KhuyenMai values(N'KM013', 20, '2023/10/01', '2023/10/04', '', 0)
+INSERT INTO KhuyenMai values(N'KM014', 20, '2023/09/23', '2023/09/27', '', 1)
+INSERT INTO KhuyenMai values(N'KM015', 15, '2023/05/12', '2023/05/26', '', 1)
+INSERT INTO KhuyenMai values(N'KM016', 5, '2023/06/24', '2023/06/27', '', 1)
+INSERT INTO KhuyenMai values(N'KM017', 10, '2023/03/07', '2023/03/11', '', 0)
+INSERT INTO KhuyenMai values(N'KM018', 15, '2023/08/18', '2023/08/25', '', 1)
+INSERT INTO KhuyenMai values(N'KM019', 5, '2023/01/15', '2023/01/19', '', 1)
+INSERT INTO KhuyenMai values(N'KM020', 20, '2023/02/09', '2023/02/13', '', 0)
+--Xem toan bo KhuyenMai
+select *from KhuyenMai
+
 ----------------------------LOAI PHONG---------------------------------------------------
 --INSERT INTO LoaiPhong(MaLP, TenLP, SucChua, GiaPhong)
 INSERT INTO LoaiPhong values(N'LP001', N'VIP', 10, 400000)
@@ -221,9 +246,6 @@ delete from DichVu where MaDV = N'DV022'
 --Lay toan bo ten dich vu
 select TenDV from DichVu
 
-
-
-
 --------------------------------NHAN VIEN-----------------------------------------------
 --INSERT INTO NhanVien(MaNV, TenNV, NamSinh, GioiTinh, SoDienThoai, CCCD, ChucVu, MatKhau, TinhTrangNV)
 --ChucVu (0: nhan vien quan ly, 1: le tan, 2: phuc vu)
@@ -250,8 +272,6 @@ INSERT INTO NhanVien values(N'NV020', N'Trần Thị Quỳnh Như', '1999/04/17'
 --Xem toan bo NhanVien
 select *from NhanVien
 
-
-
 --------------------------------KHACH HANG-----------------------------------------------
 --INSERT INTO KhachHang(MaKH, TenKH, LoaiKH, GioiTinh, SoDienThoai, Email, SoGioDaThue, GhiChu)
 INSERT INTO KhachHang values(N'KH001', N'Nguyễn Bùi Phát Đạt', 0, 0, '0649248221', N'phatdat123@gmail.com', 3, '')
@@ -276,58 +296,6 @@ INSERT INTO KhachHang values(N'KH019', N'Nguyễn Ngọc Kim Liên', 1, 1, '0927
 INSERT INTO KhachHang values(N'KH020', N'Đặng Hoàng Phúc', 0, 0, '0749205481', N'phucphuc32@gmail.com', 1, '')
 --Xem toan bo KhachHang
 select *from KhachHang
-
-
-----------------------------CT PHONG---------------------------------------------------
---INSERT INTO CTPhong(MaPhong, MaPDP, NgayNhanPhong, GioNhanPhong, GioTraPhong)
-INSERT INTO CTPhong values(N'P001', N'PDP001', '2022/06/23', '8:30:15', '11:31:24')
-INSERT INTO CTPhong values(N'P002', N'PDP001', '2022/06/23', '11:32:15', '16:31:24') 
-INSERT INTO CTPhong values(N'P003', N'PDP002', '2022/01/15', '14:25:32', '19:30:31')
-INSERT INTO CTPhong values(N'P004', N'PDP003', '2022/09/04', '10:15:40', '13:20:15')
-INSERT INTO CTPhong values(N'P005', N'PDP004', '2022/04/18', '9:10:37', '12:15:38')
-INSERT INTO CTPhong values(N'P006', N'PDP004', '2022/04/18', '12:18:23', '21:15:35')
-INSERT INTO CTPhong values(N'P007', N'PDP005', '2022/10/30', '18:45:28', '22:50:37')
-INSERT INTO CTPhong values(N'P008', N'PDP006', '2022/07/11', '11:05:20', '17:10:55')
-INSERT INTO CTPhong values(N'P009', N'PDP007', '2022/12/07', '20:36:34', '23:45:10')
-INSERT INTO CTPhong values(N'P010', N'PDP008', '2022/08/13', '13:31:12', '15:35:21')
-INSERT INTO CTPhong values(N'P011', N'PDP008', '2022/08/13', '15:40:34', '19:55:40')
-INSERT INTO CTPhong values(N'P012', N'PDP009', '2023/05/24', '9:20:30', '13:28:48')
-INSERT INTO CTPhong values(N'P013', N'PDP010', '2023/04/12', '19:23:45', '22:30:50')
-INSERT INTO CTPhong values(N'P014', N'PDP011', '2023/10/01', '10:15:21', '15:21:23')
-INSERT INTO CTPhong values(N'P015', N'PDP012', '2023/09/17', '13:40:38', '17:35:14')
-INSERT INTO CTPhong values(N'P016', N'PDP012', '2023/09/17', '17:38:27', '21:40:35')
-INSERT INTO CTPhong values(N'P017', N'PDP013', '2023/03/05', '15:14:45', '19:23:57')
-INSERT INTO CTPhong values(N'P018', N'PDP014', '2023/05/09', '18:40:17', '22:35:41')
-INSERT INTO CTPhong values(N'P019', N'PDP015', '2023/08/10', '11:28:29', '14:36:10')
-INSERT INTO CTPhong values(N'P020', N'PDP015', '2023/08/10', '14:40:16', '18:22:26')
---Xem toan bo CTPhong
-select *from CTPhong
-
-
---------------------------------CTDV PHONG-----------------------------------------------
---INSERT INTO CTDVPhong(MaPDP, MaDV, SoLuong)
-INSERT INTO CTDVPhong values(N'PDP001', N'DV001', 10)
-INSERT INTO CTDVPhong values(N'PDP001', N'DV002', 15)
-INSERT INTO CTDVPhong values(N'PDP002', N'DV003', 8)
-INSERT INTO CTDVPhong values(N'PDP003', N'DV004', 5)
-INSERT INTO CTDVPhong values(N'PDP004', N'DV005', 13)
-INSERT INTO CTDVPhong values(N'PDP005', N'DV006', 6)
-INSERT INTO CTDVPhong values(N'PDP005', N'DV007', 10)
-INSERT INTO CTDVPhong values(N'PDP005', N'DV008', 15)
-INSERT INTO CTDVPhong values(N'PDP006', N'DV009', 6)
-INSERT INTO CTDVPhong values(N'PDP007', N'DV010', 9)
-INSERT INTO CTDVPhong values(N'PDP008', N'DV011', 15)
-INSERT INTO CTDVPhong values(N'PDP009', N'DV012', 8)
-INSERT INTO CTDVPhong values(N'PDP009', N'DV013', 16)
-INSERT INTO CTDVPhong values(N'PDP010', N'DV014', 20)
-INSERT INTO CTDVPhong values(N'PDP011', N'DV015', 9)
-INSERT INTO CTDVPhong values(N'PDP012', N'DV016', 14)
-INSERT INTO CTDVPhong values(N'PDP013', N'DV017', 5)
-INSERT INTO CTDVPhong values(N'PDP014', N'DV018', 10)
-INSERT INTO CTDVPhong values(N'PDP014', N'DV019', 15)
-INSERT INTO CTDVPhong values(N'PDP014', N'DV020', 20)
---Xem toan bo CTDVPhong
-select *from CTDVPhong
 
 --------------------------------PHIEU DAT PHONG-----------------------------------------------
 --INSERT INTO PhieuDatPhong(MaPDP, MaKH, MaNV, NgayDatPhong, GioDatPhong, SoLuongKhach, TinhTrangPDP, MoTa)
@@ -355,6 +323,55 @@ INSERT INTO PhieuDatPhong values(N'PDP020', N'KH020', N'NV020', '2023/04/24', '1
 select *from PhieuDatPhong
 
 
+----------------------------CT PHONG---------------------------------------------------
+--INSERT INTO CTPhong(MaPhong, MaPDP, NgayNhanPhong, GioNhanPhong, GioTraPhong)
+INSERT INTO CTPhong values(N'P001', N'PDP001', '2022/06/23', '8:30:15', '11:31:24')
+INSERT INTO CTPhong values(N'P002', N'PDP001', '2022/06/23', '11:32:15', '16:31:24') 
+INSERT INTO CTPhong values(N'P003', N'PDP002', '2022/01/15', '14:25:32', '19:30:31')
+INSERT INTO CTPhong values(N'P004', N'PDP003', '2022/09/04', '10:15:40', '13:20:15')
+INSERT INTO CTPhong values(N'P005', N'PDP004', '2022/04/18', '9:10:37', '12:15:38')
+INSERT INTO CTPhong values(N'P006', N'PDP004', '2022/04/18', '12:18:23', '21:15:35')
+INSERT INTO CTPhong values(N'P007', N'PDP005', '2022/10/30', '18:45:28', '22:50:37')
+INSERT INTO CTPhong values(N'P008', N'PDP006', '2022/07/11', '11:05:20', '17:10:55')
+INSERT INTO CTPhong values(N'P009', N'PDP007', '2022/12/07', '20:36:34', '23:45:10')
+INSERT INTO CTPhong values(N'P010', N'PDP008', '2022/08/13', '13:31:12', '15:35:21')
+INSERT INTO CTPhong values(N'P011', N'PDP008', '2022/08/13', '15:40:34', '19:55:40')
+INSERT INTO CTPhong values(N'P012', N'PDP009', '2023/05/24', '9:20:30', '13:28:48')
+INSERT INTO CTPhong values(N'P013', N'PDP010', '2023/04/12', '19:23:45', '22:30:50')
+INSERT INTO CTPhong values(N'P014', N'PDP011', '2023/10/01', '10:15:21', '15:21:23')
+INSERT INTO CTPhong values(N'P015', N'PDP012', '2023/09/17', '13:40:38', '17:35:14')
+INSERT INTO CTPhong values(N'P016', N'PDP012', '2023/09/17', '17:38:27', '21:40:35')
+INSERT INTO CTPhong values(N'P017', N'PDP013', '2023/03/05', '15:14:45', '19:23:57')
+INSERT INTO CTPhong values(N'P018', N'PDP014', '2023/05/09', '18:40:17', '22:35:41')
+INSERT INTO CTPhong values(N'P019', N'PDP015', '2023/08/10', '11:28:29', '14:36:10')
+INSERT INTO CTPhong values(N'P020', N'PDP015', '2023/08/10', '14:40:16', '18:22:26')
+--Xem toan bo CTPhong
+select *from CTPhong
+
+--------------------------------CTDV PHONG-----------------------------------------------
+--INSERT INTO CTDVPhong(MaPDP, MaDV, SoLuong)
+INSERT INTO CTDVPhong values(N'PDP001', N'DV001', 10)
+INSERT INTO CTDVPhong values(N'PDP001', N'DV002', 15)
+INSERT INTO CTDVPhong values(N'PDP002', N'DV003', 8)
+INSERT INTO CTDVPhong values(N'PDP003', N'DV004', 5)
+INSERT INTO CTDVPhong values(N'PDP004', N'DV005', 13)
+INSERT INTO CTDVPhong values(N'PDP005', N'DV006', 6)
+INSERT INTO CTDVPhong values(N'PDP005', N'DV007', 10)
+INSERT INTO CTDVPhong values(N'PDP005', N'DV008', 15)
+INSERT INTO CTDVPhong values(N'PDP006', N'DV009', 6)
+INSERT INTO CTDVPhong values(N'PDP007', N'DV010', 9)
+INSERT INTO CTDVPhong values(N'PDP008', N'DV011', 15)
+INSERT INTO CTDVPhong values(N'PDP009', N'DV012', 8)
+INSERT INTO CTDVPhong values(N'PDP009', N'DV013', 16)
+INSERT INTO CTDVPhong values(N'PDP010', N'DV014', 20)
+INSERT INTO CTDVPhong values(N'PDP011', N'DV015', 9)
+INSERT INTO CTDVPhong values(N'PDP012', N'DV016', 14)
+INSERT INTO CTDVPhong values(N'PDP013', N'DV017', 5)
+INSERT INTO CTDVPhong values(N'PDP014', N'DV018', 10)
+INSERT INTO CTDVPhong values(N'PDP014', N'DV019', 15)
+INSERT INTO CTDVPhong values(N'PDP014', N'DV020', 20)
+--Xem toan bo CTDVPhong
+select *from CTDVPhong
 
 --------------------------------HOA DON-----------------------------------------------
 --INSERT INTO HoaDon(MaHD, MaPDP, GioThanhToan, NgayThanhToan, TienPhong, TienDichVu, TienGiam, TongTien)
@@ -383,30 +400,6 @@ select *from HoaDon
 
 
 
-----------------------------KHUYEN MAI---------------------------------------------------
---INSERT INTO KhuyenMai(MaKhuyenMai, PhanTramGiam, NgayBatDau, NgayKetThuc, MoTa, TrangThaiKM)
-INSERT INTO KhuyenMai values(N'KM001', 20, '2022/06/20', '2022/06/26', '', 1)
-INSERT INTO KhuyenMai values(N'KM002', 10, '2022/03/15', '2022/03/18', '', 1)
-INSERT INTO KhuyenMai values(N'KM003', 15, '2022/10/15', '2022/10/20', '', 1)
-INSERT INTO KhuyenMai values(N'KM004', 10, '2022/07/04', '2022/07/06', '', 0)
-INSERT INTO KhuyenMai values(N'KM005', 20, '2022/09/18', '2022/09/22', '', 1)
-INSERT INTO KhuyenMai values(N'KM006', 5, '2022/11/13', '2022/11/17', '', 0)
-INSERT INTO KhuyenMai values(N'KM007', 15, '2022/05/22', '2022/05/25', '', 1)
-INSERT INTO KhuyenMai values(N'KM008', 20, '2022/12/07', '2022/12/12', '', 1)
-INSERT INTO KhuyenMai values(N'KM009', 10, '2022/04/06', '2022/04/10', '', 0)
-INSERT INTO KhuyenMai values(N'KM010', 5, '2022/08/24', '2022/08/28', '', 0)
-INSERT INTO KhuyenMai values(N'KM011', 15, '2023/04/05', '2023/04/09', '', 1)
-INSERT INTO KhuyenMai values(N'KM012', 10, '2023/07/16', '2023/07/20', '', 1)
-INSERT INTO KhuyenMai values(N'KM013', 20, '2023/10/01', '2023/10/04', '', 0)
-INSERT INTO KhuyenMai values(N'KM014', 20, '2023/09/23', '2023/09/27', '', 1)
-INSERT INTO KhuyenMai values(N'KM015', 15, '2023/05/12', '2023/05/26', '', 1)
-INSERT INTO KhuyenMai values(N'KM016', 5, '2023/06/24', '2023/06/27', '', 1)
-INSERT INTO KhuyenMai values(N'KM017', 10, '2023/03/07', '2023/03/11', '', 0)
-INSERT INTO KhuyenMai values(N'KM018', 15, '2023/08/18', '2023/08/25', '', 1)
-INSERT INTO KhuyenMai values(N'KM019', 5, '2023/01/15', '2023/01/19', '', 1)
-INSERT INTO KhuyenMai values(N'KM020', 20, '2023/02/09', '2023/02/13', '', 0)
---Xem toan bo KhuyenMai
-select *from KhuyenMai
 
 
 
