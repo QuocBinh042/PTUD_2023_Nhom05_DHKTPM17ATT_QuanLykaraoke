@@ -22,7 +22,7 @@ public class daoNhanVien{
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		try {
-			String sql = "select * from KhachHang";
+			String sql = "select * from NhanVien";
 			Statement statement =con.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
