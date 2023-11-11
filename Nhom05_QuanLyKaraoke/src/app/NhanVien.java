@@ -8,13 +8,19 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
+import connectDB.ConnectDB;
+import dao.MaTuDong;
+import dao.daoNhanVien;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class NhanVien extends JPanel implements MouseListener {
@@ -30,8 +36,20 @@ public class NhanVien extends JPanel implements MouseListener {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	private daoNhanVien daoNV = new daoNhanVien();
+	private ArrayList<entity.NhanVien> dsNV = new ArrayList<>();
+	private MaTuDong maNhanVien = new MaTuDong();
+
 
 	public NhanVien() {
+
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		daoNV = new daoNhanVien();
+		
 		Icon img_add = new ImageIcon("src/img/add2.png");
 		Icon img_del = new ImageIcon("src/img/del.png");
 		Icon img_reset = new ImageIcon("src/img/refresh16.png");
@@ -228,7 +246,8 @@ public class NhanVien extends JPanel implements MouseListener {
 		this.setLayout(new BorderLayout());
 		add(pnlLeft, BorderLayout.WEST);
 		add(pnlRight, BorderLayout.CENTER);
-
+		
+		layToanBoNV();
 		btnLamMoiNV.addActionListener(e -> xuLyLamMoi());
 		btnThemMoi.addActionListener(e -> xuLyThemMoi());
 		btnXoa.addActionListener(e -> xuLyXoa());
@@ -237,8 +256,8 @@ public class NhanVien extends JPanel implements MouseListener {
 		btnTim.addActionListener(e -> xuLyTimKiem());
 		table.addMouseListener((MouseListener) this);
 
-		String[] row = { "NV001", "tenNV", "06/11/2023", "", "sdt", "cccd", "", "matkhau", "" };
-		tableModel.addRow(row);
+		//String[] row = { "NV001", "tenNV", "06/11/2023", "", "sdt", "cccd", "", "matkhau", "" };
+		//tableModel.addRow(row);
 	}
 
 	
@@ -314,6 +333,16 @@ public class NhanVien extends JPanel implements MouseListener {
 		return null;
 
 	}
+	
+	// Lay toan bo nhan vien
+			private void layToanBoNV() {
+				dsNV = daoNV.getAll();
+				for (entity.NhanVien nv : dsNV) {
+					tableModel.addRow(new Object[] { nv.getMaNV(), nv.getTenNV(), nv.getNamSinh(), nv.getGioiTinh(),
+							nv.getSdthoai(), nv.getCccd(), nv.getChucVu(), nv.getMatKhau(), nv.getTinhTrangNV()});
+
+				}
+			}
 
 
 
