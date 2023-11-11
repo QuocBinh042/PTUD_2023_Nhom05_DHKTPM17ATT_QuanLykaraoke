@@ -20,9 +20,8 @@ import java.util.regex.Pattern;
 
 public class DichVu extends JPanel implements MouseListener {
 
-	private JLabel lblTenDichVu, lblDonGiaNhap, lblDonGiaBan, lblDonVi, lblSoLuong, lblTinhTrang, lblLocTinhTrang,
-			lblTimDV;
-	private JTextField txtTenDichVu, txtDonGiaNhap, txtDonGiaBan, txtDonVi, txtSoLuong, txtTimDV;
+	private JLabel lblTenDichVu, lblDonGia, lblDonVi, lblSoLuong, lblTinhTrang, lblLocTinhTrang, lblTimDV;
+	private JTextField txtTenDichVu, txtDonGia, txtDonVi, txtSoLuong, txtTimDV;
 	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnTim;
 	private JComboBox cbTinhTrang;
 	private JTable table;
@@ -80,20 +79,12 @@ public class DichVu extends JPanel implements MouseListener {
 		b2.add(pnlDonVi);
 		bLeft.add(Box.createVerticalStrut(10));
 
-		JPanel pnlDonGiaNhap = new JPanel();
-		pnlDonGiaNhap.setBackground(Color.decode("#cccccc"));
-		pnlDonGiaNhap.add(lblDonGiaNhap = new JLabel("Đơn giá nhập"));
-		pnlDonGiaNhap.add(txtDonGiaNhap = new JTextField(15));
+		JPanel pnlDonGia = new JPanel();
+		pnlDonGia.setBackground(Color.decode("#cccccc"));
+		pnlDonGia.add(lblDonGia = new JLabel("Đơn giá (VNĐ)"));
+		pnlDonGia.add(txtDonGia = new JTextField(15));
 		bLeft.add(b3 = Box.createHorizontalBox());
-		b3.add(pnlDonGiaNhap);
-		bLeft.add(Box.createVerticalStrut(10));
-
-		JPanel pnlDonGiaBan = new JPanel();
-		pnlDonGiaBan.setBackground(Color.decode("#cccccc"));
-		pnlDonGiaBan.add(lblDonGiaBan = new JLabel("Đơn giá bán"));
-		pnlDonGiaBan.add(txtDonGiaBan = new JTextField(15));
-		bLeft.add(b4 = Box.createHorizontalBox());
-		b4.add(pnlDonGiaBan);
+		b3.add(pnlDonGia);
 		bLeft.add(Box.createVerticalStrut(10));
 
 		JPanel pnlSoLuong = new JPanel();
@@ -104,13 +95,11 @@ public class DichVu extends JPanel implements MouseListener {
 		b5.add(pnlSoLuong);
 		bLeft.add(Box.createVerticalStrut(10));
 
-		lblTenDichVu.setPreferredSize(lblDonGiaNhap.getPreferredSize());
-		lblDonGiaBan.setPreferredSize(lblDonGiaNhap.getPreferredSize());
-		lblDonVi.setPreferredSize(lblDonGiaNhap.getPreferredSize());
-		lblSoLuong.setPreferredSize(lblDonGiaNhap.getPreferredSize());
+		lblTenDichVu.setPreferredSize(lblDonGia.getPreferredSize());
+		lblDonVi.setPreferredSize(lblDonGia.getPreferredSize());
+		lblSoLuong.setPreferredSize(lblDonGia.getPreferredSize());
 		txtTenDichVu.setPreferredSize(dimension);
-		txtDonGiaNhap.setPreferredSize(dimension);
-		txtDonGiaBan.setPreferredSize(dimension);
+		txtDonGia.setPreferredSize(dimension);
 		txtSoLuong.setPreferredSize(dimension);
 		txtDonVi.setPreferredSize(dimension);
 
@@ -165,7 +154,7 @@ public class DichVu extends JPanel implements MouseListener {
 		// Table
 		Box table1 = Box.createVerticalBox();
 		table1.setBorder(BorderFactory.createTitledBorder(line, "Danh sách dịch vụ"));
-		String[] headers = "Mã dịch vụ;Tên dịch vụ;Đơn giá nhập;Đơn giá bán;Đơn vị;Số lượng;Tình trạng".split(";");
+		String[] headers = "Mã dịch vụ;Tên dịch vụ;Đơn giá;Đơn vị;Số lượng;Tình trạng".split(";");
 		tableModel = new DefaultTableModel(headers, 0);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -204,11 +193,10 @@ public class DichVu extends JPanel implements MouseListener {
 	private boolean kiemTraThongTin() {
 		String tenDV = txtTenDichVu.getText();
 		String donVi = txtDonVi.getText();
-		String donGiaNhap = txtDonGiaNhap.getText();
-		String donGiaBan = txtDonGiaBan.getText();
+		String donGia = txtDonGia.getText();
 		String soLuong = txtSoLuong.getText();
-		if (tenDV.trim().equals("") || donVi.trim().equals("") || donGiaNhap.trim().equals("")
-				|| donGiaBan.trim().equals("") || soLuong.trim().equals("")) {
+		if (tenDV.trim().equals("") || donVi.trim().equals("") || donGia.trim().equals("")
+				|| soLuong.trim().equals("")) {
 			return false;
 		}
 		return true;
@@ -218,8 +206,7 @@ public class DichVu extends JPanel implements MouseListener {
 	private boolean validData() {
 		String tenDV = txtTenDichVu.getText();
 		String donVi = txtDonVi.getText();
-		String donGiaNhap = txtDonGiaNhap.getText();
-		String donGiaBan = txtDonGiaBan.getText();
+		String donGia = txtDonGia.getText();
 		String soLuong = txtSoLuong.getText();
 
 		Pattern p = Pattern.compile("[a-zA-Z_0-9]");
@@ -233,17 +220,12 @@ public class DichVu extends JPanel implements MouseListener {
 			return false;
 		}
 		Pattern p2 = Pattern.compile("^\\d+$");
-		if (!(p2.matcher(donGiaNhap).find())) {
+		if (!(p2.matcher(donGia).find())) {
 			JOptionPane.showMessageDialog(null, "Đơn giá nhập không hợp lệ!");
 			return false;
 		}
 		Pattern p3 = Pattern.compile("^\\d+$");
-		if (!(p3.matcher(donGiaBan).find())) {
-			JOptionPane.showMessageDialog(null, "Đơn giá bán không hợp lệ!");
-			return false;
-		}
-		Pattern p4 = Pattern.compile("^\\d+$");
-		if (!(soLuong.length() > 0 && p4.matcher(soLuong).find())) {
+		if (!(soLuong.length() > 0 && p3.matcher(soLuong).find())) {
 			JOptionPane.showMessageDialog(null, "Số lượng không hợp lệ!");
 			return false;
 		}
@@ -259,8 +241,7 @@ public class DichVu extends JPanel implements MouseListener {
 				String maDV = "DV0" + maDVTT;
 				String tenDV = txtTenDichVu.getText();
 				String donVi = txtDonVi.getText();
-				double donGiaNhap = Double.valueOf(txtDonGiaNhap.getText());
-				double donGiaBan = Double.valueOf(txtDonGiaBan.getText());
+				double donGia = Double.valueOf(txtDonGia.getText());
 				int soLuong = Integer.valueOf(txtSoLuong.getText());
 				String tinhTrang = "";
 				if (soLuong == 0) {
@@ -270,14 +251,13 @@ public class DichVu extends JPanel implements MouseListener {
 				} else if (soLuong > 10) {
 					tinhTrang = "Còn hàng";
 				}
-				entity.DichVu dv = new entity.DichVu(maDV, tenDV, donGiaNhap, donGiaBan, donVi, soLuong, tinhTrang);
+				entity.DichVu dv = new entity.DichVu(maDV, tenDV, donGia, donVi, soLuong, tinhTrang);
 				int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thêm mới dịch vụ không ?", "Chú ý!",
 						JOptionPane.YES_OPTION);
 				if (i == JOptionPane.YES_OPTION) {
 
 					if (daoDV.add(dv)) {
-						String[] row = { maDV, tenDV, formatter.format(donGiaNhap) + "VNĐ", formatter.format(donGiaBan)+ "VNĐ", donVi, soLuong + "",
-								tinhTrang};
+						String[] row = { maDV, tenDV, formatter.format(donGia), donVi, soLuong + "", tinhTrang };
 						tableModel.addRow(row);
 						JOptionPane.showMessageDialog(null, "Thêm mới dịch vụ thành công!");
 					}
@@ -294,37 +274,35 @@ public class DichVu extends JPanel implements MouseListener {
 		int r = table.getSelectedRow();
 		if (r != -1) {
 			if (kiemTraThongTin()) {
-				if(validData()==true) {
-					int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật dịch vụ không ?", "Chú ý!",
-							JOptionPane.YES_NO_OPTION);
+				if (validData() == true) {
+					int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật dịch vụ không ?",
+							"Chú ý!", JOptionPane.YES_NO_OPTION);
 					if (i == JOptionPane.YES_OPTION) {
 						String tenDV = txtTenDichVu.getText();
 						String donVi = txtDonVi.getText();
-						double donGiaNhap = Double.valueOf(txtDonGiaNhap.getText());
-						double donGiaBan = Double.valueOf(txtDonGiaBan.getText());
+						double donGia = Double.valueOf(txtDonGia.getText());
 						int soLuong = Integer.valueOf(txtSoLuong.getText());
 						String tinhTrang = "";
 						table.setValueAt(tenDV, r, 1);
-						table.setValueAt(donGiaNhap, r, 2);
-						table.setValueAt(donGiaBan, r, 3);
-						table.setValueAt(donVi, r, 4);
-						table.setValueAt(soLuong, r, 5);
-						entity.DichVu dv = new entity.DichVu((String) table.getValueAt(r, 0), tenDV, donGiaNhap, donGiaBan,
-								donVi, soLuong, tinhTrang);
+						table.setValueAt(donGia, r, 2);
+						table.setValueAt(donVi, r, 3);
+						table.setValueAt(soLuong, r, 4);
+						entity.DichVu dv = new entity.DichVu((String) table.getValueAt(r, 0), tenDV, donGia, donVi,
+								soLuong, tinhTrang);
 						daoDV.updateGia(dv);
-						if (Integer.parseInt(table.getValueAt(r, 5).toString()) == 0) {
-							table.setValueAt("Hết hàng", r, 6);
-						} else if (Integer.parseInt(table.getValueAt(r, 5).toString()) > 10) {
-							table.setValueAt("Còn hàng", r, 6);
-						} else if (Integer.parseInt(table.getValueAt(r, 5).toString()) > 0 &&Integer.parseInt(table.getValueAt(r, 5).toString()) <= 10) {
-							table.setValueAt("Sắp hết hàng", r, 6);
+						if (Integer.parseInt(table.getValueAt(r, 4).toString()) == 0) {
+							table.setValueAt("Hết hàng", r, 5);
+						} else if (Integer.parseInt(table.getValueAt(r, 4).toString()) > 10) {
+							table.setValueAt("Còn hàng", r, 5);
+						} else if (Integer.parseInt(table.getValueAt(r, 4).toString()) > 0
+								&& Integer.parseInt(table.getValueAt(r, 4).toString()) <= 10) {
+							table.setValueAt("Sắp hết hàng", r, 5);
 						}
-						table.setValueAt(formatter.format(donGiaNhap)+"VNĐ", r, 2);
-						table.setValueAt(formatter.format(donGiaBan)+"VNĐ", r, 3);
+						table.setValueAt(formatter.format(donGia), r, 2);
 						JOptionPane.showMessageDialog(null, "Cập nhật thông tin dịch vụ thành công!");
 					}
 				}
-				
+
 			} else {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin dịch vụ!");
 			}
@@ -338,8 +316,7 @@ public class DichVu extends JPanel implements MouseListener {
 	private void xuLyLamMoi() {
 		txtTenDichVu.setText("");
 		txtDonVi.setText("");
-		txtDonGiaNhap.setText("");
-		txtDonGiaBan.setText("");
+		txtDonGia.setText("");
 		txtSoLuong.setText("");
 		txtTimDV.setText("");
 		cbTinhTrang.setSelectedIndex(0);
@@ -391,8 +368,7 @@ public class DichVu extends JPanel implements MouseListener {
 	private void layToanBoDV() {
 		dsDichVu = daoDV.getAllDichVu();
 		for (entity.DichVu dv : dsDichVu) {
-			tableModel.addRow(new Object[] { dv.getMaDichVu(), dv.getTenDichVu(),
-					formatter.format(dv.getDonGiaNhap()) + " VNĐ", formatter.format(dv.getDonGiaBan()) + " VNĐ",
+			tableModel.addRow(new Object[] { dv.getMaDichVu(), dv.getTenDichVu(), formatter.format(dv.getDonGia()),
 					dv.getDonVi(), dv.getSoLuong(), dv.getTinhTrang() });
 			locDVDaXoa();
 		}
@@ -401,7 +377,7 @@ public class DichVu extends JPanel implements MouseListener {
 	// Loc dich vu trang thai da xoa
 	private void locDVDaXoa() {
 		for (int i = 0; i < tableModel.getRowCount(); i++) {
-			String tt = table.getValueAt(i, 6).toString();
+			String tt = table.getValueAt(i, 5).toString();
 			if (tt.equalsIgnoreCase("Đã xóa")) {
 				tableModel.removeRow(i);
 			}
@@ -423,8 +399,7 @@ public class DichVu extends JPanel implements MouseListener {
 		String tt = cbTinhTrang.getSelectedItem().toString();
 		dsDichVu = daoDV.getDichVuCB(tt);
 		for (entity.DichVu dv : dsDichVu) {
-			tableModel.addRow(new Object[] { dv.getMaDichVu(), dv.getTenDichVu(),
-					formatter.format(dv.getDonGiaNhap()) + " VNĐ", formatter.format(dv.getDonGiaBan()) + " VNĐ",
+			tableModel.addRow(new Object[] { dv.getMaDichVu(), dv.getTenDichVu(), formatter.format(dv.getDonGia()),
 					dv.getDonVi(), dv.getSoLuong(), dv.getTinhTrang() });
 		}
 
@@ -459,10 +434,9 @@ public class DichVu extends JPanel implements MouseListener {
 	public void mousePressed(MouseEvent e) {
 		int row = table.getSelectedRow();
 		txtTenDichVu.setText(table.getValueAt(row, 1).toString());
-		txtDonGiaNhap.setText(table.getValueAt(row, 2).toString());
-		txtDonGiaBan.setText(table.getValueAt(row, 3).toString());
-		txtDonVi.setText(table.getValueAt(row, 4).toString());
-		txtSoLuong.setText(table.getValueAt(row, 5).toString());
+		txtDonGia.setText(table.getValueAt(row, 2).toString());
+		txtDonVi.setText(table.getValueAt(row, 3).toString());
+		txtSoLuong.setText(table.getValueAt(row, 4).toString());
 	}
 
 	@Override

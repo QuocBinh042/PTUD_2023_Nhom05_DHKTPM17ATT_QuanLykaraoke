@@ -19,8 +19,8 @@ import java.util.ArrayList;
 public class Phong extends JPanel implements MouseListener {
 
 	private JLabel lblTenPhong, lblLoaiPhong, lblSucChua, lblGiaPhong, lblMoTa, lblTimMaPhong, lblTinhTrang,
-			lblMaLoaiPhong, lblMaKM;
-	private JTextField txtTenPhong, txtSucChua, txtGiaPhong, txtTimMaPhong, txtLoaiPhong, txtMaKM;
+			lblMaLoaiPhong;
+	private JTextField txtTenPhong, txtSucChua, txtGiaPhong, txtTimMaPhong, txtLoaiPhong;
 	private JTextArea txtaMoTa;
 	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnQuanLyChiTiet, btnThoat, btnTim;
 	private JComboBox cbLoaiPhong, cbTinhTrang, cbMaLoaiPhong;
@@ -51,7 +51,7 @@ public class Phong extends JPanel implements MouseListener {
 		Icon img_search = new ImageIcon("src/img/search.png");
 		Icon img_transfer = new ImageIcon("src/img/transfer.png");
 
-		Box b1, b2, b3, b4, b5, b6, b7;
+		Box b1, b2, b3, b4, b5, b6;
 		Box bLeft, bRight;
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
 		Dimension dimension = new Dimension(110, 25);
@@ -98,14 +98,6 @@ public class Phong extends JPanel implements MouseListener {
 		b3.add(pnlLoaiPhong);
 		bLeft.add(Box.createVerticalStrut(10));
 		
-		JPanel pnlMaKM = new JPanel();
-		pnlMaKM.setBackground(Color.decode("#cccccc"));
-		pnlMaKM.add(lblMaKM = new JLabel("Mã khuyến mãi"));
-		pnlMaKM.add(txtMaKM = new JTextField(15));
-		txtMaKM.setEditable(false);
-		bLeft.add(b7 = Box.createHorizontalBox());
-		b7.add(pnlMaKM);
-		bLeft.add(Box.createVerticalStrut(10));
 
 		JPanel pnlSucChua = new JPanel();
 		pnlSucChua.setBackground(Color.decode("#cccccc"));
@@ -139,18 +131,17 @@ public class Phong extends JPanel implements MouseListener {
 		b6.add(scroll1);
 		b6.add(Box.createHorizontalStrut(5));
 
-		lblMaLoaiPhong.setPreferredSize(lblMaKM.getPreferredSize());
-		lblTenPhong.setPreferredSize(lblMaKM.getPreferredSize());
-		lblLoaiPhong.setPreferredSize(lblMaKM.getPreferredSize());
-		lblSucChua.setPreferredSize(lblMaKM.getPreferredSize());
-		lblGiaPhong.setPreferredSize(lblMaKM.getPreferredSize());
-		lblMoTa.setPreferredSize(lblMaKM.getPreferredSize());
+
+		lblTenPhong.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
+		lblLoaiPhong.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
+		lblSucChua.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
+		lblGiaPhong.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
+		lblMoTa.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
 		txtTenPhong.setPreferredSize(dimension);
 		cbMaLoaiPhong.setPreferredSize(txtTenPhong.getPreferredSize());
 		txtLoaiPhong.setPreferredSize(dimension);
 		txtSucChua.setPreferredSize(dimension);
 		txtGiaPhong.setPreferredSize(dimension);
-		txtMaKM.setPreferredSize(dimension);
 
 		bLeft.add(Box.createVerticalStrut(50));
 		JPanel pnlKM = new JPanel();
@@ -222,7 +213,7 @@ public class Phong extends JPanel implements MouseListener {
 		// Table
 		Box table1 = Box.createVerticalBox();
 		table1.setBorder(BorderFactory.createTitledBorder(line, "Danh sách phòng"));
-		String[] headers = "Mã phòng;Tên phòng;Mã khuyến mãi;Mã loại phòng;Loại phòng;Sức chứa;Giá phòng;Tình trạng;Mô tả"
+		String[] headers = "Mã phòng;Tên phòng;Mã loại phòng;Loại phòng;Sức chứa;Giá phòng;Tình trạng;Mô tả"
 				.split(";");
 		tableModel = new DefaultTableModel(headers, 0);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -264,7 +255,7 @@ public class Phong extends JPanel implements MouseListener {
 	private void layToanBoPhong() {
 		dsPhong = daoPhong.getAllDataForTableDatPhong();
 		for (entity.Phong p : dsPhong) {
-			tableModel.addRow(new Object[] {p.getMaPhong(), p.getTenPhong(),p.getKhuyenMai().getMaKM(), p.getLoaiPhong().getMaLoaiPhong(),p.getLoaiPhong().getTenLoaiPhong(), p.getLoaiPhong().getSucChua(), p.getLoaiPhong().getGiaLoaiPhong(), p.getTinhTrangPhong(), p.getMoTa()});
+			tableModel.addRow(new Object[] {p.getMaPhong(), p.getTenPhong(), p.getLoaiPhong().getMaLoaiPhong(),p.getLoaiPhong().getTenLoaiPhong(), p.getLoaiPhong().getSucChua(), p.getLoaiPhong().getGiaLoaiPhong(), p.getTinhTrangPhong(), p.getMoTa()});
 		}
 		locPhongDaXoa();
 	}
@@ -429,12 +420,11 @@ public class Phong extends JPanel implements MouseListener {
 	public void mousePressed(MouseEvent e) {
 		int row = table.getSelectedRow();
 		txtTenPhong.setText(table.getValueAt(row, 1).toString());
-		cbMaLoaiPhong.setSelectedItem(table.getValueAt(row, 3).toString());
-		txtMaKM.setText(table.getValueAt(row, 2).toString());
-		txtLoaiPhong.setText(table.getValueAt(row, 4).toString());
-		txtSucChua.setText(table.getValueAt(row, 5).toString());
-		txtGiaPhong.setText(table.getValueAt(row, 6).toString());
-		txtaMoTa.setText(table.getValueAt(row, 8).toString());
+		cbMaLoaiPhong.setSelectedItem(table.getValueAt(row, 2).toString());
+		txtLoaiPhong.setText(table.getValueAt(row, 3).toString());
+		txtSucChua.setText(table.getValueAt(row, 4).toString());
+		txtGiaPhong.setText(table.getValueAt(row, 5).toString());
+		txtaMoTa.setText(table.getValueAt(row, 7).toString());
 
 	}
 
