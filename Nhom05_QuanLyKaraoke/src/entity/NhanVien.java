@@ -2,20 +2,23 @@ package entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 public class NhanVien implements Serializable {
+	private String maNV;
 	private String tenNV;
-	private LocalDate namSinh;
-	private String gioiTinh;
+	private Date namSinh;
+	private int gioiTinh;
 	private String sdthoai;
 	private String cccd;
 	private String chucVu;
 	private String matKhau;
+	private int tinhTrangNV;
 
-	public NhanVien(String tenNV, LocalDate  namSinh, String gioiTinh, String sdthoai, String cccd, 
-			String chucVu, String matKhau) {
-		super();
+	public NhanVien(String maNV, String tenNV, Date namSinh, int gioiTinh, String sdthoai, String cccd,
+			String chucVu, String matKhau, int tinhTrangNV) {
+		this.maNV = maNV;
 		this.tenNV = tenNV;
 		this.namSinh = namSinh;
 		this.gioiTinh = gioiTinh;
@@ -23,16 +26,16 @@ public class NhanVien implements Serializable {
 		this.cccd = cccd;
 		this.chucVu = chucVu;
 		this.matKhau = matKhau;
-	
+		this.tinhTrangNV = tinhTrangNV;
 	}
 
 	public NhanVien() {
-		this("Tên nhân viên", LocalDate.now(), "Giới tính", "Số điện thoại", "CCCD", "Chức vụ", "Mật khẩu");
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(tenNV);
+		return Objects.hash(maNV);
 	}
 
 	@Override
@@ -44,7 +47,15 @@ public class NhanVien implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		NhanVien other = (NhanVien) obj;
-		return Objects.equals(tenNV, other.tenNV);
+		return Objects.equals(maNV, other.maNV);
+	}
+
+	public String getMaNV() {
+		return maNV;
+	}
+
+	public void setMaNV(String maNV) {
+		this.maNV = maNV;
 	}
 
 	public String getTenNV() {
@@ -55,20 +66,19 @@ public class NhanVien implements Serializable {
 		this.tenNV = tenNV;
 	}
 
-	
-	public LocalDate getNamSinh() {
+	public Date getNamSinh() {
 		return namSinh;
 	}
 
-	public void setNamSinh(LocalDate namSinh) {
+	public void setNamSinh(Date namSinh) {
 		this.namSinh = namSinh;
 	}
 
-	public String getGioiTinh() {
+	public int getGioiTinh() {
 		return gioiTinh;
 	}
 
-	public void setGioiTinh(String gioiTinh) {
+	public void setGioiTinh(int gioiTinh) {
 		this.gioiTinh = gioiTinh;
 	}
 
@@ -104,11 +114,20 @@ public class NhanVien implements Serializable {
 		this.matKhau = matKhau;
 	}
 
-	@Override
-	public String toString() {
-		return "NhanVien [tenNV=" + tenNV + ", namSinh=" + namSinh + ", gioiTinh=" + gioiTinh + ", sdthoai=" + sdthoai
-				+ ", cccd=" + cccd + ", chucVu=" + chucVu + ", matKhau=" + matKhau + "]";
+	public int getTinhTrangNV() {
+		return tinhTrangNV;
 	}
 
+	public void setTinhTrangNV(int tinhTrangNV) {
+		this.tinhTrangNV = tinhTrangNV;
+	}
+
+	@Override
+	public String toString() {
+		return "NhanVien [maNV=" + maNV + ", tenNV=" + tenNV + ", namSinh=" + namSinh + ", gioiTinh=" + gioiTinh
+				+ ", sdthoai=" + sdthoai + ", cccd=" + cccd + ", chucVu=" + chucVu + ", matKhau=" + matKhau
+				+ ", tinhTrangNV=" + tinhTrangNV + "]";
+	}
+	
 	
 }
