@@ -10,8 +10,7 @@ go
 create table DichVu(
 	MaDV nvarchar(20) not null primary key,
 	TenDV nvarchar(50) not null,
-	DonGiaNhap float not null,
-	DonGiaBan float not null,
+	DonGia float not null,
 	DonVi nvarchar(20),
 	SoLuongTonKho int,
 	--TinhTrangDV (Co 4 loai: Con hang(SL>10), sap het hang(10>SL>0), het hang(SL=0), da xoa(SL=0))
@@ -110,14 +109,11 @@ go
 create table Phong(
 	MaPhong nvarchar(20) not null primary key,
 	TenPhong nvarchar(50) not null,
-	-------FOREIGN KEY LoaiPhong
-	MaKM nvarchar(20) not null,
 	MaLP nvarchar(20) not null,
 	--TinhTrangPhong(con trong,dang thue,da dat truoc,da xoa)
 	TinhTrangPhong nvarchar(20) not null,
 	MoTa nvarchar(100)
 	CONSTRAINT fk_lp FOREIGN KEY (MaLP) REFERENCES LoaiPhong(MaLP),
-	CONSTRAINT fk_km FOREIGN KEY (MaKM) REFERENCES KhuyenMai(MaKM)
 )
 go
 create table ChiTietHoaDon(
@@ -136,30 +132,7 @@ go
 
 -----------Insert data
 
-----------------------------KHUYEN MAI---------------------------------------------------
---INSERT INTO KhuyenMai(MaKhuyenMai, PhanTramGiam, NgayBatDau, NgayKetThuc, MoTa, TrangThaiKM)
-INSERT INTO KhuyenMai values(N'KM001', 20, '2022/06/20', '2022/06/26', '', 1)
-INSERT INTO KhuyenMai values(N'KM002', 10, '2022/03/15', '2022/03/18', '', 1)
-INSERT INTO KhuyenMai values(N'KM003', 15, '2022/10/15', '2022/10/20', '', 1)
-INSERT INTO KhuyenMai values(N'KM004', 10, '2022/07/04', '2022/07/06', '', 0)
-INSERT INTO KhuyenMai values(N'KM005', 20, '2022/09/18', '2022/09/22', '', 1)
-INSERT INTO KhuyenMai values(N'KM006', 5, '2022/11/13', '2022/11/17', '', 0)
-INSERT INTO KhuyenMai values(N'KM007', 15, '2022/05/22', '2022/05/25', '', 1)
-INSERT INTO KhuyenMai values(N'KM008', 20, '2022/12/07', '2022/12/12', '', 1)
-INSERT INTO KhuyenMai values(N'KM009', 10, '2022/04/06', '2022/04/10', '', 0)
-INSERT INTO KhuyenMai values(N'KM010', 5, '2022/08/24', '2022/08/28', '', 0)
-INSERT INTO KhuyenMai values(N'KM011', 15, '2023/04/05', '2023/04/09', '', 1)
-INSERT INTO KhuyenMai values(N'KM012', 10, '2023/07/16', '2023/07/20', '', 1)
-INSERT INTO KhuyenMai values(N'KM013', 20, '2023/10/01', '2023/10/04', '', 0)
-INSERT INTO KhuyenMai values(N'KM014', 20, '2023/09/23', '2023/09/27', '', 1)
-INSERT INTO KhuyenMai values(N'KM015', 15, '2023/05/12', '2023/05/26', '', 1)
-INSERT INTO KhuyenMai values(N'KM016', 5, '2023/06/24', '2023/06/27', '', 1)
-INSERT INTO KhuyenMai values(N'KM017', 10, '2023/03/07', '2023/03/11', '', 0)
-INSERT INTO KhuyenMai values(N'KM018', 15, '2023/08/18', '2023/08/25', '', 1)
-INSERT INTO KhuyenMai values(N'KM019', 5, '2023/01/15', '2023/01/19', '', 1)
-INSERT INTO KhuyenMai values(N'KM020', 20, '2023/02/09', '2023/02/13', '', 0)
---Xem toan bo KhuyenMai
-select *from KhuyenMai
+
 
 ----------------------------LOAI PHONG---------------------------------------------------
 --INSERT INTO LoaiPhong(MaLP, TenLP, SucChua, GiaPhong)
@@ -176,30 +149,30 @@ select *from LoaiPhong
 ----------------------------PHONG---------------------------------------------------
 --INSERT INTO Phong(MaPhong, TenPhong, MaKM, MaLP, TinhTrangPhong, MoTa)
 --TinhTrangPhong(0: con trong, 1: dang thue, 2: da dat truoc, 3: da xoa)
-INSERT INTO Phong values(N'P001', N'101', N'KM001', N'LP002', N'Đã đặt trước',N'')
-INSERT INTO Phong values(N'P002', N'102', N'KM001', N'LP004', N'Đã đặt trước',N'')
-INSERT INTO Phong values(N'P003', N'103', N'KM001', N'LP006', N'Còn trống',N'')
-INSERT INTO Phong values(N'P004', N'104', N'KM001', N'LP004', N'Đã xóa',N'')
-INSERT INTO Phong values(N'P005', N'105', N'KM001', N'LP006', N'Còn trống',N'')
-INSERT INTO Phong values(N'P006', N'106', N'KM001', N'LP006', N'Còn trống',N'')
-INSERT INTO Phong values(N'P007', N'107', N'KM001', N'LP001', N'Đang thuê',N'')
-INSERT INTO Phong values(N'P008', N'108', N'KM001', N'LP003', N'Đang thuê',N'')
-INSERT INTO Phong values(N'P009', N'201', N'KM002', N'LP002', N'Đã xóa',N'')
-INSERT INTO Phong values(N'P010', N'202', N'KM002', N'LP004', N'Đang thuê',N'')
-INSERT INTO Phong values(N'P011', N'203', N'KM002', N'LP002', N'Đã đặt trước',N'')
-INSERT INTO Phong values(N'P012', N'204', N'KM002', N'LP006', N'Đã đặt trước',N'')
-INSERT INTO Phong values(N'P013', N'205', N'KM002', N'LP002', N'Đã xóa',N'')
-INSERT INTO Phong values(N'P014', N'206', N'KM002', N'LP002', N'Đang thuê',N'')
-INSERT INTO Phong values(N'P015', N'207', N'KM002', N'LP003', N'Đang thuê',N'')
-INSERT INTO Phong values(N'P016', N'208', N'KM002', N'LP005', N'Đã xóa',N'')
-INSERT INTO Phong values(N'P017', N'301', N'KM003', N'LP004', N'Đã đặt trước',N'')
-INSERT INTO Phong values(N'P018', N'302', N'KM003', N'LP002', N'Còn trống',N'')
-INSERT INTO Phong values(N'P019', N'303', N'KM003', N'LP003', N'Đang thuê',N'')
-INSERT INTO Phong values(N'P020', N'304', N'KM003', N'LP001', N'Còn trống',N'')
-INSERT INTO Phong values(N'P021', N'305', N'KM003', N'LP001', N'Đã đặt trước',N'')
-INSERT INTO Phong values(N'P022', N'306', N'KM003', N'LP005', N'Còn trống',N'')
-INSERT INTO Phong values(N'P023', N'307', N'KM003', N'LP001', N'Đang thuê',N'')
-INSERT INTO Phong values(N'P024', N'308', N'KM003', N'LP005', N'Còn trống',N'')
+INSERT INTO Phong values(N'P001', N'101', N'LP002', N'Đã đặt trước',N'')
+INSERT INTO Phong values(N'P002', N'102', N'LP004', N'Đã đặt trước',N'')
+INSERT INTO Phong values(N'P003', N'103', N'LP006', N'Còn trống',N'')
+INSERT INTO Phong values(N'P004', N'104', N'LP004', N'Đã xóa',N'')
+INSERT INTO Phong values(N'P005', N'105', N'LP006', N'Còn trống',N'')
+INSERT INTO Phong values(N'P006', N'106', N'LP006', N'Còn trống',N'')
+INSERT INTO Phong values(N'P007', N'107', N'LP001', N'Đang thuê',N'')
+INSERT INTO Phong values(N'P008', N'108', N'LP003', N'Đang thuê',N'')
+INSERT INTO Phong values(N'P009', N'201', N'LP002', N'Đã xóa',N'')
+INSERT INTO Phong values(N'P010', N'202', N'LP004', N'Đang thuê',N'')
+INSERT INTO Phong values(N'P011', N'203', N'LP002', N'Đã đặt trước',N'')
+INSERT INTO Phong values(N'P012', N'204', N'LP006', N'Đã đặt trước',N'')
+INSERT INTO Phong values(N'P013', N'205',  N'LP002', N'Đã xóa',N'')
+INSERT INTO Phong values(N'P014', N'206',  N'LP002', N'Đang thuê',N'')
+INSERT INTO Phong values(N'P015', N'207',  N'LP003', N'Đang thuê',N'')
+INSERT INTO Phong values(N'P016', N'208',  N'LP005', N'Đã xóa',N'')
+INSERT INTO Phong values(N'P017', N'301',  N'LP004', N'Đã đặt trước',N'')
+INSERT INTO Phong values(N'P018', N'302',  N'LP002', N'Còn trống',N'')
+INSERT INTO Phong values(N'P019', N'303',  N'LP003', N'Đang thuê',N'')
+INSERT INTO Phong values(N'P020', N'304',  N'LP001', N'Còn trống',N'')
+INSERT INTO Phong values(N'P021', N'305',  N'LP001', N'Đã đặt trước',N'')
+INSERT INTO Phong values(N'P022', N'306',  N'LP005', N'Còn trống',N'')
+INSERT INTO Phong values(N'P023', N'307',  N'LP001', N'Đang thuê',N'')
+INSERT INTO Phong values(N'P024', N'308',  N'LP005', N'Còn trống',N'')
 --Xem toan bo Phong
 select *from Phong
 ---
@@ -211,26 +184,26 @@ inner join LoaiPhong lp on p.MaLP = lp.MaLP
 --------------------------------DICH VU-----------------------------------------------
 --INSERT INTO DichVu(MaDV, TenDV, DonGiaNhap, DonGiaBan, DonVi, SoLuongTonKho, TinhTrangDV) 
 --TinhTrangDV (Co 4 loai: Con hang(SL>10), sap het hang(10>SL>0), het hang(SL=0), da xoa(SL=0))
-INSERT INTO DichVu values(N'DV001', N'Khăn giấy', 3000, 5000, N'Bịch', 200, N'Còn hàng')
-INSERT INTO DichVu values(N'DV002', N'Bia Heineken 330ml', 21000, 26000, N'Lon', 100, N'Còn hàng')
-INSERT INTO DichVu values(N'DV003', N'Coca cola', 10000, 15000, N'Lon', 7, N'Sắp hết hàng')
-INSERT INTO DichVu values(N'DV004', N'Trái cây dĩa', 60000, 70000, N'Dĩa', 0, N'Hết hàng')
-INSERT INTO DichVu values(N'DV005', N'Khăn giấy ướt', 5000, 8000, N'Bịch', 100, N'Còn hàng')
-INSERT INTO DichVu values(N'DV006', N'Cocktail', 40000, 50000, N'Lon', 50, N'Còn hàng')
-INSERT INTO DichVu values(N'DV007', N'Cà phê sữa đá', 15000, 18000, N'Ly', 70, N'Còn hàng')
-INSERT INTO DichVu values(N'DV008', N'Đậu phộng', 16000, 20000, N'Bịch', 5, N'Sắp hết hàng')
-INSERT INTO DichVu values(N'DV009', N'Bia Tiger 500ml ', 27000, 35000, N'Lon', 100, N'Còn hàng')
-INSERT INTO DichVu values(N'DV010', N'Cơm chiên hải sản', 30000, 40000, N'Dĩa', 3, N'Sắp hết hàng')
-INSERT INTO DichVu values(N'DV011', N'Sụn gà rang muối', 35000, 40000, N'Dĩa', 0, N'Đã xóa')
-INSERT INTO DichVu values(N'DV012', N'Nước suối Aquafina 500ml', 4000, 7000, N'Chai', 150, N'Còn hàng')
-INSERT INTO DichVu values(N'DV013', N'Mì xào hải sản', 30000, 40000, N'Dĩa', 8, N'Sắp hết hàng')
-INSERT INTO DichVu values(N'DV014', N'Thùng 24 lon bia Hà Nội 330ml', 282000, 315000, N'Thùng', 30, N'Còn hàng')
-INSERT INTO DichVu values(N'DV015', N'Đậu hũ xóc tỏi ớt', 25000, 35000, N'Dĩa', 3, N'Sắp hết hàng')
-INSERT INTO DichVu values(N'DV016', N'Bia Sài Gòn Chill 330ml dạng lốc 6 lon', 102000, 130000, N'Lốc', 0, N'Hết hàng')
-INSERT INTO DichVu values(N'DV017', N'Xúc xích nướng tiêu', 35000, 45000, N'Dĩa', 100, N'Còn hàng')
-INSERT INTO DichVu values(N'DV018', N'Bia Huda 330ml', 11000, 15000, N'Lon', 0, N'Đã xóa')
-INSERT INTO DichVu values(N'DV019', N'Chả giò', 30000, 40000, N'Dĩa', 20, N'Còn hàng')
-INSERT INTO DichVu values(N'DV020', N'6 lon bia Heineken Silver 330ml', 120000, 150000, N'Lốc', 40, N'Còn hàng')
+INSERT INTO DichVu values(N'DV001', N'Khăn giấy', 5000, N'Bịch', 200, N'Còn hàng')
+INSERT INTO DichVu values(N'DV002', N'Bia Heineken 330ml', 26000, N'Lon', 100, N'Còn hàng')
+INSERT INTO DichVu values(N'DV003', N'Coca cola', 15000, N'Lon', 7, N'Sắp hết hàng')
+INSERT INTO DichVu values(N'DV004', N'Trái cây dĩa',  70000, N'Dĩa', 0, N'Hết hàng')
+INSERT INTO DichVu values(N'DV005', N'Khăn giấy ướt', 8000, N'Bịch', 100, N'Còn hàng')
+INSERT INTO DichVu values(N'DV006', N'Cocktail',  50000, N'Lon', 50, N'Còn hàng')
+INSERT INTO DichVu values(N'DV007', N'Cà phê sữa đá',  18000, N'Ly', 70, N'Còn hàng')
+INSERT INTO DichVu values(N'DV008', N'Đậu phộng',  20000, N'Bịch', 5, N'Sắp hết hàng')
+INSERT INTO DichVu values(N'DV009', N'Bia Tiger 500ml ', 35000, N'Lon', 100, N'Còn hàng')
+INSERT INTO DichVu values(N'DV010', N'Cơm chiên hải sản',  40000, N'Dĩa', 3, N'Sắp hết hàng')
+INSERT INTO DichVu values(N'DV011', N'Sụn gà rang muối',  40000, N'Dĩa', 0, N'Đã xóa')
+INSERT INTO DichVu values(N'DV012', N'Nước suối Aquafina 500ml',  7000, N'Chai', 150, N'Còn hàng')
+INSERT INTO DichVu values(N'DV013', N'Mì xào hải sản',  40000, N'Dĩa', 8, N'Sắp hết hàng')
+INSERT INTO DichVu values(N'DV014', N'Thùng 24 lon bia Hà Nội 330ml',  315000, N'Thùng', 30, N'Còn hàng')
+INSERT INTO DichVu values(N'DV015', N'Đậu hũ xóc tỏi ớt',  35000, N'Dĩa', 3, N'Sắp hết hàng')
+INSERT INTO DichVu values(N'DV016', N'Bia Sài Gòn Chill 330ml dạng lốc 6 lon',  130000, N'Lốc', 0, N'Hết hàng')
+INSERT INTO DichVu values(N'DV017', N'Xúc xích nướng tiêu',  45000, N'Dĩa', 100, N'Còn hàng')
+INSERT INTO DichVu values(N'DV018', N'Bia Huda 330ml',  15000, N'Lon', 0, N'Đã xóa')
+INSERT INTO DichVu values(N'DV019', N'Chả giò',  40000, N'Dĩa', 20, N'Còn hàng')
+INSERT INTO DichVu values(N'DV020', N'6 lon bia Heineken Silver 330ml', 150000, N'Lốc', 40, N'Còn hàng')
 --Xem toan bo DichVu
 select *from DichVu
 --Insert DichVu
@@ -337,7 +310,30 @@ INSERT INTO PhieuDatPhong values(N'PDP020', N'NV020', N'KH020', '2023/09/07 17:4
 select *from PhieuDatPhong
 
 
-
+----------------------------KHUYEN MAI---------------------------------------------------
+--INSERT INTO KhuyenMai(MaKhuyenMai, PhanTramGiam, NgayBatDau, NgayKetThuc, MoTa, TrangThaiKM)
+INSERT INTO KhuyenMai values(N'KM001', 20, '2022/06/20', '2022/06/26', '', 1)
+INSERT INTO KhuyenMai values(N'KM002', 10, '2022/03/15', '2022/03/18', '', 1)
+INSERT INTO KhuyenMai values(N'KM003', 15, '2022/10/15', '2022/10/20', '', 1)
+INSERT INTO KhuyenMai values(N'KM004', 10, '2022/07/04', '2022/07/06', '', 0)
+INSERT INTO KhuyenMai values(N'KM005', 20, '2022/09/18', '2022/09/22', '', 1)
+INSERT INTO KhuyenMai values(N'KM006', 5, '2022/11/13', '2022/11/17', '', 0)
+INSERT INTO KhuyenMai values(N'KM007', 15, '2022/05/22', '2022/05/25', '', 1)
+INSERT INTO KhuyenMai values(N'KM008', 20, '2022/12/07', '2022/12/12', '', 1)
+INSERT INTO KhuyenMai values(N'KM009', 10, '2022/04/06', '2022/04/10', '', 0)
+INSERT INTO KhuyenMai values(N'KM010', 5, '2022/08/24', '2022/08/28', '', 0)
+INSERT INTO KhuyenMai values(N'KM011', 15, '2023/04/05', '2023/04/09', '', 1)
+INSERT INTO KhuyenMai values(N'KM012', 10, '2023/07/16', '2023/07/20', '', 1)
+INSERT INTO KhuyenMai values(N'KM013', 20, '2023/10/01', '2023/10/04', '', 0)
+INSERT INTO KhuyenMai values(N'KM014', 20, '2023/09/23', '2023/09/27', '', 1)
+INSERT INTO KhuyenMai values(N'KM015', 15, '2023/05/12', '2023/05/26', '', 1)
+INSERT INTO KhuyenMai values(N'KM016', 5, '2023/06/24', '2023/06/27', '', 1)
+INSERT INTO KhuyenMai values(N'KM017', 10, '2023/03/07', '2023/03/11', '', 0)
+INSERT INTO KhuyenMai values(N'KM018', 15, '2023/08/18', '2023/08/25', '', 1)
+INSERT INTO KhuyenMai values(N'KM019', 5, '2023/01/15', '2023/01/19', '', 1)
+INSERT INTO KhuyenMai values(N'KM020', 20, '2023/02/09', '2023/02/13', '', 0)
+--Xem toan bo KhuyenMai
+select *from KhuyenMai
 --------------------------------HOA DON-----------------------------------------------
 --INSERT INTO HoaDon(MaHD, MaPDP, GioThanhToan, NgayThanhToan, MaNV, MaKH, MaKM, TongHoaDon)
 INSERT INTO HoaDon values(N'HD001', N'PDP001', '13:34:26', '2022/11/21', N'NV001', N'KH001', N'KM001', 475000)
