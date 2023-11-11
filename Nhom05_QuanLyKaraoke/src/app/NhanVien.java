@@ -249,7 +249,14 @@ public class NhanVien extends JPanel implements MouseListener {
 		
 		layToanBoNV();
 		btnLamMoiNV.addActionListener(e -> xuLyLamMoi());
-		btnThemMoi.addActionListener(e -> xuLyThemMoi());
+		btnThemMoi.addActionListener(e -> {
+			try {
+				xuLyThemMoi();
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		btnXoa.addActionListener(e -> xuLyXoa());
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
 		btnThoat.addActionListener(e -> System.exit(0));
@@ -263,7 +270,7 @@ public class NhanVien extends JPanel implements MouseListener {
 	
 	
 	// Xu ly them moi
-	private void xuLyThemMoi() {
+	private void xuLyThemMoi() throws ParseException {
 		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn thêm thông tin nhân viên không?", "Chú ý",
 				JOptionPane.YES_NO_OPTION);
 		if (luaChon == JOptionPane.YES_OPTION) {
@@ -274,7 +281,15 @@ public class NhanVien extends JPanel implements MouseListener {
 			String cccd = txtCCCD.getText();
 			String chucVu = cbChucVu.getSelectedItem().toString();
 			String matKhau = txtMatKhau.getText();
-			String[] row = { "NV001", tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
+			String maNV = maNhanVien.formatMa(dsNV.get(dsNV.size()-1).getMaNV());
+			try {
+				dsNV.add(new entity.NhanVien(maNV, tenNV, dateFormat.parse(namSinh), 0, sdt, cccd, chucVu, matKhau, 0));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			String[] row = { maNV, tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
 			tableModel.addRow(row);
 		}
 	}
