@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import entity.DichVu;
 import entity.KhachHang;
 import connectDB.ConnectDB;
 
@@ -23,8 +24,8 @@ public class daoKhachHang{
 			Statement statement =con.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
-				dsKH.add(new KhachHang(rs.getString("TenKhachHang"), rs.getString("GioiTinh"), rs.getString("SoDienThoai"), 
-						rs.getString("Email"), rs.getString("GhiChu")));
+				dsKH.add(new KhachHang(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4),
+						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8)));
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -39,15 +40,18 @@ public class daoKhachHang{
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
-		String sql = "INSERT INTO KhachHang (TenKhachHang, GioiTinh, SoDienThoai, Email, GhiChu)"
-				+ "values(?,?,?,?,?)";
+		String sql = "INSERT INTO KhachHang (MaKH, TenKH, LoaiKH, GioiTinh, SoDienThoai, Email, SoGioDaThue, GhiChu)"
+				+ "values(?,?,?,?,?,?,?,?)";
 		try {
 			stm = con.prepareStatement(sql);
-			stm.setString(1, kh.getTenKH());
-			stm.setString(3, kh.getGioiTinh());
-			stm.setString(4, kh.getSdthoai());
-			stm.setString(5, kh.getEmail());
-			stm.setString(7, kh.getGhiChu());
+			stm.setString(1, kh.getMaKH());
+			stm.setString(2, kh.getTenKH());
+			stm.setInt(3, kh.getLoaiKH());
+			stm.setInt(4, kh.getGioiTinh());
+			stm.setString(5, kh.getSdthoai());
+			stm.setString(6, kh.getEmail());
+			stm.setInt(7, kh.getSoGioDaThue());
+			stm.setString(8, kh.getGhiChu());
 			System.out.println(stm);
 			stm.executeUpdate();
 		} catch (SQLException e) {
@@ -66,15 +70,18 @@ public class daoKhachHang{
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
-		String sql = "Update KhachHang set GioiTinh = ?, SoDienThoai = ?, Email = ?, GhiChu = ?\r\n"
-				+ "where TenKhachHang = ?";
+		String sql = "Update KhachHang set TenKH = ?, LoaiKH = ?, GioiTinh = ?, SoDienThoai = ?, Email = ?, SoGioDaThue = ?, GhiChu = ?\r\n"
+				+ "where MaKH = ?";
 		try {
-			stm = con.prepareStatement(sql);
+			stm = con.prepareStatement(sql);		
 			stm.setString(1, kh.getTenKH());
-			stm.setString(3, kh.getGioiTinh());
+			stm.setInt(2, kh.getLoaiKH());
+			stm.setInt(3, kh.getGioiTinh());
 			stm.setString(4, kh.getSdthoai());
 			stm.setString(5, kh.getEmail());
+			stm.setInt(6, kh.getSoGioDaThue());
 			stm.setString(7, kh.getGhiChu());
+			stm.setString(8, kh.getMaKH());
 			
 			stm.executeUpdate();
 		} catch (SQLException e) {
