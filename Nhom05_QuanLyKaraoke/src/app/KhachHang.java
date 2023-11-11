@@ -10,8 +10,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+
+import connectDB.ConnectDB;
+import dao.daoKhachHang;
+import dao.MaTuDong;
+import dao.daoDichVu;
+
 
 public class KhachHang extends JPanel implements MouseListener {
 
@@ -24,8 +32,22 @@ public class KhachHang extends JPanel implements MouseListener {
 			"Số giờ đã thuê", "Ghi chú"};
 	private JTable table;
 	private DefaultTableModel tableModel;
+	private daoKhachHang daoKH = new daoKhachHang();
+	private ArrayList<entity.KhachHang> dsKH = new ArrayList<>();
+	private MaTuDong maKhachHang = new MaTuDong();
+
+
+
 
 	public KhachHang() {
+		
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		daoKH = new daoKhachHang();
+		
 		Icon img_add = new ImageIcon("src/img/add2.png");
 		Icon img_del = new ImageIcon("src/img/del.png");
 		Icon img_reset = new ImageIcon("src/img/refresh.png");
@@ -189,6 +211,7 @@ public class KhachHang extends JPanel implements MouseListener {
 		add(pnlLeft, BorderLayout.WEST);
 		add(pnlRight, BorderLayout.CENTER);
 		
+		layToanBoKH();
 		btnLamMoiKH.addActionListener(e -> xuLyLamMoi());
 		btnThemMoi.addActionListener(e -> xuLyThemMoi());
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
@@ -196,8 +219,8 @@ public class KhachHang extends JPanel implements MouseListener {
 		btnTim.addActionListener(e -> xuLyTimKiem());
 		table.addMouseListener((MouseListener) this);
 		
-		String[] row = { "KH001", "tenKH", "", "", "sdt", "email", "5", ""};
-		tableModel.addRow(row); 
+		//String[] row = { "KH001", "tenKH", "", "", "sdt", "email", "5", ""};
+		//tableModel.addRow(row); 
 	}
 	
 	// Xu ly them moi
@@ -210,7 +233,8 @@ public class KhachHang extends JPanel implements MouseListener {
 			String sdt = txtSoDienThoai.getText();
 			String email = txtEmail.getText();
 			String ghichu = txaGhiChu.getText();
-			String[] row = { "KH001", tenKH, "", gioiTinh, sdt, email, "", ghichu };
+		    String maKH = maKhachHang.formatMa(dsKH.get(dsKH.size()-1).getMaKH());
+			String[] row = { maKH , tenKH, "", gioiTinh, sdt, email, "", ghichu };
 			tableModel.addRow(row);
 		}
 	}
@@ -251,6 +275,16 @@ public class KhachHang extends JPanel implements MouseListener {
 		return null;
 
 	}
+	
+	// Lay toan bo khach hang
+		private void layToanBoKH() {
+			dsKH = daoKH.getAll();
+			for (entity.KhachHang kh : dsKH) {
+				tableModel.addRow(new Object[] { kh.getMaKH(), kh.getTenKH(), kh.getLoaiKH(), kh.getGioiTinh(),
+						kh.getSdthoai(), kh.getEmail(), kh.getSoGioDaThue(), kh.getGhiChu()});
+
+			}
+		}
 
 	
 	
