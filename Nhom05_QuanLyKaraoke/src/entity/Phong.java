@@ -5,18 +5,16 @@ import java.util.Objects;
 public class Phong {
 	private String maPhong;
 	private String tenPhong;
-	private KhuyenMai khuyenMai;
 	private LoaiPhong loaiPhong;
 	private String tinhTrangPhong;
 	private String moTa;
 
-	public Phong(String maPhong, String tenPhong, KhuyenMai khuyenMai, LoaiPhong loaiPhong, String tinhTrangPhong,
+	public Phong(String maPhong, String tenPhong, LoaiPhong loaiPhong, String tinhTrangPhong,
 			String moTa) {
 		this.maPhong = maPhong;
 		this.tenPhong = tenPhong;
 		this.loaiPhong = loaiPhong;
 		this.tinhTrangPhong = tinhTrangPhong;
-		this.khuyenMai = khuyenMai;
 		this.moTa = moTa;
 	}
 
@@ -28,13 +26,6 @@ public class Phong {
 		this.moTa = moTa;
 	}
 
-	public KhuyenMai getKhuyenMai() {
-		return khuyenMai;
-	}
-
-	public void setKhuyenMai(KhuyenMai khuyenMai) {
-		this.khuyenMai = khuyenMai;
-	}
 
 	public String getMaPhong() {
 		return maPhong;
@@ -88,6 +79,6 @@ public class Phong {
 	@Override
 	public String toString() {
 		return "Phong [maPhong=" + maPhong + ", tenPhong=" + tenPhong + ", loaiPhong=" + loaiPhong + ", tinhTrangPhong="
-				+ tinhTrangPhong + "]";
+				+ tinhTrangPhong + ", moTa=" + moTa + "]";
 	}
 }

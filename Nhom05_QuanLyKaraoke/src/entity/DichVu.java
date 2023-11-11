@@ -5,22 +5,20 @@ import java.util.Objects;
 public class DichVu {
 	private String maDichVu;
 	private String tenDichVu;
-	private double donGiaNhap;
-	private double donGiaBan;
+	private double donGia;
 	private String donVi;
 	private int soLuong;
 	private String tinhTrang; // (0: het, 1: sap het; 2: con; 3 da xoa)
 
 	public DichVu() {
-		this("", "", 0, 0, "", 0, "");
+		this("", "", 0, "", 0, "");
 	}
 
-	public DichVu(String maDichVu, String tenDichVu, double donGiaNhap, double donGiaBan, String donVi, int soLuong,
-			String tinhTrang) {
+	public DichVu(String maDichVu, String tenDichVu, double donGia, String donVi, int soLuong, String tinhTrang) {
+		super();
 		this.maDichVu = maDichVu;
 		this.tenDichVu = tenDichVu;
-		this.donGiaNhap = donGiaNhap;
-		this.donGiaBan = donGiaBan;
+		this.donGia = donGia;
 		this.donVi = donVi;
 		this.soLuong = soLuong;
 		this.tinhTrang = tinhTrang;
@@ -42,20 +40,12 @@ public class DichVu {
 		this.tenDichVu = tenDichVu;
 	}
 
-	public double getDonGiaNhap() {
-		return donGiaNhap;
+	public double getDonGia() {
+		return donGia;
 	}
 
-	public void setDonGiaNhap(double donGiaNhap) {
-		this.donGiaNhap = donGiaNhap;
-	}
-
-	public double getDonGiaBan() {
-		return donGiaBan;
-	}
-
-	public void setDonGiaBan(double donGiaBan) {
-		this.donGiaBan = donGiaBan;
+	public void setDonGia(double donGia) {
+		this.donGia = donGia;
 	}
 
 	public String getDonVi() {
@@ -101,8 +91,7 @@ public class DichVu {
 
 	@Override
 	public String toString() {
-		return "DichVu [maDichVu=" + maDichVu + ", tenDichVu=" + tenDichVu + ", donGiaNhap=" + donGiaNhap
-				+ ", donGiaBan=" + donGiaBan + ", donVi=" + donVi + ", soLuong=" + soLuong + ", tinhTrang=" + tinhTrang
-				+ "]";
+		return "DichVu [maDichVu=" + maDichVu + ", tenDichVu=" + tenDichVu + ", donGia=" + donGia + ", donVi=" + donVi
+				+ ", soLuong=" + soLuong + ", tinhTrang=" + tinhTrang + "]";
 	}
 }
