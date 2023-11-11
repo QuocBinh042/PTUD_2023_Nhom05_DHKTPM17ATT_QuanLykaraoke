@@ -5,34 +5,42 @@ import java.util.Objects;
 public class Phong {
 	private String maPhong;
 	private String tenPhong;
-	private String maLP;
-	private String loaiPhong;
-	private int sucChua;
-	private double giaPhong;
-	private String tinhTrang; // (0: con trong, 1: dang thue, 2: da dat truoc, 3: da xoa)
+	private KhuyenMai khuyenMai;
+	private LoaiPhong loaiPhong;
+	private String tinhTrangPhong;
 	private String moTa;
 
-	public Phong() {
-		this("", "", "", "", 0, 0, "", "");
-	}
-
-	public Phong(String maPhong, String tenPhong, String maLP, String loaiPhong, int sucChua, double giaPhong,
-			String tinhTrang, String moTa) {
+	public Phong(String maPhong, String tenPhong, KhuyenMai khuyenMai, LoaiPhong loaiPhong, String tinhTrangPhong,
+			String moTa) {
 		this.maPhong = maPhong;
 		this.tenPhong = tenPhong;
-		this.maLP = maLP;
 		this.loaiPhong = loaiPhong;
-		this.sucChua = sucChua;
-		this.giaPhong = giaPhong;
-		this.tinhTrang = tinhTrang;
+		this.tinhTrangPhong = tinhTrangPhong;
+		this.khuyenMai = khuyenMai;
 		this.moTa = moTa;
+	}
+
+	public String getMoTa() {
+		return moTa;
+	}
+
+	public void setMoTa(String moTa) {
+		this.moTa = moTa;
+	}
+
+	public KhuyenMai getKhuyenMai() {
+		return khuyenMai;
+	}
+
+	public void setKhuyenMai(KhuyenMai khuyenMai) {
+		this.khuyenMai = khuyenMai;
 	}
 
 	public String getMaPhong() {
 		return maPhong;
 	}
 
-	public void setMaPhong(String maPhong) {
+	private void setMaPhong(String maPhong) {
 		this.maPhong = maPhong;
 	}
 
@@ -44,52 +52,20 @@ public class Phong {
 		this.tenPhong = tenPhong;
 	}
 
-	public String getMaLP() {
-		return maLP;
-	}
-
-	public void setMaLP(String maLP) {
-		this.maLP = maLP;
-	}
-
-	public String getLoaiPhong() {
+	public LoaiPhong getLoaiPhong() {
 		return loaiPhong;
 	}
 
-	public void setLoaiPhong(String loaiPhong) {
+	public void setLoaiPhong(LoaiPhong loaiPhong) {
 		this.loaiPhong = loaiPhong;
 	}
 
-	public int getSucChua() {
-		return sucChua;
+	public String getTinhTrangPhong() {
+		return tinhTrangPhong;
 	}
 
-	public void setSucChua(int sucChua) {
-		this.sucChua = sucChua;
-	}
-
-	public double getGiaPhong() {
-		return giaPhong;
-	}
-
-	public void setGiaPhong(double giaPhong) {
-		this.giaPhong = giaPhong;
-	}
-
-	public String getTinhTrang() {
-		return tinhTrang;
-	}
-
-	public void setTinhTrang(String tinhTrang) {
-		this.tinhTrang = tinhTrang;
-	}
-
-	public String getMoTa() {
-		return moTa;
-	}
-
-	public void setMoTa(String moTa) {
-		this.moTa = moTa;
+	public void setTinhTrangPhong(String tinhTrangPhong) {
+		this.tinhTrangPhong = tinhTrangPhong;
 	}
 
 	@Override
@@ -111,9 +87,7 @@ public class Phong {
 
 	@Override
 	public String toString() {
-		return "Phong [maPhong=" + maPhong + ", tenPhong=" + tenPhong + ", maLP=" + maLP + ", loaiPhong=" + loaiPhong
-				+ ", sucChua=" + sucChua + ", giaPhong=" + giaPhong + ", tinhTrang=" + tinhTrang + ", moTa=" + moTa
-				+ "]";
+		return "Phong [maPhong=" + maPhong + ", tenPhong=" + tenPhong + ", loaiPhong=" + loaiPhong + ", tinhTrangPhong="
+				+ tinhTrangPhong + "]";
 	}
-
 }
