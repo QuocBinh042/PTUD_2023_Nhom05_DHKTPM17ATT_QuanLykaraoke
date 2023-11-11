@@ -32,7 +32,7 @@ public class LoaiPhong extends JFrame implements MouseListener {
 	private JTextField txtSucChua, txtGiaLP;
 	private JLabel lblTenLP, lblsucChua, lblGiaLP, lblLocTenLP, lblLocSC;
 	private JButton btnThem, btnCapNhat, btnLamMoi, btnQuayLai;
-	private JComboBox cbTenLP, cbSucChua, cbLocTP;
+	private JComboBox cbTenLP, cbLocSC, cbLocTP;
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private ArrayList<entity.LoaiPhong> dsLP;
@@ -75,12 +75,12 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		bLeft.add(Box.createVerticalStrut(5));
 
 		JPanel pnlTenLP = new JPanel();
+		String cbLP[] = { "Tất cả", "Thường", "VIP" };
 		pnlTenLP.setBackground(Color.decode("#cccccc"));
 		pnlTenLP.add(lblTenLP = new JLabel("Tên loại phòng"));
 		pnlTenLP.add(cbTenLP = new JComboBox<>());
-		cbTenLP.addItem("Tất cả");
-		cbTenLP.addItem("Phòng thường");
-		cbTenLP.addItem("Phòng VIP");
+		cbTenLP.addItem("Thường");
+		cbTenLP.addItem("VIP");
 		bLeft.add(b2 = Box.createHorizontalBox());
 		b2.add(pnlTenLP);
 		bLeft.add(Box.createVerticalStrut(10));
@@ -129,16 +129,17 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		pnlTacVu.setLayout(gridTV);
 		// Panel Loc
 		JPanel pnlLoc = new JPanel();
+		String cbSC[] = { "Tất cả", "10", "15", "20" };
 		pnlLoc.setBackground(Color.decode("#e6dbd1"));
 		pnlLoc.add(lblLocTenLP = new JLabel("Tên loại phòng"));
 		pnlLoc.add(Box.createHorizontalStrut(20));
-		pnlLoc.add(cbLocTP = new JComboBox<>());
+		pnlLoc.add(cbLocTP = new JComboBox<>(cbLP));
 		cbLocTP.setPreferredSize(new Dimension(100, 25));
 		pnlLoc.add(Box.createHorizontalStrut(40));
 		pnlLoc.add(lblLocSC = new JLabel("Sức chứa"));
 		pnlLoc.add(Box.createHorizontalStrut(20));
-		pnlLoc.add(cbSucChua = new JComboBox<>());
-		cbSucChua.setPreferredSize(new Dimension(100, 25));
+		pnlLoc.add(cbLocSC = new JComboBox<>(cbSC));
+		cbLocSC.setPreferredSize(new Dimension(100, 25));
 		pnlTacVu.add(pnlLoc);
 
 		// Table
@@ -168,6 +169,8 @@ public class LoaiPhong extends JFrame implements MouseListener {
 
 		// add event
 		layToanBoLP();
+		cbLocTP.addActionListener(e -> xuLyLocCBTP());
+		cbLocSC.addActionListener(e -> xuLyLocCBSC());
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
 		btnThem.addActionListener(e -> xuLyThemMoi());
 		btnQuayLai.addActionListener(e -> xuLyQuayLai());
@@ -175,58 +178,108 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		table.addMouseListener(this);
 
 	}
-	//Lay toan bo loai phong
-			private void layToanBoLP() {
-				dsLP = daoLP.getAllLoaiPhong();
-				for(entity.LoaiPhong lp : dsLP) {
-					tableModel.addRow(new Object[] {lp.getMaLoaiPhong(), lp.getTenLoaiPhong(), lp.getSucChua(), formatter.format(lp.getGiaLoaiPhong())+" VNĐ"});
+	// Lay toan bo loai phong
+		private void layToanBoLP() {
+			dsLP = daoLP.getAllLoaiPhong();
+			for (entity.LoaiPhong lp : dsLP) {
+				tableModel.addRow(new Object[] { lp.getMaLoaiPhong(), lp.getTenLoaiPhong(), lp.getSucChua(),
+						formatter.format(lp.getGiaLoaiPhong()) + " VNĐ" });
+			}
+		}
+
+		// Xu ly them moi
+		private void xuLyThemMoi() {
+			String tenLP = cbTenLP.getSelectedItem().toString();
+			String giaLP = txtGiaLP.getText();
+			String sucChua = txtSucChua.getText();
+			int soLP = 0;
+			String maLP = "LP00" + (soLP + "");
+			String[] row = { maLP, tenLP, giaLP, sucChua };
+			tableModel.addRow(row);
+		}
+
+		// Xu ly cap nhat
+		private void xuLyCapNhat() {
+			int r = table.getSelectedRow();
+			String tenLP = cbTenLP.getSelectedItem().toString();
+			String giaLP = txtGiaLP.getText();
+			String sucChua = txtSucChua.getText();
+			table.setValueAt(tenLP, r, 1);
+			table.setValueAt(sucChua, r, 2);
+			table.setValueAt(giaLP, r, 3);
+
+		}
+
+		// Xu ly lam moi
+		private void xuLyLamMoi() {
+			cbTenLP.setSelectedIndex(0);
+			txtGiaLP.setText("");
+			txtSucChua.setText("");
+			cbLocTP.setSelectedIndex(0);
+			cbLocSC.setSelectedIndex(0);
+		}
+
+		// Xu ly quay lai
+		private void xuLyQuayLai() {
+			this.setVisible(false);
+		}
+
+		// Xu ly kiem tra thong tin
+		private int kiemTraThongTin() {
+			String sucChua = txtSucChua.getText();
+			String giaLP = txtGiaLP.getText();
+			if (sucChua.equals("") || giaLP.equals("")) {
+				return -1;
+			}
+			return 1;
+		}
+
+		// Xu ly loc ten loai phong xuLyLocCBSC
+		private void xuLyLocCBTP() {
+			String lc = cbLocTP.getSelectedItem().toString();
+			if (lc.equalsIgnoreCase("Tất cả")) {
+				xoaToanBoLP();
+				layToanBoLP();
+			} else if (lc.equalsIgnoreCase("Thường")) {
+				xoaToanBoLP();
+				layToanBoLP();
+				for (int i = 0; i < table.getRowCount(); i++) {
+					String tenLP = table.getValueAt(i, 1).toString();
+					if (tenLP.equalsIgnoreCase("VIP")) {
+						tableModel.removeRow(i);
+					}
 				}
+			} else if (lc.equalsIgnoreCase("VIP")) {
+				xoaToanBoLP();
+				layToanBoLP();
+				for (int i = 0; i < table.getRowCount(); i++) {
+					String tenLP = table.getValueAt(i, 1).toString();
+					if (tenLP.equalsIgnoreCase("Thường")) {
+						tableModel.removeRow(i);
+					}
+				}
+
+			}
+		}
+
+		// Xu ly loc theo suc chua
+		private void xuLyLocCBSC() {
+			xoaToanBoLP();
+			String lc = cbLocSC.getSelectedItem().toString();
+			dsLP = daoLP.getCBSC(lc);
+			for(entity.LoaiPhong lp : dsLP) {
+				tableModel.addRow(new Object[] {lp.getMaLoaiPhong(), lp.getTenLoaiPhong(), lp.getSucChua(), formatter.format(lp.getGiaLoaiPhong())+" VNĐ"});
+			}
+		}
+
+		// Xoa toan bo loai phong
+		private void xoaToanBoLP() {
+			DefaultTableModel dm = (DefaultTableModel) table.getModel();
+			while (dm.getRowCount() > 0) {
+				dm.removeRow(0);
 			}
 
-	// Xu ly them moi
-	private void xuLyThemMoi() {
-		String tenLP = cbTenLP.getSelectedItem().toString();
-		String giaLP = txtGiaLP.getText();
-		String sucChua = txtSucChua.getText();
-		int soLP = 0;
-		String maLP = "LP00" + (soLP + "");
-		String[] row = { maLP, tenLP, giaLP, sucChua };
-		tableModel.addRow(row);
-	}
-
-	// Xu ly cap nhat
-	private void xuLyCapNhat() {
-		int r = table.getSelectedRow();
-		String tenLP = cbTenLP.getSelectedItem().toString();
-		String giaLP = txtGiaLP.getText();
-		String sucChua = txtSucChua.getText();
-		table.setValueAt(tenLP, r, 1);
-		table.setValueAt(sucChua, r, 2);
-		table.setValueAt(giaLP, r, 3);
-
-	}
-
-	// Xu ly lam moi
-	private void xuLyLamMoi() {
-		cbTenLP.setSelectedIndex(0);
-		txtGiaLP.setText("");
-		txtSucChua.setText("");
-	}
-
-	// Xu ly quay lai
-	private void xuLyQuayLai() {
-		this.setVisible(false);
-	}
-
-	// Xu ly kiem tra thong tin
-	private int kiemTraThongTin() {
-		String sucChua = txtSucChua.getText();
-		String giaLP = txtGiaLP.getText();
-		if (sucChua.equals("") || giaLP.equals("")) {
-			return -1;
 		}
-		return 1;
-	}
 
 	// Xu ly mouseclick
 	@Override
