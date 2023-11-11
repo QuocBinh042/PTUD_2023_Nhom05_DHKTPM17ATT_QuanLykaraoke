@@ -4,26 +4,43 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class KhachHang implements Serializable {
+	private String maKH;
 	private String tenKH;
-	private String gioiTinh;
+	private int loaiKH;
+	private int gioiTinh;
 	private String sdthoai;
 	private String email;
+	private int soGioDaThue;
 	private String ghiChu;
 	
 	
-	public KhachHang(String tenKH, String gioiTinh, String sdthoai, String email, 
+	public int getSoGioDaThue() {
+		return soGioDaThue;
+	}
+
+	public void setSoGioDaThue(int soGioDaThue) {
+		this.soGioDaThue = soGioDaThue;
+	}
+	
+	public KhachHang(String SDT, String TenKH) {
+		setTenKH(TenKH);
+		setSdthoai(SDT);
+	}
+
+	public KhachHang(String maKH, String tenKH, int loaiKH, int gioiTinh, String sdthoai, String email, int soGioDaThue,
 			String ghiChu) {
-		super();
+		this.maKH = maKH;
 		this.tenKH = tenKH;
+		this.loaiKH = loaiKH;
 		this.gioiTinh = gioiTinh;
 		this.sdthoai = sdthoai;
 		this.email = email;
+		this.soGioDaThue = soGioDaThue;
 		this.ghiChu = ghiChu;
-
 	}
 
 	public KhachHang() {
-		this("Tên khách hàng", "Giới tính", "Số điện thoại", "Email", "Ghi chú");
+		this("Ma Khach Hang", "Tên khách hàng", 1, 1, "Số điện thoại", "Email", 1, "Ghi chú");
 	}
 
 	@Override
@@ -43,6 +60,14 @@ public class KhachHang implements Serializable {
 		return Objects.equals(tenKH, other.tenKH);
 	}
 
+	public String getMaKH() {
+		return maKH;
+	}
+
+	private void setMaKH(String maKH) {
+		this.maKH = maKH;
+	}
+
 	public String getTenKH() {
 		return tenKH;
 	}
@@ -51,11 +76,19 @@ public class KhachHang implements Serializable {
 		this.tenKH = tenKH;
 	}
 
-	public String getGioiTinh() {
+	public int getGioiTinh() {
 		return gioiTinh;
 	}
 
-	public void setGioiTinh(String gioiTinh) {
+	public int getLoaiKH() {
+		return loaiKH;
+	}
+
+	public void setLoaiKH(int loaiKH) {
+		this.loaiKH = loaiKH;
+	}
+
+	public void setGioiTinh(int gioiTinh) {
 		this.gioiTinh = gioiTinh;
 	}
 
