@@ -235,6 +235,7 @@ public class KhachHang extends JPanel implements MouseListener {
 			String ghichu = txaGhiChu.getText();
 		    String maKH = maKhachHang.formatMa(dsKH.get(dsKH.size()-1).getMaKH());
 			String[] row = { maKH , tenKH, "", gioiTinh, sdt, email, "", ghichu };
+            dsKH.add(new entity.KhachHang(maKH, tenKH, 0, 0, sdt, email, 0, ghichu));
 			tableModel.addRow(row);
 		}
 	}
