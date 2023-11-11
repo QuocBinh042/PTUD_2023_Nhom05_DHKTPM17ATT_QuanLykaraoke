@@ -1,24 +1,23 @@
 package entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class KhuyenMai {
 	private String maKM;
 	private Double phanTramGiam;
-	private LocalDate ngayBD;
-	private LocalDate ngayKT;
-	private String trangThai;
+	private Date ngayBD;
+	private Date ngayKT;
 	private String moTa;
+	private Boolean trangThai;
 
-	public KhuyenMai(String maKM, Double phanTramGiam, LocalDate ngayBD, LocalDate ngayKT, String trangThai,
-			String moTa) {
+	public KhuyenMai(String maKM, Double phanTramGiam, Date ngayBD, Date ngayKT, String moTa, Boolean trangThai) {
 		super();
 		this.maKM = maKM;
 		this.phanTramGiam = phanTramGiam;
 		this.ngayBD = ngayBD;
 		this.ngayKT = ngayKT;
-		this.trangThai = trangThai;
 		this.moTa = moTa;
+		this.trangThai = trangThai;
 	}
 
 	public String getMaKM() {
@@ -37,28 +36,20 @@ public class KhuyenMai {
 		this.phanTramGiam = phanTramGiam;
 	}
 
-	public LocalDate getNgayBD() {
+	public Date getNgayBD() {
 		return ngayBD;
 	}
 
-	public void setNgayBD(LocalDate ngayBD) {
+	public void setNgayBD(Date ngayBD) {
 		this.ngayBD = ngayBD;
 	}
 
-	public LocalDate getNgayKT() {
+	public Date getNgayKT() {
 		return ngayKT;
 	}
 
-	public void setNgayKT(LocalDate ngayKT) {
+	public void setNgayKT(Date ngayKT) {
 		this.ngayKT = ngayKT;
-	}
-
-	public String getTrangThai() {
-		return trangThai;
-	}
-
-	public void setTrangThai(String trangThai) {
-		this.trangThai = trangThai;
 	}
 
 	public String getMoTa() {
@@ -69,10 +60,18 @@ public class KhuyenMai {
 		this.moTa = moTa;
 	}
 
+	public Boolean getTrangThai() {
+		return trangThai;
+	}
+
+	public void setTrangThai(Boolean trangThai) {
+		this.trangThai = trangThai;
+	}
+
 	@Override
 	public String toString() {
 		return "KhuyenMai [maKM=" + maKM + ", phanTramGiam=" + phanTramGiam + ", ngayBD=" + ngayBD + ", ngayKT="
-				+ ngayKT + ", trangThai=" + trangThai + ", moTa=" + moTa + "]";
+				+ ngayKT + ", moTa=" + moTa + ", trangThai=" + trangThai + "]";
 	}
 
 }
