@@ -22,8 +22,8 @@ public class daoPhong {
 					+ "inner join KhuyenMai km on p.MaKM = km.MaKM"; 
 			ResultSet rs = connect.createStatement().executeQuery(sql);
 			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13).toLocalDate(), rs.getDate(14).toLocalDate(),
-						rs.getString(15), rs.getString(16));
+				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
+						rs.getString(15), rs.getBoolean(16));
 				
 				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
 				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
@@ -50,8 +50,8 @@ public class daoPhong {
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13).toLocalDate(), rs.getDate(14).toLocalDate(),
-						rs.getString(15), rs.getString(16));
+				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
+						rs.getString(15), rs.getBoolean(16));
 				
 				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
 				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
@@ -80,8 +80,8 @@ public class daoPhong {
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13).toLocalDate(), rs.getDate(14).toLocalDate(),
-						rs.getString(15), rs.getString(16));
+				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
+						rs.getString(15), rs.getBoolean(16));
 				
 				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
 				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
@@ -110,8 +110,8 @@ public class daoPhong {
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13).toLocalDate(), rs.getDate(14).toLocalDate(),
-						rs.getString(15), rs.getString(16));
+				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
+						rs.getString(15), rs.getBoolean(16));
 				
 				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
 				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
@@ -140,8 +140,8 @@ public class daoPhong {
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13).toLocalDate(), rs.getDate(14).toLocalDate(),
-						rs.getString(15), rs.getString(16));
+				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
+						rs.getString(15), rs.getBoolean(16));
 				
 				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
 				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
@@ -171,8 +171,8 @@ public class daoPhong {
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13).toLocalDate(), rs.getDate(14).toLocalDate(),
-						rs.getString(15), rs.getString(16));
+				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
+						rs.getString(15), rs.getBoolean(16));
 				
 				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
 				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
