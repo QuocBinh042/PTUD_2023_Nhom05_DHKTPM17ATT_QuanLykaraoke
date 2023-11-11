@@ -1,9 +1,9 @@
-﻿go
+﻿--Tạo cơ sở dữ liệu
 create database QuanLyKaraokeOne
 go
 use QuanLyKaraokeOne
 go
---drop database QuanLyKaraokeOne
+drop database QuanLyKaraokeOne
 go
 --------------Create Table
 go
@@ -12,11 +12,12 @@ create table DichVu(
 	TenDV nvarchar(50) not null,
 	DonGiaNhap float not null,
 	DonGiaBan float not null,
-	DonViTinh nvarchar(20),
+	DonVi nvarchar(20),
 	SoLuongTonKho int,
 	--TinhTrangDV (Co 4 loai: Con hang(SL>10), sap het hang(10>SL>0), het hang(SL=0), da xoa(SL=0))
 	TinhTrangDV nvarchar(20) not null
 )
+
 go
 create table KhachHang(
 	MaKH nvarchar(20) not null primary key,
@@ -39,7 +40,7 @@ create table NhanVien(
 	GioiTinh bit,
 	SoDienThoai nvarchar(10) not null,
 	CCCD nvarchar(12) not null,
-	--ChucVu (0: nhan vien quan ly, 1: le tan, 2: phuc vu)
+	--ChucVu (nhan vien quan ly, le tan,phuc vu)
 	ChucVu nvarchar(20)not null,
 	MatKhau nvarchar(30) not null,
 	--TinhTrangNV(0: nghi viec, 1: dang lam)
@@ -48,29 +49,28 @@ create table NhanVien(
 go
 create table PhieuDatPhong(
 	MaPDP nvarchar(20) not null primary key,
-	-----FOREIGN KEY MaKhachHang
-	MaKH nvarchar(20) not null,
 	-----FOREIGN KEY MaNhanVien
 	MaNV nvarchar(20) not null,
-	NgayDatPhong date,
-	GioDatPhong time,
+	-----FOREIGN KEY MaKhachHang
+	MaKH nvarchar(20) not null,
+	ThoiGianDatPhong date,
+	ThoiGianNhanPhong date,
 	SoLuongKhach int,
 	--TinhTrangPDP(0: chua thanh toan, 1: da thanh toan)
 	TinhTrangPDP bit, 
-	MoTa nvarchar(50),
+	GhiChu nvarchar(50),
 	CONSTRAINT fk_kh FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH),
 	CONSTRAINT fk_nv FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
 )
 go
-create table CTDVPhong(
-	-------FOREIGN KEY PhieuDatPhong
-	MaPDP nvarchar(20) not null,
-	-------FOREIGN KEY DichVu
-	MaDV nvarchar(20) not null,
-	SoLuong int not null,
-	CONSTRAINT fk_pdp FOREIGN KEY (MaPDP) REFERENCES PhieuDatPhong(MaPDP),
-	CONSTRAINT fk_dv FOREIGN KEY (MaDV) REFERENCES DichVu(MaDV),
-	PRIMARY KEY (MaPDP,MaDV)
+create table KhuyenMai(
+	MaKM nvarchar(20) not null primary key,
+	PhanTramGiam float,
+	NgayBatDau date,
+	NgayKetThuc date,
+	MoTa nvarchar(50),
+	--TrangThaiKM(0: ket thuc, 1: dang hoat dong)
+	TrangThaiKM bit
 )
 go
 create table HoaDon(
@@ -79,11 +79,25 @@ create table HoaDon(
 	MaPDP nvarchar(20) not null,
 	GioThanhToan time,
 	NgayThanhToan date,
-	TienPhong float,
-	TienDichVu float,
-	TienGiam float,
-	TongTien float,
-	CONSTRAINT fk_maPDP FOREIGN KEY (MaPDP) REFERENCES PhieuDatPhong(MaPDP)
+	MaNV nvarchar(20) not null,
+	MaKH nvarchar(20) not null,
+	MaKM nvarchar(20) not null,
+	TongHoaDon float
+	CONSTRAINT fk_maPDP FOREIGN KEY (MaPDP) REFERENCES PhieuDatPhong(MaPDP),
+	CONSTRAINT fk_n_vien FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV),
+	CONSTRAINT fk_k_hang FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH),
+	CONSTRAINT fk_maKM FOREIGN KEY (MaKM) REFERENCES KhuyenMai(MaKM)
+)
+go
+create table CTDVPhong(
+	-------FOREIGN KEY PhieuDatPhong
+	MaHD nvarchar(20) not null,
+	-------FOREIGN KEY DichVu
+	MaDV nvarchar(20) not null,
+	SoLuong int not null,
+	CONSTRAINT fk_hd FOREIGN KEY (MaHD) REFERENCES HoaDon(MaHD),
+	CONSTRAINT fk_dv FOREIGN KEY (MaDV) REFERENCES DichVu(MaDV),
+	PRIMARY KEY (MaHD,MaDV)
 )
 go
 create table LoaiPhong(
@@ -93,46 +107,34 @@ create table LoaiPhong(
 	GiaPhong float
 )
 go
-create table KhuyenMai(
-	MaKhuyenMai nvarchar(20) not null primary key,
-	PhanTramGiam float,
-	NgayBatDau date,
-	NgayKetThuc date,
-	MoTa nvarchar(50),
-	--TrangThaiKM(0: ket thuc, 1: dang hoat dong)
-	TrangThaiKM bit
-)
-go
 create table Phong(
 	MaPhong nvarchar(20) not null primary key,
 	TenPhong nvarchar(50) not null,
 	-------FOREIGN KEY LoaiPhong
 	MaKM nvarchar(20) not null,
 	MaLP nvarchar(20) not null,
-	--TinhTrangPhong(0: con trong, 1: dang thue, 2: da dat truoc, 3: da xoa)
+	--TinhTrangPhong(con trong,dang thue,da dat truoc,da xoa)
 	TinhTrangPhong nvarchar(20) not null,
 	MoTa nvarchar(100)
 	CONSTRAINT fk_lp FOREIGN KEY (MaLP) REFERENCES LoaiPhong(MaLP),
-	CONSTRAINT fk_km FOREIGN KEY (MaKM) REFERENCES KhuyenMai(MaKhuyenMai)
+	CONSTRAINT fk_km FOREIGN KEY (MaKM) REFERENCES KhuyenMai(MaKM)
 )
 go
-create table CTPhong(
+create table ChiTietHoaDon(
 	-------FOREIGN KEY Phong
 	MaPhong nvarchar(20) not null,
-	-------FOREIGN KEY PhieuDatPhong
-	MaPDP nvarchar(20) not null,
-	NgayNhanPhong date,
-	GioNhanPhong time,
-	GioTraPhong time ,
+	-------FOREIGN KEY HoaDon
+	MaHD nvarchar(20) not null,
+	ThoiGianNhanPhong date,
+	ThoiGianTraPhong date,
 	CONSTRAINT fk_maP FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong),
-	CONSTRAINT fk_maPDphong FOREIGN KEY (MaPDP) REFERENCES PhieuDatPhong(MaPDP),
-	PRIMARY KEY (MaPhong,MaPDP)
+	CONSTRAINT fk_mahd FOREIGN KEY (MaHD) REFERENCES HoaDon(MaHD),
+	PRIMARY KEY (MaPhong,MaHD)
 )
 
 go
 
 -----------Insert data
-
 
 ----------------------------KHUYEN MAI---------------------------------------------------
 --INSERT INTO KhuyenMai(MaKhuyenMai, PhanTramGiam, NgayBatDau, NgayKetThuc, MoTa, TrangThaiKM)
@@ -172,7 +174,7 @@ select *from LoaiPhong
 
 
 ----------------------------PHONG---------------------------------------------------
---INSERT INTO Phong(MaPhong, TenPhong, MaKM, MaLP, TinhTrangPhong)
+--INSERT INTO Phong(MaPhong, TenPhong, MaKM, MaLP, TinhTrangPhong, MoTa)
 --TinhTrangPhong(0: con trong, 1: dang thue, 2: da dat truoc, 3: da xoa)
 INSERT INTO Phong values(N'P001', N'101', N'KM001', N'LP002', N'Đã đặt trước',N'')
 INSERT INTO Phong values(N'P002', N'102', N'KM001', N'LP004', N'Đã đặt trước',N'')
@@ -200,10 +202,14 @@ INSERT INTO Phong values(N'P023', N'307', N'KM003', N'LP001', N'Đang thuê',N''
 INSERT INTO Phong values(N'P024', N'308', N'KM003', N'LP005', N'Còn trống',N'')
 --Xem toan bo Phong
 select *from Phong
+---
+select p.MaPhong, TenPhong, lp.MaLP, lp.TenLP, lp.SucChua, lp.GiaPhong, p.TinhTrangPhong,p.MoTa from Phong p
+inner join LoaiPhong lp on p.MaLP = lp.MaLP
+
 
 
 --------------------------------DICH VU-----------------------------------------------
---INSERT INTO DichVu(MaDV, TenDV, DonGiaNhap, DonGiaBan, DonViTinh, SoLuongTonKho, TinhTrangDV) 
+--INSERT INTO DichVu(MaDV, TenDV, DonGiaNhap, DonGiaBan, DonVi, SoLuongTonKho, TinhTrangDV) 
 --TinhTrangDV (Co 4 loai: Con hang(SL>10), sap het hang(10>SL>0), het hang(SL=0), da xoa(SL=0))
 INSERT INTO DichVu values(N'DV001', N'Khăn giấy', 3000, 5000, N'Bịch', 200, N'Còn hàng')
 INSERT INTO DichVu values(N'DV002', N'Bia Heineken 330ml', 21000, 26000, N'Lon', 100, N'Còn hàng')
@@ -212,14 +218,14 @@ INSERT INTO DichVu values(N'DV004', N'Trái cây dĩa', 60000, 70000, N'Dĩa', 0
 INSERT INTO DichVu values(N'DV005', N'Khăn giấy ướt', 5000, 8000, N'Bịch', 100, N'Còn hàng')
 INSERT INTO DichVu values(N'DV006', N'Cocktail', 40000, 50000, N'Lon', 50, N'Còn hàng')
 INSERT INTO DichVu values(N'DV007', N'Cà phê sữa đá', 15000, 18000, N'Ly', 70, N'Còn hàng')
-INSERT INTO DichVu values(N'DV008', N'Đậu phộng', 16000, 20000, N'Bịch', 5, N'Sắp hết')
+INSERT INTO DichVu values(N'DV008', N'Đậu phộng', 16000, 20000, N'Bịch', 5, N'Sắp hết hàng')
 INSERT INTO DichVu values(N'DV009', N'Bia Tiger 500ml ', 27000, 35000, N'Lon', 100, N'Còn hàng')
 INSERT INTO DichVu values(N'DV010', N'Cơm chiên hải sản', 30000, 40000, N'Dĩa', 3, N'Sắp hết hàng')
 INSERT INTO DichVu values(N'DV011', N'Sụn gà rang muối', 35000, 40000, N'Dĩa', 0, N'Đã xóa')
 INSERT INTO DichVu values(N'DV012', N'Nước suối Aquafina 500ml', 4000, 7000, N'Chai', 150, N'Còn hàng')
 INSERT INTO DichVu values(N'DV013', N'Mì xào hải sản', 30000, 40000, N'Dĩa', 8, N'Sắp hết hàng')
 INSERT INTO DichVu values(N'DV014', N'Thùng 24 lon bia Hà Nội 330ml', 282000, 315000, N'Thùng', 30, N'Còn hàng')
-INSERT INTO DichVu values(N'DV015', N'Đậu hũ xóc tỏi ớt', 25000, 35000, N'Dĩa', 30, N'Sắp hết')
+INSERT INTO DichVu values(N'DV015', N'Đậu hũ xóc tỏi ớt', 25000, 35000, N'Dĩa', 3, N'Sắp hết hàng')
 INSERT INTO DichVu values(N'DV016', N'Bia Sài Gòn Chill 330ml dạng lốc 6 lon', 102000, 130000, N'Lốc', 0, N'Hết hàng')
 INSERT INTO DichVu values(N'DV017', N'Xúc xích nướng tiêu', 35000, 45000, N'Dĩa', 100, N'Còn hàng')
 INSERT INTO DichVu values(N'DV018', N'Bia Huda 330ml', 11000, 15000, N'Lon', 0, N'Đã xóa')
@@ -228,12 +234,12 @@ INSERT INTO DichVu values(N'DV020', N'6 lon bia Heineken Silver 330ml', 120000, 
 --Xem toan bo DichVu
 select *from DichVu
 --Insert DichVu
-insert into DichVu (MaDV,TenDV,DonGiaNhap,DonGiaBan,DonViTinh,SoLuongTonKho,TinhTrangDV) values(N'DV021',N'Trái cây dĩa',50000,70000,N'Dĩa',100,1)
-insert into DichVu values(N'DV021',N'Trái cây dĩa',50000,70000,N'Dĩa',100,1)
+--insert into DichVu (MaDV,TenDV,DonGiaNhap,DonGiaBan,DonViTinh,SoLuongTonKho,TinhTrangDV) values(N'DV021',N'Trái cây dĩa',50000,70000,N'Dĩa',100,1)
+--insert into DichVu values(N'DV021',N'Trái cây dĩa',50000,70000,N'Dĩa',100,1)
 --Update DichVu
-update DichVu 
-set TenDV = N'Khăn giấy', DonGiaNhap = 2000, DonGiaBan = 5000, DonViTinh = N'Cái', SoLuongTonKho = 100
-where MaDV = N'DV001'
+--update DichVu 
+--set TenDV = N'Khăn giấy', DonGiaNhap = 2000, DonGiaBan = 5000, DonViTinh = N'Cái', SoLuongTonKho = 100
+--where MaDV = N'DV001'
 --Delete DichVu
 delete from DichVu where MaDV = N'DV021'
 --Loc theo tinh trang (0: het, 1: sap het; 2: con; 3 da xoa)
@@ -246,6 +252,9 @@ where TenDV like N'Bia'
 delete from DichVu where MaDV = N'DV022'
 --Lay toan bo ten dich vu
 select TenDV from DichVu
+
+
+
 
 --------------------------------NHAN VIEN-----------------------------------------------
 --INSERT INTO NhanVien(MaNV, TenNV, NamSinh, GioiTinh, SoDienThoai, CCCD, ChucVu, MatKhau, TinhTrangNV)
@@ -273,6 +282,8 @@ INSERT INTO NhanVien values(N'NV020', N'Trần Thị Quỳnh Như', '1999/04/17'
 --Xem toan bo NhanVien
 select *from NhanVien
 
+
+
 --------------------------------KHACH HANG-----------------------------------------------
 --INSERT INTO KhachHang(MaKH, TenKH, LoaiKH, GioiTinh, SoDienThoai, Email, SoGioDaThue, GhiChu)
 INSERT INTO KhachHang values(N'KH001', N'Nguyễn Bùi Phát Đạt', 0, 0, '0649248221', N'phatdat123@gmail.com', 3, '')
@@ -298,106 +309,111 @@ INSERT INTO KhachHang values(N'KH020', N'Đặng Hoàng Phúc', 0, 0, '074920548
 --Xem toan bo KhachHang
 select *from KhachHang
 
+
+
 --------------------------------PHIEU DAT PHONG-----------------------------------------------
---INSERT INTO PhieuDatPhong(MaPDP, MaKH, MaNV, NgayDatPhong, GioDatPhong, SoLuongKhach, TinhTrangPDP, MoTa)
-INSERT INTO PhieuDatPhong values(N'PDP001', N'KH001', N'NV001', '2022/07/23', '9:25:43', 4, 1, '')
-INSERT INTO PhieuDatPhong values(N'PDP002', N'KH002', N'NV002', '2022/03/11', '8:45:12', 3, 0, '')
-INSERT INTO PhieuDatPhong values(N'PDP003', N'KH003', N'NV003', '2022/10/05', '13:10:06', 7, 0, '')
-INSERT INTO PhieuDatPhong values(N'PDP004', N'KH004', N'NV004', '2022/04/28', '17:05:25', 2, 1, '')
-INSERT INTO PhieuDatPhong values(N'PDP005', N'KH005', N'NV005', '2022/09/15', '20:27:18', 5, 0, '')
-INSERT INTO PhieuDatPhong values(N'PDP006', N'KH006', N'NV006', '2022/01/13', '11:30:15', 5, 0, '')
-INSERT INTO PhieuDatPhong values(N'PDP007', N'KH007', N'NV007', '2022/11/04', '22:14:27', 6, 1, '')
-INSERT INTO PhieuDatPhong values(N'PDP008', N'KH008', N'NV008', '2022/05/27', '10:40:10', 8, 1, '')
-INSERT INTO PhieuDatPhong values(N'PDP009', N'KH009', N'NV009', '2022/08/16', '12:05:50', 3, 0, '')
-INSERT INTO PhieuDatPhong values(N'PDP010', N'KH010', N'NV010', '2022/12/01', '19:35:38', 4, 1, '')
-INSERT INTO PhieuDatPhong values(N'PDP011', N'KH011', N'NV011', '2022/07/19', '14:23:39', 2, 1, '')
-INSERT INTO PhieuDatPhong values(N'PDP012', N'KH012', N'NV012', '2022/06/25', '21:36:55', 7, 0, '')
-INSERT INTO PhieuDatPhong values(N'PDP013', N'KH013', N'NV013', '2023/10/01', '15:40:05', 5, 1, '')
-INSERT INTO PhieuDatPhong values(N'PDP014', N'KH014', N'NV014', '2023/05/21', '23:01:20', 3, 0, '')
-INSERT INTO PhieuDatPhong values(N'PDP015', N'KH015', N'NV015', '2023/09/18', '18:20:35', 4, 0, '')
-INSERT INTO PhieuDatPhong values(N'PDP016', N'KH016', N'NV016', '2023/01/27', '10:14:20', 2, 1, '')
-INSERT INTO PhieuDatPhong values(N'PDP017', N'KH017', N'NV017', '2023/08/06', '19:50:10', 8, 0, '')
-INSERT INTO PhieuDatPhong values(N'PDP018', N'KH018', N'NV018', '2023/06/29', '14:21:37', 5, 1, '')
-INSERT INTO PhieuDatPhong values(N'PDP019', N'KH019', N'NV019', '2023/07/16', '8:30:45', 6, 0, '')
-INSERT INTO PhieuDatPhong values(N'PDP020', N'KH020', N'NV020', '2023/04/24', '17:44:03', 3, 1, '')
+--INSERT INTO PhieuDatPhong(MaPDP, MaNV, MaKH, ThoiGianDatPhong, ThoiGianNhanPhong, SoLuongKhach, TinhTrangPDP, MoTa)
+INSERT INTO PhieuDatPhong values(N'PDP001', N'NV001', N'KH001', '2022/11/21 9:25:43', '2022/11/21 9:30:43', 4, 1, '')
+INSERT INTO PhieuDatPhong values(N'PDP002', N'NV002', N'KH002', '2022/03/10 8:45:12', '2022/03/10 8:50:15', 3, 0, '')
+INSERT INTO PhieuDatPhong values(N'PDP003', N'NV003', N'KH003', '2022/09/24 13:10:06', '2022/09/24 14:05:25', 7, 0, '')
+INSERT INTO PhieuDatPhong values(N'PDP004', N'NV004', N'KH004', '2022/06/05 17:05:25', '2022/06/05 17:10:30', 2, 1, '')
+INSERT INTO PhieuDatPhong values(N'PDP005', N'NV005', N'KH005', '2022/10/13 15:27:18', '2022/10/13 15:35:20', 5, 0, '')
+INSERT INTO PhieuDatPhong values(N'PDP006', N'NV006', N'KH006', '2022/05/29 11:30:15', '2022/05/29 11:35:20', 5, 0, '')
+INSERT INTO PhieuDatPhong values(N'PDP007', N'NV007', N'KH007', '2022/07/17 19:14:27', '2022/07/17 19:20:36', 6, 1, '')
+INSERT INTO PhieuDatPhong values(N'PDP008', N'NV008', N'KH008', '2022/10/30 10:40:10', '2022/10/30 10:45:20', 8, 1, '')
+INSERT INTO PhieuDatPhong values(N'PDP009', N'NV009', N'KH009', '2022/03/15 12:05:50', '2022/03/15 12:10:15', 3, 0, '')
+INSERT INTO PhieuDatPhong values(N'PDP010', N'NV010', N'KH010', '2022/08/25 20:35:38', '2022/08/25 20:40:03', 4, 1, '')
+INSERT INTO PhieuDatPhong values(N'PDP011', N'NV011', N'KH011', '2023/06/24 14:23:39', '2023/06/24 15:00:23', 2, 1, '')
+INSERT INTO PhieuDatPhong values(N'PDP012', N'NV012', N'KH012', '2023/05/02 16:36:55', '2023/05/02 16:40:10', 7, 0, '')
+INSERT INTO PhieuDatPhong values(N'PDP013', N'NV013', N'KH013', '2023/01/15 15:40:05', '2023/01/15 15:50:10', 5, 1, '')
+INSERT INTO PhieuDatPhong values(N'PDP014', N'NV014', N'KH014', '2023/08/29 10:01:20', '2023/08/29 10:06:35', 3, 0, '')
+INSERT INTO PhieuDatPhong values(N'PDP015', N'NV015', N'KH015', '2023/10/02 18:20:35', '2023/10/02 18:25:40', 4, 0, '')
+INSERT INTO PhieuDatPhong values(N'PDP016', N'NV016', N'KH016', '2023/04/13 10:14:20', '2023/04/13 10:20:34', 2, 1, '')
+INSERT INTO PhieuDatPhong values(N'PDP017', N'NV017', N'KH017', '2023/07/18 19:50:10', '2023/07/18 20:00:32', 8, 0, '')
+INSERT INTO PhieuDatPhong values(N'PDP018', N'NV018', N'KH018', '2023/03/17 14:21:37', '2023/03/17 14:25:45', 5, 1, '')
+INSERT INTO PhieuDatPhong values(N'PDP019', N'NV019', N'KH019', '2023/05/25 8:30:45', '2023/05/25 8:35:50', 6, 0, '')
+INSERT INTO PhieuDatPhong values(N'PDP020', N'NV020', N'KH020', '2023/09/07 17:44:03', '2023/09/07 17:51:07', 3, 1, '')
 --Xem toan bo PhieuDatPhong
 select *from PhieuDatPhong
 
 
-----------------------------CT PHONG---------------------------------------------------
---INSERT INTO CTPhong(MaPhong, MaPDP, NgayNhanPhong, GioNhanPhong, GioTraPhong)
-INSERT INTO CTPhong values(N'P001', N'PDP001', '2022/06/23', '8:30:15', '11:31:24')
-INSERT INTO CTPhong values(N'P002', N'PDP001', '2022/06/23', '11:32:15', '16:31:24') 
-INSERT INTO CTPhong values(N'P003', N'PDP002', '2022/01/15', '14:25:32', '19:30:31')
-INSERT INTO CTPhong values(N'P004', N'PDP003', '2022/09/04', '10:15:40', '13:20:15')
-INSERT INTO CTPhong values(N'P005', N'PDP004', '2022/04/18', '9:10:37', '12:15:38')
-INSERT INTO CTPhong values(N'P006', N'PDP004', '2022/04/18', '12:18:23', '21:15:35')
-INSERT INTO CTPhong values(N'P007', N'PDP005', '2022/10/30', '18:45:28', '22:50:37')
-INSERT INTO CTPhong values(N'P008', N'PDP006', '2022/07/11', '11:05:20', '17:10:55')
-INSERT INTO CTPhong values(N'P009', N'PDP007', '2022/12/07', '20:36:34', '23:45:10')
-INSERT INTO CTPhong values(N'P010', N'PDP008', '2022/08/13', '13:31:12', '15:35:21')
-INSERT INTO CTPhong values(N'P011', N'PDP008', '2022/08/13', '15:40:34', '19:55:40')
-INSERT INTO CTPhong values(N'P012', N'PDP009', '2023/05/24', '9:20:30', '13:28:48')
-INSERT INTO CTPhong values(N'P013', N'PDP010', '2023/04/12', '19:23:45', '22:30:50')
-INSERT INTO CTPhong values(N'P014', N'PDP011', '2023/10/01', '10:15:21', '15:21:23')
-INSERT INTO CTPhong values(N'P015', N'PDP012', '2023/09/17', '13:40:38', '17:35:14')
-INSERT INTO CTPhong values(N'P016', N'PDP012', '2023/09/17', '17:38:27', '21:40:35')
-INSERT INTO CTPhong values(N'P017', N'PDP013', '2023/03/05', '15:14:45', '19:23:57')
-INSERT INTO CTPhong values(N'P018', N'PDP014', '2023/05/09', '18:40:17', '22:35:41')
-INSERT INTO CTPhong values(N'P019', N'PDP015', '2023/08/10', '11:28:29', '14:36:10')
-INSERT INTO CTPhong values(N'P020', N'PDP015', '2023/08/10', '14:40:16', '18:22:26')
---Xem toan bo CTPhong
-select *from CTPhong
-
---------------------------------CTDV PHONG-----------------------------------------------
---INSERT INTO CTDVPhong(MaPDP, MaDV, SoLuong)
-INSERT INTO CTDVPhong values(N'PDP001', N'DV001', 10)
-INSERT INTO CTDVPhong values(N'PDP001', N'DV002', 15)
-INSERT INTO CTDVPhong values(N'PDP002', N'DV003', 8)
-INSERT INTO CTDVPhong values(N'PDP003', N'DV004', 5)
-INSERT INTO CTDVPhong values(N'PDP004', N'DV005', 13)
-INSERT INTO CTDVPhong values(N'PDP005', N'DV006', 6)
-INSERT INTO CTDVPhong values(N'PDP005', N'DV007', 10)
-INSERT INTO CTDVPhong values(N'PDP005', N'DV008', 15)
-INSERT INTO CTDVPhong values(N'PDP006', N'DV009', 6)
-INSERT INTO CTDVPhong values(N'PDP007', N'DV010', 9)
-INSERT INTO CTDVPhong values(N'PDP008', N'DV011', 15)
-INSERT INTO CTDVPhong values(N'PDP009', N'DV012', 8)
-INSERT INTO CTDVPhong values(N'PDP009', N'DV013', 16)
-INSERT INTO CTDVPhong values(N'PDP010', N'DV014', 20)
-INSERT INTO CTDVPhong values(N'PDP011', N'DV015', 9)
-INSERT INTO CTDVPhong values(N'PDP012', N'DV016', 14)
-INSERT INTO CTDVPhong values(N'PDP013', N'DV017', 5)
-INSERT INTO CTDVPhong values(N'PDP014', N'DV018', 10)
-INSERT INTO CTDVPhong values(N'PDP014', N'DV019', 15)
-INSERT INTO CTDVPhong values(N'PDP014', N'DV020', 20)
---Xem toan bo CTDVPhong
-select *from CTDVPhong
 
 --------------------------------HOA DON-----------------------------------------------
---INSERT INTO HoaDon(MaHD, MaPDP, GioThanhToan, NgayThanhToan, TienPhong, TienDichVu, TienGiam, TongTien)
-INSERT INTO HoaDon values(N'HDOO1', N'PDP001', '13:34:26', '2022/11/21', 125000, 400000, 50000, 475000)
-INSERT INTO HoaDon values(N'HDOO2', N'PDP002', '16:30:50', '2022/03/10', 225000, 650000, 100000, 775000)
-INSERT INTO HoaDon values(N'HDOO3', N'PDP003', '10:15:30', '2022/09/24', 455000, 1050000, 150000, 1355000)
-INSERT INTO HoaDon values(N'HDOO4', N'PDP004', '11:35:45', '2022/06/05', 175000, 1500000, 150000, 1525000)
-INSERT INTO HoaDon values(N'HDOO5', N'PDP005', '12:01:59', '2022/10/13', 400000, 830000, 100000, 1130000)
-INSERT INTO HoaDon values(N'HDOO6', N'PDP006', '09:23:31', '2022/05/29', 525000, 500000, 50000, 975000)
-INSERT INTO HoaDon values(N'HDOO7', N'PDP007', '15:43:27', '2022/07/17', 175000, 765000, 100000, 840000)
-INSERT INTO HoaDon values(N'HDOO8', N'PDP008', '20:27:46', '2022/10/30', 525000, 450000, 50000, 925000)
-INSERT INTO HoaDon values(N'HDOO9', N'PDP009', '22:05:48', '2022/03/15', 125000, 600000, 75000, 650000)
-INSERT INTO HoaDon values(N'HDO10', N'PDP010', '17:38:46', '2022/08/25', 225000, 575000, 75000, 725000)
-INSERT INTO HoaDon values(N'HDO11', N'PDP011', '14:55:21', '2023/06/24', 225000, 1200000, 150000, 1275000)
-INSERT INTO HoaDon values(N'HDO12', N'PDP012', '18:25:47', '2023/05/02', 400000, 675000, 75000, 1000000)
-INSERT INTO HoaDon values(N'HDO13', N'PDP013', '21:42:58', '2023/01/15', 455000, 500000, 50000, 905000)
-INSERT INTO HoaDon values(N'HDO14', N'PDP014', '11:50:11', '2023/08/29', 175000, 480000, 50000, 605000)
-INSERT INTO HoaDon values(N'HDO15', N'PDP015', '12:35:47', '2023/10/02', 125000, 635000, 75000, 685000)
-INSERT INTO HoaDon values(N'HDO16', N'PDP016', '19:27:06', '2023/04/13', 525000, 1400000, 150000, 1775000)
-INSERT INTO HoaDon values(N'HDO17', N'PDP017', '13:45:29', '2023/07/18', 225000, 865000, 100000, 990000)
-INSERT INTO HoaDon values(N'HDO18', N'PDP018', '23:02:33', '2023/03/17', 400000, 750000, 100000, 1050000)
-INSERT INTO HoaDon values(N'HDO19', N'PDP019', '15:46:13', '2023/05/25', 455000, 1500000, 150000, 1805000)
-INSERT INTO HoaDon values(N'HDO20', N'PDP020', '10:55:04', '2023/09/07', 125000, 450000, 50000, 525000)
+--INSERT INTO HoaDon(MaHD, MaPDP, GioThanhToan, NgayThanhToan, MaNV, MaKH, MaKM, TongHoaDon)
+INSERT INTO HoaDon values(N'HD001', N'PDP001', '13:34:26', '2022/11/21', N'NV001', N'KH001', N'KM001', 475000)
+INSERT INTO HoaDon values(N'HD002', N'PDP002', '16:30:50', '2022/03/10', N'NV002', N'KH002', N'KM002', 775000)
+INSERT INTO HoaDon values(N'HD003', N'PDP003', '10:15:30', '2022/09/24', N'NV003', N'KH003', N'KM003', 1355000)
+INSERT INTO HoaDon values(N'HD004', N'PDP004', '11:35:45', '2022/06/05', N'NV004', N'KH004', N'KM004', 1525000)
+INSERT INTO HoaDon values(N'HD005', N'PDP005', '12:01:59', '2022/10/13', N'NV005', N'KH005', N'KM005', 1130000)
+INSERT INTO HoaDon values(N'HD006', N'PDP006', '09:23:31', '2022/05/29', N'NV006', N'KH006', N'KM006', 975000)
+INSERT INTO HoaDon values(N'HD007', N'PDP007', '15:43:27', '2022/07/17', N'NV007', N'KH007', N'KM007', 840000)
+INSERT INTO HoaDon values(N'HD008', N'PDP008', '20:27:46', '2022/10/30', N'NV008', N'KH008', N'KM008', 925000)
+INSERT INTO HoaDon values(N'HD009', N'PDP009', '22:05:48', '2022/03/15', N'NV009', N'KH009', N'KM009', 650000)
+INSERT INTO HoaDon values(N'HD010', N'PDP010', '17:38:46', '2022/08/25', N'NV010', N'KH010', N'KM010', 725000)
+INSERT INTO HoaDon values(N'HD011', N'PDP011', '14:55:21', '2023/06/24', N'NV011', N'KH011', N'KM011', 1275000)
+INSERT INTO HoaDon values(N'HD012', N'PDP012', '18:25:47', '2023/05/02', N'NV012', N'KH012', N'KM012', 1000000)
+INSERT INTO HoaDon values(N'HD013', N'PDP013', '21:42:58', '2023/01/15', N'NV013', N'KH013', N'KM013', 905000)
+INSERT INTO HoaDon values(N'HD014', N'PDP014', '11:50:11', '2023/08/29', N'NV014', N'KH014', N'KM014', 605000)
+INSERT INTO HoaDon values(N'HD015', N'PDP015', '12:35:47', '2023/10/02', N'NV015', N'KH015', N'KM015', 685000)
+INSERT INTO HoaDon values(N'HD016', N'PDP016', '19:27:06', '2023/04/13', N'NV016', N'KH016', N'KM016', 1775000)
+INSERT INTO HoaDon values(N'HD017', N'PDP017', '13:45:29', '2023/07/18', N'NV017', N'KH017', N'KM017', 990000)
+INSERT INTO HoaDon values(N'HD018', N'PDP018', '23:02:33', '2023/03/17', N'NV018', N'KH018', N'KM018', 1050000)
+INSERT INTO HoaDon values(N'HD019', N'PDP019', '15:46:13', '2023/05/25', N'NV019', N'KH019', N'KM019', 1805000)
+INSERT INTO HoaDon values(N'HD020', N'PDP020', '10:55:04', '2023/09/07', N'NV020', N'KH020', N'KM020', 525000)
 --Xem toan bo HoaDon
 select *from HoaDon
+
+
+----------------------------CT HOA DON---------------------------------------------------
+--INSERT INTO ChiTietHoaDon(MaPhong, MaHD, ThoiGianNhanPhong, ThoiGianTraPhong)
+INSERT INTO ChiTietHoaDon values(N'P001', N'HD001', '8:30:15', '11:31:24')
+INSERT INTO ChiTietHoaDon values(N'P002', N'HD001', '11:32:15', '16:31:24') 
+INSERT INTO ChiTietHoaDon values(N'P003', N'HD002', '14:25:32', '19:30:31')
+INSERT INTO ChiTietHoaDon values(N'P004', N'HD003', '10:15:40', '13:20:15')
+INSERT INTO ChiTietHoaDon values(N'P005', N'HD004', '9:10:37', '12:15:38')
+INSERT INTO ChiTietHoaDon values(N'P006', N'HD004', '12:18:23', '21:15:35')
+INSERT INTO ChiTietHoaDon values(N'P007', N'HD005', '18:45:28', '22:50:37')
+INSERT INTO ChiTietHoaDon values(N'P008', N'HD006', '11:05:20', '17:10:55')
+INSERT INTO ChiTietHoaDon values(N'P009', N'HD007', '20:36:34', '23:45:10')
+INSERT INTO ChiTietHoaDon values(N'P010', N'HD008', '13:31:12', '15:35:21')
+INSERT INTO ChiTietHoaDon values(N'P011', N'HD008', '15:40:34', '19:55:40')
+INSERT INTO ChiTietHoaDon values(N'P012', N'HD009', '9:20:30', '13:28:48')
+INSERT INTO ChiTietHoaDon values(N'P013', N'HD010', '19:23:45', '22:30:50')
+INSERT INTO ChiTietHoaDon values(N'P014', N'HD011', '10:15:21', '15:21:23')
+INSERT INTO ChiTietHoaDon values(N'P015', N'HD012', '13:40:38', '17:35:14')
+INSERT INTO ChiTietHoaDon values(N'P016', N'HD012', '17:38:27', '21:40:35')
+INSERT INTO ChiTietHoaDon values(N'P017', N'HD013', '15:14:45', '19:23:57')
+INSERT INTO ChiTietHoaDon values(N'P018', N'HD014', '18:40:17', '22:35:41')
+INSERT INTO ChiTietHoaDon values(N'P019', N'HD015', '11:28:29', '14:36:10')
+INSERT INTO ChiTietHoaDon values(N'P020', N'HD015', '14:40:16', '18:22:26')
+--Xem toan bo CTPhong
+select *from ChiTietHoaDon
+
+
+--------------------------------CTDV PHONG-----------------------------------------------
+--INSERT INTO CTDVPhong(MaHD, MaDV, SoLuong)
+INSERT INTO CTDVPhong values(N'HD001', N'DV001', 10)
+INSERT INTO CTDVPhong values(N'HD001', N'DV002', 15)
+INSERT INTO CTDVPhong values(N'HD002', N'DV003', 8)
+INSERT INTO CTDVPhong values(N'HD003', N'DV004', 5)
+INSERT INTO CTDVPhong values(N'HD004', N'DV005', 13)
+INSERT INTO CTDVPhong values(N'HD005', N'DV006', 6)
+INSERT INTO CTDVPhong values(N'HD005', N'DV007', 10)
+INSERT INTO CTDVPhong values(N'HD005', N'DV008', 15)
+INSERT INTO CTDVPhong values(N'HD006', N'DV009', 6)
+INSERT INTO CTDVPhong values(N'HD007', N'DV010', 9)
+INSERT INTO CTDVPhong values(N'HD008', N'DV011', 15)
+INSERT INTO CTDVPhong values(N'HD009', N'DV012', 8)
+INSERT INTO CTDVPhong values(N'HD009', N'DV013', 16)
+INSERT INTO CTDVPhong values(N'HD010', N'DV014', 20)
+INSERT INTO CTDVPhong values(N'HD011', N'DV015', 9)
+INSERT INTO CTDVPhong values(N'HD012', N'DV016', 14)
+INSERT INTO CTDVPhong values(N'HD013', N'DV017', 5)
+INSERT INTO CTDVPhong values(N'HD014', N'DV018', 10)
+INSERT INTO CTDVPhong values(N'HD014', N'DV019', 15)
+INSERT INTO CTDVPhong values(N'HD014', N'DV020', 20)
+--Xem toan bo CTDVPhong
+select *from CTDVPhong
 
 
 
