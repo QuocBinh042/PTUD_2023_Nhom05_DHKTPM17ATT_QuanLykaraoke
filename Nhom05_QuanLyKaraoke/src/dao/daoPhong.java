@@ -18,15 +18,11 @@ public class daoPhong {
 		try {
 			ConnectDB.getInstance();
 			Connection connect = ConnectDB.getConnection();
-			String sql = "select * from Phong p inner join LoaiPhong lp on p.MaLP = lp.MaLP "
-					+ "inner join KhuyenMai km on p.MaKM = km.MaKM"; 
+			String sql = "select * from Phong p inner join LoaiPhong lp on p.MaLP = lp.MaLP "; 
 			ResultSet rs = connect.createStatement().executeQuery(sql);
-			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
-						rs.getString(15), rs.getBoolean(16));
-				
-				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
-				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
+			while(rs.next()) {				
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9));
+				Phong phong = new Phong(rs.getString(1), rs.getString(2), lp, rs.getString(4), rs.getString(5));
 				dsPhong.add(phong);
 			}
 		} catch (Exception e) {
@@ -43,18 +39,15 @@ public class daoPhong {
 			Connection connect = ConnectDB.getConnection();
 			PreparedStatement statement = null;
 			String sql = "select * from Phong p inner join LoaiPhong lp on p.MaLP = lp.MaLP "
-					+ "inner join KhuyenMai km on p.MaKM = km.MaKhuyenMai "
 					+ "Where TenLP = ?";
 			statement = connect.prepareStatement(sql);
 			statement.setString(1, loaiPhong);
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
-						rs.getString(15), rs.getBoolean(16));
 				
-				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
-				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9));
+				Phong phong = new Phong(rs.getString(1), rs.getString(2), lp, rs.getString(4), rs.getString(5));
 				dsPhong.add(phong);
 			}
 			
@@ -73,18 +66,14 @@ public class daoPhong {
 			Connection connect = ConnectDB.getConnection();
 			PreparedStatement statement = null;
 			String sql = "select * from Phong p inner join LoaiPhong lp on p.MaLP = lp.MaLP "
-					+ "inner join KhuyenMai km on p.MaKM = km.MaKhuyenMai "
 					+ "Where TinhTrangPhong = ?";
 			statement = connect.prepareStatement(sql);
 			statement.setString(1, tinhTrangPhong);
 			ResultSet rs = statement.executeQuery();
 			
-			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
-						rs.getString(15), rs.getBoolean(16));
-				
-				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
-				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
+			while(rs.next()) {				
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9));
+				Phong phong = new Phong(rs.getString(1), rs.getString(2), lp, rs.getString(4), rs.getString(5));
 				dsPhong.add(phong);
 			}
 			
@@ -103,18 +92,14 @@ public class daoPhong {
 			Connection connect = ConnectDB.getConnection();
 			PreparedStatement statement = null;
 			String sql = "select * from Phong p inner join LoaiPhong lp on p.MaLP = lp.MaLP "
-					+ "inner join KhuyenMai km on p.MaKM = km.MaKhuyenMai "
 					+ "Where SucChua = ?";
 			statement = connect.prepareStatement(sql);
 			statement.setInt(1, soNguoi);
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
-						rs.getString(15), rs.getBoolean(16));
-				
-				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
-				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9));
+				Phong phong = new Phong(rs.getString(1), rs.getString(2), lp, rs.getString(4), rs.getString(5));
 				dsPhong.add(phong);
 			}
 			
@@ -133,18 +118,15 @@ public class daoPhong {
 			Connection connect = ConnectDB.getConnection();
 			PreparedStatement statement = null;
 			String sql = "select * from Phong p inner join LoaiPhong lp on p.MaLP = lp.MaLP "
-					+ "inner join KhuyenMai km on p.MaKM = km.MaKhuyenMai "
 					+ "Where TenPhong = ?";
 			statement = connect.prepareStatement(sql);
 			statement.setString(1, tenPhong);
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
-						rs.getString(15), rs.getBoolean(16));
 				
-				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
-				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9));
+				Phong phong = new Phong(rs.getString(1), rs.getString(2), lp, rs.getString(4), rs.getString(5));
 				dsPhong.add(phong);
 			}
 			
@@ -164,18 +146,14 @@ public class daoPhong {
 			PreparedStatement statement = null;
 //			tenPhong = tenPhong.replace("%", "!%");
 			String sql = "select * from Phong p inner join LoaiPhong lp on p.MaLP = lp.MaLP "
-					+ "inner join KhuyenMai km on p.MaKM = km.MaKhuyenMai "
 					+ "Where TenPhong LIKE ?";
 			statement = connect.prepareStatement(sql);
 			statement.setString(1, "%" + tenPhong + "%");
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
-				KhuyenMai km = new KhuyenMai(rs.getString(11), rs.getDouble(12), rs.getDate(13), rs.getDate(14),
-						rs.getString(15), rs.getBoolean(16));
-				
-				LoaiPhong lp = new LoaiPhong(rs.getString(7), rs.getString(8), rs.getInt(9), rs.getDouble(10));
-				Phong phong = new Phong(rs.getString(1), rs.getString(2), km, lp, rs.getString(5), rs.getString(6));
+				LoaiPhong lp = new LoaiPhong(rs.getString(6), rs.getString(7), rs.getInt(8), rs.getDouble(9));
+				Phong phong = new Phong(rs.getString(1), rs.getString(2), lp, rs.getString(4), rs.getString(5));
 				dsPhong.add(phong);
 			}
 			

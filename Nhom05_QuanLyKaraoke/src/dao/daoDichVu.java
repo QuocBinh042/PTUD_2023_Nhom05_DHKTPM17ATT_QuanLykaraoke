@@ -22,8 +22,8 @@ public class daoDichVu {
 			Statement statement = connect.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while (rs.next()) {
-				dsDichVu.add(new DichVu(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4),
-						rs.getString(5), rs.getInt(6), rs.getString(7)));
+				dsDichVu.add(new DichVu(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getString(4),
+						rs.getInt(5), rs.getString(6)));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,8 +53,8 @@ public class daoDichVu {
 			Statement statement = connect.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while (rs.next()) {
-				dsDichVu.add(new DichVu(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getDouble(4),
-						rs.getString(5), rs.getInt(6), rs.getString(7)));
+				dsDichVu.add(new DichVu(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getString(4),
+						rs.getInt(5), rs.getString(6)));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,17 +67,16 @@ public class daoDichVu {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
-		String sql = "INSERT INTO DichVu (MaDV,TenDV,DonGiaNhap,DonGiaBan,DonViTinh,SoLuongTonKho,TinhTrangDV) "
-				+ "values(?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO DichVu (MaDV,TenDV,DonGia,DonVi,SoLuongTonKho,TinhTrangDV) "
+				+ "values(?,?,?,?,?,?)";
 		try {
 			stm = con.prepareStatement(sql);
 			stm.setString(1, dv.getMaDichVu());
 			stm.setString(2, dv.getTenDichVu());
-			stm.setDouble(3, dv.getDonGiaNhap());
-			stm.setDouble(4, dv.getDonGiaBan());
-			stm.setString(5, dv.getDonVi());
-			stm.setInt(6, dv.getSoLuong());
-			stm.setString(7, dv.getTinhTrang());
+			stm.setDouble(3, dv.getDonGia());
+			stm.setString(4, dv.getDonVi());
+			stm.setInt(5, dv.getSoLuong());
+			stm.setString(6, dv.getTinhTrang());
 			System.out.println(stm);
 			stm.executeUpdate();
 		} catch (Exception e) {
@@ -94,16 +93,15 @@ public class daoDichVu {
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
 		String sql = "update DichVu \r\n"
-				+ "set TenDV = ?, DonGiaNhap = ?, DonGiaBan = ?, DonViTinh = ?, SoLuongTonKho = ?\r\n"
+				+ "set TenDV = ?, DonGia = ?, DonVi = ?, SoLuongTonKho = ?\r\n"
 				+ "where MaDV = ?";
 		try {
 			stm = con.prepareStatement(sql);
 			stm.setString(1, dv.getTenDichVu());
-			stm.setDouble(2, dv.getDonGiaNhap());
-			stm.setDouble(3, dv.getDonGiaBan());
-			stm.setString(4, dv.getDonVi());
-			stm.setInt(5, dv.getSoLuong());
-			stm.setString(6, dv.getMaDichVu());
+			stm.setDouble(2, dv.getDonGia());
+			stm.setString(3, dv.getDonVi());
+			stm.setInt(4, dv.getSoLuong());
+			stm.setString(5, dv.getMaDichVu());
 
 			stm.executeUpdate();
 		} catch (SQLException e) {
