@@ -26,8 +26,8 @@ public class daoNhanVien{
 			Statement statement =con.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
-				dsNV.add(new NhanVien(rs.getString(1), rs.getString(2), rs.getDate(3), rs.getInt(4),
-						rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9)));
+				dsNV.add(new NhanVien(rs.getString(1), rs.getString(2), rs.getDate(3), rs.getBoolean(4),
+						rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9)));
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -49,12 +49,12 @@ public class daoNhanVien{
 			stm.setString(1, nv.getMaNV());
 			stm.setString(2, nv.getTenNV());
 			stm.setDate(3, (Date) nv.getNamSinh());
-			stm.setInt(4, nv.getGioiTinh());
+			stm.setBoolean(4, nv.getGioiTinh());
 			stm.setString(5, nv.getSdthoai());
 			stm.setString(6, nv.getCccd());
 			stm.setString(7, nv.getChucVu());
 			stm.setString(8, nv.getMatKhau());
-			stm.setInt(9, nv.getTinhTrangNV());
+			stm.setBoolean(9, nv.getTinhTrangNV());
 			System.out.println(stm);
 			stm.executeUpdate();
 		} catch (SQLException e) {
@@ -79,12 +79,12 @@ public class daoNhanVien{
 			stm.setString(1, nv.getMaNV());
 			stm.setString(2, nv.getTenNV());
 			stm.setDate(3, (Date) nv.getNamSinh());
-			stm.setInt(4, nv.getGioiTinh());
+			stm.setBoolean(4, nv.getGioiTinh());
 			stm.setString(5, nv.getSdthoai());
 			stm.setString(6, nv.getCccd());
 			stm.setString(7, nv.getChucVu());
 			stm.setString(8, nv.getMatKhau());
-			stm.setInt(9, nv.getTinhTrangNV());
+			stm.setBoolean(9, nv.getTinhTrangNV());
 			
 			stm.executeUpdate();
 		} catch (SQLException e) {
