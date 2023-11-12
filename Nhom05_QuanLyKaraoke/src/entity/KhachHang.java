@@ -6,8 +6,8 @@ import java.util.Objects;
 public class KhachHang implements Serializable {
 	private String maKH;
 	private String tenKH;
-	private int loaiKH;
-	private int gioiTinh;
+	private Boolean loaiKH;
+	private Boolean gioiTinh;
 	private String sdthoai;
 	private String email;
 	private int soGioDaThue;
@@ -27,7 +27,7 @@ public class KhachHang implements Serializable {
 		setSdthoai(SDT);
 	}
 
-	public KhachHang(String maKH, String tenKH, int loaiKH, int gioiTinh, String sdthoai, String email, int soGioDaThue,
+	public KhachHang(String maKH, String tenKH, Boolean loaiKH, Boolean gioiTinh, String sdthoai, String email, int soGioDaThue,
 			String ghiChu) {
 		this.maKH = maKH;
 		this.tenKH = tenKH;
@@ -40,7 +40,7 @@ public class KhachHang implements Serializable {
 	}
 
 	public KhachHang() {
-		this("Ma Khach Hang", "Tên khách hàng", 1, 1, "Số điện thoại", "Email", 1, "Ghi chú");
+		this("Ma Khach Hang", "Tên khách hàng");
 	}
 
 	@Override
@@ -76,19 +76,19 @@ public class KhachHang implements Serializable {
 		this.tenKH = tenKH;
 	}
 
-	public int getGioiTinh() {
+	public boolean getGioiTinh() {
 		return gioiTinh;
 	}
 
-	public int getLoaiKH() {
+	public Boolean getLoaiKH() {
 		return loaiKH;
 	}
 
-	public void setLoaiKH(int loaiKH) {
+	public void setLoaiKH(Boolean loaiKH) {
 		this.loaiKH = loaiKH;
 	}
 
-	public void setGioiTinh(int gioiTinh) {
+	public void setGioiTinh(Boolean gioiTinh) {
 		this.gioiTinh = gioiTinh;
 	}
 
