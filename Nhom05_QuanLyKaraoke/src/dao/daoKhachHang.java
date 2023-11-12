@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.DichVu;
+
 import entity.KhachHang;
 import connectDB.ConnectDB;
 
@@ -24,7 +24,7 @@ public class daoKhachHang{
 			Statement statement =con.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
-				dsKH.add(new KhachHang(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4),
+				dsKH.add(new KhachHang(rs.getString(1), rs.getString(2), rs.getBoolean(3), rs.getBoolean(4),
 						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8)));
 			}
 		} catch (SQLException e) {
@@ -46,8 +46,8 @@ public class daoKhachHang{
 			stm = con.prepareStatement(sql);
 			stm.setString(1, kh.getMaKH());
 			stm.setString(2, kh.getTenKH());
-			stm.setInt(3, kh.getLoaiKH());
-			stm.setInt(4, kh.getGioiTinh());
+			stm.setBoolean(3, kh.getLoaiKH());
+			stm.setBoolean(4, kh.getGioiTinh());
 			stm.setString(5, kh.getSdthoai());
 			stm.setString(6, kh.getEmail());
 			stm.setInt(7, kh.getSoGioDaThue());
@@ -75,8 +75,8 @@ public class daoKhachHang{
 		try {
 			stm = con.prepareStatement(sql);		
 			stm.setString(1, kh.getTenKH());
-			stm.setInt(2, kh.getLoaiKH());
-			stm.setInt(3, kh.getGioiTinh());
+			stm.setBoolean(2, kh.getLoaiKH());
+			stm.setBoolean(3, kh.getGioiTinh());
 			stm.setString(4, kh.getSdthoai());
 			stm.setString(5, kh.getEmail());
 			stm.setInt(6, kh.getSoGioDaThue());
