@@ -9,15 +9,15 @@ public class NhanVien implements Serializable {
 	private String maNV;
 	private String tenNV;
 	private Date namSinh;
-	private int gioiTinh;
+	private Boolean gioiTinh;
 	private String sdthoai;
 	private String cccd;
 	private String chucVu;
 	private String matKhau;
-	private int tinhTrangNV;
+	private Boolean tinhTrangNV;
 
-	public NhanVien(String maNV, String tenNV, Date namSinh, int gioiTinh, String sdthoai, String cccd,
-			String chucVu, String matKhau, int tinhTrangNV) {
+	public NhanVien(String maNV, String tenNV, Date namSinh, Boolean gioiTinh, String sdthoai, String cccd,
+			String chucVu, String matKhau, Boolean tinhTrangNV) {
 		this.maNV = maNV;
 		this.tenNV = tenNV;
 		this.namSinh = namSinh;
@@ -74,11 +74,11 @@ public class NhanVien implements Serializable {
 		this.namSinh = namSinh;
 	}
 
-	public int getGioiTinh() {
+	public Boolean getGioiTinh() {
 		return gioiTinh;
 	}
 
-	public void setGioiTinh(int gioiTinh) {
+	public void setGioiTinh(Boolean gioiTinh) {
 		this.gioiTinh = gioiTinh;
 	}
 
@@ -114,11 +114,11 @@ public class NhanVien implements Serializable {
 		this.matKhau = matKhau;
 	}
 
-	public int getTinhTrangNV() {
+	public Boolean getTinhTrangNV() {
 		return tinhTrangNV;
 	}
 
-	public void setTinhTrangNV(int tinhTrangNV) {
+	public void setTinhTrangNV(Boolean tinhTrangNV) {
 		this.tinhTrangNV = tinhTrangNV;
 	}
 
