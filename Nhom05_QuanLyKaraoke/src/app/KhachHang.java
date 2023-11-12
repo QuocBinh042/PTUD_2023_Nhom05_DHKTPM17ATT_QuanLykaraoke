@@ -220,7 +220,6 @@ public class KhachHang extends JPanel implements MouseListener {
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
 		btnThoat.addActionListener(e -> System.exit(0));
 		btnTim.addActionListener(e -> xuLyTimKiem());
-		cbLoaiKhachHang.addActionListener(e -> xuLyCBLoaiKH());
 		table.addMouseListener((MouseListener) this);
 		
 		//String[] row = { "KH001", "tenKH", "", "", "sdt", "email", "5", ""};
@@ -360,19 +359,6 @@ public class KhachHang extends JPanel implements MouseListener {
 
 		}
 
-	
-	
-	// Xu ly combo tinh trang
-		private void xuLyCBLoaiKH() {
-			xoaToanBoKH();
-			String tt = cbLoaiKhachHang.getSelectedItem().toString();
-			//dsKH = daoKhachHang.getKhachHangCB(tt);
-			for (entity.KhachHang kh : dsKH) {
-				tableModel.addRow(new Object[] { kh.getMaKH(), kh.getTenKH(), kh.getLoaiKH(), kh.getGioiTinh(),
-						kh.getSdthoai(), kh.getEmail(), kh.getSoGioDaThue(), kh.getGhiChu() });
-			}
-
-		}
 	
 	// Lay toan bo khach hang
 		private void layToanBoKH() {
