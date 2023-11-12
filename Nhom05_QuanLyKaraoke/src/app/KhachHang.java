@@ -36,6 +36,7 @@ public class KhachHang extends JPanel implements MouseListener {
 	private daoKhachHang daoKH = new daoKhachHang();
 	private ArrayList<entity.KhachHang> dsKH = new ArrayList<>();
 	private MaTuDong maKhachHang = new MaTuDong();
+	private Boolean gt;
 
 
 
@@ -218,6 +219,7 @@ public class KhachHang extends JPanel implements MouseListener {
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
 		btnThoat.addActionListener(e -> System.exit(0));
 		btnTim.addActionListener(e -> xuLyTimKiem());
+		cbLoaiKhachHang.addActionListener(e -> xuLyCBLoaiKH());
 		table.addMouseListener((MouseListener) this);
 		
 		//String[] row = { "KH001", "tenKH", "", "", "sdt", "email", "5", ""};
@@ -263,12 +265,16 @@ public class KhachHang extends JPanel implements MouseListener {
 			if (validData() == true) {
 			String tenKH = txtTenKhachHang.getText();
 			String gioiTinh = cbGioiTinh.getSelectedItem().toString();
+			if (gioiTinh  == "Nam") {
+				 gt = false;
+			}else 
+                 gt = true;
 			String sdt = txtSoDienThoai.getText();
 			String email = txtEmail.getText();
 			String ghichu = txaGhiChu.getText();
 		    String maKH = maKhachHang.formatMa(dsKH.get(dsKH.size()-1).getMaKH());
 			String[] row = { maKH , tenKH, "", gioiTinh, sdt, email, "", ghichu };
-            dsKH.add(new entity.KhachHang(maKH, tenKH, 0, 0, sdt, email, 0, ghichu));
+            dsKH.add(new entity.KhachHang(maKH, tenKH, false, false, sdt, email, 0, ghichu));
 			tableModel.addRow(row);
 			JOptionPane.showMessageDialog(null, "Thêm mới khách hàng thành công!");
 		}
@@ -294,7 +300,7 @@ public class KhachHang extends JPanel implements MouseListener {
 			String maKH = (String) table.getValueAt(table.getSelectedRow(),0);
 			tableModel.removeRow(viTri);
 			String[] row = { maKH , tenKH, "", gioiTinh, sdt, email, "", ghichu };
-		    daoKH.updateKhachHang(new entity.KhachHang(maKH, tenKH, 0, 0, sdt, email, 0, ghichu));
+		    daoKH.updateKhachHang(new entity.KhachHang(maKH, tenKH, false, false, sdt, email, 0, ghichu));
 			tableModel.insertRow(viTri, row);
 			JOptionPane.showMessageDialog(null, "Cập nhật khách hàng thành công!");
 		}else {
@@ -324,11 +330,35 @@ public class KhachHang extends JPanel implements MouseListener {
 
 	}
 	
+	// Xoa toan bo dich vu
+		private void xoaToanBoKH() {
+			DefaultTableModel dm = (DefaultTableModel) table.getModel();
+			while (dm.getRowCount() > 0) {
+				dm.removeRow(0);
+			}
+
+		}
+
+	
+	
+	// Xu ly combo tinh trang
+		private void xuLyCBLoaiKH() {
+			xoaToanBoKH();
+			String loaikh = cbLoaiKhachHang.getSelectedItem().toString();
+			//dsKH = daoKhachHang.getKhachHangCB(loaikh);
+			for (entity.KhachHang kh : dsKH) {
+				tableModel.addRow(new Object[] { kh.getMaKH(), kh.getTenKH(), kh.getLoaiKH(), kh.getGioiTinh(),
+						kh.getSdthoai(), kh.getEmail(), kh.getSoGioDaThue(), kh.getGhiChu() });
+			}
+
+		}
+	
 	// Lay toan bo khach hang
 		private void layToanBoKH() {
 			dsKH = daoKH.getAll();
 			for (entity.KhachHang kh : dsKH) {
-				tableModel.addRow(new Object[] { kh.getMaKH(), kh.getTenKH(), kh.getLoaiKH(), kh.getGioiTinh(),
+			  String gioiTinh = kh.getGioiTinh() ? "Nữ" : "Nam";
+				tableModel.addRow(new Object[] { kh.getMaKH(), kh.getTenKH(), kh.getLoaiKH(), gioiTinh,
 						kh.getSdthoai(), kh.getEmail(), kh.getSoGioDaThue(), kh.getGhiChu()});
 
 			}
