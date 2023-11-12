@@ -22,6 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class NhanVien extends JPanel implements MouseListener {
 
@@ -258,7 +259,14 @@ public class NhanVien extends JPanel implements MouseListener {
 			}
 		});
 		btnXoa.addActionListener(e -> xuLyXoa());
-		btnCapNhat.addActionListener(e -> xuLyCapNhat());
+		btnCapNhat.addActionListener(e -> {
+			try {
+				xuLyCapNhat();
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		btnThoat.addActionListener(e -> System.exit(0));
 		btnTim.addActionListener(e -> xuLyTimKiem());
 		table.addMouseListener((MouseListener) this);
@@ -266,6 +274,39 @@ public class NhanVien extends JPanel implements MouseListener {
 		//String[] row = { "NV001", "tenNV", "06/11/2023", "", "sdt", "cccd", "", "matkhau", "" };
 		//tableModel.addRow(row);
 	}
+	
+	// Kiem tra rang buoc
+			private boolean validData() {
+				String tenNV = txtTenNhanVien.getText();
+				String sdt = txtSoDienThoai.getText();
+				String cccd = txtCCCD.getText();
+				String matKhau = txtMatKhau.getText();
+				
+				Pattern p = Pattern.compile("[a-zA-Z]+");
+				if (!(p.matcher(tenNV).find())) {
+					JOptionPane.showMessageDialog(null, "Tên nhân viên không hợp lệ!");
+					return false;
+				}
+				
+				Pattern p1 = Pattern.compile("[0-9]{10}");
+				if (!(p1.matcher(sdt).find())) {
+					JOptionPane.showMessageDialog(null, "Số điện thoại chỉ được nhập chữ số!");
+					return false;
+				}
+				
+				Pattern p2 = Pattern.compile("[0-9]{12}");
+				if (!(p2.matcher(cccd).find())) {
+					JOptionPane.showMessageDialog(null, "Căn cước công dân chỉ được nhập chữ số!");
+					return false;
+				}
+				
+				Pattern p3 = Pattern.compile("(.)+");
+				if (!(p3.matcher(matKhau).find())) {
+					JOptionPane.showMessageDialog(null, "Mật khẩu không được để trống!");
+					return false;
+				}
+				return true;
+			}
 
 	
 	
@@ -274,6 +315,7 @@ public class NhanVien extends JPanel implements MouseListener {
 		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn thêm thông tin nhân viên không?", "Chú ý",
 				JOptionPane.YES_NO_OPTION);
 		if (luaChon == JOptionPane.YES_OPTION) {
+			if (validData() == true) {
 			String tenNV = txtTenNhanVien.getText();
 			String namSinh = dateFormat.format(dateNamSinh.getDate());
 			String gioiTinh = cbGioiTinh.getSelectedItem().toString();
@@ -291,6 +333,10 @@ public class NhanVien extends JPanel implements MouseListener {
 			}
 			String[] row = { maNV, tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
 			tableModel.addRow(row);
+			JOptionPane.showMessageDialog(null, "Thêm mới nhân viên thành công!");
+		}
+		}else {
+			JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin nhân viên!");
 		}
 	}
 	
@@ -309,7 +355,7 @@ public class NhanVien extends JPanel implements MouseListener {
 	}
 	
 
-	private Object xuLyCapNhat() {
+	private Object xuLyCapNhat() throws ParseException {
 		// TODO Auto-generated method stub
 		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn muốn cập nhật thông tin nhân viên không?",
 				"Chú ý", JOptionPane.YES_NO_OPTION);
@@ -321,10 +367,21 @@ public class NhanVien extends JPanel implements MouseListener {
 			String cccd = txtCCCD.getText();
 			String chucVu = cbChucVu.getSelectedItem().toString();
 			String matKhau = txtMatKhau.getText();
+			String maNV = (String) table.getValueAt(table.getSelectedRow(),0);
 			int viTri = table.getSelectedRow();
 			tableModel.removeRow(viTri);
-			String[] row = { "NV001", tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
+			String[] row = { maNV, tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
+			try {
+			daoNV.updateNhanVien(new entity.NhanVien(maNV, tenNV, dateFormat.parse(namSinh), 0, sdt, cccd, chucVu, matKhau, 0));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			tableModel.insertRow(viTri, row);
+			JOptionPane.showMessageDialog(null, "Cập nhật nhân viên thành công!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin nhân viên!");
 		}
 		return null;
 	}
