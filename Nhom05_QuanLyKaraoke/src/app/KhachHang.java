@@ -215,6 +215,7 @@ public class KhachHang extends JPanel implements MouseListener {
 		
 		layToanBoKH();
 		btnLamMoiKH.addActionListener(e -> xuLyLamMoi());
+		btnLamMoi.addActionListener(e -> xuLyTraCuu());
 		btnThemMoi.addActionListener(e -> xuLyThemMoi());
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
 		btnThoat.addActionListener(e -> System.exit(0));
@@ -322,13 +323,33 @@ public class KhachHang extends JPanel implements MouseListener {
 		return null;
 	}
 	
-	
-	private Object xuLyTimKiem() {
+
+	private Object xuLyTraCuu() {
 		// TODO Auto-generated method stub
-
+		txtTimTenKH.setText("");		
+		txtTimSDT.setText("");
 		return null;
-
 	}
+	
+	
+	private void xuLyTimKiem() {
+		String tenKHTim = txtTimTenKH.getText();
+		int n = 0;
+		for (int i = 0; i < table.getRowCount(); i++) {
+			if (table.getValueAt(i, 1).toString().equalsIgnoreCase(tenKHTim)) {
+				table.setRowSelectionInterval(i, i);
+				n = 1;
+			}
+		}
+		if (n == 1) {
+			JOptionPane.showMessageDialog(null, "Tên khách hàng được tìm thấy!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Tên khách hàng không tồn tại!");
+		}
+	}
+	
+	
+	
 	
 	// Xoa toan bo dich vu
 		private void xoaToanBoKH() {
@@ -344,8 +365,8 @@ public class KhachHang extends JPanel implements MouseListener {
 	// Xu ly combo tinh trang
 		private void xuLyCBLoaiKH() {
 			xoaToanBoKH();
-			String loaikh = cbLoaiKhachHang.getSelectedItem().toString();
-			//dsKH = daoKhachHang.getKhachHangCB(loaikh);
+			String tt = cbLoaiKhachHang.getSelectedItem().toString();
+			//dsKH = daoKhachHang.getKhachHangCB(tt);
 			for (entity.KhachHang kh : dsKH) {
 				tableModel.addRow(new Object[] { kh.getMaKH(), kh.getTenKH(), kh.getLoaiKH(), kh.getGioiTinh(),
 						kh.getSdthoai(), kh.getEmail(), kh.getSoGioDaThue(), kh.getGhiChu() });
@@ -358,7 +379,8 @@ public class KhachHang extends JPanel implements MouseListener {
 			dsKH = daoKH.getAll();
 			for (entity.KhachHang kh : dsKH) {
 			  String gioiTinh = kh.getGioiTinh() ? "Nữ" : "Nam";
-				tableModel.addRow(new Object[] { kh.getMaKH(), kh.getTenKH(), kh.getLoaiKH(), gioiTinh,
+			  String loaikh = kh.getLoaiKH() ? "VIP" : "Thường";
+				tableModel.addRow(new Object[] { kh.getMaKH(), kh.getTenKH(), loaikh, gioiTinh,
 						kh.getSdthoai(), kh.getEmail(), kh.getSoGioDaThue(), kh.getGhiChu()});
 
 			}
