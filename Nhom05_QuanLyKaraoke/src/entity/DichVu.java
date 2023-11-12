@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class DichVu {
+public class DichVu implements Serializable {
 	private String maDichVu;
 	private String tenDichVu;
 	private double donGia;

@@ -1,33 +1,38 @@
 package entity;
 
-import java.sql.Time;
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-public class HoaDon {
+public class HoaDon implements Serializable{
 	private String maHoaDon;
-	private LocalDate ngayThanhToan;
-	private Time gioThanhToan;
-	private String tenNV;
-	private String tenKH;
-	private String sdt;
-	private Double tongTien;
+	private Date ngayThanhToan;
+	private Date gioThanhToan;
+	private NhanVien nv;
+	private KhachHang kh;
+	private KhuyenMai km;
+	private Double tongHoaDon;
+	private Double tienKhachTra;
+	private ArrayList<ChiTietHoaDon> CTHD;
+	private ArrayList<CTDVPhong> CTDVP;
 
 	public HoaDon() {
-		this("Mã hoá đơn", LocalDate.now(), new Time(0),"Tên NV", "Tên KH", "Số điện thoại", 0.0);
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	public HoaDon(String maHoaDon, LocalDate ngayThanhToan, Time i, String tenNV, String tenKH, String sdt,
-			Double tongTien) {
+
+	public HoaDon(String maHoaDon, Date ngayThanhToan, Date gioThanhToan, NhanVien nv, KhachHang kh, KhuyenMai km,
+			Double tongHoaDon, Double tienKhachTra) {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.ngayThanhToan = ngayThanhToan;
-		this.gioThanhToan = i;
-		this.tenNV = tenNV;
-		this.tenKH = tenKH;
-		this.sdt = sdt;
-		this.tongTien = tongTien;
+		this.gioThanhToan = gioThanhToan;
+		this.nv = nv;
+		this.kh = kh;
+		this.km = km;
+		this.tongHoaDon = tongHoaDon;
+		this.tienKhachTra = tienKhachTra;
 	}
 
 	public String getMaHoaDon() {
@@ -38,52 +43,76 @@ public class HoaDon {
 		this.maHoaDon = maHoaDon;
 	}
 
-	public LocalDate getNgayThanhToan() {
+	public Date getNgayThanhToan() {
 		return ngayThanhToan;
 	}
 
-	public void setNgayThanhToan(LocalDate ngayThanhToan) {
+	public void setNgayThanhToan(Date ngayThanhToan) {
 		this.ngayThanhToan = ngayThanhToan;
 	}
 
-	public Time getGioThanhToan() {
+	public Date getGioThanhToan() {
 		return gioThanhToan;
 	}
 
-	public void setGioThanhToan(Time gioThanhToan) {
+	public void setGioThanhToan(Date gioThanhToan) {
 		this.gioThanhToan = gioThanhToan;
 	}
 
-	public String getTenNV() {
-		return tenNV;
+	public NhanVien getNv() {
+		return nv;
 	}
 
-	public void setTenNV(String tenNV) {
-		this.tenNV = tenNV;
+	public void setNv(NhanVien nv) {
+		this.nv = nv;
 	}
 
-	public String getTenKH() {
-		return tenKH;
+	public KhachHang getKh() {
+		return kh;
 	}
 
-	public void setTenKH(String tenKH) {
-		this.tenKH = tenKH;
+	public void setKh(KhachHang kh) {
+		this.kh = kh;
 	}
 
-	public String getSdt() {
-		return sdt;
+	public KhuyenMai getKm() {
+		return km;
 	}
 
-	public void setSdt(String sdt) {
-		this.sdt = sdt;
+	public void setKm(KhuyenMai km) {
+		this.km = km;
 	}
 
-	public Double getTongTien() {
-		return tongTien;
+	public Double getTienKhachTra() {
+		return tienKhachTra;
 	}
 
-	public void setTongTien(Double tongTien) {
-		this.tongTien = tongTien;
+	public void setTienKhachTra(Double tienKhachTra) {
+		this.tienKhachTra = tienKhachTra;
+	}
+
+	public Double getTongHoaDon() {
+		return tongHoaDon;
+	}
+
+	public void setTongHoaDon(Double tongHoaDon) {
+		this.tongHoaDon = tongHoaDon;
+	}
+
+	public ArrayList<ChiTietHoaDon> getCTHD() {
+		return CTHD;
+	}
+
+	public void setCTHD(ArrayList<ChiTietHoaDon> cTHD) {
+		CTHD = cTHD;
+	}
+
+	public ArrayList<CTDVPhong> getCTDVP() {
+		return CTDVP;
+	}
+
+	public void setCTDVP(ArrayList<CTDVPhong> cTDVP) {
+		CTDVP = cTDVP;
 	}
 
 	@Override
@@ -106,7 +135,29 @@ public class HoaDon {
 	@Override
 	public String toString() {
 		return "HoaDon [maHoaDon=" + maHoaDon + ", ngayThanhToan=" + ngayThanhToan + ", gioThanhToan=" + gioThanhToan
-				+ ", tenNV=" + tenNV + ", tenKH=" + tenKH + ", sdt=" + sdt + ", tongTien=" + tongTien + "]";
+				+ ", nv=" + nv + ", kh=" + kh + ", km=" + km + ", tongHoaDon=" + tongHoaDon + ", tienKhachTra="
+				+ tienKhachTra + ", CTHD=" + CTHD + ", CTDVP=" + CTDVP + "]";
 	}
 
+	// tinh tien
+	public Double tinhTongHD() {
+		Double tongTien = 0.0;
+		for (CTDVPhong chiTietDVPhong : getCTDVP()) {
+			tongTien += chiTietDVPhong.tinhTienDV();
+		}
+
+		for (ChiTietHoaDon cthd : getCTHD()) {
+			tongTien += cthd.tinhTienPhong();
+		}
+
+		if (km.getTrangThai()) {
+			tongTien = tongTien - tongTien * km.getPhanTramGiam();
+		}
+
+		return tongTien;
+	}
+	
+	public Double tinhTienTraKhach() {
+		return tienKhachTra - tinhTongHD();
+	}
 }

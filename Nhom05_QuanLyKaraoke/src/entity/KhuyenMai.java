@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class KhuyenMai {
+public class KhuyenMai implements Serializable{
 	private String maKM;
 	private Double phanTramGiam;
 	private Date ngayBD;

@@ -1,8 +1,9 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class LoaiPhong {
+public class LoaiPhong implements Serializable{
 	private String maLoaiPhong;
 	private String tenLoaiPhong;
 	private int sucChua;

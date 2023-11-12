@@ -1,10 +1,11 @@
 package entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class PhieuDatPhong {
+public class PhieuDatPhong implements Serializable{
 	private String maPDP;
 	private LocalDate ngayDatPhong;
 	private LocalTime gioDatPhong;
