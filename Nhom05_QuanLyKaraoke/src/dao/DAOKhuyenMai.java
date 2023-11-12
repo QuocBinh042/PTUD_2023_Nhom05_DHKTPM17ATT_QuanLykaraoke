@@ -29,6 +29,47 @@ public class DAOKhuyenMai {
 		return dsKhuyenMai;
 	}
 
+	public KhuyenMai layKhuyenMaiTheoMa(String maKhuyenMai) {
+	    KhuyenMai khuyenMai = null;
+	    ConnectDB.getInstance();
+	    Connection connect = ConnectDB.getConnection();
+	    try {
+	        String sql = "SELECT * FROM KhuyenMai WHERE MaKM=?";
+	        PreparedStatement preparedStatement = connect.prepareStatement(sql);
+	        preparedStatement.setString(1, maKhuyenMai);
+	        ResultSet rs = preparedStatement.executeQuery();
+	        if (rs.next()) {
+	            khuyenMai = new KhuyenMai(rs.getString(1), rs.getDouble(2), rs.getDate(3), rs.getDate(4),
+	                    rs.getString(5), rs.getBoolean(6));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return khuyenMai;
+	}
+
+	public ArrayList<KhuyenMai> layDSKhuyenMaiTrongKhoangThoiGian(java.util.Date date, java.util.Date date2) {
+	    ArrayList<KhuyenMai> dsKhuyenMai = new ArrayList<KhuyenMai>();
+	    ConnectDB.getInstance();
+	    Connection connect = ConnectDB.getConnection();
+	    try {
+	        String sql = "SELECT * FROM KhuyenMai WHERE NgayBatDau >= ? AND NgayKetThuc <= ?";
+	        PreparedStatement preparedStatement = connect.prepareStatement(sql);
+	        java.sql.Date sqlNgayBD = new java.sql.Date(date.getTime());
+			java.sql.Date sqlNgayKT = new java.sql.Date(date2.getTime());
+	        preparedStatement.setDate(1, sqlNgayBD);
+	        preparedStatement.setDate(2, sqlNgayKT);
+	        ResultSet rs = preparedStatement.executeQuery();
+	        while (rs.next()) {
+	            dsKhuyenMai.add(new KhuyenMai(rs.getString(1), rs.getDouble(2), rs.getDate(3), rs.getDate(4),
+	                    rs.getString(5), rs.getBoolean(6)));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return dsKhuyenMai;
+	}
+
 	public boolean themKhuyenMai(KhuyenMai km) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
