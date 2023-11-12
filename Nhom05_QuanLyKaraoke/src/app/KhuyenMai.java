@@ -45,7 +45,7 @@ public class KhuyenMai extends JPanel implements MouseListener {
 	private JTextField txtMaKM, txtPhanTramGiam, txtNgayBatDau, txtNgayKetThuc, txtThongBaoLoi, txtTimKM, txtTimPhong,
 			txtTrangThai;
 	private JDateChooser dateBD, dateKT, dateBDTim, dateKTTim;
-	private app.ButtonGradient btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnTimKM;
+	private app.ButtonGradient btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnTimKM, btnLocKM, btnLamMoiLoc;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private DAOKhuyenMai daoKM = new DAOKhuyenMai();
 	private ArrayList<entity.KhuyenMai> dsKM = new ArrayList<>();
@@ -64,11 +64,12 @@ public class KhuyenMai extends JPanel implements MouseListener {
 		Icon img_edit = new ImageIcon("src/img/edit16.png");
 		Icon img_out = new ImageIcon("src/img/out.png");
 		Icon img_search = new ImageIcon("src/img/search.png");
+		Icon img_refresh = new ImageIcon("src/img/refresh16.png");
 
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
 		Box b1, b2, b3, b4, b5;
-		Box bLeft, bRight, bLoc, bTacVu;
-		Dimension dimension = new Dimension(170, 25);
+		Box bLeft, bRight, bLoc, bTacVu, bLoc1, bLoc2;
+		Dimension dimension = new Dimension(200, 30);
 
 		JPanel pnlLeft = new JPanel();
 		JPanel pnlRight = new JPanel();
@@ -83,7 +84,7 @@ public class KhuyenMai extends JPanel implements MouseListener {
 		JPanel pnlPhanTramGiam = new JPanel();
 		pnlPhanTramGiam.setBackground(Color.decode("#cccccc"));
 		pnlPhanTramGiam.add(lblPhanTramGiam = new JLabel("Phần trăm giảm"));
-		pnlPhanTramGiam.add(txtPhanTramGiam = new JTextField(15));
+		pnlPhanTramGiam.add(txtPhanTramGiam = new JTextField(18));
 		bLeft.add(b1 = Box.createHorizontalBox());
 		b1.add(pnlPhanTramGiam);
 		bLeft.add(Box.createVerticalStrut(10));
@@ -106,12 +107,13 @@ public class KhuyenMai extends JPanel implements MouseListener {
 		JPanel pnlMoTa = new JPanel();
 		pnlMoTa.setBackground(Color.decode("#cccccc"));
 		pnlMoTa.add(lblMoTa = new JLabel("Mô tả"));
-		pnlMoTa.add(txaMoTa = new JTextArea(5, 15));
+		pnlMoTa.add(txaMoTa = new JTextArea(5, 18));
 		txaMoTa.setBorder(line);
 		bLeft.add(b4 = Box.createHorizontalBox());
 		b4.add(pnlMoTa);
 		bLeft.add(Box.createVerticalStrut(10));
 
+		txtPhanTramGiam.setPreferredSize(dimension);
 		lblNgayBatDau.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblNgayKetThuc.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblMoTa.setPreferredSize(lblPhanTramGiam.getPreferredSize());
@@ -147,27 +149,41 @@ public class KhuyenMai extends JPanel implements MouseListener {
 		bTacVu.add(pnlLocKM);
 		bTacVu.add(pnlTimKM);
 		bRight.add(bTacVu);
+		pnlLocKM.add(bLoc = Box.createVerticalBox());
+		bLoc.add(bLoc1 = Box.createHorizontalBox());
+		bLoc1.add(Box.createHorizontalStrut(10));
+		bLoc1.add(lblNgayBatDau = new JLabel("Ngày bắt đầu"));
 
-		GridLayout gridLocKM = new GridLayout(1, 2);
-		pnlLocKM.setLayout(gridLocKM);
-		gridLocKM.setHgap(5);
-		Box bNgayBD = Box.createHorizontalBox();
+		bLoc1.add(Box.createHorizontalStrut(15));
+		bLoc1.add(dateBDTim = new JDateChooser());
+		bLoc1.add(Box.createHorizontalStrut(50));
 
-		bNgayBD.add(lblNgayBatDau = new JLabel("Từ ngày"));
-		bNgayBD.add(Box.createHorizontalStrut(5));
-		bNgayBD.add(dateBDTim = new JDateChooser());
-		bNgayBD.add(Box.createHorizontalStrut(10));
-		pnlLocKM.add(bNgayBD);
-		Box bNgayKT = Box.createHorizontalBox();
-		bNgayKT.add(lblNgayKetThuc = new JLabel("Đến"));
-		bNgayKT.add(Box.createHorizontalStrut(5));
-		bNgayKT.add(dateKTTim = new JDateChooser());
-		pnlLocKM.add(bNgayKT);
+		bLoc1.add(Box.createHorizontalStrut(50));
+		bLoc1.add(btnLocKM = new ButtonGradient("Lọc", img_search));
+		bLoc1.add(Box.createHorizontalStrut(5));
+
+		bLoc.add(Box.createVerticalStrut(5));
+		bLoc.add(bLoc2 = Box.createHorizontalBox());
+		bLoc2.add(Box.createHorizontalStrut(10));
+		bLoc2.add(lblNgayKetThuc = new JLabel("Ngày kết thúc"));
+		bLoc2.add(Box.createHorizontalStrut(15));
+		bLoc2.add(dateKTTim = new JDateChooser());
+		bLoc2.add(Box.createHorizontalStrut(50));
+		bLoc2.add(Box.createHorizontalStrut(50));
+		bLoc2.add(btnLamMoiLoc = new ButtonGradient("Làm mới", img_refresh));
+		bLoc2.add(Box.createHorizontalStrut(5));
 
 		pnlTimKM.add(lblMaKM = new JLabel("Mã khuyến mãi"));
 		pnlTimKM.add(txtTimKM = new JTextField(10));
 		pnlTimKM.add(btnTimKM = new ButtonGradient("Tìm", img_search));
 
+		btnTimKM.setPreferredSize(new Dimension(120, 30));
+		btnLocKM.setPreferredSize(new Dimension(140, 30));
+		btnLamMoiLoc.setPreferredSize(new Dimension(140, 30));
+		dateBDTim.setPreferredSize(dimension);
+		dateKTTim.setPreferredSize(dimension);
+		lblNgayBatDau.setPreferredSize(lblPhanTramGiam.getPreferredSize());
+		lblNgayKetThuc.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		// Table
 		Box table1 = Box.createVerticalBox();
 		table1.setBorder(BorderFactory.createTitledBorder(line, "Danh sách khuyến mãi"));
@@ -192,17 +208,33 @@ public class KhuyenMai extends JPanel implements MouseListener {
 		this.add(pnlRight, BorderLayout.CENTER);
 
 		// Load data
-		dsKM = daoKM.layDSKhuyenMai();
-		loadData();
 
+		loadData();
+		LocKMTheoNgay();
 		// sự kiện
 		btnLamMoi.addActionListener(e -> xuLyLamMoiKM());
 		btnThemMoi.addActionListener(e -> xuLyThemMoiKM());
 		btnXoa.addActionListener(e -> xuLyXoaKM());
 		btnCapNhat.addActionListener(e -> xuLyCapNhatKM());
 		btnThoat.addActionListener(e -> xuLyThoat());
+		btnLocKM.addActionListener(e -> LocKMTheoNgay());
 		btnTimKM.addActionListener(e -> xuLyTimKM());
+		btnLamMoiLoc.addActionListener(e -> loadData());
 		table.addMouseListener(this);
+
+	}
+
+	private void LocKMTheoNgay() {
+		// TODO Auto-generated method stub
+		if (dateKTTim.getDate() != null) {
+			deleteAllDataJtable();
+			dsKM = daoKM.layDSKhuyenMaiTrongKhoangThoiGian(dateBDTim.getDate(), dateKTTim.getDate());
+			for (entity.KhuyenMai km : dsKM) {
+				String trangThai = km.getTrangThai() ? "Đang hoạt động" : "Đã kết thúc";
+				tableModel.addRow(new Object[] { km.getMaKM(), km.getPhanTramGiam(), dateFormat.format(km.getNgayBD()),
+						dateFormat.format(km.getNgayKT()), km.getMoTa(), trangThai });
+			}
+		}
 
 	}
 
@@ -220,7 +252,7 @@ public class KhuyenMai extends JPanel implements MouseListener {
 		// delete all
 		deleteAllDataJtable();
 		// Load data
-	
+		dsKM = daoKM.layDSKhuyenMai();
 		for (entity.KhuyenMai km : dsKM) {
 			String trangThai = km.getTrangThai() ? "Đang hoạt động" : "Đã kết thúc";
 			tableModel.addRow(new Object[] { km.getMaKM(), km.getPhanTramGiam(), dateFormat.format(km.getNgayBD()),
@@ -243,11 +275,24 @@ public class KhuyenMai extends JPanel implements MouseListener {
 	private Object xuLyTimKM() {
 		// TODO Auto-generated method stub
 		String maKM = txtTimKM.getText();
-//		if (maKM) {
-//			JOptionPane.showMessageDialog(null, "Tìm kiếm thông tin khuyến mãi thành công!");
-////			table.setRowSelectionInterval(pos, pos);
-//		} else
-//			JOptionPane.showMessageDialog(null, "Chương trình khuyến mãi không tồn tại!");
+		int rowIndex = -1;
+		for (int i = 0; i < table.getRowCount(); i++) {
+			if (table.getValueAt(i, 0).equals(maKM)) {
+				rowIndex = i;
+				break;
+			}
+		}
+		if (rowIndex != -1) {
+			table.setRowSelectionInterval(rowIndex, rowIndex);
+			JOptionPane.showMessageDialog(null, "Tìm kiếm thông tin khuyến mãi thành công!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Chương trình khuyến mãi không tồn tại!");
+		}
+//		if (daoKM.layKhuyenMaiTheoMa(maKM)!=null) {
+//		JOptionPane.showMessageDialog(null, "Tìm kiếm thông tin khuyến mãi thành công!");
+////		table.setRowSelectionInterval(pos, pos);
+//	} else
+//		JOptionPane.showMessageDialog(null, "Chương trình khuyến mãi không tồn tại!");
 		return null;
 	}
 
