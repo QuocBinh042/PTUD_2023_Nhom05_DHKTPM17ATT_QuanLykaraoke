@@ -291,7 +291,7 @@ public class KhachHang extends JPanel implements MouseListener {
 			String email = txtEmail.getText();
 			String ghichu = txaGhiChu.getText();
 			int viTri = table.getSelectedRow();
-			String maKH = maKhachHang.formatMa(dsKH.get(dsKH.size()-1).getMaKH());
+			String maKH = (String) table.getValueAt(table.getSelectedRow(),0);
 			tableModel.removeRow(viTri);
 			String[] row = { maKH , tenKH, "", gioiTinh, sdt, email, "", ghichu };
 		    daoKH.updateKhachHang(new entity.KhachHang(maKH, tenKH, 0, 0, sdt, email, 0, ghichu));
