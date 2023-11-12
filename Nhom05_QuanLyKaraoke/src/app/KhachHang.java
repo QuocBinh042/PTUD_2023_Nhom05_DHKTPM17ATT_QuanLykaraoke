@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import connectDB.ConnectDB;
 import dao.daoKhachHang;
@@ -223,11 +224,43 @@ public class KhachHang extends JPanel implements MouseListener {
 		//tableModel.addRow(row); 
 	}
 	
+	
+	
+	// Kiem tra rang buoc
+		private boolean validData() {
+			String tenKH = txtTenKhachHang.getText();
+			String sdt = txtSoDienThoai.getText();
+			String email = txtEmail.getText();
+			
+			Pattern p = Pattern.compile("[a-zA-Z]");
+			if (!(p.matcher(tenKH).find())) {
+				JOptionPane.showMessageDialog(null, "Tên khách hàng không hợp lệ!");
+				return false;
+			}
+			
+			Pattern p1 = Pattern.compile("[0-9]");
+			if (!(p1.matcher(sdt).find())) {
+				JOptionPane.showMessageDialog(null, "Số điện thoại chỉ được nhập chữ số!");
+				return false;
+			}
+			
+			Pattern p2 = Pattern.compile("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+					+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
+			if (!(p2.matcher(email).find())) {
+				JOptionPane.showMessageDialog(null, "Email khonogg được để trống!");
+				return false;
+			}
+			
+			
+			return true;
+		}
+	
 	// Xu ly them moi
 	private void xuLyThemMoi() {
 		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn thêm thông tin khách hàng không?", "Chú ý",
 				JOptionPane.YES_NO_OPTION);
 		if (luaChon == JOptionPane.YES_OPTION) {
+			if (validData() == true) {
 			String tenKH = txtTenKhachHang.getText();
 			String gioiTinh = cbGioiTinh.getSelectedItem().toString();
 			String sdt = txtSoDienThoai.getText();
@@ -237,6 +270,12 @@ public class KhachHang extends JPanel implements MouseListener {
 			String[] row = { maKH , tenKH, "", gioiTinh, sdt, email, "", ghichu };
             dsKH.add(new entity.KhachHang(maKH, tenKH, 0, 0, sdt, email, 0, ghichu));
 			tableModel.addRow(row);
+			JOptionPane.showMessageDialog(null, "Thêm mới khách hàng thành công!");
+		}
+			
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin khách hàng!");
 		}
 	}
 	
@@ -245,17 +284,25 @@ public class KhachHang extends JPanel implements MouseListener {
 		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn muốn cập nhật thông tin khách hàng không?",
 				"Chú ý", JOptionPane.YES_NO_OPTION);
 		if (luaChon == JOptionPane.YES_OPTION) {
+			if (validData() == true) {
 			String tenKH = txtTenKhachHang.getText();
 			String gioiTinh = cbGioiTinh.getSelectedItem().toString();
 			String sdt = txtSoDienThoai.getText();
 			String email = txtEmail.getText();
 			String ghichu = txaGhiChu.getText();
 			int viTri = table.getSelectedRow();
+			String maKH = maKhachHang.formatMa(dsKH.get(dsKH.size()-1).getMaKH());
 			tableModel.removeRow(viTri);
-			String[] row = { "KH001", tenKH, "", gioiTinh, sdt, email, "", ghichu };
+			String[] row = { maKH , tenKH, "", gioiTinh, sdt, email, "", ghichu };
+		    daoKH.updateKhachHang(new entity.KhachHang(maKH, tenKH, 0, 0, sdt, email, 0, ghichu));
 			tableModel.insertRow(viTri, row);
+			JOptionPane.showMessageDialog(null, "Cập nhật khách hàng thành công!");
+		}else {
+			JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin khách hàng!");
+		}
 		}
 		return null;
+		
 	}
 	
 	
