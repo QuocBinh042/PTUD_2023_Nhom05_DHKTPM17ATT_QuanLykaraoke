@@ -232,13 +232,13 @@ public class KhachHang extends JPanel implements MouseListener {
 			String sdt = txtSoDienThoai.getText();
 			String email = txtEmail.getText();
 			
-			Pattern p = Pattern.compile("[a-zA-Z]");
+			Pattern p = Pattern.compile("[a-zA-Z]+");
 			if (!(p.matcher(tenKH).find())) {
 				JOptionPane.showMessageDialog(null, "Tên khách hàng không hợp lệ!");
 				return false;
 			}
 			
-			Pattern p1 = Pattern.compile("[0-9]");
+			Pattern p1 = Pattern.compile("[0-9]{10}");
 			if (!(p1.matcher(sdt).find())) {
 				JOptionPane.showMessageDialog(null, "Số điện thoại chỉ được nhập chữ số!");
 				return false;
@@ -247,7 +247,7 @@ public class KhachHang extends JPanel implements MouseListener {
 			Pattern p2 = Pattern.compile("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
 					+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
 			if (!(p2.matcher(email).find())) {
-				JOptionPane.showMessageDialog(null, "Email khonogg được để trống!");
+				JOptionPane.showMessageDialog(null, "Email không được để trống!");
 				return false;
 			}
 			
