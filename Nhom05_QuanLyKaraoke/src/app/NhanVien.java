@@ -269,6 +269,7 @@ public class NhanVien extends JPanel implements MouseListener {
 		});
 		btnThoat.addActionListener(e -> System.exit(0));
 		btnTim.addActionListener(e -> xuLyTimKiem());
+		btnLamMoi.addActionListener(e -> xuLyTraCuu());
 		table.addMouseListener((MouseListener) this);
 
 		//String[] row = { "NV001", "tenNV", "06/11/2023", "", "sdt", "cccd", "", "matkhau", "" };
@@ -325,7 +326,7 @@ public class NhanVien extends JPanel implements MouseListener {
 			String matKhau = txtMatKhau.getText();
 			String maNV = maNhanVien.formatMa(dsNV.get(dsNV.size()-1).getMaNV());
 			try {
-				dsNV.add(new entity.NhanVien(maNV, tenNV, dateFormat.parse(namSinh), 0, sdt, cccd, chucVu, matKhau, 0));
+				dsNV.add(new entity.NhanVien(maNV, tenNV, dateFormat.parse(namSinh), false, sdt, cccd, chucVu, matKhau, false));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (ParseException e) {
@@ -372,7 +373,7 @@ public class NhanVien extends JPanel implements MouseListener {
 			tableModel.removeRow(viTri);
 			String[] row = { maNV, tenNV, namSinh, gioiTinh, sdt, cccd, chucVu, matKhau, "Đang làm" };
 			try {
-			daoNV.updateNhanVien(new entity.NhanVien(maNV, tenNV, dateFormat.parse(namSinh), 0, sdt, cccd, chucVu, matKhau, 0));
+			daoNV.updateNhanVien(new entity.NhanVien(maNV, tenNV, dateFormat.parse(namSinh), false, sdt, cccd, chucVu, matKhau, false));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (ParseException e) {
@@ -399,19 +400,37 @@ public class NhanVien extends JPanel implements MouseListener {
 		return null;
 	}
 
-	private Object xuLyTimKiem() {
+	
+	private Object xuLyTraCuu() {
 		// TODO Auto-generated method stub
-
+		txtTimNhanVien.setText("");		
+		txtTimSDT.setText("");
 		return null;
-
+	}
+	private void xuLyTimKiem() {
+		String tenNVTim = txtTimNhanVien.getText();
+		int n = 0;
+		for (int i = 0; i < table.getRowCount(); i++) {
+			if (table.getValueAt(i, 1).toString().equalsIgnoreCase(tenNVTim)) {
+				table.setRowSelectionInterval(i, i);
+				n = 1;
+			}
+		}
+		if (n == 1) {
+			JOptionPane.showMessageDialog(null, "Tên nhân viên được tìm thấy!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Tên nhân viên không tồn tại!");
+		}
 	}
 	
 	// Lay toan bo nhan vien
 			private void layToanBoNV() {
 				dsNV = daoNV.getAll();
 				for (entity.NhanVien nv : dsNV) {
-					tableModel.addRow(new Object[] { nv.getMaNV(), nv.getTenNV(), nv.getNamSinh(), nv.getGioiTinh(),
-							nv.getSdthoai(), nv.getCccd(), nv.getChucVu(), nv.getMatKhau(), nv.getTinhTrangNV()});
+					String gioiTinh = nv.getGioiTinh() ? "Nữ" : "Nam";
+					String tinhTrang = nv.getTinhTrangNV() ? "Đang làm" : "Nghỉ việc";
+					tableModel.addRow(new Object[] { nv.getMaNV(), nv.getTenNV(), nv.getNamSinh(), gioiTinh,
+							nv.getSdthoai(), nv.getCccd(), nv.getChucVu(), nv.getMatKhau(), tinhTrang});
 
 				}
 			}
