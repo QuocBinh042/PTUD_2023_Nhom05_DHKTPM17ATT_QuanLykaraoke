@@ -213,7 +213,7 @@ public class Phong extends JPanel implements MouseListener {
 		pnlTim.add(txtTimMaPhong = new JTextField(20));
 		txtTimMaPhong.setPreferredSize(dimension);
 		pnlTim.add(Box.createHorizontalStrut(30));
-		pnlTim.add(btnTim = new JButton("Tìm", img_search));
+		pnlTim.add(btnTim = new ButtonGradient("Tìm", img_search));
 		btnTim.setPreferredSize(new Dimension(100, 25));
 		bTacVu.add(pnlTim);
 		bTacVu.add(Box.createHorizontalStrut(100));

@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -263,6 +264,19 @@ public class LoaiPhong extends JFrame implements MouseListener {
 	}
 
 	private boolean validData() {
+		String sucChua = txtSucChua.getText();
+		String giaLP = txtGiaLP.getText();
+
+		Pattern p = Pattern.compile("^[0-9]+$");
+		if (!(p.matcher(sucChua).find())) {
+			JOptionPane.showMessageDialog(null, "Sức chứa không hợp lệ");
+			return false;
+		}
+		Pattern p1 = Pattern.compile("^[0-9]+$");
+		if (!(p1.matcher(giaLP).find())) {
+			JOptionPane.showMessageDialog(null, "Giá phòng không hợp lệ");
+			return false;
+		}
 		return true;
 	}
 
