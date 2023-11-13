@@ -87,7 +87,7 @@ public class daoDichVu {
 	}
 
 	// Cap nhat dich vu
-	public boolean updateGia(DichVu dv) {
+	public boolean update(DichVu dv) {
 		// TODO Auto-generated method stub
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
