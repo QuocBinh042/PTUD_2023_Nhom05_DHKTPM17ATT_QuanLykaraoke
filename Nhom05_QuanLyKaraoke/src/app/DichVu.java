@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 import connectDB.ConnectDB;
 import dao.daoDichVu;
+import dao.MaTuDong;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,8 +30,9 @@ public class DichVu extends JPanel implements MouseListener {
 	private Box bLeft, bRight;
 	private ArrayList<entity.DichVu> dsDichVu;
 	private daoDichVu daoDV;
-	private DecimalFormat formatter = new DecimalFormat("###,###,###");
+	private DecimalFormat formatter = new DecimalFormat("###");
 	private static int maDVTT = 0;
+	private MaTuDong maDVTD = new MaTuDong();
 
 	public DichVu() {
 
@@ -48,7 +50,7 @@ public class DichVu extends JPanel implements MouseListener {
 		Icon img_out = new ImageIcon("src/img/out.png");
 		Icon img_search = new ImageIcon("src/img/search.png");
 
-		Box b1, b2, b3, b4, b5;
+		Box b1, b2, b3, b5;
 		Box bLeft, bRight;
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
 		Dimension dimension = new Dimension(110, 25);
@@ -81,7 +83,7 @@ public class DichVu extends JPanel implements MouseListener {
 
 		JPanel pnlDonGia = new JPanel();
 		pnlDonGia.setBackground(Color.decode("#cccccc"));
-		pnlDonGia.add(lblDonGia = new JLabel("Đơn giá (VNĐ)"));
+		pnlDonGia.add(lblDonGia = new JLabel("Đơn giá"));
 		pnlDonGia.add(txtDonGia = new JTextField(15));
 		bLeft.add(b3 = Box.createHorizontalBox());
 		b3.add(pnlDonGia);
@@ -95,15 +97,15 @@ public class DichVu extends JPanel implements MouseListener {
 		b5.add(pnlSoLuong);
 		bLeft.add(Box.createVerticalStrut(10));
 
-		lblTenDichVu.setPreferredSize(lblDonGia.getPreferredSize());
-		lblDonVi.setPreferredSize(lblDonGia.getPreferredSize());
-		lblSoLuong.setPreferredSize(lblDonGia.getPreferredSize());
+		lblDonGia.setPreferredSize(lblTenDichVu.getPreferredSize());
+		lblDonVi.setPreferredSize(lblTenDichVu.getPreferredSize());
+		lblSoLuong.setPreferredSize(lblTenDichVu.getPreferredSize());
 		txtTenDichVu.setPreferredSize(dimension);
 		txtDonGia.setPreferredSize(dimension);
 		txtSoLuong.setPreferredSize(dimension);
 		txtDonVi.setPreferredSize(dimension);
 
-		bLeft.add(Box.createVerticalStrut(50));
+		bLeft.add(Box.createVerticalStrut(30));
 
 		JPanel pnlKM = new JPanel();
 		pnlKM.setBackground(Color.decode("#cccccc"));
@@ -116,6 +118,8 @@ public class DichVu extends JPanel implements MouseListener {
 		pnlKM.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
 		pnlKM.add(btnThoat = new ButtonGradient(" Thoát ", img_out));
 		bLeft.add(pnlKM);
+		bLeft.add(Box.createVerticalStrut(110));
+		bLeft.setMaximumSize(new Dimension(Integer.MAX_VALUE, bLeft.getPreferredSize().height));
 
 		// Right box
 		Box bTacVu = Box.createHorizontalBox();
@@ -134,7 +138,7 @@ public class DichVu extends JPanel implements MouseListener {
 		pnlLoc.add(cbTinhTrang = new JComboBox<>(cbTT));
 		cbTinhTrang.setPreferredSize(new Dimension(150, 25));
 		bTacVu.add(pnlLoc);
-		bTacVu.add(Box.createHorizontalStrut(150));
+		bTacVu.add(Box.createHorizontalStrut(170));
 
 		// Panel Tra cuu
 		JPanel pnlTim = new JPanel();
@@ -146,8 +150,8 @@ public class DichVu extends JPanel implements MouseListener {
 		pnlTim.add(txtTimDV = new JTextField(20));
 		txtTimDV.setPreferredSize(dimension);
 		pnlTim.add(Box.createHorizontalStrut(30));
-		pnlTim.add(btnTim = new JButton("Tìm", img_search));
-		btnTim.setPreferredSize(new Dimension(80, 25));
+		pnlTim.add(btnTim = new ButtonGradient("Tìm", img_search));
+		btnTim.setPreferredSize(new Dimension(90, 25));
 		bTacVu.add(pnlTim);
 		bTacVu.add(Box.createHorizontalStrut(100));
 
@@ -237,8 +241,7 @@ public class DichVu extends JPanel implements MouseListener {
 
 		if (kiemTraThongTin()) {
 			if (validData() == true) {
-				maDVTT = daoDV.getAllDichVu().size() + 1;
-				String maDV = "DV0" + maDVTT;
+				String maDV = maDVTD.formatMa(daoDV.getAllDichVu().get(daoDV.getAllDichVu().size()-1).getMaDichVu());
 				String tenDV = txtTenDichVu.getText();
 				String donVi = txtDonVi.getText();
 				double donGia = Double.valueOf(txtDonGia.getText());
@@ -289,7 +292,7 @@ public class DichVu extends JPanel implements MouseListener {
 						table.setValueAt(soLuong, r, 4);
 						entity.DichVu dv = new entity.DichVu((String) table.getValueAt(r, 0), tenDV, donGia, donVi,
 								soLuong, tinhTrang);
-						daoDV.updateGia(dv);
+						daoDV.update(dv);
 						if (Integer.parseInt(table.getValueAt(r, 4).toString()) == 0) {
 							table.setValueAt("Hết hàng", r, 5);
 						} else if (Integer.parseInt(table.getValueAt(r, 4).toString()) > 10) {

@@ -27,6 +27,8 @@ import javax.swing.table.DefaultTableModel;
 
 import connectDB.ConnectDB;
 import dao.daoLoaiPhong;
+import dao.MaTuDong;
+import entity.*;
 
 public class LoaiPhong extends JFrame implements MouseListener {
 	private JTextField txtSucChua, txtGiaLP;
@@ -37,17 +39,20 @@ public class LoaiPhong extends JFrame implements MouseListener {
 	private DefaultTableModel tableModel;
 	private ArrayList<entity.LoaiPhong> dsLP;
 	private daoLoaiPhong daoLP;
-	private DecimalFormat formatter = new DecimalFormat("###,###,###");
+	private entity.LoaiPhong lp;
+	private MaTuDong maLPTD = new MaTuDong();
+	private DecimalFormat formatter = new DecimalFormat("###");
 
 	public LoaiPhong() {
-		
+
 		try {
-			ConnectDB.getInstance().connect();;
+			ConnectDB.getInstance().connect();
+			;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		daoLP = new daoLoaiPhong();
-		
+
 		setSize(780, 350);
 		setTitle("Quản lý loại phòng");
 		setLocationRelativeTo(null);
@@ -58,7 +63,7 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		Icon img_reset = new ImageIcon("src/img/refresh16.png");
 		Icon img_edit = new ImageIcon("src/img/edit16.png");
 
-		Box b1, b2, b3, b4;
+		Box b2, b3, b4;
 		Box bLeft, bRight;
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
 		Dimension dimension = new Dimension(120, 25);
@@ -173,113 +178,134 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		cbLocSC.addActionListener(e -> xuLyLocCBSC());
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
 		btnThem.addActionListener(e -> xuLyThemMoi());
-		btnQuayLai.addActionListener(e -> xuLyQuayLai());
+		btnQuayLai.addActionListener(e -> this.dispose());
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
 		table.addMouseListener(this);
 
 	}
+
 	// Lay toan bo loai phong
-		private void layToanBoLP() {
-			dsLP = daoLP.getAllLoaiPhong();
-			for (entity.LoaiPhong lp : dsLP) {
-				tableModel.addRow(new Object[] { lp.getMaLoaiPhong(), lp.getTenLoaiPhong(), lp.getSucChua(),
-						formatter.format(lp.getGiaLoaiPhong()) + " VNĐ" });
-			}
+	private void layToanBoLP() {
+		dsLP = daoLP.getAllLoaiPhong();
+		for (entity.LoaiPhong lp : dsLP) {
+			tableModel.addRow(new Object[] { lp.getMaLoaiPhong(), lp.getTenLoaiPhong(), lp.getSucChua(),
+					formatter.format(lp.getGiaLoaiPhong()) });
 		}
+	}
 
-		// Xu ly them moi
-		private void xuLyThemMoi() {
-			String tenLP = cbTenLP.getSelectedItem().toString();
-			String giaLP = txtGiaLP.getText();
-			String sucChua = txtSucChua.getText();
-			int soLP = 0;
-			String maLP = "LP00" + (soLP + "");
-			String[] row = { maLP, tenLP, giaLP, sucChua };
-			tableModel.addRow(row);
-		}
-
-		// Xu ly cap nhat
-		private void xuLyCapNhat() {
-			int r = table.getSelectedRow();
-			String tenLP = cbTenLP.getSelectedItem().toString();
-			String giaLP = txtGiaLP.getText();
-			String sucChua = txtSucChua.getText();
-			table.setValueAt(tenLP, r, 1);
-			table.setValueAt(sucChua, r, 2);
-			table.setValueAt(giaLP, r, 3);
-
-		}
-
-		// Xu ly lam moi
-		private void xuLyLamMoi() {
-			cbTenLP.setSelectedIndex(0);
-			txtGiaLP.setText("");
-			txtSucChua.setText("");
-			cbLocTP.setSelectedIndex(0);
-			cbLocSC.setSelectedIndex(0);
-		}
-
-		// Xu ly quay lai
-		private void xuLyQuayLai() {
-			this.setVisible(false);
-		}
-
-		// Xu ly kiem tra thong tin
-		private int kiemTraThongTin() {
-			String sucChua = txtSucChua.getText();
-			String giaLP = txtGiaLP.getText();
-			if (sucChua.equals("") || giaLP.equals("")) {
-				return -1;
-			}
-			return 1;
-		}
-
-		// Xu ly loc ten loai phong xuLyLocCBSC
-		private void xuLyLocCBTP() {
-			String lc = cbLocTP.getSelectedItem().toString();
-			if (lc.equalsIgnoreCase("Tất cả")) {
-				xoaToanBoLP();
-				layToanBoLP();
-			} else if (lc.equalsIgnoreCase("Thường")) {
-				xoaToanBoLP();
-				layToanBoLP();
-				for (int i = 0; i < table.getRowCount(); i++) {
-					String tenLP = table.getValueAt(i, 1).toString();
-					if (tenLP.equalsIgnoreCase("VIP")) {
-						tableModel.removeRow(i);
+	// Xu ly them moi
+	private void xuLyThemMoi() {
+		if (kiemTraDuThongTin()) {
+			if (validData() == true) {
+				String tenLP = cbTenLP.getSelectedItem().toString();
+				double giaLP = Double.parseDouble(txtGiaLP.getText());
+				int sucChua = Integer.parseInt(txtSucChua.getText());
+				String maLP = maLPTD
+						.formatMa(daoLP.getAllLoaiPhong().get(daoLP.getAllLoaiPhong().size() - 1).getMaLoaiPhong());
+				entity.LoaiPhong lp = new entity.LoaiPhong(maLP, tenLP, sucChua, giaLP);
+				int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thêm mới loại phòng không ?",
+						"Chú ý!", JOptionPane.YES_OPTION);
+				if (i == JOptionPane.YES_OPTION) {
+					if (daoLP.add(lp)) {
+						String[] row = { maLP, tenLP, sucChua + "", formatter.format(giaLP) };
+						tableModel.addRow(row);
+						JOptionPane.showMessageDialog(null, "Thêm mới loại phòng thành công!");
 					}
 				}
-			} else if (lc.equalsIgnoreCase("VIP")) {
-				xoaToanBoLP();
-				layToanBoLP();
-				for (int i = 0; i < table.getRowCount(); i++) {
-					String tenLP = table.getValueAt(i, 1).toString();
-					if (tenLP.equalsIgnoreCase("Thường")) {
-						tableModel.removeRow(i);
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin loại phòng!");
+		}
+
+	}
+
+	// Xu ly cap nhat
+	private void xuLyCapNhat() {
+		int r = table.getSelectedRow();
+
+		if (r != -1) {
+			if (kiemTraDuThongTin()) {
+				if (validData() == true) {
+					int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật loại phòng không ?",
+							"Chú ý!", JOptionPane.YES_NO_OPTION);
+					if (i == JOptionPane.YES_OPTION) {
+						String tenLP = cbTenLP.getSelectedItem().toString();
+						double giaLP = Double.parseDouble(txtGiaLP.getText());
+						int sucChua = Integer.parseInt(txtSucChua.getText());
+						table.setValueAt(tenLP, r, 1);
+						table.setValueAt(sucChua, r, 2);
+						table.setValueAt(giaLP, r, 3);
+						entity.LoaiPhong lp = new entity.LoaiPhong((String) table.getValueAt(r, 0), tenLP, sucChua,
+								giaLP);
+						daoLP.update(lp);
+						table.setValueAt(formatter.format(giaLP), r, 3);
+						JOptionPane.showMessageDialog(null, "Cập nhật thông tin loại phòng thành công!");
 					}
 				}
 
-			}
-		}
-
-		// Xu ly loc theo suc chua
-		private void xuLyLocCBSC() {
-			xoaToanBoLP();
-			String lc = cbLocSC.getSelectedItem().toString();
-			dsLP = daoLP.getCBSC(lc);
-			for(entity.LoaiPhong lp : dsLP) {
-				tableModel.addRow(new Object[] {lp.getMaLoaiPhong(), lp.getTenLoaiPhong(), lp.getSucChua(), formatter.format(lp.getGiaLoaiPhong())+" VNĐ"});
-			}
-		}
-
-		// Xoa toan bo loai phong
-		private void xoaToanBoLP() {
-			DefaultTableModel dm = (DefaultTableModel) table.getModel();
-			while (dm.getRowCount() > 0) {
-				dm.removeRow(0);
+			} else {
+				JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin loại phòng!");
 			}
 
+		} else {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn loại phòng cần cập nhật!");
 		}
+
+	}
+
+	// Xu ly lam moi
+	private void xuLyLamMoi() {
+		cbTenLP.setSelectedIndex(0);
+		txtGiaLP.setText("");
+		txtSucChua.setText("");
+		cbLocTP.setSelectedIndex(0);
+		cbLocSC.setSelectedIndex(0);
+	}
+
+	private boolean validData() {
+		return true;
+	}
+
+	// Xu ly kiem tra thong tin
+	private boolean kiemTraDuThongTin() {
+		String sucChua = txtSucChua.getText();
+		String giaLP = txtGiaLP.getText();
+		if (sucChua.equals("") || giaLP.equals("")) {
+			return false;
+		}
+		return true;
+	}
+
+	// Xu ly loc ten loai phong xuLyLocCBSC
+	private void xuLyLocCBTP() {
+		xoaToanBoLP();
+		String lc = cbLocTP.getSelectedItem().toString();
+		dsLP = daoLP.getCBLP(lc);
+		for (entity.LoaiPhong lp : dsLP) {
+			tableModel.addRow(new Object[] { lp.getMaLoaiPhong(), lp.getTenLoaiPhong(), lp.getSucChua(),
+					formatter.format(lp.getGiaLoaiPhong()) });
+		}
+	}
+
+	// Xu ly loc theo suc chua
+	private void xuLyLocCBSC() {
+		xoaToanBoLP();
+		String lc = cbLocSC.getSelectedItem().toString();
+		dsLP = daoLP.getCBSC(lc);
+		for (entity.LoaiPhong lp : dsLP) {
+			tableModel.addRow(new Object[] { lp.getMaLoaiPhong(), lp.getTenLoaiPhong(), lp.getSucChua(),
+					formatter.format(lp.getGiaLoaiPhong()) });
+		}
+	}
+
+	// Xoa toan bo loai phong
+	private void xoaToanBoLP() {
+		DefaultTableModel dm = (DefaultTableModel) table.getModel();
+		while (dm.getRowCount() > 0) {
+			dm.removeRow(0);
+		}
+
+	}
 
 	// Xu ly mouseclick
 	@Override
