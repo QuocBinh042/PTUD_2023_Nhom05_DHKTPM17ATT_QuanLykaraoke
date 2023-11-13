@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
 import java.lang.annotation.Retention;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class HoaDon extends JPanel {
 	private DAOHoaDon daoHD = new DAOHoaDon();
 	private ArrayList<entity.HoaDon> dsHD = new ArrayList<>();
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
+	private DecimalFormat formatter = new DecimalFormat("###,###,### VNĐ");
 	public HoaDon() {
 		// Khai báo
 		Icon img_out = new ImageIcon("src/img/out16.png");
@@ -127,7 +128,7 @@ public class HoaDon extends JPanel {
 		for (entity.HoaDon hd : dsHD) {
 			tableModel.addRow(new Object[] { hd.getMaHoaDon(), dateFormat.format(hd.getNgayThanhToan()),
 					hd.getGioThanhToan().toString(), hd.getKh().getTenKH(), hd.getNv().getTenNV(),
-					hd.getKh().getSdthoai(), hd.getTongHoaDon() });
+					hd.getKh().getSdthoai(), formatter.format(hd.getTongHoaDon()) });
 		}
 
 	}
@@ -147,7 +148,7 @@ public class HoaDon extends JPanel {
 		// Load data
 		
 		loadData(daoHD.layDSHoaDonTrongKhoangThoiGian(dateBD.getDate(), dateKT.getDate()));
-		
+//		loadData(daoHD.layDSHoaDonTheoTenNhanVien(txtTimNV.getText()));
 //		if (pos != -1) {
 //			JOptionPane.showMessageDialog(null, "Tìm kiếm thông tin hóa đơn thành công!");
 //			table.setRowSelectionInterval(pos, pos);

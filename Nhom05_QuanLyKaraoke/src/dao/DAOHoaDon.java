@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import connectDB.ConnectDB;
 import entity.HoaDon;
@@ -135,7 +137,7 @@ public class DAOHoaDon {
 		return dsHoaDon;
 	}
 
-	public Double ThongKelHoaDon(java.util.Date date, java.util.Date date2) {
+	public Double ThongKeHoaDon(java.util.Date date, java.util.Date date2) {
 		Double totalCount = 0.0;
 		try {
 			ConnectDB.getInstance();
@@ -156,5 +158,54 @@ public class DAOHoaDon {
 			e.printStackTrace();
 		}
 		return totalCount;
+	}
+
+	public int ThongKeSoLuongHoaDon(java.util.Date date, java.util.Date date2) {
+		int totalCount = 0;
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE NgayThanhToan BETWEEN ? AND ?";
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			java.sql.Date sqlNgayBD = new java.sql.Date(date.getTime());
+			java.sql.Date sqlNgayKT = new java.sql.Date(date2.getTime());
+			preparedStatement.setDate(1, sqlNgayBD);
+			preparedStatement.setDate(2, sqlNgayKT);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				totalCount = rs.getInt("TotalCount");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return totalCount;
+	}
+
+	public Map<String, Double> ThongKeHoaDonThang(java.util.Date date, java.util.Date date2) {
+		Map<String, Double> monthlyTotal = new HashMap<>();
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+			if (date != null && date2 != null) {
+				String sql = "SELECT CONVERT(VARCHAR(7), NgayThanhToan, 120) AS Month, SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE NgayThanhToan BETWEEN ? AND ? GROUP BY CONVERT(VARCHAR(7), NgayThanhToan, 120)";
+				PreparedStatement preparedStatement = connect.prepareStatement(sql);
+				java.sql.Date sqlNgayBD = new java.sql.Date(date.getTime());
+				java.sql.Date sqlNgayKT = new java.sql.Date(date2.getTime());
+				preparedStatement.setDate(1, sqlNgayBD);
+				preparedStatement.setDate(2, sqlNgayKT);
+				ResultSet rs = preparedStatement.executeQuery();
+
+				while (rs.next()) {
+					String month = rs.getString("Month");
+					Double totalCount = rs.getDouble("TotalCount");
+					monthlyTotal.put(month, totalCount);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return monthlyTotal;
 	}
 }
