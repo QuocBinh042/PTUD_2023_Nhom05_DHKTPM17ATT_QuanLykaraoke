@@ -160,6 +160,10 @@ public class NhanVien extends JPanel implements MouseListener {
 
 		pnlLblChucVu.add(lblChucVu = new JLabel("Chức vụ:"));
 		pnlCbChucVu.add(cbTimChucVu = new JComboBox<>());
+		cbTimChucVu.addItem("Tất cả");
+		cbTimChucVu.addItem("Lễ tân");
+		cbTimChucVu.addItem("Nhân viên quản lý");
+		cbTimChucVu.addItem("Phục vụ");
 		pnlLblTinhTrang.add(lblTinhTrang = new JLabel("Tình trạng:"));
 		pnlCbTinhTrang.add(cbTinhTrang = new JComboBox<>());
 		cbTinhTrang.addItem("Tất cả");
