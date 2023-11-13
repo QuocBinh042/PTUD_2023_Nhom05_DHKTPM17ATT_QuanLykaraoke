@@ -35,6 +35,61 @@ public class daoNhanVien{
 		}
 		return dsNV;
 	}
+	
+	// Lay chuc vu theo combobox
+		public static ArrayList<NhanVien> getChucVuCB(String chucVu) {
+			ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+			String sql = "";
+			if (chucVu.equalsIgnoreCase("Lễ tân")) {
+				sql = "select *from NhanVien\r\n" + "where ChucVu like N'Lễ tân'";
+			} else if (chucVu.equalsIgnoreCase("Nhân viên quản lý")) {
+				sql = "select *from NhanVien\r\n" + "where ChucVu like N'Nhân viên quản lý'";
+			} else if (chucVu.equalsIgnoreCase("Phục vụ")) {
+				sql = "select *from NhanVien\r\n" + "where ChucVu like N'Phục vụ'";
+			} else if (chucVu.equalsIgnoreCase("Tất cả")) {
+				sql = "select *from NhanVien\r\n" + "where ChucVu";
+			}
+			try {
+
+				Statement statement = connect.createStatement();
+				ResultSet rs = statement.executeQuery(sql);
+				while (rs.next()) {
+					dsNV.add(new NhanVien(rs.getString(1), rs.getString(2), rs.getDate(3), rs.getBoolean(4),
+							rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9)));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return dsNV;
+		}
+		
+		// Lay tinh trang theo combobox
+		public static ArrayList<NhanVien> getTinhTrangCB(Boolean tinhTrangNV) {
+			ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+			String sql = "";
+			if (tinhTrangNV) {
+				sql = "SELECT * FROM NhanVien WHERE tinhTrangNV = ?";
+			} else if (!tinhTrangNV) {
+				sql = "SELECT * FROM NhanVien WHERE tinhTrangNV = ?";
+			}
+			try {
+				PreparedStatement preparedStatement = connect.prepareStatement(sql);
+				preparedStatement.setBoolean(1, tinhTrangNV);
+
+				ResultSet rs = preparedStatement.executeQuery();
+				while (rs.next()) {
+					dsNV.add(new NhanVien(rs.getString(1), rs.getString(2), rs.getDate(3), rs.getBoolean(4),
+							rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9)));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return dsNV;
+		}
 		
 	
 	public boolean add(NhanVien nv) {
