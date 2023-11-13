@@ -37,12 +37,14 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import connectDB.ConnectDB;
+import dao.DAODangNhap;
 
 public class Login extends JFrame implements ActionListener {
 	private JLabel lblUser, lblPass, lblPicture;
 	private JTextField txtUser;
 	private JPasswordField txtPass;
 	private JButton btnLogin, btnExit, btnShowPass, btnHidePass, btnForgetPass;
+	private DAODangNhap daoDN = new DAODangNhap();
 
 	public Login() {
 		try {
@@ -62,7 +64,7 @@ public class Login extends JFrame implements ActionListener {
 
 		Image img_logo = new ImageIcon("src/IMG/login.png").getImage(); // Image Logo
 		setTitle("ĐĂNG NHẬP");
-		setSize(550, 300);
+		setSize(550, 250);
 		setIconImage(img_logo);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -158,7 +160,12 @@ public class Login extends JFrame implements ActionListener {
 			String pass = new String(txtPass.getPassword());
 			if (username.equals("") || pass.equals("")) {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin đăng nhập!");
+			} else if (daoDN.kiemTraTK(username, pass) != null) {
+				JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
+				new Tab().setVisible(true);
+				 dispose();
 			}
+			
 		}
 		// Event show pass
 		if (o.equals(btnShowPass)) {
