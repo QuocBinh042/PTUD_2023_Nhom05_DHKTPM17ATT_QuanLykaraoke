@@ -80,8 +80,8 @@ create table PhieuDatPhong(
 	-----FOREIGN KEY MaKhachHang
 	MaPhong nvarchar(20) not null,
 	-----FOREIGN KEY MaPhong
-	ThoiGianDatPhong date,
-	ThoiGianNhanPhong date,
+	ThoiGianDatPhong datetime,
+	ThoiGianNhanPhong datetime,
 	SoLuongKhach int,
 	--TinhTrangPDP(0: chua thanh toan, 1: da thanh toan)
 	TinhTrangPDP bit, 
@@ -125,8 +125,8 @@ create table ChiTietHoaDon(
 	MaPhong nvarchar(20) not null,
 	-------FOREIGN KEY HoaDon
 	MaHD nvarchar(20) not null,
-	ThoiGianNhanPhong date,
-	ThoiGianTraPhong date,
+	ThoiGianNhanPhong datetime,
+	ThoiGianTraPhong datetime,
 	CONSTRAINT fk_maP FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong),
 	CONSTRAINT fk_mahd FOREIGN KEY (MaHD) REFERENCES HoaDon(MaHD),
 	PRIMARY KEY (MaPhong,MaHD)
