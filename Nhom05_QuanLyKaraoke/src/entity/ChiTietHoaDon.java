@@ -15,7 +15,15 @@ public class ChiTietHoaDon implements Serializable {
 	public ChiTietHoaDon() {
 		super();
 	}
-	
+
+	public ChiTietHoaDon(Phong phong, HoaDon hd, Date thoiGianNhanPhong, Date thoiGianTraPhong) {
+		super();
+		this.phong = phong;
+		this.hd = hd;
+		this.thoiGianNhanPhong = thoiGianNhanPhong;
+		this.thoiGianTraPhong = thoiGianTraPhong;
+	}
+
 	public Phong getPhong() {
 		return phong;
 	}

@@ -20,6 +20,10 @@ public class KhuyenMai implements Serializable{
 		this.moTa = moTa;
 		this.trangThai = trangThai;
 	}
+	
+	public KhuyenMai(String maKM) {
+		this.maKM = maKM;
+	}
 
 	public String getMaKM() {
 		return maKM;

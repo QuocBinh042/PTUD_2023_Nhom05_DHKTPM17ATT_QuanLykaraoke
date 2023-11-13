@@ -144,5 +144,71 @@ public class daoKhachHang {
 			}
 		}
 	}
-
+	public ArrayList<KhachHang> timKiemKHTheoSDT(String SDT) {
+		ArrayList<KhachHang> dsKH = new ArrayList<>();
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+			PreparedStatement statement = null;
+			String sql = "Select * from KhachHang where SoDienThoai = ?";
+			statement = connect.prepareStatement(sql);
+			statement.setString(1, SDT);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {
+				KhachHang kh = new KhachHang(rs.getString(1), rs.getString(2), rs.getBoolean(3), rs.getBoolean(4),
+						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8));
+				
+				dsKH.add(kh);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsKH;
+	}
+	
+	public boolean createKhach(KhachHang kh) {
+		ConnectDB.getInstance();
+		Connection connect = ConnectDB.getConnection();
+		PreparedStatement pre = null;
+		int n = 0;
+		try {
+			pre = connect.prepareStatement("insert into "
+					+ "KhachHang values(?,?,?,?,?,?,?,?)");
+			pre.setString(1, kh.getMaKH());
+			pre.setString(2, kh.getTenKH());
+			pre.setBoolean(3, kh.getLoaiKH());
+			pre.setBoolean(4, kh.getGioiTinh());
+			pre.setString(5, kh.getSdthoai());
+			pre.setString(6, kh.getEmail());
+			pre.setInt(7, kh.getSoGioDaThue());
+			pre.setString(8, kh.getGhiChu());
+			n = pre.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return n > 0;
+	}
+	
+	public ArrayList<KhachHang> getAllDataKH() {
+		ArrayList<KhachHang> dsKH = new ArrayList<>();
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+			String sql = "select * from KhachHang";
+			ResultSet rs = connect.createStatement().executeQuery(sql);
+			while(rs.next()) {
+				KhachHang kh = new KhachHang(rs.getString(1), rs.getString(2), rs.getBoolean(3), rs.getBoolean(4),
+						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8));
+				dsKH.add(kh);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsKH;
+	}
 }

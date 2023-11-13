@@ -9,15 +9,15 @@ public class NhanVien implements Serializable {
 	private String maNV;
 	private String tenNV;
 	private Date namSinh;
-	private Boolean gioiTinh;
+	private boolean gioiTinh;
 	private String sdthoai;
 	private String cccd;
 	private String chucVu;
 	private String matKhau;
-	private Boolean tinhTrangNV;
+	private boolean tinhTrangNV;
 
-	public NhanVien(String maNV, String tenNV, Date namSinh, Boolean gioiTinh, String sdthoai, String cccd,
-			String chucVu, String matKhau, Boolean tinhTrangNV) {
+	public NhanVien(String maNV, String tenNV, Date namSinh, boolean gioiTinh, String sdthoai, String cccd,
+			String chucVu, String matKhau, boolean tinhTrangNV) {
 		this.maNV = maNV;
 		this.tenNV = tenNV;
 		this.namSinh = namSinh;
@@ -27,6 +27,11 @@ public class NhanVien implements Serializable {
 		this.chucVu = chucVu;
 		this.matKhau = matKhau;
 		this.tinhTrangNV = tinhTrangNV;
+	}
+	
+
+	public NhanVien(String maNV) {
+		this.maNV = maNV;
 	}
 
 	public NhanVien() {
@@ -74,11 +79,11 @@ public class NhanVien implements Serializable {
 		this.namSinh = namSinh;
 	}
 
-	public Boolean getGioiTinh() {
+	public boolean getGioiTinh() {
 		return gioiTinh;
 	}
 
-	public void setGioiTinh(Boolean gioiTinh) {
+	public void setGioiTinh(boolean gioiTinh) {
 		this.gioiTinh = gioiTinh;
 	}
 
@@ -114,11 +119,11 @@ public class NhanVien implements Serializable {
 		this.matKhau = matKhau;
 	}
 
-	public Boolean getTinhTrangNV() {
+	public boolean getTinhTrangNV() {
 		return tinhTrangNV;
 	}
 
-	public void setTinhTrangNV(Boolean tinhTrangNV) {
+	public void setTinhTrangNV(boolean tinhTrangNV) {
 		this.tinhTrangNV = tinhTrangNV;
 	}
 

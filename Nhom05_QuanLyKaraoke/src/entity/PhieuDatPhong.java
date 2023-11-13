@@ -1,63 +1,78 @@
 package entity;
 
-import java.io.Serializable;
+import java.util.Date;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Objects;
 
-public class PhieuDatPhong implements Serializable{
+public class PhieuDatPhong {
 	private String maPDP;
-	private LocalDate ngayDatPhong;
-	private LocalTime gioDatPhong;
-	private NhanVien nhanVien;
 	private KhachHang khachHang;
+	private NhanVien nhanVien;
+	private Phong phong;
+	private Date thoiGianDatPhong;
+	private Date thoiGianNhanPhong;
 	private int soLuongKhach;
-	private Boolean tinhTrangPDP;
+	private int tinhTrangPDP;
 	private String moTa;
 	
 	
 	
 	public PhieuDatPhong() {
 		setMaPDP("");
-		setNgayDatPhong(LocalDate.now());
-		setGioDatPhong(LocalTime.now());
+		setThoiGianDatPhong(new Date());
+		setThoiGianNhanPhong(new Date());
 		setNhanVien(new NhanVien());
 		setKhachHang(new KhachHang());
 		setSoLuongKhach(1);
-		setTinhTrangPDP(true);
+		setTinhTrangPDP(1);
 		setMoTa("");
 	}
 
-	public PhieuDatPhong(String maPDP, LocalDate ngayDatPhong, LocalTime gioDatPhong, NhanVien nhanVien,
-			KhachHang khachHang, int soLuongKhach, Boolean tinhTrangPDP, String moTa) {
+	
+	
+	public PhieuDatPhong(String maPDP, KhachHang khachHang, NhanVien nhanVien, Phong phong, Date thoiGianDatPhong,
+			Date thoiGianNhanPhong, int soLuongKhach, int tinhTrangPDP, String moTa) {
+		super();
 		this.maPDP = maPDP;
-		this.ngayDatPhong = ngayDatPhong;
-		this.gioDatPhong = gioDatPhong;
-		this.nhanVien = nhanVien;
 		this.khachHang = khachHang;
+		this.nhanVien = nhanVien;
+		this.phong = phong;
+		this.thoiGianDatPhong = thoiGianDatPhong;
+		this.thoiGianNhanPhong = thoiGianNhanPhong;
 		this.soLuongKhach = soLuongKhach;
 		this.tinhTrangPDP = tinhTrangPDP;
 		this.moTa = moTa;
 	}
+
+	public Phong getPhong() {
+		return phong;
+	}
+
+	public void setPhong(Phong phong) {
+		this.phong = phong;
+	}
 	
+
+
+	public Date getThoiGianDatPhong() {
+		return thoiGianDatPhong;
+	}
+	public void setThoiGianDatPhong(Date thoiGianDatPhong) {
+		this.thoiGianDatPhong = thoiGianDatPhong;
+	}
+	public Date getThoiGianNhanPhong() {
+		return thoiGianNhanPhong;
+	}
+	public void setThoiGianNhanPhong(Date thoiGianNhanPhong) {
+		this.thoiGianNhanPhong = thoiGianNhanPhong;
+	}
 	public String getMaPDP() {
 		return maPDP;
 	}
 	private void setMaPDP(String maPDP) {
 		this.maPDP = maPDP;
 	}
-	public LocalDate getNgayDatPhong() {
-		return ngayDatPhong;
-	}
-	public void setNgayDatPhong(LocalDate ngayDatPhong) {
-		this.ngayDatPhong = ngayDatPhong;
-	}
-	public LocalTime getGioDatPhong() {
-		return gioDatPhong;
-	}
-	public void setGioDatPhong(LocalTime gioDatPhong) {
-		this.gioDatPhong = gioDatPhong;
-	}
+	
 	public NhanVien getNhanVien() {
 		return nhanVien;
 	}
@@ -76,10 +91,10 @@ public class PhieuDatPhong implements Serializable{
 	public void setSoLuongKhach(int soLuongKhach) {
 		this.soLuongKhach = soLuongKhach;
 	}
-	public Boolean getTinhTrangPDP() {
+	public int getTinhTrangPDP() {
 		return tinhTrangPDP;
 	}
-	public void setTinhTrangPDP(Boolean tinhTrangPDP) {
+	public void setTinhTrangPDP(int tinhTrangPDP) {
 		this.tinhTrangPDP = tinhTrangPDP;
 	}
 	public String getMoTa() {
@@ -108,7 +123,7 @@ public class PhieuDatPhong implements Serializable{
 
 	@Override
 	public String toString() {
-		return "PhieuDatPhong [maPDP=" + maPDP + ", ngayDatPhong=" + ngayDatPhong + ", gioDatPhong=" + gioDatPhong
+		return "PhieuDatPhong [maPDP=" + maPDP + ", ngayDatPhong=" + thoiGianDatPhong + ", gioDatPhong=" + thoiGianNhanPhong
 				+ ", nhanVien=" + nhanVien + ", khachHang=" + khachHang + ", soLuongKhach=" + soLuongKhach
 				+ ", tinhTrangPDP=" + tinhTrangPDP + ", moTa=" + moTa + "]";
 	}

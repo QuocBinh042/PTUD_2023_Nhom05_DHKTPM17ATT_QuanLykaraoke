@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-public class HoaDon implements Serializable {
+public class HoaDon implements Serializable{
 	private String maHoaDon;
 	private Date ngayThanhToan;
 	private LocalTime gioThanhToan;
@@ -15,17 +15,14 @@ public class HoaDon implements Serializable {
 	private KhachHang kh;
 	private KhuyenMai km;
 	private Double tongHoaDon;
-	private Double tienKhachTra;
 	private ArrayList<ChiTietHoaDon> CTHD;
 	private ArrayList<CTDVPhong> CTDVP;
 
-	public HoaDon() {
-		super();
-		// TODO Auto-generated constructor stub
+	public HoaDon(String maHD) {
+		setMaHoaDon(maHD);
 	}
 
-	public HoaDon(String maHoaDon, LocalTime gioThanhToan, Date ngayThanhToan, NhanVien nv, KhachHang kh,
-			KhuyenMai km) {
+	public HoaDon(String maHoaDon, LocalTime gioThanhToan, Date ngayThanhToan, NhanVien nv, KhachHang kh, KhuyenMai km) {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.ngayThanhToan = ngayThanhToan;
@@ -35,9 +32,8 @@ public class HoaDon implements Serializable {
 		this.km = km;
 		this.tongHoaDon = 0.00;
 	}
-
-	public HoaDon(String maHoaDon, LocalTime gioThanhToan, Date ngayThanhToan, NhanVien nv, KhachHang kh, KhuyenMai km,
-			Double tongHD) {
+	
+	public HoaDon(String maHoaDon, LocalTime gioThanhToan, Date ngayThanhToan, NhanVien nv, KhachHang kh, KhuyenMai km, Double tongHoaDon) {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.ngayThanhToan = ngayThanhToan;
@@ -45,8 +41,7 @@ public class HoaDon implements Serializable {
 		this.nv = nv;
 		this.kh = kh;
 		this.km = km;
-		this.tongHoaDon = tongHD;
-
+		this.tongHoaDon = tongHoaDon;
 	}
 
 	public String getMaHoaDon() {
@@ -97,14 +92,6 @@ public class HoaDon implements Serializable {
 		this.km = km;
 	}
 
-	public Double getTienKhachTra() {
-		return tienKhachTra;
-	}
-
-	public void setTienKhachTra(Double tienKhachTra) {
-		this.tienKhachTra = tienKhachTra;
-	}
-
 	public Double getTongHoaDon() {
 		return tongHoaDon;
 	}
@@ -146,13 +133,6 @@ public class HoaDon implements Serializable {
 		return Objects.equals(maHoaDon, other.maHoaDon);
 	}
 
-	@Override
-	public String toString() {
-		return "HoaDon [maHoaDon=" + maHoaDon + ", ngayThanhToan=" + ngayThanhToan + ", gioThanhToan=" + gioThanhToan
-				+ ", nv=" + nv + ", kh=" + kh + ", km=" + km + ", tongHoaDon=" + tongHoaDon + ", tienKhachTra="
-				+ tienKhachTra + ", CTHD=" + CTHD + ", CTDVP=" + CTDVP + "]";
-	}
-
 	// tinh tien
 	public Double tinhTongHD() {
 		Double tongTien = 0.0;
@@ -169,9 +149,5 @@ public class HoaDon implements Serializable {
 		}
 
 		return tongTien;
-	}
-
-	public Double tinhTienTraKhach() {
-		return tienKhachTra - tinhTongHD();
 	}
 }

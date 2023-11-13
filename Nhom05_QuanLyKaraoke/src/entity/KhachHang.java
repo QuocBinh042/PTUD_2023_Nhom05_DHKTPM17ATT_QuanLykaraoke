@@ -22,6 +22,10 @@ public class KhachHang implements Serializable {
 		this.soGioDaThue = soGioDaThue;
 	}
 	
+	public KhachHang(String maKH) {
+		setMaKH(maKH);
+	}
+	
 	public KhachHang(String SDT, String TenKH) {
 		setTenKH(TenKH);
 		setSdthoai(SDT);
@@ -37,6 +41,14 @@ public class KhachHang implements Serializable {
 		this.email = email;
 		this.soGioDaThue = soGioDaThue;
 		this.ghiChu = ghiChu;
+	}
+	
+	public KhachHang(String maKH, String SDT, String TenKH) {
+		setTenKH(TenKH);
+		setSdthoai(SDT);
+		setMaKH(maKH);
+		setLoaiKH(false);
+		setGioiTinh(false);
 	}
 
 	public KhachHang() {
