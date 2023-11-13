@@ -1,14 +1,16 @@
 package entity;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-public class HoaDon implements Serializable{
+public class HoaDon implements Serializable {
 	private String maHoaDon;
 	private Date ngayThanhToan;
-	private Date gioThanhToan;
+	private LocalTime gioThanhToan;
 	private NhanVien nv;
 	private KhachHang kh;
 	private KhuyenMai km;
@@ -22,8 +24,8 @@ public class HoaDon implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public HoaDon(String maHoaDon, Date ngayThanhToan, Date gioThanhToan, NhanVien nv, KhachHang kh, KhuyenMai km,
-			Double tongHoaDon, Double tienKhachTra) {
+	public HoaDon(String maHoaDon, LocalTime gioThanhToan, Date ngayThanhToan, NhanVien nv, KhachHang kh,
+			KhuyenMai km) {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.ngayThanhToan = ngayThanhToan;
@@ -31,8 +33,20 @@ public class HoaDon implements Serializable{
 		this.nv = nv;
 		this.kh = kh;
 		this.km = km;
-		this.tongHoaDon = tongHoaDon;
-		this.tienKhachTra = tienKhachTra;
+		this.tongHoaDon = 0.00;
+	}
+
+	public HoaDon(String maHoaDon, LocalTime gioThanhToan, Date ngayThanhToan, NhanVien nv, KhachHang kh, KhuyenMai km,
+			Double tongHD) {
+		super();
+		this.maHoaDon = maHoaDon;
+		this.ngayThanhToan = ngayThanhToan;
+		this.gioThanhToan = gioThanhToan;
+		this.nv = nv;
+		this.kh = kh;
+		this.km = km;
+		this.tongHoaDon = tongHD;
+
 	}
 
 	public String getMaHoaDon() {
@@ -51,11 +65,11 @@ public class HoaDon implements Serializable{
 		this.ngayThanhToan = ngayThanhToan;
 	}
 
-	public Date getGioThanhToan() {
+	public LocalTime getGioThanhToan() {
 		return gioThanhToan;
 	}
 
-	public void setGioThanhToan(Date gioThanhToan) {
+	public void setGioThanhToan(LocalTime gioThanhToan) {
 		this.gioThanhToan = gioThanhToan;
 	}
 
@@ -156,7 +170,7 @@ public class HoaDon implements Serializable{
 
 		return tongTien;
 	}
-	
+
 	public Double tinhTienTraKhach() {
 		return tienKhachTra - tinhTongHD();
 	}
