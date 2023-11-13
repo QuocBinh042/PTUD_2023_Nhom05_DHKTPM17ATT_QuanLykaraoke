@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
+import java.lang.annotation.Retention;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -20,8 +23,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.html.parser.Entity;
 
 import com.toedter.calendar.JDateChooser;
+
+import dao.DAOHoaDon;
 
 public class HoaDon extends JPanel {
 	private JTable table;
@@ -32,7 +38,9 @@ public class HoaDon extends JPanel {
 	private JTextField txtTimNV, txtTimKH;
 	private JButton btnTim, btnLamMoi, btnThoat, btnXemCT;
 	private JDateChooser dateBD, dateKT;
-	private MouseListener mouseListener;
+	private DAOHoaDon daoHD = new DAOHoaDon();
+	private ArrayList<entity.HoaDon> dsHD = new ArrayList<>();
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 	public HoaDon() {
 		// Khai báo
@@ -102,12 +110,9 @@ public class HoaDon extends JPanel {
 		this.add(scroll, BorderLayout.CENTER);
 
 		// Load data
-		loadData();
+		loadData(daoHD.getAllDataHD());
 
 		// Sự kiện
-		String[] row = "HDOO1; 2022/11/21; 13:34:26; Trần Lê Quốc Bình; Quốc Quốc; 0394109819; 150000; 100000; 250000"
-				.split(";");
-		tableModel.addRow(row);
 		btnTim.addActionListener(e -> xuLyTimKiem());
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
 		btnThoat.addActionListener(e -> System.exit(0));
@@ -115,10 +120,15 @@ public class HoaDon extends JPanel {
 
 	}
 
-	public void loadData() {
+	public void loadData(ArrayList<entity.HoaDon> dsHD) {
 		// delete all
 		deleteAllDataJtable();
 		// Load data
+		for (entity.HoaDon hd : dsHD) {
+			tableModel.addRow(new Object[] { hd.getMaHoaDon(), dateFormat.format(hd.getNgayThanhToan()),
+					hd.getGioThanhToan().toString(), hd.getKh().getTenKH(), hd.getNv().getTenNV(),
+					hd.getKh().getSdthoai(), hd.getTongHoaDon() });
+		}
 
 	}
 
@@ -133,12 +143,16 @@ public class HoaDon extends JPanel {
 	private Object xuLyTimKiem() {
 		// TODO Auto-generated method stub
 		int pos = 0;
-
-		if (pos != -1) {
-			JOptionPane.showMessageDialog(null, "Tìm kiếm thông tin hóa đơn thành công!");
-			table.setRowSelectionInterval(pos, pos);
-		} else
-			JOptionPane.showMessageDialog(null, "Hóa đơn không tồn tại!");
+		deleteAllDataJtable();
+		// Load data
+		
+		loadData(daoHD.layDSHoaDonTrongKhoangThoiGian(dateBD.getDate(), dateKT.getDate()));
+		
+//		if (pos != -1) {
+//			JOptionPane.showMessageDialog(null, "Tìm kiếm thông tin hóa đơn thành công!");
+//			table.setRowSelectionInterval(pos, pos);
+//		} else
+//			JOptionPane.showMessageDialog(null, "Hóa đơn không tồn tại!");
 
 		return null;
 	}

@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -28,16 +31,22 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.toedter.calendar.JDateChooser;
 
+import dao.DAOHoaDon;
+
 public class ThongKe extends JPanel {
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private String[] headers = { "Tên phòng", "Loại phòng", "Ngày thanh toán", "Tiền phòng", "Tiền dịch vụ",
+	private String[] headers = { "Mã hoá đơn", "Tên khách hàng", "Tên nhân viên", "Ngày thanh toán",
 			"Tổng hoá đơn" };
 	private JLabel lblTenNV, lblSđtKH, lblNgayBatDau, lblNgayKetThuc, lblLoaiPhong, lblPhong, lblTongDT, lblSoLuotSD;
 	private JTextField txtPhong, txtTongDT, txtSoLuotSD;
 	private JButton btnTim, btnLoc, btnLamMoi2, btnLamMoi, btnThoat, btnXemCT;
 	private JDateChooser dateBD, dateKT;
 	private JComboBox<String> cbLoaiPhong;
+	private DAOHoaDon daoHD = new DAOHoaDon();
+	private ArrayList<entity.HoaDon> dsHD = new ArrayList<>();
+	private DecimalFormat formatter = new DecimalFormat("###,###,### VNĐ");
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 	public ThongKe() {
 		// Khai báo
@@ -81,8 +90,10 @@ public class ThongKe extends JPanel {
 		pnlKetQua.setBorder(BorderFactory.createTitledBorder(line, "Kết quả thống kê"));
 		pnlKetQua.add(lblTongDT = new JLabel("Tổng doanh thu: "));
 		pnlKetQua.add(txtTongDT = new JTextField(10));
+		txtTongDT.setEditable(false);
 		pnlKetQua.add(lblSoLuotSD = new JLabel("Số lượt sử dụng phòng: "));
 		pnlKetQua.add(txtSoLuotSD = new JTextField(10));
+		txtSoLuotSD.setEditable(false);
 		b.add(pnlKetQua);
 //		pnlKetQua.setBackground(Color.decode("#cccccc"));
 		b.add(Box.createHorizontalStrut(100));
@@ -92,7 +103,8 @@ public class ThongKe extends JPanel {
 		tableModel = new DefaultTableModel(headers, 0);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scroll.setBorder(BorderFactory.createTitledBorder(line, "Danh sách phòng"));
+		scroll.setBorder(BorderFactory.createTitledBorder(line, "Danh sách hoá đơn"
+				+ ""));
 		scroll.setViewportView(table = new JTable(tableModel));
 		table.setRowHeight(25);
 		table.setAutoCreateRowSorter(true);
@@ -115,9 +127,7 @@ public class ThongKe extends JPanel {
 //		this.setBackground(Color.decode("#e6dbd1"));	
 
 		// Sự kiện
-		String[] row = "HDOO1; 2022/11/21; 13:34:26; 0394109819; 150000; 100000; 250000".split(";");
 		cbLoaiPhong.addItem("VIP");
-		tableModel.addRow(row);
 		btnTim.addActionListener(e -> xuLyThongKe());
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
 		btnThoat.addActionListener(e -> System.exit(0));
@@ -134,7 +144,22 @@ public class ThongKe extends JPanel {
 
 	private Object xuLyThongKe() {
 		// TODO Auto-generated method stub
+		deleteAllDataJtable();
+		txtTongDT.setText(formatter.format(daoHD.ThongKelHoaDon(dateBD.getDate(), dateKT.getDate())));
+		dsHD = daoHD.layDSHoaDonTrongKhoangThoiGian(dateBD.getDate(), dateKT.getDate());
+		for (entity.HoaDon hd : dsHD) {
+			tableModel.addRow(new Object[] { hd.getMaHoaDon(), hd.getKh().getTenKH(), hd.getNv().getTenNV(),
+					dateFormat.format(hd.getNgayThanhToan()), formatter.format(hd.getTongHoaDon()) });
+		}
 		return null;
+	}
+
+	private void deleteAllDataJtable() {
+		DefaultTableModel dm = (DefaultTableModel) table.getModel();
+		while (dm.getRowCount() > 0) {
+			dm.removeRow(0);
+		}
+
 	}
 
 	private CategoryDataset createDataset() {
