@@ -1,9 +1,10 @@
 package Start;
 
+import app.Login;
 import app.Tab;
 
 public class main {
 	public static void main(String[] args) {
-		new Tab().setVisible(true);
+		new Login().setVisible(true);
 	}
 }
