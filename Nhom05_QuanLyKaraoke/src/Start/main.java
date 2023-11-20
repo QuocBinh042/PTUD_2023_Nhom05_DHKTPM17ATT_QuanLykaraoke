@@ -1,5 +1,6 @@
 package Start;
 
+import app.Card;
 import app.Login;
 import app.Tab;
 import connectDB.ConnectDB;
@@ -12,6 +13,6 @@ public class main {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		new Login().setVisible(true);
+		new Card().setVisible(true);
 	}
 }

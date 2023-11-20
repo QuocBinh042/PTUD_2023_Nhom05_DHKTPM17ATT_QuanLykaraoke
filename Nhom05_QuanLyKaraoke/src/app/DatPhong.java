@@ -212,12 +212,12 @@ public class DatPhong extends JPanel {
 		Box traCuuB2 = Box.createHorizontalBox();
 		
 		JPanel panePhongLb = new JPanel();
-		panePhongLb.setBackground(Color.decode("#cccccc"));
+		panePhongLb.setBackground(Color.decode("#e6dbd1"));
 		panePhongLb.add(phongLb = new JLabel("Phòng"));
 		traCuuB1.add(panePhongLb);
 		
 		JPanel panePhongF = new JPanel();
-		panePhongF.setBackground(Color.decode("#cccccc"));
+		panePhongF.setBackground(Color.decode("#e6dbd1"));
 		panePhongF.add(phongF = new JTextField(15));
 		phongF.setFont(new Font("Arial", Font.PLAIN, 16));
 		traCuuB1.add(panePhongF);
@@ -225,12 +225,12 @@ public class DatPhong extends JPanel {
 		traCuuB1.add(timKiemPBtn = new ButtonGradient("Tìm kiếm", imgSearch));
 		
 		JPanel paneGiaLb = new JPanel();
-		paneGiaLb.setBackground(Color.decode("#cccccc"));
+		paneGiaLb.setBackground(Color.decode("#e6dbd1"));
 		paneGiaLb.add(giaPLb = new JLabel("Giá phòng"));
 		traCuuB2.add(paneGiaLb);
 		
 		JPanel paneGiaPhongF = new JPanel();
-		paneGiaPhongF.setBackground(Color.decode("#cccccc"));
+		paneGiaPhongF.setBackground(Color.decode("#e6dbd1"));
 		paneGiaPhongF.add(giaPhongF = new JTextField(15));
 		giaPhongF.setFont(new Font("Arial", Font.PLAIN, 16));
 		traCuuB2.add(paneGiaPhongF);
@@ -241,7 +241,7 @@ public class DatPhong extends JPanel {
 		traCuuB.add(Box.createVerticalStrut(10));
 		traCuuB.add(traCuuB2);
 		paneTraCuuP.add(traCuuB);
-		paneTraCuuP.setBackground(Color.decode("#cccccc"));
+		paneTraCuuP.setBackground(Color.decode("#e6dbd1"));
 		paneTraCuuP.setBorder(BorderFactory.createTitledBorder(blackLine, "Tra cứu"));
 		
 		lamMoiBtn.setBackground(Color.decode("#6fa8dc"));
@@ -256,37 +256,34 @@ public class DatPhong extends JPanel {
 		
 		//pane combobox tình trạng 
 		Box btnPhongBox1 = Box.createHorizontalBox();
-		btnPhongBox1.add(tinhTrangLb = new JLabel("Tình trạng phòng"));
-		btnPhongBox1.add(Box.createHorizontalStrut(5));
+		btnPhongBox1.add(tinhTrangLb = new JLabel("Tình trạng phòng "));
 		btnPhongBox1.add(tinhTrangB = new JComboBox<>(headersTinhTrang));
 		JPanel paneCBTinhTrang = new JPanel();
-		paneCBTinhTrang.setBackground(Color.decode("#cccccc"));
+		paneCBTinhTrang.setBackground(Color.decode("#e6dbd1"));
 		paneCBTinhTrang.add(btnPhongBox1);
 		btnPhongBox.add(paneCBTinhTrang);
-		btnPhongBox.add(Box.createHorizontalStrut(20));
+		btnPhongBox.add(Box.createHorizontalStrut(5));
 
 		
 		//pane combobox số người
 		Box btnPhongBox2 = Box.createHorizontalBox();
-		btnPhongBox2.add(soNguoiLb = new JLabel("Số người"));
-		btnPhongBox2.add(Box.createHorizontalStrut(5));
+		btnPhongBox2.add(soNguoiLb = new JLabel("Số người "));
 		btnPhongBox2.add(soNguoiB = new JComboBox<>(headersSoNguoi));
 		JPanel paneCBSoNguoi = new JPanel();
-		paneCBSoNguoi.setBackground(Color.decode("#cccccc"));
+		paneCBSoNguoi.setBackground(Color.decode("#e6dbd1"));
 		paneCBSoNguoi.add(btnPhongBox2);
 		btnPhongBox.add(paneCBSoNguoi);
-		btnPhongBox.add(Box.createHorizontalStrut(20));
+		btnPhongBox.add(Box.createHorizontalStrut(5));
 		
 		//pane combobox loại phòng
 		Box btnPhongBox3 = Box.createHorizontalBox();
-		btnPhongBox3.add(loaiPLb = new JLabel("Loại phòng"));
-		btnPhongBox3.add(Box.createHorizontalStrut(5));
+		btnPhongBox3.add(loaiPLb = new JLabel("Loại phòng "));
 		btnPhongBox3.add(loaiPhongB = new JComboBox<>(headersLoaiPhong));
 		JPanel paneCBLoaiPhong = new JPanel();
-		paneCBLoaiPhong.setBackground(Color.decode("#cccccc"));
+		paneCBLoaiPhong.setBackground(Color.decode("#e6dbd1"));
 		paneCBLoaiPhong.add(btnPhongBox3);
 		btnPhongBox.add(paneCBLoaiPhong);
-		btnPhongBox.add(Box.createHorizontalStrut(85));
+		btnPhongBox.add(Box.createHorizontalStrut(5));
 		
 		//Thêm pane tra cứu vào Box
 		btnPhongBox.add(paneTraCuuP);
@@ -296,7 +293,7 @@ public class DatPhong extends JPanel {
 		
 		paneBtnPhong.add(clock = new DigitalClock(), BorderLayout.WEST);
 		paneBtnPhong.add(btnPhongBox, BorderLayout.CENTER);
-		paneBtnPhong.setBackground(Color.decode("#cccccc"));
+		paneBtnPhong.setBackground(Color.decode("#e6dbd1"));
 		
 		panePhong.add(paneBtnPhong, BorderLayout.NORTH);
 //		panePhong.setBorder(BorderFactory.createTitledBorder(blackLine, "Thông tin phòng"));

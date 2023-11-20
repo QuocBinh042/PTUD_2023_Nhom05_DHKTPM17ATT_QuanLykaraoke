@@ -22,7 +22,7 @@ public class ConnectDB {
 
         String URL = "jdbc:sqlserver://localhost:1433;databaseName=QuanLyKaraokeOne;";
         String user = "sa";
-        String pass = "sapassword";
+        String pass = "1234";
         connection = DriverManager.getConnection(URL, user, pass);
         if (connection != null) {
             DatabaseMetaData dm = (DatabaseMetaData) connection.getMetaData();

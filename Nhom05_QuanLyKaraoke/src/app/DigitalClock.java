@@ -35,7 +35,7 @@ public class DigitalClock extends JPanel{
 		
 		pane.add(timeLabel, BorderLayout.CENTER);
 		pane.add(dateLabel, BorderLayout.SOUTH);
-		pane.setBackground(Color.decode("#cccccc"));
+		pane.setBackground(Color.decode("#e6dbd1"));
 		
 		Timer timer = new Timer(1000, new ActionListener() {
 			@Override
@@ -45,7 +45,7 @@ public class DigitalClock extends JPanel{
 		});
 		timer.start();
 		this.add(pane);
-		this.setBackground(Color.decode("#cccccc"));
+		this.setBackground(Color.decode("#e6dbd1"));
 		this.setBorder(border);
 	}
 	
