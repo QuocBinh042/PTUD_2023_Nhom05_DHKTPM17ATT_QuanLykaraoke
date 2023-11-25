@@ -14,7 +14,7 @@ import entity.KhachHang;
 import entity.NhanVien;
 import connectDB.ConnectDB;
 
-public class daoNhanVien{
+public class DAONhanVien{
 
 	public ArrayList<NhanVien> getAll() {
 		// TODO Auto-generated method stubArrayList<HoaDonDichVuPhong> dsDVP = new ArrayList<HoaDonDichVuPhong>();
@@ -103,7 +103,8 @@ public class daoNhanVien{
 	        stm = con.prepareStatement(sql);
 			stm.setString(1, nv.getMaNV());
 			stm.setString(2, nv.getTenNV());
-			stm.setDate(3, (Date) nv.getNamSinh());
+			java.sql.Date namSinh = new java.sql.Date(nv.getNamSinh().getTime());
+			stm.setDate(3, namSinh);
 			stm.setBoolean(4, nv.getGioiTinh());
 			stm.setString(5, nv.getSdthoai());
 			stm.setString(6, nv.getCccd());
@@ -131,15 +132,17 @@ public class daoNhanVien{
 		String sql = "Update NhanVien set TenNV = ?, NamSinh = ?, GioiTinh = ?, SoDienThoai = ?,CCCD = ?, ChucVu = ?, MatKhau = ?, TinhTrangNV = ?\r\n"
 				+ "where MaNV = ?";
 		try {
-			stm.setString(1, nv.getMaNV());
-			stm.setString(2, nv.getTenNV());
-			stm.setDate(3, (Date) nv.getNamSinh());
-			stm.setBoolean(4, nv.getGioiTinh());
-			stm.setString(5, nv.getSdthoai());
-			stm.setString(6, nv.getCccd());
-			stm.setString(7, nv.getChucVu());
-			stm.setString(8, nv.getMatKhau());
-			stm.setBoolean(9, nv.getTinhTrangNV());
+			stm = con.prepareStatement(sql);
+			stm.setString(1, nv.getTenNV());
+			java.sql.Date namSinh = new java.sql.Date(nv.getNamSinh().getTime());
+			stm.setDate(2, namSinh);
+			stm.setBoolean(3, nv.getGioiTinh());
+			stm.setString(4, nv.getSdthoai());
+			stm.setString(5, nv.getCccd());
+			stm.setString(6, nv.getChucVu());
+			stm.setString(7, nv.getMatKhau());
+			stm.setBoolean(8, nv.getTinhTrangNV());
+			stm.setString(9, nv.getMaNV());
 			
 			stm.executeUpdate();
 		} catch (SQLException e) {
