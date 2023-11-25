@@ -5,6 +5,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.toedter.calendar.JDateChooser;
+
 import connectDB.ConnectDB;
 import dao.daoDichVu;
 import dao.MaTuDong;
@@ -21,9 +23,9 @@ import java.util.regex.Pattern;
 
 public class DichVu extends JPanel implements MouseListener {
 
-	private JLabel lblTenDichVu, lblDonGia, lblDonVi, lblSoLuong, lblTinhTrang, lblLocTinhTrang, lblTimDV;
-	private JTextField txtTenDichVu, txtDonGia, txtDonVi, txtSoLuong, txtTimDV;
-	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnTim;
+	private JLabel lblTenDichVu, lblDonGia, lblDonVi, lblSoLuong, lblTinhTrang, lblLocTinhTrang, lblTimDV, lblMaDV;
+	private JTextField txtTenDichVu, txtDonGia, txtDonVi, txtSoLuong, txtTimDV, txtMaDV, txtTinhTrang;
+	private JButton btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnTim, btnLuu;
 	private JComboBox cbTinhTrang;
 	private JTable table;
 	private DefaultTableModel tableModel;
@@ -43,154 +45,129 @@ public class DichVu extends JPanel implements MouseListener {
 		}
 		daoDV = new daoDichVu();
 
-		Icon img_add = new ImageIcon("src/img/add2.png");
-		Icon img_del = new ImageIcon("src/img/del.png");
-		Icon img_reset = new ImageIcon("src/img/refresh.png");
-		Icon img_edit = new ImageIcon("src/img/edit.png");
-		Icon img_out = new ImageIcon("src/img/out.png");
-		Icon img_search = new ImageIcon("src/img/search.png");
-
-		Box b1, b2, b3, b5;
-		Box bLeft, bRight;
-		Border line = BorderFactory.createLineBorder(Color.BLACK);
-		Dimension dimension = new Dimension(110, 25);
-
-		JPanel pnlLeft = new JPanel();
-		JPanel pnlRight = new JPanel();
-
-		bLeft = Box.createVerticalBox();
-		bRight = Box.createVerticalBox();
-		pnlLeft.add(bLeft);
-		pnlRight.add(bRight);
-
-		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin dịch vụ"));
-		bLeft.add(Box.createVerticalStrut(5));
-		JPanel pnlTenDV = new JPanel();
-		pnlTenDV.setBackground(Color.decode("#cccccc"));
-		pnlTenDV.add(lblTenDichVu = new JLabel("Tên dịch vụ"));
-		pnlTenDV.add(txtTenDichVu = new JTextField(15));
-		bLeft.add(b1 = Box.createHorizontalBox());
-		b1.add(pnlTenDV);
-		bLeft.add(Box.createVerticalStrut(10));
-
-		JPanel pnlDonVi = new JPanel();
-		pnlDonVi.setBackground(Color.decode("#cccccc"));
-		pnlDonVi.add(lblDonVi = new JLabel("Đơn vị"));
-		pnlDonVi.add(txtDonVi = new JTextField(15));
-		bLeft.add(b2 = Box.createHorizontalBox());
-		b2.add(pnlDonVi);
-		bLeft.add(Box.createVerticalStrut(10));
-
-		JPanel pnlDonGia = new JPanel();
-		pnlDonGia.setBackground(Color.decode("#cccccc"));
-		pnlDonGia.add(lblDonGia = new JLabel("Đơn giá"));
-		pnlDonGia.add(txtDonGia = new JTextField(15));
-		bLeft.add(b3 = Box.createHorizontalBox());
-		b3.add(pnlDonGia);
-		bLeft.add(Box.createVerticalStrut(10));
-
-		JPanel pnlSoLuong = new JPanel();
-		pnlSoLuong.setBackground(Color.decode("#cccccc"));
-		pnlSoLuong.add(lblSoLuong = new JLabel("Số lượng"));
-		pnlSoLuong.add(txtSoLuong = new JTextField(15));
-		bLeft.add(b5 = Box.createHorizontalBox());
-		b5.add(pnlSoLuong);
-		bLeft.add(Box.createVerticalStrut(10));
-
-		lblDonGia.setPreferredSize(lblTenDichVu.getPreferredSize());
-		lblDonVi.setPreferredSize(lblTenDichVu.getPreferredSize());
-		lblSoLuong.setPreferredSize(lblTenDichVu.getPreferredSize());
-		txtTenDichVu.setPreferredSize(dimension);
-		txtDonGia.setPreferredSize(dimension);
-		txtSoLuong.setPreferredSize(dimension);
-		txtDonVi.setPreferredSize(dimension);
-
-		bLeft.add(Box.createVerticalStrut(30));
-
-		JPanel pnlKM = new JPanel();
-		pnlKM.setBackground(Color.decode("#cccccc"));
-		GridLayout gridKM = new GridLayout(5, 1);
-		pnlKM.setLayout(gridKM);
-		gridKM.setVgap(20);
-		pnlKM.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
-		pnlKM.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
-		pnlKM.add(btnXoa = new ButtonGradient("     Xóa    ", img_del));
-		pnlKM.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
-		pnlKM.add(btnThoat = new ButtonGradient(" Thoát ", img_out));
-		bLeft.add(pnlKM);
-		bLeft.add(Box.createVerticalStrut(110));
-		bLeft.setMaximumSize(new Dimension(Integer.MAX_VALUE, bLeft.getPreferredSize().height));
-
-		// Right box
-		Box bTacVu = Box.createHorizontalBox();
-		JPanel pnlTacVu = new JPanel();
-		pnlTacVu.add(bTacVu);
-		bTacVu.setOpaque(true);
-		bTacVu.setBackground(Color.decode("#e6dbd1"));
-		bTacVu.add(Box.createHorizontalStrut(200));
-		// Panel Loc
-		JPanel pnlLoc = new JPanel();
-		String[] cbTT = { "Tất cả", "Còn hàng", "Hết hàng", "Sắp hết hàng", "Đã xóa" };
-		pnlLoc.setBackground(Color.decode("#cccccc"));
-		pnlLoc.setBorder(BorderFactory.createTitledBorder(line, "Lọc"));
-		pnlLoc.add(lblTinhTrang = new JLabel("Tình trạng"));
-		pnlLoc.add(Box.createHorizontalStrut(30));
-		pnlLoc.add(cbTinhTrang = new JComboBox<>(cbTT));
-		cbTinhTrang.setPreferredSize(new Dimension(150, 25));
-		bTacVu.add(pnlLoc);
-		bTacVu.add(Box.createHorizontalStrut(170));
-
-		// Panel Tra cuu
-		JPanel pnlTim = new JPanel();
-		pnlTim.setBackground(Color.decode("#cccccc"));
-		pnlTim.add(Box.createVerticalStrut(25));
-		pnlTim.setBorder(BorderFactory.createTitledBorder(line, "Tra cứu"));
-		pnlTim.add(lblTenDichVu = new JLabel("Tên dịch vụ"));
-		pnlTim.add(Box.createHorizontalStrut(30));
-		pnlTim.add(txtTimDV = new JTextField(20));
-		txtTimDV.setPreferredSize(dimension);
-		pnlTim.add(Box.createHorizontalStrut(30));
-		pnlTim.add(btnTim = new ButtonGradient("Tìm", img_search));
-		btnTim.setPreferredSize(new Dimension(90, 25));
-		bTacVu.add(pnlTim);
-		bTacVu.add(Box.createHorizontalStrut(100));
-
-		// Table
-		Box table1 = Box.createVerticalBox();
-		table1.setBorder(BorderFactory.createTitledBorder(line, "Danh sách dịch vụ"));
-		String[] headers = "Mã dịch vụ;Tên dịch vụ;Đơn giá;Đơn vị;Số lượng;Tình trạng".split(";");
-		tableModel = new DefaultTableModel(headers, 0);
-		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scroll.setViewportView(table = new JTable(tableModel));
-		table.setRowHeight(25);
-		table.setAutoCreateRowSorter(true);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table1.add(scroll);
-
-		// set color
-		pnlTacVu.setBackground(Color.decode("#e6dbd1"));
-		pnlLeft.setBackground(Color.decode("#cccccc"));
-		pnlRight.setBackground(Color.decode("#e6dbd1"));
-		pnlRight.setLayout(new BorderLayout());
-		pnlRight.add(pnlTacVu, BorderLayout.NORTH);
-		pnlRight.add(table1, BorderLayout.CENTER);
-
-		this.setLayout(new BorderLayout());
-		this.add(pnlLeft, BorderLayout.WEST);
-		this.add(pnlRight, BorderLayout.CENTER);
+		createUI();
 
 		// add event button
 		layToanBoDV();
 		table.addMouseListener(this);
 		btnThemMoi.addActionListener(e -> xuLyThemMoi());
+		btnLuu.addActionListener(e -> xuLyLuu());
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
 		btnXoa.addActionListener(e -> xuLyXoa());
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
-		btnThoat.addActionListener(e -> xuLyThoat());
 		btnTim.addActionListener(e -> xuLyTimKiem());
 		cbTinhTrang.addActionListener(e -> xuLyCBTinhTrang());
 		txtTimDV.addActionListener(e -> xuLyGoiY());
+	}
+
+	private void createUI() {
+		Icon img_add = new ImageIcon("src/img/add16.png");
+		Icon img_del = new ImageIcon("src/img/bin.png");
+		Icon img_reset = new ImageIcon("src/img/refresh16.png");
+		Icon img_edit = new ImageIcon("src/img/edit16.png");
+		Icon img_out = new ImageIcon("src/img/out.png");
+		Icon img_search = new ImageIcon("src/img/search.png");
+		Icon img_refresh = new ImageIcon("src/img/refresh16.png");
+		Border line = BorderFactory.createLineBorder(Color.BLACK);
+
+		// Thông tin khuyến mãi
+		JPanel pnlInput = new JPanel();
+		pnlInput.setLayout(new GridLayout(3, 2, 40, 0));
+
+		pnlInput.add(createPanel(lblMaDV = new JLabel("Mã dịch vụ"), txtMaDV = new JTextField()));
+		pnlInput.add(createPanel(lblTenDichVu = new JLabel("Tên dịch vụ"), txtTenDichVu = new JTextField()));
+		pnlInput.add(createPanel(lblDonVi = new JLabel("Đơn vị"), txtDonVi = new JTextField()));
+		pnlInput.add(createPanel(lblDonGia = new JLabel("Đơn giá"), txtDonGia = new JTextField()));
+		pnlInput.add(createPanel(lblSoLuong = new JLabel("Số lượng"), txtSoLuong = new JTextField()));
+		pnlInput.add(createPanel(lblTinhTrang = new JLabel("Tình trạng"), txtTinhTrang = new JTextField()));
+
+		// Nút chức năng
+		JPanel pnlChucNang = new JPanel();
+		pnlChucNang.setBackground(Color.decode("#cccccc"));
+		pnlChucNang.setLayout(new GridLayout(3, 2));
+		pnlChucNang.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
+		pnlChucNang.add(btnLuu = new ButtonGradient("Lưu", img_add));
+		pnlChucNang.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
+		pnlChucNang.add(btnXoa = new ButtonGradient("Xóa", img_del));
+		pnlChucNang.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
+
+		Box bThongTinKM = Box.createHorizontalBox();
+		bThongTinKM.add(pnlInput);
+		bThongTinKM.add(Box.createHorizontalStrut(50));
+		bThongTinKM.add(pnlChucNang);
+		JPanel pnlThongTinKM = new JPanel();
+		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
+		pnlThongTinKM.add(bThongTinKM);
+
+		// Set kích thước
+		Dimension dimension = new Dimension(250, 30);
+
+		txtTenDichVu.setPreferredSize(dimension);
+		txtDonGia.setPreferredSize(dimension);
+		txtSoLuong.setPreferredSize(dimension);
+		txtDonVi.setPreferredSize(dimension);
+		txtMaDV.setPreferredSize(dimension);
+		txtTinhTrang.setPreferredSize(dimension);
+		lblMaDV.setPreferredSize(lblTenDichVu.getPreferredSize());
+		lblTinhTrang.setPreferredSize(lblTenDichVu.getPreferredSize());
+		lblDonGia.setPreferredSize(lblTenDichVu.getPreferredSize());
+		lblDonVi.setPreferredSize(lblTenDichVu.getPreferredSize());
+		lblSoLuong.setPreferredSize(lblTenDichVu.getPreferredSize());
+		int preferredWidth = 300;
+		Dimension preferredSize = new Dimension(preferredWidth, pnlChucNang.getPreferredSize().height);
+		pnlChucNang.setPreferredSize(preferredSize);
+
+		// Tìm
+		JPanel pnlLoc = new JPanel();
+		String[] cbTT = { "Tất cả", "Còn hàng", "Hết hàng", "Sắp hết hàng", "Đã xóa" };
+		pnlLoc.add(lblTinhTrang = new JLabel("Tình trạng"));
+		pnlLoc.add(Box.createHorizontalStrut(30));
+		pnlLoc.add(cbTinhTrang = new JComboBox<>(cbTT));
+		cbTinhTrang.setPreferredSize(dimension);
+		JPanel pnlTim = new JPanel();
+		pnlTim.add(lblTenDichVu = new JLabel("Tên dịch vụ"));
+		pnlTim.add(txtTimDV = new JTextField(20));
+		pnlTim.add(btnTim = new ButtonGradient("Tìm", img_search));
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlLoc, pnlTim);
+		splitPane.setDividerLocation(600);
+
+		// Table
+		JPanel pnlTable = new JPanel();
+		pnlTable.setBorder(BorderFactory.createTitledBorder("Danh sách dịch vụ"));
+		table = new JTable();
+		String[] headers = "Mã dịch vụ;Tên dịch vụ;Đơn giá;Đơn vị;Số lượng;Tình trạng".split(";");
+		tableModel = new DefaultTableModel(headers, 0);
+		table.setModel(tableModel);
+		table.setRowHeight(25);
+		table.setAutoCreateRowSorter(true);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setViewportView(table);
+		pnlTable.setLayout(new BorderLayout());
+		pnlTable.add(splitPane, BorderLayout.NORTH);
+		pnlTable.add(scroll, BorderLayout.CENTER);
+
+		// Set editable
+		txtMaDV.setEnabled(false);
+		txtTinhTrang.setEnabled(false);
+
+		// Add vào giao diện
+		setLayout(new BorderLayout());
+		add(pnlThongTinKM, BorderLayout.NORTH);
+		add(pnlTable, BorderLayout.CENTER);
+		pnlInput.setBackground(Color.decode("#e6dbd1"));
+		pnlChucNang.setBackground(Color.decode("#e6dbd1"));
+		pnlThongTinKM.setBackground(Color.decode("#e6dbd1"));
+	}
+
+	private JPanel createPanel(JLabel label, JComponent component) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.add(label);
+		panel.add(component);
+		panel.setBackground(Color.decode("#e6dbd1"));
+		return panel;
 	}
 
 	// Xu ly kiem tra thong tin day du
@@ -236,12 +213,18 @@ public class DichVu extends JPanel implements MouseListener {
 		return true;
 	}
 
-	// Xu ly them moi
-	private void xuLyThemMoi() {
+	private Object xuLyThemMoi() {
+		// TODO Auto-generated method stub
+		String maDV = maDVTD.formatMa(daoDV.getAllDichVu().get(daoDV.getAllDichVu().size() - 1).getMaDichVu());
+		txtMaDV.setText(maDV);
+		return null;
+	}
 
+	// Xu ly them moi
+	private void xuLyLuu() {
 		if (kiemTraThongTin()) {
 			if (validData() == true) {
-				String maDV = maDVTD.formatMa(daoDV.getAllDichVu().get(daoDV.getAllDichVu().size()-1).getMaDichVu());
+				String maDV = txtMaDV.getText();
 				String tenDV = txtTenDichVu.getText();
 				String donVi = txtDonVi.getText();
 				double donGia = Double.valueOf(txtDonGia.getText());
