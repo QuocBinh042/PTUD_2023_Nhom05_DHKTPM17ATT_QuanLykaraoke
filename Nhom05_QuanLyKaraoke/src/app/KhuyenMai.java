@@ -3,6 +3,9 @@ package app;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,14 +21,18 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,11 +48,10 @@ public class KhuyenMai extends JPanel implements MouseListener {
 	private String[] headers = { "Mã khuyến mãi", "Phần trăm giảm", "Ngày bắt đầu", "Ngày kết thúc", "Mô tả",
 			"Trạng thái" };
 	private JLabel lblMaKM, lblPhanTramGiam, lblNgayBatDau, lblNgayKetThuc, lblTrangThai, lblMoTa;
-	private JTextArea txaMoTa, txaMoTa2;
-	private JTextField txtMaKM, txtPhanTramGiam, txtNgayBatDau, txtNgayKetThuc, txtThongBaoLoi, txtTimKM, txtTimPhong,
-			txtTrangThai;
+	private JTextArea txaMoTa;
+	private JTextField txtMaKM, txtPhanTramGiam, txtTimKM, txtTrangThai;
 	private JDateChooser dateBD, dateKT, dateBDTim, dateKTTim;
-	private app.ButtonGradient btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnThoat, btnTimKM, btnLocKM, btnLamMoiLoc;
+	private app.ButtonGradient btnThemMoi, btnCapNhat, btnXoa, btnLamMoi, btnTimKM, btnLuu;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private DAOKhuyenMai daoKM = new DAOKhuyenMai();
 	private ArrayList<entity.KhuyenMai> dsKM = new ArrayList<>();
@@ -57,7 +63,35 @@ public class KhuyenMai extends JPanel implements MouseListener {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		// Khai báo
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		createUI();
+		loadData();
+		// sự kiện
+		btnLamMoi.addActionListener(e -> xuLyLamMoiKM());
+		btnThemMoi.addActionListener(e -> xuLyThemMoiKM());
+		btnLuu.addActionListener(e -> xuLyLuu());
+		btnXoa.addActionListener(e -> xuLyXoaKM());
+		btnCapNhat.addActionListener(e -> xuLyCapNhatKM());
+		btnTimKM.addActionListener(e -> xuLyTimKM());
+		table.addMouseListener(this);
+	}
+
+	private void createUI() {
 		Icon img_add = new ImageIcon("src/img/add16.png");
 		Icon img_del = new ImageIcon("src/img/bin.png");
 		Icon img_reset = new ImageIcon("src/img/refresh16.png");
@@ -65,163 +99,109 @@ public class KhuyenMai extends JPanel implements MouseListener {
 		Icon img_out = new ImageIcon("src/img/out.png");
 		Icon img_search = new ImageIcon("src/img/search.png");
 		Icon img_refresh = new ImageIcon("src/img/refresh16.png");
-
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
-		Box b1, b2, b3, b4, b5;
-		Box bLeft, bRight, bLoc, bTacVu, bLoc1, bLoc2;
-		Dimension dimension = new Dimension(200, 30);
 
-		JPanel pnlLeft = new JPanel();
-		JPanel pnlRight = new JPanel();
+		// Thông tin khuyến mãi
+		JPanel pnlInput = new JPanel();
+		pnlInput.setLayout(new GridLayout(3, 2, 40, 0));
+		pnlInput.add(createPanel(lblMaKM = new JLabel("Mã khuyến mãi"), txtMaKM = new JTextField()));
+		pnlInput.add(createPanel(lblPhanTramGiam = new JLabel("Phần trăm giảm"), txtPhanTramGiam = new JTextField()));
+		pnlInput.add(createPanel(lblNgayBatDau = new JLabel("Ngày bắt đầu"), dateBD = new JDateChooser()));
+		pnlInput.add(createPanel(lblTrangThai = new JLabel("Trạng thái"), txtTrangThai = new JTextField()));
+		pnlInput.add(createPanel(lblNgayKetThuc = new JLabel("Ngày kết thúc"), dateKT = new JDateChooser()));
+		pnlInput.add(createPanel(lblMoTa = new JLabel("Mô tả"), txaMoTa = new JTextArea()));
 
-		bLeft = Box.createVerticalBox();
-		bRight = Box.createVerticalBox();
-		pnlLeft.add(bLeft);
-		pnlRight.add(bRight);
+		// Nút chức năng
+		JPanel pnlChucNang = new JPanel();
+		pnlChucNang.setBackground(Color.decode("#cccccc"));
+		pnlChucNang.setLayout(new GridLayout(3, 2));
+		pnlChucNang.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
+		pnlChucNang.add(btnLuu = new ButtonGradient("Lưu", img_add));
+		pnlChucNang.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
+		pnlChucNang.add(btnXoa = new ButtonGradient("Xóa", img_del));
+		pnlChucNang.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
 
-		pnlLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
-		bLeft.add(Box.createVerticalStrut(5));
-		JPanel pnlPhanTramGiam = new JPanel();
-		pnlPhanTramGiam.setBackground(Color.decode("#cccccc"));
-		pnlPhanTramGiam.add(lblPhanTramGiam = new JLabel("Phần trăm giảm"));
-		pnlPhanTramGiam.add(txtPhanTramGiam = new JTextField(18));
-		bLeft.add(b1 = Box.createHorizontalBox());
-		b1.add(pnlPhanTramGiam);
-		bLeft.add(Box.createVerticalStrut(10));
-		JPanel pnlNgayBatDau = new JPanel();
-		pnlNgayBatDau.setBackground(Color.decode("#cccccc"));
-		pnlNgayBatDau.add(lblNgayBatDau = new JLabel("Ngày bắt đầu"));
-		pnlNgayBatDau.add(dateBD = new JDateChooser());
-		dateBD.setPreferredSize(dimension);
-		bLeft.add(b2 = Box.createHorizontalBox());
-		b2.add(pnlNgayBatDau);
-		bLeft.add(Box.createVerticalStrut(10));
-		JPanel pnlNgayKetThuc = new JPanel();
-		pnlNgayKetThuc.setBackground(Color.decode("#cccccc"));
-		pnlNgayKetThuc.add(lblNgayKetThuc = new JLabel("Ngày kết thúc"));
-		pnlNgayKetThuc.add(dateKT = new JDateChooser());
-		dateKT.setPreferredSize(dimension);
-		bLeft.add(b3 = Box.createHorizontalBox());
-		b3.add(pnlNgayKetThuc);
-		bLeft.add(Box.createVerticalStrut(10));
-		JPanel pnlMoTa = new JPanel();
-		pnlMoTa.setBackground(Color.decode("#cccccc"));
-		pnlMoTa.add(lblMoTa = new JLabel("Mô tả"));
-		pnlMoTa.add(txaMoTa = new JTextArea(5, 18));
-		txaMoTa.setBorder(line);
-		bLeft.add(b4 = Box.createHorizontalBox());
-		b4.add(pnlMoTa);
-		bLeft.add(Box.createVerticalStrut(10));
+		Box bThongTinKM = Box.createHorizontalBox();
+		bThongTinKM.add(pnlInput);
+		bThongTinKM.add(Box.createHorizontalStrut(50));
+		bThongTinKM.add(pnlChucNang);
+		JPanel pnlThongTinKM = new JPanel();
+		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
+		pnlThongTinKM.add(bThongTinKM);
 
+		// Set kích thước
+		Dimension dimension = new Dimension(250, 30);
+		txtMaKM.setPreferredSize(dimension);
 		txtPhanTramGiam.setPreferredSize(dimension);
+		dateBD.setPreferredSize(dimension);
+		dateKT.setPreferredSize(dimension);
+		txtTrangThai.setPreferredSize(dimension);
+		txaMoTa.setPreferredSize(dimension);
+		lblMaKM.setPreferredSize(lblPhanTramGiam.getPreferredSize());
+		lblTrangThai.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblNgayBatDau.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblNgayKetThuc.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		lblMoTa.setPreferredSize(lblPhanTramGiam.getPreferredSize());
+		int preferredWidth = 300;
+		Dimension preferredSize = new Dimension(preferredWidth, pnlChucNang.getPreferredSize().height);
+		pnlChucNang.setPreferredSize(preferredSize);
 
-		bLeft.add(Box.createVerticalStrut(50));
-		JPanel pnlKM = new JPanel();
-		pnlKM.setBackground(Color.decode("#cccccc"));
-		GridLayout gridKM = new GridLayout(2, 2);
-		pnlKM.setLayout(gridKM);
-		gridKM.setHgap(20);
-		gridKM.setVgap(20);
-		pnlKM.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
-		pnlKM.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
-		pnlKM.add(btnXoa = new ButtonGradient("Xóa", img_del));
-		pnlKM.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
-		bLeft.add(pnlKM);
-		bLeft.add(Box.createVerticalStrut(20));
-		bLeft.add(b5 = Box.createHorizontalBox());
-		b5.add(btnThoat = new ButtonGradient("Thoát", img_out));
-		btnThoat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThoat.getMinimumSize().height));
-
-		// Set size
-		bLeft.setMaximumSize(new Dimension(Integer.MAX_VALUE, bLeft.getPreferredSize().height));
-
-		// Right box
-		// Tac vu khuyen mai
-		bTacVu = Box.createHorizontalBox();
-		JPanel pnlLocKM = new JPanel();
-		pnlLocKM.setBorder(BorderFactory.createTitledBorder(line, "Lọc theo ngày"));
-		pnlLocKM.setBackground(Color.decode("#cccccc"));
+		// Tìm
+		Box bLoc1, bLoc2;
 		JPanel pnlTimKM = new JPanel();
-		pnlTimKM.setBackground(Color.decode("#e6dbd1"));
-		bTacVu.add(pnlLocKM);
-		bTacVu.add(pnlTimKM);
-		bRight.add(bTacVu);
-		pnlLocKM.add(bLoc = Box.createVerticalBox());
-		bLoc.add(bLoc1 = Box.createHorizontalBox());
+		JPanel pnlLoc = new JPanel(new GridLayout(1, 2, 20, 0));
+		bLoc1 = Box.createHorizontalBox();
+		bLoc1.add(lblNgayBatDau = new JLabel("Từ ngày"));
 		bLoc1.add(Box.createHorizontalStrut(10));
-		bLoc1.add(lblNgayBatDau = new JLabel("Ngày bắt đầu"));
-
-		bLoc1.add(Box.createHorizontalStrut(15));
 		bLoc1.add(dateBDTim = new JDateChooser());
-		bLoc1.add(Box.createHorizontalStrut(50));
-
-		bLoc1.add(Box.createHorizontalStrut(50));
-		bLoc1.add(btnLocKM = new ButtonGradient("Lọc", img_search));
-		bLoc1.add(Box.createHorizontalStrut(5));
-
-		bLoc.add(Box.createVerticalStrut(5));
-		bLoc.add(bLoc2 = Box.createHorizontalBox());
+		bLoc2 = Box.createHorizontalBox();
+		bLoc2.add(lblNgayKetThuc = new JLabel("Đến ngày"));
 		bLoc2.add(Box.createHorizontalStrut(10));
-		bLoc2.add(lblNgayKetThuc = new JLabel("Ngày kết thúc"));
-		bLoc2.add(Box.createHorizontalStrut(15));
 		bLoc2.add(dateKTTim = new JDateChooser());
-		bLoc2.add(Box.createHorizontalStrut(50));
-		bLoc2.add(Box.createHorizontalStrut(50));
-		bLoc2.add(btnLamMoiLoc = new ButtonGradient("Làm mới", img_refresh));
-		bLoc2.add(Box.createHorizontalStrut(5));
-
+		pnlLoc.add(bLoc1);
+		pnlLoc.add(bLoc2);
 		pnlTimKM.add(lblMaKM = new JLabel("Mã khuyến mãi"));
-		pnlTimKM.add(txtTimKM = new JTextField(10));
-		pnlTimKM.add(btnTimKM = new ButtonGradient("Tìm", img_search));
+		pnlTimKM.add(txtTimKM = new JTextField(15));
+		pnlTimKM.add(btnTimKM = new ButtonGradient("Tìm kiếm", img_search));
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlLoc, pnlTimKM);
+		splitPane.setDividerLocation(700);
 
-		btnTimKM.setPreferredSize(new Dimension(120, 30));
-		btnLocKM.setPreferredSize(new Dimension(140, 30));
-		btnLamMoiLoc.setPreferredSize(new Dimension(140, 30));
-		dateBDTim.setPreferredSize(dimension);
-		dateKTTim.setPreferredSize(dimension);
-		lblNgayBatDau.setPreferredSize(lblPhanTramGiam.getPreferredSize());
-		lblNgayKetThuc.setPreferredSize(lblPhanTramGiam.getPreferredSize());
 		// Table
-		Box table1 = Box.createVerticalBox();
-		table1.setBorder(BorderFactory.createTitledBorder(line, "Danh sách khuyến mãi"));
+		JPanel pnlTable = new JPanel();
+		pnlTable.setBorder(BorderFactory.createTitledBorder("Danh sách khuyến mãi"));
+		table = new JTable();
 		tableModel = new DefaultTableModel(headers, 0);
-		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scroll.setViewportView(table = new JTable(tableModel));
+		table.setModel(tableModel);
 		table.setRowHeight(25);
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table1.add(scroll);
+		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setViewportView(table);
+		pnlTable.setLayout(new BorderLayout());
+		pnlTable.add(splitPane, BorderLayout.NORTH);
+		pnlTable.add(scroll, BorderLayout.CENTER);
 
-		// set color
-		pnlLeft.setBackground(Color.decode("#cccccc"));
-		pnlRight.setBackground(Color.decode("#e6dbd1"));
-		pnlRight.setLayout(new BorderLayout());
-		pnlRight.add(bTacVu, BorderLayout.NORTH);
-		pnlRight.add(table1, BorderLayout.CENTER);
+		// Set editable
+		txtMaKM.setEnabled(false);
+		txtTrangThai.setEnabled(false);
 
-		this.setLayout(new BorderLayout());
-		this.add(pnlLeft, BorderLayout.WEST);
-		this.add(pnlRight, BorderLayout.CENTER);
+		// Add vào giao diện
+		setLayout(new BorderLayout());
+		add(pnlThongTinKM, BorderLayout.NORTH);
+		add(pnlTable, BorderLayout.CENTER);
+		pnlInput.setBackground(Color.decode("#e6dbd1"));
+		pnlChucNang.setBackground(Color.decode("#e6dbd1"));
+		pnlThongTinKM.setBackground(Color.decode("#e6dbd1"));
+	}
 
-		// Load data
-
-		loadData();
-		LocKMTheoNgay();
-		// sự kiện
-		btnLamMoi.addActionListener(e -> xuLyLamMoiKM());
-		btnThemMoi.addActionListener(e -> xuLyThemMoiKM());
-		btnXoa.addActionListener(e -> xuLyXoaKM());
-		btnCapNhat.addActionListener(e -> xuLyCapNhatKM());
-		btnThoat.addActionListener(e -> xuLyThoat());
-		btnLocKM.addActionListener(e -> LocKMTheoNgay());
-		btnTimKM.addActionListener(e -> xuLyTimKM());
-		btnLamMoiLoc.addActionListener(e -> loadData());
-		table.addMouseListener(this);
-
+	private JPanel createPanel(JLabel label, JComponent component) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.add(label);
+		panel.add(component);
+		panel.setBackground(Color.decode("#e6dbd1"));
+		return panel;
 	}
 
 	private void LocKMTheoNgay() {
@@ -235,23 +215,10 @@ public class KhuyenMai extends JPanel implements MouseListener {
 						dateFormat.format(km.getNgayKT()), km.getMoTa(), trangThai });
 			}
 		}
-
-	}
-
-	private Object xuLyThoat() {
-		// TODO Auto-generated method stub
-		if (JOptionPane.showConfirmDialog(null, "Bạn có chắc chắc muốn thoát không ?", "Chú ý!",
-				JOptionPane.YES_OPTION) == JOptionPane.YES_OPTION) {
-			System.exit(0);
-		}
-
-		return null;
 	}
 
 	public void loadData() {
-		// delete all
 		deleteAllDataJtable();
-		// Load data
 		dsKM = daoKM.layDSKhuyenMai();
 		for (entity.KhuyenMai km : dsKM) {
 			String trangThai = km.getTrangThai() ? "Đang hoạt động" : "Đã kết thúc";
@@ -269,7 +236,6 @@ public class KhuyenMai extends JPanel implements MouseListener {
 
 	private boolean kiemTraDuLieu() {
 		return false;
-
 	}
 
 	private Object xuLyTimKM() {
@@ -296,7 +262,7 @@ public class KhuyenMai extends JPanel implements MouseListener {
 		return null;
 	}
 
-	private Object xuLyThemMoiKM() {
+	private Object xuLyLuu() {
 		// TODO Auto-generated method stub
 		int luaChon = JOptionPane.showConfirmDialog(null, "Có chắc chắn thêm thông tin khuyến mãi không?", "Chú ý",
 				JOptionPane.YES_NO_OPTION);
@@ -305,7 +271,7 @@ public class KhuyenMai extends JPanel implements MouseListener {
 			String ngayBD = dateFormat.format(dateBD.getDate());
 			String ngayKT = dateFormat.format(dateKT.getDate());
 			String moTa = txaMoTa.getText();
-			String maKM = maKhuyenMai.formatMa(daoKM.layDSKhuyenMai().get(daoKM.layDSKhuyenMai().size() - 1).getMaKM());
+			String maKM = txtMaKM.getText();
 			entity.KhuyenMai km = new entity.KhuyenMai(maKM, Double.valueOf(txtPhanTramGiam.getText()),
 					dateBD.getDate(), dateKT.getDate(), moTa, true);
 			if (daoKM.themKhuyenMai(km)) {
@@ -314,6 +280,14 @@ public class KhuyenMai extends JPanel implements MouseListener {
 				JOptionPane.showMessageDialog(null, "Thêm mới khuyến mãi thành công!");
 			}
 		}
+		xuLyLamMoiKM();
+		return null;
+	}
+
+	private Object xuLyThemMoiKM() {
+		// TODO Auto-generated method stub
+		String maKM = maKhuyenMai.formatMa(daoKM.layDSKhuyenMai().get(daoKM.layDSKhuyenMai().size() - 1).getMaKM());
+		txtMaKM.setText(maKM);
 		return null;
 	}
 
@@ -330,7 +304,6 @@ public class KhuyenMai extends JPanel implements MouseListener {
 			Boolean trangThai = dateKT.getDate().before(new Date()) ? true : false;
 			entity.KhuyenMai km = new entity.KhuyenMai(maKM, Double.valueOf(txtPhanTramGiam.getText()),
 					dateBD.getDate(), dateKT.getDate(), moTa, true);
-
 			if (daoKM.capNhat(km)) {
 				int viTri = table.getSelectedRow();
 				tableModel.removeRow(viTri);
@@ -364,7 +337,9 @@ public class KhuyenMai extends JPanel implements MouseListener {
 
 	private Object xuLyLamMoiKM() {
 		// TODO Auto-generated method stub
+		txtMaKM.setText("");
 		txtPhanTramGiam.setText("");
+		txtTrangThai.setText("");
 		((JTextField) dateBD.getDateEditor().getUiComponent()).setText("");
 		((JTextField) dateKT.getDateEditor().getUiComponent()).setText("");
 		txaMoTa.setText("");
@@ -381,6 +356,7 @@ public class KhuyenMai extends JPanel implements MouseListener {
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		int row = table.getSelectedRow();
+		txtMaKM.setText(table.getValueAt(row, 0).toString());
 		txtPhanTramGiam.setText(table.getValueAt(row, 1).toString());
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date date1, date2;
@@ -394,6 +370,7 @@ public class KhuyenMai extends JPanel implements MouseListener {
 			e1.printStackTrace();
 		}
 		txaMoTa.setText(table.getValueAt(row, 4).toString());
+		txtTrangThai.setText(table.getValueAt(row, 5).toString());
 
 	}
 
