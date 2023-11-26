@@ -19,7 +19,7 @@ import dao.DAONhanVien;
 
 public class ForgotPassword extends JFrame {
 	private static String ACCOUNT_SID = "AC4d68f5344f866140494be07649cb767c"; // Thay bằng ACCOUNT_SID
-	private static String AUTH_TOKEN = "5208b7198b910b83bb55748eed4f8b35"; // Thay bằng AUTH_TOKEN
+	private static String AUTH_TOKEN = "5bb06bbd882b685ac173992175881576"; // Thay bằng AUTH_TOKEN
 	private static String TWILIO_PHONE_NUMBER = "+19185057094"; // Thay bằng số điện thoại Twilio
 	private JLabel lblSoDienThoai, lblMatKhau, lblMaXacNhan;
 	private JTextField txtSoDienThoai, txtMaXacNhan;
@@ -51,6 +51,7 @@ public class ForgotPassword extends JFrame {
 
 		btnGuiMa = new ButtonGradient("Gửi mã");
 		btnGuiMa.setBounds(185, 87, 85, 30);
+		btnGuiMa.setForeground(Color.WHITE);
 		pnlBorder.add(btnGuiMa);
 
 		lblMaXacNhan = new JLabel("Mã xác nhận");
@@ -70,11 +71,13 @@ public class ForgotPassword extends JFrame {
 		pnlBorder.add(txtMatKhau);
 
 		btnXacNhan = new ButtonGradient("Xác nhận");
-		btnXacNhan.setBounds(20, 245, 105, 40);
+		btnXacNhan.setBounds(20, 245, 115, 50);
+		btnXacNhan.setForeground(Color.WHITE);
 		pnlBorder.add(btnXacNhan);
 
 		btnQuayLai = new ButtonGradient("Quay lại");
-		btnQuayLai.setBounds(165, 245, 105, 40);
+		btnQuayLai.setBounds(165, 245, 115, 50);
+		btnQuayLai.setForeground(Color.WHITE);
 		pnlBorder.add(btnQuayLai);
 
 		// Event
@@ -109,9 +112,13 @@ public class ForgotPassword extends JFrame {
 		} else {
 			// Kiểm tra mã xác nhận có trùng khớp không
 			if (kiemTraTrungKhop(maXacNhan, generatedCode)) {
-				daoNV.updateMatKhau(matKhau, soDienThoai);
-				JOptionPane.showMessageDialog(null, "Reset mật khẩu thành công.");
-				this.dispose();
+				if(!matKhau.isEmpty()) {
+					daoNV.updateMatKhau(matKhau, soDienThoai);
+					JOptionPane.showMessageDialog(null, "Reset mật khẩu thành công.");
+					this.dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "Vui lòng nhập mật khẩu mới!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
+				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Mã xác nhận không chính xác!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
 			}

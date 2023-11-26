@@ -49,7 +49,7 @@ public class Login extends JFrame implements ActionListener {
 
 		Image img_logo = new ImageIcon("src/IMG/login.png").getImage(); // Image Logo
 		setTitle("ĐĂNG NHẬP");
-		setSize(550, 250);
+		setSize(520, 250);
 		setIconImage(img_logo);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -91,7 +91,7 @@ public class Login extends JFrame implements ActionListener {
 		btnForgetPass.setFont(new Font("Times new roman", ABORT, 15));
 		btnForgetPass.setBorder(null);
 		btnForgetPass.setBackground(Color.decode("#e6dbd1"));
-		btnForgetPass.setBounds(335, 120, 150, 35);
+		btnForgetPass.setBounds(340, 120, 130, 35);
 		panel.add(btnForgetPass);
 
 		// Show password
@@ -99,7 +99,7 @@ public class Login extends JFrame implements ActionListener {
 		btnShowPass = new JButton(icon_showPass);
 		btnShowPass.setBorder(null);
 		btnShowPass.setBackground(Color.decode("#e6dbd1"));
-		btnShowPass.setBounds(480, 85, 30, 30);
+		btnShowPass.setBounds(470, 85, 30, 30);
 		panel.add(btnShowPass);
 
 		// Hide password
@@ -107,19 +107,21 @@ public class Login extends JFrame implements ActionListener {
 		btnHidePass = new JButton(icon_hidePass);
 		btnHidePass.setBorder(null);
 		btnHidePass.setBackground(Color.decode("#e6dbd1"));
-		btnHidePass.setBounds(480, 85, 30, 30);
+		btnHidePass.setBounds(470, 85, 30, 30);
 		panel.add(btnHidePass);
 
 		// Button LOGIN and EXIT 6aa84f
-		btnLogin = new JButton("Đăng nhập");
+		btnLogin = new ButtonGradient("Đăng nhập");
+		btnLogin.setFont(new Font("Arial", ALLBITS, 18));
 		btnLogin.setForeground(Color.WHITE);
 		btnLogin.setBackground(Color.decode("#6aa84f"));
-		btnLogin.setBounds(200, 160, 120, 40);
+		btnLogin.setBounds(170, 150, 150, 50);
 		panel.add(btnLogin);
-		btnExit = new JButton("Thoát");
+		btnExit = new ButtonGradient("Thoát");
+		btnExit.setFont(new Font("Arial", ALLBITS, 18));
 		btnExit.setForeground(Color.WHITE);
 		btnExit.setBackground(Color.decode("#cc0000"));
-		btnExit.setBounds(340, 160, 120, 40);
+		btnExit.setBounds(320, 150, 150, 50);
 		panel.add(btnExit);
 
 		// add event

@@ -276,7 +276,7 @@ public class Phong extends JPanel implements MouseListener {
 
 		// Nút chức năng
 		JPanel pnlChucNang = new JPanel();
-		pnlChucNang.setLayout(new GridLayout(3, 2, 5, 10));
+		pnlChucNang.setLayout(new GridLayout(3, 2, 10, 10));
 		pnlChucNang.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
 		pnlChucNang.add(btnLuu = new ButtonGradient("Lưu", img_add));
 		pnlChucNang.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
@@ -289,7 +289,7 @@ public class Phong extends JPanel implements MouseListener {
 		bThongTinPhong.add(Box.createHorizontalStrut(20));
 		bThongTinPhong.add(pnlChucNang);
 		JPanel pnlThongTinPhong = new JPanel();
-		pnlThongTinPhong.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
+		pnlThongTinPhong.setBorder(BorderFactory.createTitledBorder(line, "Thông tin phòng"));
 		pnlThongTinPhong.add(bThongTinPhong);
 
 		Dimension dimension = new Dimension(250, 30);
@@ -342,7 +342,7 @@ public class Phong extends JPanel implements MouseListener {
 		splitPane.setDividerLocation(600);
 
 		JPanel pnlTable = new JPanel();
-		pnlTable.setBorder(BorderFactory.createTitledBorder("Danh sách khuyến mãi"));
+		pnlTable.setBorder(BorderFactory.createTitledBorder("Danh sách phòng"));
 		table = new JTable();
 		String[] headers = "Mã phòng;Tên phòng;Mã loại phòng;Loại phòng;Sức chứa;Giá phòng;Tình trạng;Mô tả"
 				.split(";");
@@ -470,7 +470,7 @@ public class Phong extends JPanel implements MouseListener {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin phòng!");
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Vui lòng chọn dịch vụ cần cập nhật!");
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn phòng cần cập nhật!");
 		}
 	}
 
@@ -479,10 +479,12 @@ public class Phong extends JPanel implements MouseListener {
 		cbMaLoaiPhong.setSelectedIndex(0);
 		cbLoaiPhong.setSelectedIndex(0);
 		cbTinhTrang.setSelectedIndex(0);
+		txtMaPhong.setText("");
 		txtTenPhong.setText("");
 		txtLoaiPhong.setText("");
 		txtGiaPhong.setText("");
 		txtSucChua.setText("");
+		txtTinhTrang.setText("");
 		txaMoTa.setText("");
 	}
 
@@ -640,9 +642,11 @@ public class Phong extends JPanel implements MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		int row = table.getSelectedRow();
+		txtMaPhong.setText(table.getValueAt(row, 0).toString());
 		txtTenPhong.setText(table.getValueAt(row, 1).toString());
 		cbMaLoaiPhong.setSelectedItem(table.getValueAt(row, 2).toString());
 		capNhatTTLP();
+		txtTinhTrang.setText(table.getValueAt(row, 6).toString());
 		txaMoTa.setText(table.getValueAt(row, 7).toString());
 
 	}

@@ -84,7 +84,7 @@ public class DichVu extends JPanel implements MouseListener {
 		// Nút chức năng
 		JPanel pnlChucNang = new JPanel();
 		pnlChucNang.setBackground(Color.decode("#cccccc"));
-		pnlChucNang.setLayout(new GridLayout(3, 2));
+		pnlChucNang.setLayout(new GridLayout(3, 2, 0, 10));
 		pnlChucNang.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
 		pnlChucNang.add(btnLuu = new ButtonGradient("Lưu", img_add));
 		pnlChucNang.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
@@ -96,7 +96,7 @@ public class DichVu extends JPanel implements MouseListener {
 		bThongTinKM.add(Box.createHorizontalStrut(50));
 		bThongTinKM.add(pnlChucNang);
 		JPanel pnlThongTinKM = new JPanel();
-		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
+		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder(line, "Thông tin dịch vụ"));
 		pnlThongTinKM.add(bThongTinKM);
 
 		// Set kích thước
@@ -300,11 +300,13 @@ public class DichVu extends JPanel implements MouseListener {
 
 	// Xu ly lam moi
 	private void xuLyLamMoi() {
+		txtMaDV.setText("");
 		txtTenDichVu.setText("");
 		txtDonVi.setText("");
 		txtDonGia.setText("");
 		txtSoLuong.setText("");
 		txtTimDV.setText("");
+		txtTinhTrang.setText("");
 		cbTinhTrang.setSelectedIndex(0);
 	}
 
@@ -419,10 +421,12 @@ public class DichVu extends JPanel implements MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		int row = table.getSelectedRow();
+		txtMaDV.setText(table.getValueAt(row, 0).toString());
 		txtTenDichVu.setText(table.getValueAt(row, 1).toString());
 		txtDonGia.setText(table.getValueAt(row, 2).toString());
 		txtDonVi.setText(table.getValueAt(row, 3).toString());
 		txtSoLuong.setText(table.getValueAt(row, 4).toString());
+		txtTinhTrang.setText(table.getValueAt(row, 5).toString());
 	}
 
 	@Override
