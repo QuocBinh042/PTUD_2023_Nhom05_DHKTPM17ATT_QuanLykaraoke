@@ -3,6 +3,7 @@ package app;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -23,8 +24,8 @@ import javax.swing.border.EmptyBorder;
 
 public class ButtonGradient extends JButton {
 
-	private Color color1 = Color.decode("#7f0910");
-	private Color color2 = Color.decode("#7f0910");
+	private Color color1 = Color.decode("#0099F7");
+	private Color color2 = Color.decode("#427D9D");
 	private final Timer timer;
 	private final Timer timerPressed;
 	private float alpha = 0.3f;
@@ -129,6 +130,8 @@ public class ButtonGradient extends JButton {
 
 	public ButtonGradient(String text, Icon img) {
 		setText(text);
+		Font newFont = new Font("Arial", Font.BOLD, 13);
+	    setFont(newFont);
 		setIcon(img);
 		setContentAreaFilled(false);
 		setForeground(Color.BLACK);
@@ -197,24 +200,39 @@ public class ButtonGradient extends JButton {
 
 	@Override
 	protected void paintComponent(Graphics grphcs) {
-		int width = getWidth();
-		int height = getHeight();
-		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2 = img.createGraphics();
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		// Create Gradients Color
-		GradientPaint gra = new GradientPaint(0, 0, color1, width, 0, color2);
-		g2.setPaint(gra);
-		g2.fillRoundRect(0, 0, width, height, 10, 10);
-		// Add Style
-		createStyle(g2);
-		if (pressed) {
-			paintPressed(g2);
-		}
-		g2.dispose();
-		grphcs.drawImage(img, 0, 0, null);
-		super.paintComponent(grphcs);
+	    int originalWidth = getWidth();
+	    int originalHeight = getHeight();
+	    int scaledWidth = (int) (originalWidth * 0.8); // Adjust the scaling factor as needed
+	    int scaledHeight = (int) (originalHeight * 0.8); // Adjust the scaling factor as needed
+
+	    BufferedImage img = new BufferedImage(originalWidth, originalHeight, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D g2 = img.createGraphics();
+	    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	    
+	    // Create Gradients Color
+	    GradientPaint gra = new GradientPaint(0, 0, color1, originalWidth, 0, color2);
+	    g2.setPaint(gra);
+	    g2.fillRoundRect(0, 0, originalWidth, originalHeight, 10, 10);
+
+	    // Add Style
+	    createStyle(g2);
+
+	    if (pressed) {
+	        paintPressed(g2);
+	    }
+
+	    g2.dispose();
+
+	    // Scale the image
+	    BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D scaledGraphics = scaledImage.createGraphics();
+	    scaledGraphics.drawImage(img, 0, 0, scaledWidth, scaledHeight, null);
+	    scaledGraphics.dispose();
+
+	    grphcs.drawImage(scaledImage, (originalWidth - scaledWidth) / 2, (originalHeight - scaledHeight) / 2, null);
+	    super.paintComponent(grphcs);
 	}
+
 
 	private void createStyle(Graphics2D g2) {
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, alpha));
