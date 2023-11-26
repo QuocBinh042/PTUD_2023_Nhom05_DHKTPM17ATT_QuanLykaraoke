@@ -156,6 +156,20 @@ public class DAONhanVien{
 		return true;
 	}
 	
+	public void updateMatKhau(String matKhau,String soDienThoai) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		String sql = "Update NhanVien set MatKhau = ? where SoDienThoai = ?";
+		try {
+			stm = con.prepareStatement(sql);
+			stm.setString(1, matKhau);
+			stm.setString(2, soDienThoai);
+			stm.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void delete(String tenNV) {
 		// TODO Auto-generated method stub
