@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import connectDB.ConnectDB;
+import entity.CTDVPhong;
 import entity.ChiTietHoaDon;
 import entity.HoaDon;
 import entity.KhachHang;

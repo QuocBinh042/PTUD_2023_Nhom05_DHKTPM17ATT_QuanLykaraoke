@@ -195,6 +195,38 @@ public class DAOHoaDon {
         return dsHoaDon;
     }
 	
+	public ArrayList<HoaDon> timKiemHoaDonTheoMaHD(String maHD) {
+		ArrayList<HoaDon> dsHD = new ArrayList<>();
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+			PreparedStatement statement = null;
+			String sql = "select * from HoaDon hd inner join NhanVien nv on hd.MaNV = nv.MaNV "
+					+ "inner join KhachHang kh on hd.MaKH = kh.MaKH " + "inner join KhuyenMai km on hd.MaKM = km.MaKM "
+					+ "where MaHD = ?";
+			statement = connect.prepareStatement(sql);
+			statement.setString(1, maHD);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				NhanVien nv = new NhanVien(rs.getString(8), rs.getString(9), rs.getDate(10), rs.getBoolean(11),
+						rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getBoolean(16));
+
+				KhachHang kh = new KhachHang(rs.getString(17), rs.getString(18), rs.getBoolean(19), rs.getBoolean(20),
+						rs.getString(21), rs.getString(22), rs.getInt(23), rs.getString(24));
+				KhuyenMai km = new KhuyenMai(rs.getString(25), rs.getDouble(26), rs.getDate(27), rs.getDate(28),
+						rs.getString(29), rs.getBoolean(30));
+
+				HoaDon hd = new HoaDon(rs.getString(1), rs.getTime(2).toLocalTime(), rs.getDate(3), nv, kh, km,
+						rs.getDouble(7));
+				dsHD.add(hd);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsHD;
+	}
+	
 	public ArrayList<HoaDon> layDSHoaDonKhiThongKe(java.util.Date date, java.util.Date date2) {
 		ArrayList<HoaDon> dsHoaDon = new ArrayList<HoaDon>();
 		ConnectDB.getInstance();

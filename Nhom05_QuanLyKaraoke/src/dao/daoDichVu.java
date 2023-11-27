@@ -12,6 +12,7 @@ import connectDB.ConnectDB;
 import entity.DichVu;
 
 public class daoDichVu {
+	
 	// Lay toan bo dich vu
 	public ArrayList<DichVu> getAllDichVu() {
 		ArrayList<DichVu> dsDichVu = new ArrayList<DichVu>();
@@ -21,6 +22,26 @@ public class daoDichVu {
 			String sql = "select *from DichVu";
 			Statement statement = connect.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				dsDichVu.add(new DichVu(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getString(4),
+						rs.getInt(5), rs.getString(6)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsDichVu;
+	}
+	
+	public ArrayList<DichVu> timKiemDichVuTheoTenDV(String tenDV) {
+		ArrayList<DichVu> dsDichVu = new ArrayList<DichVu>();
+		ConnectDB.getInstance();
+		Connection connect = ConnectDB.getConnection();
+		try {
+			PreparedStatement statement = null;
+			String sql = "select * from DichVu where TenDV = ?";
+			statement = connect.prepareStatement(sql);
+			statement.setString(1, tenDV);
+			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				dsDichVu.add(new DichVu(rs.getString(1), rs.getString(2), rs.getDouble(3), rs.getString(4),
 						rs.getInt(5), rs.getString(6)));

@@ -14,6 +14,10 @@ public class DichVu implements Serializable {
 	public DichVu() {
 		this("", "", 0, "", 0, "");
 	}
+	
+	public DichVu(String maDichVu) {
+		setMaDichVu(maDichVu);
+	}
 
 	public DichVu(String maDichVu, String tenDichVu, double donGia, String donVi, int soLuong, String tinhTrang) {
 		super();
