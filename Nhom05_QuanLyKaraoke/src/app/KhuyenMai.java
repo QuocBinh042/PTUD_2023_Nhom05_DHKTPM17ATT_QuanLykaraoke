@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,6 +90,21 @@ public class KhuyenMai extends JPanel implements MouseListener {
 		btnXoa.addActionListener(e -> xuLyXoaKM());
 		btnCapNhat.addActionListener(e -> xuLyCapNhatKM());
 		btnTimKM.addActionListener(e -> xuLyTimKM());
+
+		dateBDTim.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (dateKTTim.getDate() != null)
+					LocKMTheoNgay();
+			}
+		});
+		dateKTTim.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (dateBDTim.getDate() != null)
+					LocKMTheoNgay();
+			}
+		});
 		table.addMouseListener(this);
 	}
 
@@ -206,7 +223,7 @@ public class KhuyenMai extends JPanel implements MouseListener {
 
 	private void LocKMTheoNgay() {
 		// TODO Auto-generated method stub
-		if (dateKTTim.getDate() != null) {
+		if (!dateKTTim.getDate().before(dateBDTim.getDate())) {
 			deleteAllDataJtable();
 			dsKM = daoKM.layDSKhuyenMaiTrongKhoangThoiGian(dateBDTim.getDate(), dateKTTim.getDate());
 			for (entity.KhuyenMai km : dsKM) {
@@ -214,6 +231,8 @@ public class KhuyenMai extends JPanel implements MouseListener {
 				tableModel.addRow(new Object[] { km.getMaKM(), km.getPhanTramGiam(), dateFormat.format(km.getNgayBD()),
 						dateFormat.format(km.getNgayKT()), km.getMoTa(), trangThai });
 			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Chọn lại ngày!");
 		}
 	}
 
@@ -286,8 +305,11 @@ public class KhuyenMai extends JPanel implements MouseListener {
 
 	private Object xuLyThemMoiKM() {
 		// TODO Auto-generated method stub
+		xuLyLamMoiKM();
 		String maKM = maKhuyenMai.formatMa(daoKM.layDSKhuyenMai().get(daoKM.layDSKhuyenMai().size() - 1).getMaKM());
+		txtTrangThai.setText("Đang hoạt động");
 		txtMaKM.setText(maKM);
+		
 		return null;
 	}
 

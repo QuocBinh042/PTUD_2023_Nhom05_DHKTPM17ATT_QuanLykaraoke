@@ -3,6 +3,8 @@ package app;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -37,21 +39,22 @@ public class Card extends JFrame{
 	private KhuyenMai km = new KhuyenMai();
 	private ThongKe tk = new ThongKe();
 	private TroGiup tg = new TroGiup();
+	private JPanel pnlButton = new JPanel();
+	
+	
 	public Card() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setSize(1400, 720);
 		setLocationRelativeTo(null);
 		this.setLayout(new BorderLayout());
 		JPanel pane = new JPanel(new BorderLayout());
 		JPanel pnlLeft = new JPanel(new BorderLayout());
 		JPanel pnlLogo = new JPanel();
-		ImageIcon icon = new ImageIcon("src/img/logo2.jpg");
+		ImageIcon icon = new ImageIcon("src/img/One.png");
 		JLabel label = new JLabel(icon);
 		pnlLogo.add(Box.createVerticalStrut(50));
-		pnlLogo.add(label);
-		
-		JPanel pnlButton = new JPanel();
+		pnlLogo.add(label);		
+		pnlLogo.setBackground(Color.decode("#e6dbd1"));
 		
 		pnl.add(tc, "tc");
 		pnl.add(dp, "dp");
@@ -64,51 +67,18 @@ public class Card extends JFrame{
 		pnl.add(tk, "tk");
 		pnl.add(tg, "tg");
 		
-//		ImageIcon icon = new ImageIcon("src/img/logo2.jpg");
-//		JLabel label = new JLabel(icon);
-//		pnlLogo.add(label);
-//		
-//		pnlLeft.add(pnlLogo, BorderLayout.NORTH);
-		//
-		Box boxForButton = Box.createVerticalBox();
-		boxForButton.add(Box.createVerticalStrut(100));
-		boxForButton.add(btnTrangChu = new JButton("TRANG CHỦ"));
-		btnTrangChu.setPreferredSize(new Dimension(200, 20));
-		boxForButton.add(Box.createVerticalStrut(20));
-		boxForButton.add(btnPhongHat = new JButton("PHÒNG HÁT"));
-		boxForButton.add(Box.createVerticalStrut(20));
-		boxForButton.add(btnPhong = new JButton("PHÒNG"));
-		boxForButton.add(Box.createVerticalStrut(20));
-		boxForButton.add(btnDichVu = new JButton("DỊCH VỤ"));
-		boxForButton.add(Box.createVerticalStrut(20));
-		boxForButton.add(btnKhachHang = new JButton("KHÁCH HÀNG"));
-		boxForButton.add(Box.createVerticalStrut(20));
-		boxForButton.add(btnNhanVien = new JButton("NHÂN VIÊN"));
-		boxForButton.add(Box.createVerticalStrut(20));
-		boxForButton.add(btnHoaDon = new JButton("HÓA ĐƠN"));
-		boxForButton.add(Box.createVerticalStrut(20));
-		boxForButton.add(btnKhuyenMai = new JButton("KHUYẾN MÃI"));
-		boxForButton.add(Box.createVerticalStrut(20));
-		boxForButton.add(btnThongKe = new JButton("THỐNG KÊ"));
-		boxForButton.add(Box.createVerticalStrut(20));
-		boxForButton.add(btnTroGiup = new JButton("TRỢ GIÚP"));
-		boxForButton.add(Box.createVerticalStrut(20));
-		pnlButton.add(boxForButton);
-		pnlButton.setPreferredSize(new Dimension(200, 720));
-		
-		List<JButton> dsBtn = Arrays.asList(btnTrangChu, btnPhongHat, btnPhong, btnDichVu, btnKhachHang, btnNhanVien, btnHoaDon, btnKhuyenMai,
-				btnThongKe, btnTroGiup);
-		
-		for(int i = 0; i < dsBtn.size(); i++) {
-			dsBtn.get(i).setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-			dsBtn.get(i).setFont(new Font("Sanserif", Font.BOLD, 14));
-			dsBtn.get(i).setForeground(Color.black);
-			dsBtn.get(i).setBackground(Color.decode("#e6dbd1"));
-			dsBtn.get(i).setBorder(BorderFactory.createLineBorder(Color.decode("#e6dbd1")));
-		}
-		
-		btnTrangChu.addMouseListener(new MouseListener() {
-			
+        addButton(btnTrangChu = new JButton("TRANG CHỦ"));
+        addButton(btnPhongHat = new JButton("PHÒNG HÁT"));
+        addButton(btnPhong = new JButton("PHÒNG"));
+        addButton(btnDichVu = new JButton("DỊCH VỤ"));
+        addButton(btnKhachHang = new JButton("KHÁCH HÀNG"));
+        addButton(btnNhanVien = new JButton("NHÂN VIÊN"));
+        addButton(btnHoaDon = new JButton("HÓA ĐƠN"));
+        addButton(btnKhuyenMai = new JButton("KHUYẾN MÃI"));
+        addButton(btnThongKe = new JButton("THỐNG KÊ DOANH THU"));
+        addButton(btnTroGiup = new JButton("TRỢ GIÚP"));
+		pnlButton.setPreferredSize(new Dimension(200, 720));		
+		btnTrangChu.addMouseListener(new MouseListener() {			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
@@ -428,37 +398,6 @@ public class Card extends JFrame{
 			}
 		});
 	
-//		btnTrangChu.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnTrangChu.getMinimumSize().height));
-//		btnTrangChu.setFont(new Font("Sanserif", Font.BOLD, 25));
-//		btnTrangChu.setForeground(Color.decode("#c0baa2"));
-//		btnPhongHat.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnPhongHat.getMinimumSize().height));
-//		btnPhongHat.setFont(new Font("Sanserif", Font.BOLD, 25));
-//		btnPhongHat.setForeground(Color.decode("#c0baa2"));
-//		btnPhong.setMaximumSize(new Dimension(Integer.MAX_VALUE,  btnPhong.getMinimumSize().height));
-//		btnPhong.setFont(new Font("Sanserif", Font.BOLD, 25));
-//		btnPhong.setForeground(Color.decode("#c0baa2"));
-//		btnDichVu.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnDichVu.getMinimumSize().height));
-//		btnDichVu.setFont(new Font("Sanserif", Font.BOLD, 25));
-//		btnDichVu.setForeground(Color.decode("#c0baa2"));
-//		btnKhachHang.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnKhachHang.getMinimumSize().height));
-//		btnKhachHang.setFont(new Font("Sanserif", Font.BOLD, 25));
-//		btnKhachHang.setForeground(Color.decode("#c0baa2"));
-//		btnHoaDon.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnHoaDon.getMinimumSize().height));
-//		btnHoaDon.setFont(new Font("Sanserif", Font.BOLD, 25));
-//		btnHoaDon.setForeground(Color.decode("#c0baa2"));
-//		btnNhanVien.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnNhanVien.getMinimumSize().height));
-//		btnNhanVien.setFont(new Font("Sanserif", Font.BOLD, 25));
-//		btnNhanVien.setForeground(Color.decode("#c0baa2"));
-//		btnKhuyenMai.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnKhuyenMai.getMinimumSize().height));
-//		btnKhuyenMai.setFont(new Font("Sanserif", Font.BOLD, 25));
-//		btnKhuyenMai.setForeground(Color.decode("#c0baa2"));
-//		btnThongKe.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnThongKe.getMinimumSize().height));
-//		btnThongKe.setFont(new Font("Sanserif", Font.BOLD, 25));
-//		btnThongKe.setForeground(Color.decode("#c0baa2"));
-//		btnTroGiup.setMaximumSize(new Dimension(Integer.MAX_VALUE, btnTroGiup.getMinimumSize().height));
-//		btnTroGiup.setFont(new Font("Sanserif", Font.BOLD, 25));
-//		btnTroGiup.setForeground(Color.decode("#c0baa2"));
-//		
 		pnlButton.setBackground(Color.decode("#e6dbd1"));
 		
 		pnlLeft.add(pnlLogo, BorderLayout.NORTH);
@@ -480,6 +419,18 @@ public class Card extends JFrame{
 		btnTrangChu.addActionListener(e -> xuLyTrangChu());
 	}
 	
+	private void addButton(JButton button) {
+		button.setAlignmentX(Component.LEFT_ALIGNMENT);
+	    button.setBackground(Color.decode("#e6dbd1"));
+	    button.setForeground(Color.BLACK);
+	    button.setFocusPainted(false);
+	    button.setBorderPainted(false);
+	    button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	    button.setPreferredSize(new Dimension(200, 40));
+	    pnlButton.add(Box.createVerticalStrut(20));
+	    pnlButton.add(button);
+    }
+
 	private void xuLyPhong() {
 		CardLayout card = (CardLayout) pnl.getLayout();
 		card.show(pnl, "phong");

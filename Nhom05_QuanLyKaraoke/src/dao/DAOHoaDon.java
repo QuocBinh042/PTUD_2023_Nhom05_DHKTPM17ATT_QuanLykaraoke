@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,6 +106,95 @@ public class DAOHoaDon {
 		return dsHoaDon;
 	}
 
+	public ArrayList<HoaDon> layDSHoaDonTrongNgay() {
+		LocalDate today = LocalDate.now();
+		java.util.Date date = java.util.Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		return layDSHoaDonKhiThongKe(date, date);
+	}
+
+	public ArrayList<HoaDon> layDSHoaDonTheoThang() {
+		LocalDate currentDate = LocalDate.now();
+		int currentYear = currentDate.getYear();
+		int currentMonth = currentDate.getMonthValue();
+
+		LocalDate startDate = LocalDate.of(currentYear, currentMonth, 1);
+		LocalDate endDate = LocalDate.of(currentYear, currentMonth, startDate.lengthOfMonth());
+
+		java.util.Date startDateUtil = java.util.Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		java.util.Date endDateUtil = java.util.Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+		return layDSHoaDonKhiThongKe(startDateUtil, endDateUtil);
+	}
+
+	public ArrayList<HoaDon> layDSHoaDonTheoNam() {
+		LocalDate currentDate = LocalDate.now();
+		int currentYear = currentDate.getYear();
+
+		LocalDate startDate = LocalDate.of(currentYear, 1, 1);
+		LocalDate endDate = LocalDate.of(currentYear, 12, 31);
+
+		java.util.Date startDateUtil = java.util.Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		java.util.Date endDateUtil = java.util.Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+		return layDSHoaDonKhiThongKe(startDateUtil, endDateUtil);
+	}
+
+	public ArrayList<HoaDon> timKiemHoaDon(String maHD, String tenNV, String sdtKhach) {
+        ArrayList<HoaDon> dsHoaDon = new ArrayList<>();
+        ConnectDB.getInstance();
+        Connection connect = ConnectDB.getConnection();
+        try {
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append("SELECT * FROM HoaDon hd ");
+            sqlBuilder.append("INNER JOIN NhanVien nv ON hd.MaNV = nv.MaNV ");
+            sqlBuilder.append("INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH ");
+            sqlBuilder.append("INNER JOIN KhuyenMai km ON hd.MaKM = km.MaKM ");
+
+            if (maHD != null && !maHD.isEmpty()) {
+                sqlBuilder.append("AND hd.MaHD = ? ");
+            }
+            if (tenNV != null && !tenNV.isEmpty()) {
+                sqlBuilder.append("AND nv.TenNV LIKE ? ");
+            }
+            if (sdtKhach != null && !sdtKhach.isEmpty()) {
+                sqlBuilder.append("AND kh.SoDienThoai = ? ");
+            }
+
+            PreparedStatement preparedStatement = connect.prepareStatement(sqlBuilder.toString());
+
+            int paramIndex = 1;
+            if (maHD != null && !maHD.isEmpty()) {
+                preparedStatement.setString(paramIndex++, maHD);
+            }
+
+            if (tenNV != null && !tenNV.isEmpty()) {
+                preparedStatement.setString(paramIndex++, "%" + tenNV + "%");
+            }
+
+            if (sdtKhach != null && !sdtKhach.isEmpty()) {
+                preparedStatement.setString(paramIndex++, sdtKhach);
+            }
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+            	NhanVien nv = new NhanVien(rs.getString(8), rs.getString(9), rs.getDate(10), rs.getBoolean(11),
+						rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getBoolean(16));
+
+				KhachHang kh = new KhachHang(rs.getString(17), rs.getString(18), rs.getBoolean(19), rs.getBoolean(20),
+						rs.getString(21), rs.getString(22), rs.getInt(23), rs.getString(24));
+				KhuyenMai km = new KhuyenMai(rs.getString(25), rs.getDouble(26), rs.getDate(27), rs.getDate(28),
+						rs.getString(29), rs.getBoolean(30));
+
+				HoaDon hd = new HoaDon(rs.getString(1), rs.getTime(2).toLocalTime(), rs.getDate(3), nv, kh, km,
+						rs.getDouble(7));
+				dsHoaDon.add(hd);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return dsHoaDon;
+    }
+	
 	public ArrayList<HoaDon> layDSHoaDonKhiThongKe(java.util.Date date, java.util.Date date2) {
 		ArrayList<HoaDon> dsHoaDon = new ArrayList<HoaDon>();
 		ConnectDB.getInstance();
