@@ -111,7 +111,6 @@ public class ThongKe extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(cardPanel, "TablePanel");
-
 			}
 		});
 		btnChart.addActionListener(new ActionListener() {
@@ -142,12 +141,14 @@ public class ThongKe extends JPanel {
 		pnlThoiGian.add(dcChonNgay = new JDateChooser());
 //		pnlThoiGian.add(dcChonNgay = new JDateChooser((Date) null, "dd/MM/yyyy"));
 		dcChonNgay.setDate(new Date());
+		dcChonThang = new JDateChooser((Date) null, "MM/yyyy");
+		dcChonThang.setDate(new Date());
 		cbChonNam = new JComboBox<Integer>();
 		List<Integer> dsNam = daoHD.layNamLapHoaDon();
 		for (Integer string : dsNam) {
 			cbChonNam.addItem(string);
 		}
-		dcChonThang = new JDateChooser((Date) null, "MM/yyyy");
+		
 
 		cbLuaChonTG.setPreferredSize(new Dimension(150, 40));
 		dcChonNgay.setPreferredSize(dimension);
@@ -245,21 +246,27 @@ public class ThongKe extends JPanel {
 	private void thongKeTheoNgay() {
 		Double dt = daoHD.ThongKeHoaDonTheoNgay(dcChonNgay.getDate());
 		Integer slhd = daoHD.ThongKeSoLuongHoaDonTheoNgay(dcChonNgay.getDate());
-		Double dttb = dt/slhd;
+		Double dttb = dt / slhd;
+		if (slhd == 0)
+			dttb = 0.0;
 		addKetQua(dt, slhd, dttb);
 	}
 
 	private void thongKeTheoThang() {
 		Double dt = daoHD.ThongKeHoaDonTheoThang(dcChonThang.getDate());
 		Integer slhd = daoHD.ThongKeSoLuongHoaDonTheoThang(dcChonThang.getDate());
-		Double dttb = dt/slhd;
+		Double dttb = dt / slhd;
+		if (slhd == 0)
+			dttb = 0.0;
 		addKetQua(dt, slhd, dttb);
 	}
 
 	private void thongKeTheoNam() {
 		Double dt = daoHD.ThongKeHoaDonTheoNam(cbChonNam.getSelectedItem().toString());
 		Integer slhd = daoHD.ThongKeSoLuongHoaDonTheoNam(cbChonNam.getSelectedItem().toString());
-		Double dttb = dt/slhd;
+		Double dttb = dt / slhd;
+		if (slhd == 0)
+			dttb = 0.0;
 		addKetQua(dt, slhd, dttb);
 	}
 
@@ -268,6 +275,7 @@ public class ThongKe extends JPanel {
 		lblSoLuongHDValue.setText(slhd.toString());
 		lblDoanhThuTBValue.setText(formatter.format(dttb));
 	}
+
 	private Object xuLyThongKe() {
 		// TODO Auto-generated method stub
 		deleteAllDataJtable();
