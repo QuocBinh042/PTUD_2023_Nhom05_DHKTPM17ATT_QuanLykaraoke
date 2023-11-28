@@ -109,6 +109,149 @@ public class DAOHoaDon {
 		return dsHoaDon;
 	}
 
+	public ArrayList<HoaDon> layDSHoaDonTheoNgay(Date date) {
+		ArrayList<HoaDon> dsHoaDon = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection connect = ConnectDB.getConnection();
+
+		try {
+			// Truncate the timestamp to the day level
+			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
+
+			String sql = "SELECT * FROM HoaDon hd " + "INNER JOIN NhanVien nv ON hd.MaNV = nv.MaNV "
+					+ "INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH " + "INNER JOIN KhuyenMai km ON hd.MaKM = km.MaKM "
+					+ "WHERE CAST(NgayThanhToan AS DATE) = CAST(? AS DATE)";
+
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			preparedStatement.setDate(1, sqlNgay);
+
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				NhanVien nv = new NhanVien(rs.getString(8), rs.getString(9), rs.getDate(10), rs.getBoolean(11),
+						rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getBoolean(16));
+
+				KhachHang kh = new KhachHang(rs.getString(17), rs.getString(18), rs.getBoolean(19), rs.getBoolean(20),
+						rs.getString(21), rs.getString(22), rs.getInt(23), rs.getString(24));
+				KhuyenMai km = new KhuyenMai(rs.getString(25), rs.getDouble(26), rs.getDate(27), rs.getDate(28),
+						rs.getString(29), rs.getBoolean(30));
+
+				HoaDon hd = new HoaDon(rs.getString(1), rs.getTime(2).toLocalTime(), rs.getDate(3), nv, kh, km,
+						rs.getDouble(7));
+				dsHoaDon.add(hd);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	}
+
+	public ArrayList<HoaDon> layDSHoaDonTheoNgay(java.util.Date date) {
+		ArrayList<HoaDon> dsHoaDon = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection connect = ConnectDB.getConnection();
+
+		try {
+			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
+
+			String sql = "SELECT * FROM HoaDon hd " + "INNER JOIN NhanVien nv ON hd.MaNV = nv.MaNV "
+					+ "INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH " + "INNER JOIN KhuyenMai km ON hd.MaKM = km.MaKM "
+					+ "WHERE CAST(NgayThanhToan AS DATE) = CAST(? AS DATE)";
+
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			preparedStatement.setDate(1, sqlNgay);
+
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				NhanVien nv = new NhanVien(rs.getString(8), rs.getString(9), rs.getDate(10), rs.getBoolean(11),
+						rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getBoolean(16));
+
+				KhachHang kh = new KhachHang(rs.getString(17), rs.getString(18), rs.getBoolean(19), rs.getBoolean(20),
+						rs.getString(21), rs.getString(22), rs.getInt(23), rs.getString(24));
+				KhuyenMai km = new KhuyenMai(rs.getString(25), rs.getDouble(26), rs.getDate(27), rs.getDate(28),
+						rs.getString(29), rs.getBoolean(30));
+
+				HoaDon hd = new HoaDon(rs.getString(1), rs.getTime(2).toLocalTime(), rs.getDate(3), nv, kh, km,
+						rs.getDouble(7));
+				dsHoaDon.add(hd);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	}
+
+	public ArrayList<HoaDon> layDSHoaDonTheoThang(java.util.Date date) {
+		ArrayList<HoaDon> dsHoaDon = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection connect = ConnectDB.getConnection();
+
+		try {
+			// Truncate the timestamp to the month level
+			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
+
+			String sql = "SELECT * FROM HoaDon hd " + "INNER JOIN NhanVien nv ON hd.MaNV = nv.MaNV "
+					+ "INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH " + "INNER JOIN KhuyenMai km ON hd.MaKM = km.MaKM "
+					+ "WHERE MONTH(NgayThanhToan) = MONTH(?)";
+
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			preparedStatement.setDate(1, sqlNgay);
+
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				NhanVien nv = new NhanVien(rs.getString(8), rs.getString(9), rs.getDate(10), rs.getBoolean(11),
+						rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getBoolean(16));
+
+				KhachHang kh = new KhachHang(rs.getString(17), rs.getString(18), rs.getBoolean(19), rs.getBoolean(20),
+						rs.getString(21), rs.getString(22), rs.getInt(23), rs.getString(24));
+				KhuyenMai km = new KhuyenMai(rs.getString(25), rs.getDouble(26), rs.getDate(27), rs.getDate(28),
+						rs.getString(29), rs.getBoolean(30));
+
+				HoaDon hd = new HoaDon(rs.getString(1), rs.getTime(2).toLocalTime(), rs.getDate(3), nv, kh, km,
+						rs.getDouble(7));
+				dsHoaDon.add(hd);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	}
+
+	public ArrayList<HoaDon> layDSHoaDonTheoNam(int nam) {
+		ArrayList<HoaDon> dsHoaDon = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection connect = ConnectDB.getConnection();
+
+		try {
+			String sql = "SELECT * FROM HoaDon hd " + "INNER JOIN NhanVien nv ON hd.MaNV = nv.MaNV "
+					+ "INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH " + "INNER JOIN KhuyenMai km ON hd.MaKM = km.MaKM "
+					+ "WHERE YEAR(NgayThanhToan) = ?";
+
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			preparedStatement.setInt(1, nam);
+
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				NhanVien nv = new NhanVien(rs.getString(8), rs.getString(9), rs.getDate(10), rs.getBoolean(11),
+						rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getBoolean(16));
+
+				KhachHang kh = new KhachHang(rs.getString(17), rs.getString(18), rs.getBoolean(19), rs.getBoolean(20),
+						rs.getString(21), rs.getString(22), rs.getInt(23), rs.getString(24));
+				KhuyenMai km = new KhuyenMai(rs.getString(25), rs.getDouble(26), rs.getDate(27), rs.getDate(28),
+						rs.getString(29), rs.getBoolean(30));
+
+				HoaDon hd = new HoaDon(rs.getString(1), rs.getTime(2).toLocalTime(), rs.getDate(3), nv, kh, km,
+						rs.getDouble(7));
+				dsHoaDon.add(hd);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	}
+
 	public ArrayList<HoaDon> layDSHoaDonTrongNgay() {
 		LocalDate today = LocalDate.now();
 		java.util.Date date = java.util.Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -266,7 +409,6 @@ public class DAOHoaDon {
 
 	public Double ThongKeHoaDonTheoNgay(java.util.Date date) {
 		if (date == null) {
-			// Handle the case when date is null
 			return 0.0;
 		}
 
@@ -274,8 +416,6 @@ public class DAOHoaDon {
 		try {
 			ConnectDB.getInstance();
 			Connection connect = ConnectDB.getConnection();
-
-			// Truncate the timestamp to the day level
 			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
@@ -295,7 +435,6 @@ public class DAOHoaDon {
 
 	public Double ThongKeHoaDonTheoThang(java.util.Date date) {
 		if (date == null) {
-			// Handle the case when date is null
 			return 0.0;
 		}
 
@@ -303,8 +442,6 @@ public class DAOHoaDon {
 		try {
 			ConnectDB.getInstance();
 			Connection connect = ConnectDB.getConnection();
-
-			// Truncate the timestamp to the month level
 			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
@@ -318,14 +455,12 @@ public class DAOHoaDon {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			// Log the exception or rethrow a more meaningful exception.
 		}
 		return totalCount;
 	}
 
 	public Double ThongKeHoaDonTheoNam(String yearString) {
 		if (yearString == null || yearString.isEmpty()) {
-			// Handle the case when yearString is null or empty
 			return 0.0;
 		}
 
@@ -347,7 +482,6 @@ public class DAOHoaDon {
 			}
 		} catch (SQLException | NumberFormatException e) {
 			e.printStackTrace();
-			// Log the exception or rethrow a more meaningful exception.
 		}
 		return totalCount;
 	}
@@ -398,15 +532,12 @@ public class DAOHoaDon {
 
 	public int ThongKeSoLuongHoaDonTheoNgay(java.util.Date date) {
 		if (date == null) {
-			// Handle the case when date is null
 			return 0;
 		}
 		int totalCount = 0;
 		try {
 			ConnectDB.getInstance();
 			Connection connect = ConnectDB.getConnection();
-
-			// Truncate the timestamp to the day level
 			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
@@ -422,22 +553,18 @@ public class DAOHoaDon {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			// Log the exception or rethrow a more meaningful exception.
 		}
 		return totalCount;
 	}
 
 	public int ThongKeSoLuongHoaDonTheoThang(java.util.Date date) {
 		if (date == null) {
-			// Handle the case when date is null
 			return 0;
 		}
 		int totalCount = 0;
 		try {
 			ConnectDB.getInstance();
 			Connection connect = ConnectDB.getConnection();
-
-			// Truncate the timestamp to the month level
 			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
@@ -452,22 +579,18 @@ public class DAOHoaDon {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			// Log the exception or rethrow a more meaningful exception.
 		}
 		return totalCount;
 	}
 
 	public int ThongKeSoLuongHoaDonTheoNam(String yearString) {
 		if (yearString == null || yearString.isEmpty()) {
-			// Handle the case when date is null or empty
 			return 0;
 		}
 		int totalCount = 0;
 		try {
 			ConnectDB.getInstance();
 			Connection connect = ConnectDB.getConnection();
-
-			// Convert the input string to a java.sql.Date
 			int year = Integer.parseInt(yearString);
 			LocalDate localDate = LocalDate.of(year, 1, 1);
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
@@ -482,7 +605,6 @@ public class DAOHoaDon {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			// Log the exception or rethrow a more meaningful exception.
 		}
 		return totalCount;
 	}
@@ -503,7 +625,6 @@ public class DAOHoaDon {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			// Log the exception or rethrow a more meaningful exception.
 		}
 
 		return years;
@@ -534,4 +655,28 @@ public class DAOHoaDon {
 		}
 		return monthlyTotal;
 	}
+
+	public Map<Integer, Double> ThongKeHoaDonNam(Integer year) {
+		Map<Integer, Double> yearlyTotal = new HashMap<>();
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+			if (year != null) {
+				String sql = "SELECT YEAR(NgayThanhToan) AS Year, SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE YEAR(NgayThanhToan) = ? GROUP BY YEAR(NgayThanhToan)";
+				PreparedStatement preparedStatement = connect.prepareStatement(sql);
+				preparedStatement.setInt(1, year);
+				ResultSet rs = preparedStatement.executeQuery();
+
+				while (rs.next()) {
+					Integer resultYear = rs.getInt("Year");
+					Double totalCount = rs.getDouble("TotalCount");
+					yearlyTotal.put(resultYear, totalCount);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return yearlyTotal;
+	}
+
 }

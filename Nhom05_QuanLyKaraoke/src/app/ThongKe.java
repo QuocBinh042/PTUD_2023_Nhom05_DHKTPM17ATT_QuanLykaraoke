@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -106,7 +107,13 @@ public class ThongKe extends JPanel {
 				thongKeTheoThang();
 			}
 		});
-		cbChonNam.addActionListener(e -> thongKeTheoNam());
+		cbChonNam.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				thongKeTheoNam();
+				cbChonNam.addActionListener(e -> thongKeTheoNam());
+			}
+		});
 		btnTable.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -148,7 +155,6 @@ public class ThongKe extends JPanel {
 		for (Integer string : dsNam) {
 			cbChonNam.addItem(string);
 		}
-		
 
 		cbLuaChonTG.setPreferredSize(new Dimension(150, 40));
 		dcChonNgay.setPreferredSize(dimension);
@@ -160,7 +166,7 @@ public class ThongKe extends JPanel {
 		JPanel pnlCenter = new JPanel(new BorderLayout());
 		cardLayout = new CardLayout();
 		cardPanel = new JPanel(cardLayout);
-		cardPanel.add(createChartPanel(), "ChartPanel");
+		cardPanel.add(createChartPanel(null), "ChartPanel");
 		cardPanel.add(createTablePanel(), "TablePanel");
 		pnlCenter.add(cardPanel, BorderLayout.CENTER);
 		JPanel pnlLuaChonKQ = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -168,11 +174,10 @@ public class ThongKe extends JPanel {
 		pnlLuaChonKQ.add(btnTable = new JButton("Bảng thống kê"));
 		pnlCenter.add(pnlLuaChonKQ, BorderLayout.NORTH);
 
-		// Create the main panel
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		mainPanel.add(pnlLuaChonTK);
-		mainPanel.add(pnlKetQua); // Add pnlKetQua here
+		mainPanel.add(pnlKetQua);
 		mainPanel.add(pnlCenter);
 		this.setLayout(new BorderLayout());
 		this.add(mainPanel, BorderLayout.CENTER);
@@ -193,7 +198,7 @@ public class ThongKe extends JPanel {
 		lblDoanhThuTBValue.setPreferredSize(componentSize);
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.insets = new Insets(0, 25, 0, 25); // Adjust the insets as needed
+		gbc.insets = new Insets(0, 25, 0, 25);
 		pnlKetQua.add(b1, gbc);
 		gbc.gridx = 1;
 		pnlKetQua.add(b2, gbc);
@@ -205,7 +210,7 @@ public class ThongKe extends JPanel {
 	private JPanel createPanelWithLabelAndTextField(JLabel label, JLabel valueLabel, Color color) {
 		Icon img_dollar = new ImageIcon("src/img/dollar.png");
 		JPanel panel = new JPanel(new BorderLayout());
-		panel.setBackground(color); // Set background color for the JPanel
+		panel.setBackground(color);
 		label.setFont(new Font("Arial", Font.BOLD, 13));
 		panel.add(new JLabel(img_dollar), BorderLayout.WEST);
 
@@ -234,7 +239,7 @@ public class ThongKe extends JPanel {
 		return pnlTable;
 	}
 
-	private JPanel createChartPanel() {
+	private JPanel createChartPanel(CategoryDataset dataset) {
 		JPanel pnlChart = new JPanel(new BorderLayout());
 		JFreeChart chart = ChartFactory.createBarChart("Biểu đồ doanh thu", "Tháng", "Doanh thu (VNĐ)", dataset,
 				PlotOrientation.VERTICAL, true, true, false);
@@ -244,30 +249,38 @@ public class ThongKe extends JPanel {
 	}
 
 	private void thongKeTheoNgay() {
-		Double dt = daoHD.ThongKeHoaDonTheoNgay(dcChonNgay.getDate());
-		Integer slhd = daoHD.ThongKeSoLuongHoaDonTheoNgay(dcChonNgay.getDate());
+		Date date = dcChonNgay.getDate();
+		Double dt = daoHD.ThongKeHoaDonTheoNgay(date);
+		Integer slhd = daoHD.ThongKeSoLuongHoaDonTheoNgay(date);
 		Double dttb = dt / slhd;
 		if (slhd == 0)
 			dttb = 0.0;
+		loadData(daoHD.layDSHoaDonTheoNgay(date));
 		addKetQua(dt, slhd, dttb);
 	}
 
 	private void thongKeTheoThang() {
-		Double dt = daoHD.ThongKeHoaDonTheoThang(dcChonThang.getDate());
-		Integer slhd = daoHD.ThongKeSoLuongHoaDonTheoThang(dcChonThang.getDate());
+		Date date = dcChonThang.getDate();
+		Double dt = daoHD.ThongKeHoaDonTheoThang(date);
+		Integer slhd = daoHD.ThongKeSoLuongHoaDonTheoThang(date);
 		Double dttb = dt / slhd;
 		if (slhd == 0)
 			dttb = 0.0;
+		loadData(daoHD.layDSHoaDonTheoThang(date));
 		addKetQua(dt, slhd, dttb);
 	}
 
 	private void thongKeTheoNam() {
-		Double dt = daoHD.ThongKeHoaDonTheoNam(cbChonNam.getSelectedItem().toString());
-		Integer slhd = daoHD.ThongKeSoLuongHoaDonTheoNam(cbChonNam.getSelectedItem().toString());
+		String year = cbChonNam.getSelectedItem().toString();
+		Double dt = daoHD.ThongKeHoaDonTheoNam(year);
+		Integer slhd = daoHD.ThongKeSoLuongHoaDonTheoNam(year);
 		Double dttb = dt / slhd;
 		if (slhd == 0)
 			dttb = 0.0;
+		loadData(dsHD = daoHD.layDSHoaDonTheoNam(Integer.valueOf(year)));
 		addKetQua(dt, slhd, dttb);
+		cardPanel.add(createChartPanel(createDatasetYear(Integer.valueOf(year))), "ChartPanel");
+		createDatasetYear(Integer.valueOf(year));		
 	}
 
 	private void addKetQua(Double dt, Integer slhd, Double dttb) {
@@ -277,16 +290,16 @@ public class ThongKe extends JPanel {
 	}
 
 	private Object xuLyThongKe() {
-		// TODO Auto-generated method stub
-		deleteAllDataJtable();
-		txtDoanhThu.setText(formatter.format(daoHD.ThongKeHoaDon(dateBD.getDate(), dateKT.getDate())));
-		txtSoLuongHD.setText(String.valueOf(daoHD.ThongKeSoLuongHoaDon(dateBD.getDate(), dateKT.getDate())));
-		dsHD = daoHD.layDSHoaDonTrongKhoangThoiGian(dateBD.getDate(), dateKT.getDate());
-		loadData(dsHD);
-		dataset = createDataset();
-		JFreeChart chart = ChartFactory.createBarChart("Biểu đồ doanh thu", "Tháng", "Doanh thu (VNĐ)", dataset,
-				PlotOrientation.VERTICAL, true, true, false);
-		ChartPanel panel = new ChartPanel(chart);
+//		// TODO Auto-generated method stub
+//		deleteAllDataJtable();
+//		txtDoanhThu.setText(formatter.format(daoHD.ThongKeHoaDon(dateBD.getDate(), dateKT.getDate())));
+//		txtSoLuongHD.setText(String.valueOf(daoHD.ThongKeSoLuongHoaDon(dateBD.getDate(), dateKT.getDate())));
+//		dsHD = daoHD.layDSHoaDonTrongKhoangThoiGian(dateBD.getDate(), dateKT.getDate());
+//		loadData(dsHD);
+//		dataset = createDatasetYear();
+//		JFreeChart chart = ChartFactory.createBarChart("Biểu đồ doanh thu", "Tháng", "Doanh thu (VNĐ)", dataset,
+//				PlotOrientation.VERTICAL, true, true, false);
+//		ChartPanel panel = new ChartPanel(chart);
 
 //		bCenter.removeAll();
 //		bCenter.add(scroll);
@@ -295,17 +308,28 @@ public class ThongKe extends JPanel {
 		return null;
 	}
 
-	private CategoryDataset createDataset() {
+	private CategoryDataset createDatasetYear(Integer year) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		Map<String, Double> dsThongKe = new HashMap<>();
-		dsThongKe = daoHD.ThongKeHoaDonThang(dateBD.getDate(), dateKT.getDate());
-		for (Map.Entry<String, Double> entry : dsThongKe.entrySet()) {
-			String month = entry.getKey();
+		Map<Integer, Double> dsThongKe = new HashMap<>();
+		dsThongKe = daoHD.ThongKeHoaDonNam(year);
+		for (Entry<Integer, Double> entry : dsThongKe.entrySet()) {
+			Integer month = entry.getKey();
 			Double totalCount = entry.getValue();
-			dataset.addValue(totalCount, "Doanh thu trong tháng", month);
-		}
+			dataset.addValue(totalCount, "Doanh thu trong năm", month);
+		}	
 		return dataset;
 	}
+//	private CategoryDataset createDataset() {
+//		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//		Map<String, Double> dsThongKe = new HashMap<>();
+//		dsThongKe = daoHD.ThongKeHoaDonThang(dateBD.getDate(), dateKT.getDate());
+//		for (Map.Entry<String, Double> entry : dsThongKe.entrySet()) {
+//			String month = entry.getKey();
+//			Double totalCount = entry.getValue();
+//			dataset.addValue(totalCount, "Doanh thu trong tháng", month);
+//		}
+//		return dataset;
+//	}
 
 	private void deleteAllDataJtable() {
 		DefaultTableModel dm = (DefaultTableModel) table.getModel();
@@ -316,6 +340,7 @@ public class ThongKe extends JPanel {
 	}
 
 	private void loadData(ArrayList<HoaDon> ds) {
+		deleteAllDataJtable();
 		for (entity.HoaDon hd : ds) {
 			tableModel.addRow(new Object[] { hd.getMaHoaDon(), hd.getKh().getTenKH(), hd.getNv().getTenNV(),
 					dateFormat.format(hd.getNgayThanhToan()), formatter.format(hd.getTongHoaDon()) });
