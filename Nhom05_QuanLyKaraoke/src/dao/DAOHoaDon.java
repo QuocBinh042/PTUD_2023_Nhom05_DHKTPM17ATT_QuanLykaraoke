@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import connectDB.ConnectDB;
@@ -140,44 +143,44 @@ public class DAOHoaDon {
 	}
 
 	public ArrayList<HoaDon> timKiemHoaDon(String maHD, String tenNV, String sdtKhach) {
-        ArrayList<HoaDon> dsHoaDon = new ArrayList<>();
-        ConnectDB.getInstance();
-        Connection connect = ConnectDB.getConnection();
-        try {
-            StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.append("SELECT * FROM HoaDon hd ");
-            sqlBuilder.append("INNER JOIN NhanVien nv ON hd.MaNV = nv.MaNV ");
-            sqlBuilder.append("INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH ");
-            sqlBuilder.append("INNER JOIN KhuyenMai km ON hd.MaKM = km.MaKM ");
+		ArrayList<HoaDon> dsHoaDon = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection connect = ConnectDB.getConnection();
+		try {
+			StringBuilder sqlBuilder = new StringBuilder();
+			sqlBuilder.append("SELECT * FROM HoaDon hd ");
+			sqlBuilder.append("INNER JOIN NhanVien nv ON hd.MaNV = nv.MaNV ");
+			sqlBuilder.append("INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH ");
+			sqlBuilder.append("INNER JOIN KhuyenMai km ON hd.MaKM = km.MaKM ");
 
-            if (maHD != null && !maHD.isEmpty()) {
-                sqlBuilder.append("AND hd.MaHD = ? ");
-            }
-            if (tenNV != null && !tenNV.isEmpty()) {
-                sqlBuilder.append("AND nv.TenNV LIKE ? ");
-            }
-            if (sdtKhach != null && !sdtKhach.isEmpty()) {
-                sqlBuilder.append("AND kh.SoDienThoai = ? ");
-            }
+			if (maHD != null && !maHD.isEmpty()) {
+				sqlBuilder.append("AND hd.MaHD = ? ");
+			}
+			if (tenNV != null && !tenNV.isEmpty()) {
+				sqlBuilder.append("AND nv.TenNV LIKE ? ");
+			}
+			if (sdtKhach != null && !sdtKhach.isEmpty()) {
+				sqlBuilder.append("AND kh.SoDienThoai = ? ");
+			}
 
-            PreparedStatement preparedStatement = connect.prepareStatement(sqlBuilder.toString());
+			PreparedStatement preparedStatement = connect.prepareStatement(sqlBuilder.toString());
 
-            int paramIndex = 1;
-            if (maHD != null && !maHD.isEmpty()) {
-                preparedStatement.setString(paramIndex++, maHD);
-            }
+			int paramIndex = 1;
+			if (maHD != null && !maHD.isEmpty()) {
+				preparedStatement.setString(paramIndex++, maHD);
+			}
 
-            if (tenNV != null && !tenNV.isEmpty()) {
-                preparedStatement.setString(paramIndex++, "%" + tenNV + "%");
-            }
+			if (tenNV != null && !tenNV.isEmpty()) {
+				preparedStatement.setString(paramIndex++, "%" + tenNV + "%");
+			}
 
-            if (sdtKhach != null && !sdtKhach.isEmpty()) {
-                preparedStatement.setString(paramIndex++, sdtKhach);
-            }
+			if (sdtKhach != null && !sdtKhach.isEmpty()) {
+				preparedStatement.setString(paramIndex++, sdtKhach);
+			}
 
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-            	NhanVien nv = new NhanVien(rs.getString(8), rs.getString(9), rs.getDate(10), rs.getBoolean(11),
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				NhanVien nv = new NhanVien(rs.getString(8), rs.getString(9), rs.getDate(10), rs.getBoolean(11),
 						rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getBoolean(16));
 
 				KhachHang kh = new KhachHang(rs.getString(17), rs.getString(18), rs.getBoolean(19), rs.getBoolean(20),
@@ -188,13 +191,13 @@ public class DAOHoaDon {
 				HoaDon hd = new HoaDon(rs.getString(1), rs.getTime(2).toLocalTime(), rs.getDate(3), nv, kh, km,
 						rs.getDouble(7));
 				dsHoaDon.add(hd);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } 
-        return dsHoaDon;
-    }
-	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	}
+
 	public ArrayList<HoaDon> timKiemHoaDonTheoMaHD(String maHD) {
 		ArrayList<HoaDon> dsHD = new ArrayList<>();
 		try {
@@ -226,7 +229,7 @@ public class DAOHoaDon {
 		}
 		return dsHD;
 	}
-	
+
 	public ArrayList<HoaDon> layDSHoaDonKhiThongKe(java.util.Date date, java.util.Date date2) {
 		ArrayList<HoaDon> dsHoaDon = new ArrayList<HoaDon>();
 		ConnectDB.getInstance();
@@ -261,6 +264,94 @@ public class DAOHoaDon {
 		return dsHoaDon;
 	}
 
+	public Double ThongKeHoaDonTheoNgay(java.util.Date date) {
+		if (date == null) {
+			// Handle the case when date is null
+			return 0.0;
+		}
+
+		Double totalCount = 0.0;
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+
+			// Truncate the timestamp to the day level
+			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
+
+			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE DAY(NgayThanhToan) = DAY(?)";
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			preparedStatement.setDate(1, sqlNgay);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				totalCount = rs.getDouble("TotalCount");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return totalCount;
+	}
+
+	public Double ThongKeHoaDonTheoThang(java.util.Date date) {
+		if (date == null) {
+			// Handle the case when date is null
+			return 0.0;
+		}
+
+		Double totalCount = 0.0;
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+
+			// Truncate the timestamp to the month level
+			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
+
+			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE MONTH(NgayThanhToan) = MONTH(?)";
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			preparedStatement.setDate(1, sqlNgay);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				totalCount = rs.getDouble("TotalCount");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// Log the exception or rethrow a more meaningful exception.
+		}
+		return totalCount;
+	}
+
+	public Double ThongKeHoaDonTheoNam(String yearString) {
+		if (yearString == null || yearString.isEmpty()) {
+			// Handle the case when yearString is null or empty
+			return 0.0;
+		}
+
+		Double totalCount = 0.0;
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+			int year = Integer.parseInt(yearString);
+			LocalDate localDate = LocalDate.of(year, 1, 1);
+			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
+			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE YEAR(NgayThanhToan) = YEAR(?)";
+			try (PreparedStatement preparedStatement = connect.prepareStatement(sql)) {
+				preparedStatement.setDate(1, sqlNgay);
+				try (ResultSet rs = preparedStatement.executeQuery()) {
+					if (rs.next()) {
+						totalCount = rs.getDouble("TotalCount");
+					}
+				}
+			}
+		} catch (SQLException | NumberFormatException e) {
+			e.printStackTrace();
+			// Log the exception or rethrow a more meaningful exception.
+		}
+		return totalCount;
+	}
+
 	public Double ThongKeHoaDon(java.util.Date date, java.util.Date date2) {
 		Double totalCount = 0.0;
 		try {
@@ -273,7 +364,6 @@ public class DAOHoaDon {
 			preparedStatement.setDate(1, sqlNgayBD);
 			preparedStatement.setDate(2, sqlNgayKT);
 			ResultSet rs = preparedStatement.executeQuery();
-
 			if (rs.next()) {
 				totalCount = rs.getDouble("TotalCount");
 			}
@@ -296,7 +386,6 @@ public class DAOHoaDon {
 			preparedStatement.setDate(1, sqlNgayBD);
 			preparedStatement.setDate(2, sqlNgayKT);
 			ResultSet rs = preparedStatement.executeQuery();
-
 			if (rs.next()) {
 				totalCount = rs.getInt("TotalCount");
 			}
@@ -305,6 +394,119 @@ public class DAOHoaDon {
 			e.printStackTrace();
 		}
 		return totalCount;
+	}
+
+	public int ThongKeSoLuongHoaDonTheoNgay(java.util.Date date) {
+		if (date == null) {
+			// Handle the case when date is null
+			return 0;
+		}
+		int totalCount = 0;
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+
+			// Truncate the timestamp to the day level
+			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
+
+			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE DAY(NgayThanhToan) = DAY(?) AND MONTH(NgayThanhToan) = MONTH(?) AND YEAR(NgayThanhToan) = YEAR(?)";
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			preparedStatement.setDate(1, sqlNgay);
+			preparedStatement.setDate(2, sqlNgay);
+			preparedStatement.setDate(3, sqlNgay);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				totalCount = rs.getInt("TotalCount");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// Log the exception or rethrow a more meaningful exception.
+		}
+		return totalCount;
+	}
+
+	public int ThongKeSoLuongHoaDonTheoThang(java.util.Date date) {
+		if (date == null) {
+			// Handle the case when date is null
+			return 0;
+		}
+		int totalCount = 0;
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+
+			// Truncate the timestamp to the month level
+			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
+
+			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE MONTH(NgayThanhToan) = MONTH(?) AND YEAR(NgayThanhToan) = YEAR(?)";
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			preparedStatement.setDate(1, sqlNgay);
+			preparedStatement.setDate(2, sqlNgay);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				totalCount = rs.getInt("TotalCount");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// Log the exception or rethrow a more meaningful exception.
+		}
+		return totalCount;
+	}
+
+	public int ThongKeSoLuongHoaDonTheoNam(String yearString) {
+		if (yearString == null || yearString.isEmpty()) {
+			// Handle the case when date is null or empty
+			return 0;
+		}
+		int totalCount = 0;
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+
+			// Convert the input string to a java.sql.Date
+			int year = Integer.parseInt(yearString);
+			LocalDate localDate = LocalDate.of(year, 1, 1);
+			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
+
+			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE DATEPART(YEAR, NgayThanhToan) = DATEPART(YEAR, ?)";
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			preparedStatement.setDate(1, sqlNgay);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				totalCount = rs.getInt("TotalCount");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// Log the exception or rethrow a more meaningful exception.
+		}
+		return totalCount;
+	}
+
+	public List<Integer> layNamLapHoaDon() {
+		List<Integer> years = new ArrayList<>();
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+
+			String sql = "SELECT DISTINCT YEAR(NgayThanhToan) AS InvoiceYear FROM HoaDon";
+			PreparedStatement preparedStatement = connect.prepareStatement(sql);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int year = rs.getInt("InvoiceYear");
+				years.add(year);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// Log the exception or rethrow a more meaningful exception.
+		}
+
+		return years;
 	}
 
 	public Map<String, Double> ThongKeHoaDonThang(java.util.Date date, java.util.Date date2) {
