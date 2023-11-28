@@ -12,9 +12,11 @@ import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import connectDB.ConnectDB;
 import entity.HoaDon;
@@ -656,27 +658,73 @@ public class DAOHoaDon {
 		return monthlyTotal;
 	}
 
+
 	public Map<Integer, Double> ThongKeHoaDonNam(Integer year) {
-		Map<Integer, Double> yearlyTotal = new HashMap<>();
+		Map<Integer, Double> monthlyTotal = new HashMap<>();
 		try {
 			ConnectDB.getInstance();
 			Connection connect = ConnectDB.getConnection();
 			if (year != null) {
-				String sql = "SELECT YEAR(NgayThanhToan) AS Year, SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE YEAR(NgayThanhToan) = ? GROUP BY YEAR(NgayThanhToan)";
-				PreparedStatement preparedStatement = connect.prepareStatement(sql);
-				preparedStatement.setInt(1, year);
-				ResultSet rs = preparedStatement.executeQuery();
+				// Loop through all 12 months
+				for (int month = 1; month <= 12; month++) {
+					String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE YEAR(NgayThanhToan) = ? AND MONTH(NgayThanhToan) = ?";
+					PreparedStatement preparedStatement = connect.prepareStatement(sql);
+					preparedStatement.setInt(1, year);
+					preparedStatement.setInt(2, month);
+					ResultSet rs = preparedStatement.executeQuery();
 
-				while (rs.next()) {
-					Integer resultYear = rs.getInt("Year");
-					Double totalCount = rs.getDouble("TotalCount");
-					yearlyTotal.put(resultYear, totalCount);
+					if (rs.next()) {
+						Double totalCount = rs.getDouble("TotalCount");
+						monthlyTotal.put(month, totalCount);
+					} else {
+						// If there is no revenue for the month, set it to 0
+						monthlyTotal.put(month, 0.0);
+					}
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return yearlyTotal;
+		return monthlyTotal;
+	}
+
+	public Map<Integer, Double> ThongKeHoaDonThang(java.util.Date month) {
+		Map<Integer, Double> monthlyTotal = new TreeMap<>();
+
+		try {
+			if (month != null) {
+				ConnectDB.getInstance();
+				Connection connect = ConnectDB.getConnection();
+
+				LocalDate localDate = month.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				YearMonth yearMonth = YearMonth.from(localDate);
+
+				int year = yearMonth.getYear();
+				int monthValue = yearMonth.getMonthValue();
+
+				int daysInMonth = yearMonth.lengthOfMonth();
+
+				for (int day = 1; day <= daysInMonth; day++) {
+					String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE YEAR(ngayThanhToan) = ? AND MONTH(ngayThanhToan) = ? AND DAY(ngayThanhToan) = ?";
+					PreparedStatement preparedStatement = connect.prepareStatement(sql);
+					preparedStatement.setInt(1, year);
+					preparedStatement.setInt(2, monthValue);
+					preparedStatement.setInt(3, day);
+					ResultSet rs = preparedStatement.executeQuery();
+
+					if (rs.next()) {
+						double totalCount = rs.getDouble("TotalCount");
+						monthlyTotal.put(day, totalCount);
+					} else {
+						// If there is no revenue for the day, set it to 0
+						monthlyTotal.put(day, 0.0);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return monthlyTotal;
 	}
 
 }

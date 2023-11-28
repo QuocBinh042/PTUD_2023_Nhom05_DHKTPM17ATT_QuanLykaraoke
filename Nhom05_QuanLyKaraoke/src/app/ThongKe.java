@@ -82,6 +82,7 @@ public class ThongKe extends JPanel {
 		cbLuaChonTG.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				btnChart.enable(true);
 				Component selectedComponent = null;
 				pnlThoiGian.removeAll();
 				if (cbLuaChonTG.getSelectedItem().equals("Ngày")) {
@@ -99,17 +100,20 @@ public class ThongKe extends JPanel {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				thongKeTheoNgay();
+				btnChart.enable(false);
 			}
 		});
 		dcChonThang.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
+				btnChart.enable(true);
 				thongKeTheoThang();
 			}
 		});
 		cbChonNam.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
+				btnChart.enable(true);
 				thongKeTheoNam();
 				cbChonNam.addActionListener(e -> thongKeTheoNam());
 			}
@@ -166,7 +170,7 @@ public class ThongKe extends JPanel {
 		JPanel pnlCenter = new JPanel(new BorderLayout());
 		cardLayout = new CardLayout();
 		cardPanel = new JPanel(cardLayout);
-		cardPanel.add(createChartPanel(null), "ChartPanel");
+		cardPanel.add(createChartPanel(null, "giờ"), "ChartPanel");
 		cardPanel.add(createTablePanel(), "TablePanel");
 		pnlCenter.add(cardPanel, BorderLayout.CENTER);
 		JPanel pnlLuaChonKQ = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -239,9 +243,9 @@ public class ThongKe extends JPanel {
 		return pnlTable;
 	}
 
-	private JPanel createChartPanel(CategoryDataset dataset) {
+	private JPanel createChartPanel(CategoryDataset dataset, String txt) {
 		JPanel pnlChart = new JPanel(new BorderLayout());
-		JFreeChart chart = ChartFactory.createBarChart("Biểu đồ doanh thu", "Tháng", "Doanh thu (VNĐ)", dataset,
+		JFreeChart chart = ChartFactory.createBarChart("Biểu đồ doanh thu", txt, "Doanh thu (VNĐ)", dataset,
 				PlotOrientation.VERTICAL, true, true, false);
 		ChartPanel chartPanelComponent = new ChartPanel(chart);
 		pnlChart.add(chartPanelComponent, BorderLayout.CENTER);
@@ -257,6 +261,7 @@ public class ThongKe extends JPanel {
 			dttb = 0.0;
 		loadData(daoHD.layDSHoaDonTheoNgay(date));
 		addKetQua(dt, slhd, dttb);
+		cardLayout.show(cardPanel, "TablePanel");
 	}
 
 	private void thongKeTheoThang() {
@@ -268,6 +273,8 @@ public class ThongKe extends JPanel {
 			dttb = 0.0;
 		loadData(daoHD.layDSHoaDonTheoThang(date));
 		addKetQua(dt, slhd, dttb);
+		cardPanel.add(createChartPanel(createDatasetMonth(date), "Ngày"), "ChartPanel");
+		cardLayout.show(cardPanel, "ChartPanel");
 	}
 
 	private void thongKeTheoNam() {
@@ -279,33 +286,27 @@ public class ThongKe extends JPanel {
 			dttb = 0.0;
 		loadData(dsHD = daoHD.layDSHoaDonTheoNam(Integer.valueOf(year)));
 		addKetQua(dt, slhd, dttb);
-		cardPanel.add(createChartPanel(createDatasetYear(Integer.valueOf(year))), "ChartPanel");
-		createDatasetYear(Integer.valueOf(year));		
+		cardPanel.add(createChartPanel(createDatasetYear(Integer.valueOf(year)), "Tháng"), "ChartPanel");
+		cardLayout.show(cardPanel, "ChartPanel");
+	}
+
+	private CategoryDataset createDatasetMonth(Date date) {
+		// TODO Auto-generated method stub
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		Map<Integer, Double> dsThongKe = new HashMap<>();
+		dsThongKe = daoHD.ThongKeHoaDonThang(date);
+		for (Entry<Integer, Double> entry : dsThongKe.entrySet()) {
+			Integer day = entry.getKey();
+			Double totalCount = entry.getValue();
+			dataset.addValue(totalCount, "Doanh thu trong ngày", day);
+		}
+		return dataset;
 	}
 
 	private void addKetQua(Double dt, Integer slhd, Double dttb) {
 		lblDoanhThuValue.setText(formatter.format(dt));
 		lblSoLuongHDValue.setText(slhd.toString());
 		lblDoanhThuTBValue.setText(formatter.format(dttb));
-	}
-
-	private Object xuLyThongKe() {
-//		// TODO Auto-generated method stub
-//		deleteAllDataJtable();
-//		txtDoanhThu.setText(formatter.format(daoHD.ThongKeHoaDon(dateBD.getDate(), dateKT.getDate())));
-//		txtSoLuongHD.setText(String.valueOf(daoHD.ThongKeSoLuongHoaDon(dateBD.getDate(), dateKT.getDate())));
-//		dsHD = daoHD.layDSHoaDonTrongKhoangThoiGian(dateBD.getDate(), dateKT.getDate());
-//		loadData(dsHD);
-//		dataset = createDatasetYear();
-//		JFreeChart chart = ChartFactory.createBarChart("Biểu đồ doanh thu", "Tháng", "Doanh thu (VNĐ)", dataset,
-//				PlotOrientation.VERTICAL, true, true, false);
-//		ChartPanel panel = new ChartPanel(chart);
-
-//		bCenter.removeAll();
-//		bCenter.add(scroll);
-//		bCenter.add(panel);
-//		bCenter.repaint();
-		return null;
 	}
 
 	private CategoryDataset createDatasetYear(Integer year) {
@@ -315,28 +316,16 @@ public class ThongKe extends JPanel {
 		for (Entry<Integer, Double> entry : dsThongKe.entrySet()) {
 			Integer month = entry.getKey();
 			Double totalCount = entry.getValue();
-			dataset.addValue(totalCount, "Doanh thu trong năm", month);
-		}	
+			dataset.addValue(totalCount, "Doanh thu trong tháng", month);
+		}
 		return dataset;
 	}
-//	private CategoryDataset createDataset() {
-//		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//		Map<String, Double> dsThongKe = new HashMap<>();
-//		dsThongKe = daoHD.ThongKeHoaDonThang(dateBD.getDate(), dateKT.getDate());
-//		for (Map.Entry<String, Double> entry : dsThongKe.entrySet()) {
-//			String month = entry.getKey();
-//			Double totalCount = entry.getValue();
-//			dataset.addValue(totalCount, "Doanh thu trong tháng", month);
-//		}
-//		return dataset;
-//	}
 
 	private void deleteAllDataJtable() {
 		DefaultTableModel dm = (DefaultTableModel) table.getModel();
 		while (dm.getRowCount() > 0) {
 			dm.removeRow(0);
 		}
-
 	}
 
 	private void loadData(ArrayList<HoaDon> ds) {
