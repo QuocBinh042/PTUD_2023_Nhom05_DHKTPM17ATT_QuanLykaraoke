@@ -23,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
@@ -52,6 +54,21 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		daoLP = new daoLoaiPhong();
 
 		setSize(780, 350);
@@ -67,7 +84,7 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		Box b2, b3, b4;
 		Box bLeft, bRight;
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
-		Dimension dimension = new Dimension(120, 25);
+		Dimension dimension = new Dimension(170, 30);
 
 		JPanel pnlLeft = new JPanel();
 		JPanel pnlRight = new JPanel();
@@ -109,9 +126,10 @@ public class LoaiPhong extends JFrame implements MouseListener {
 
 		lblsucChua.setPreferredSize(lblTenLP.getPreferredSize());
 		lblGiaLP.setPreferredSize(lblTenLP.getPreferredSize());
+		cbTenLP.setPreferredSize(dimension);
 		txtSucChua.setPreferredSize(dimension);
 		txtGiaLP.setPreferredSize(dimension);
-		cbTenLP.setPreferredSize(new Dimension(155, 25));
+		
 
 		// button
 		bLeft.add(Box.createVerticalStrut(10));
@@ -140,12 +158,12 @@ public class LoaiPhong extends JFrame implements MouseListener {
 		pnlLoc.add(lblLocTenLP = new JLabel("Tên loại phòng"));
 		pnlLoc.add(Box.createHorizontalStrut(20));
 		pnlLoc.add(cbLocTP = new JComboBox<>(cbLP));
-		cbLocTP.setPreferredSize(new Dimension(100, 25));
+		cbLocTP.setPreferredSize(new Dimension(100, 30));
 		pnlLoc.add(Box.createHorizontalStrut(40));
 		pnlLoc.add(lblLocSC = new JLabel("Sức chứa"));
 		pnlLoc.add(Box.createHorizontalStrut(20));
 		pnlLoc.add(cbLocSC = new JComboBox<>(cbSC));
-		cbLocSC.setPreferredSize(new Dimension(100, 25));
+		cbLocSC.setPreferredSize(new Dimension(100, 30));
 		pnlTacVu.add(pnlLoc);
 
 		// Table

@@ -205,8 +205,9 @@ INSERT INTO DichVu values(N'DV0020', N'6 lon bia Heineken Silver 330ml', 150000,
 
 --------------------------------NHAN VIEN-----------------------------------------------
 --INSERT INTO NhanVien(MaNV, TenNV, NamSinh, GioiTinh, SoDienThoai, CCCD, ChucVu, MatKhau, TinhTrangNV)
+update NhanVien set SoDienThoai = N'0386076296' where MaNV = N'NV0001'
 --ChucVu (0: nhan vien quan ly, 1: le tan, 2: phuc vu)
-INSERT INTO NhanVien values(N'NV0001', N'Nguyễn Thị Yến Nhi', '2003/10/05', 1, N'0395259603', N'082594657912', N'Lễ tân', N'123456789', 1)
+INSERT INTO NhanVien values(N'NV0001', N'Nguyễn Thị Yến Nhi', '2003/10/05', 1, N'0386076296', N'082594657912', N'Lễ tân', N'123456789', 1)
 INSERT INTO NhanVien values(N'NV0002', N'Nguyễn Trung Kiên', '1999/07/21', 0, N'0205578931', N'064769123700', N'Nhân viên quản lý', N'123456789', 1)
 INSERT INTO NhanVien values(N'NV0003', N'Vũ Đức Thắng', '2004/02/15', 0, N'0702447601', N'076591236064', N'Nhân viên quản lý', N'thang54t', 1)
 INSERT INTO NhanVien values(N'NV0004', N'Lâm Thúy Hiền', '2002/05/18', 1, N'0452603567', N'084769431052', N'Phục vụ', N'hienthuy59r', 0)
