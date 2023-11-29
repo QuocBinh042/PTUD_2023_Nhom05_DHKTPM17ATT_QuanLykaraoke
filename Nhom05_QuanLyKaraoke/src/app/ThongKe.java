@@ -18,6 +18,8 @@ import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -330,6 +332,7 @@ public class ThongKe extends JPanel {
 
 	private void loadData(ArrayList<HoaDon> ds) {
 		deleteAllDataJtable();
+		Collections.sort(ds, Comparator.comparing(HoaDon::getTongHoaDon, Comparator.reverseOrder()));
 		for (entity.HoaDon hd : ds) {
 			tableModel.addRow(new Object[] { hd.getMaHoaDon(), hd.getKh().getTenKH(), hd.getNv().getTenNV(),
 					dateFormat.format(hd.getNgayThanhToan()), formatter.format(hd.getTongHoaDon()) });
