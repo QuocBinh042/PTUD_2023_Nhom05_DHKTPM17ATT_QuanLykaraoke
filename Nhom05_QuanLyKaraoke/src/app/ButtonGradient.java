@@ -24,8 +24,8 @@ import javax.swing.border.EmptyBorder;
 
 public class ButtonGradient extends JButton {
 
-	private Color color1 = Color.decode("#0099F7");
-	private Color color2 = Color.decode("#427D9D");
+	private Color color1 = Color.decode("#D360E4");
+	private Color color2 = Color.decode("#990447");
 	private final Timer timer;
 	private final Timer timerPressed;
 	private float alpha = 0.3f;
@@ -63,7 +63,6 @@ public class ButtonGradient extends JButton {
 	public ButtonGradient(String text) {
 		setText(text);
 		setContentAreaFilled(false);
-		setForeground(Color.decode("#c0baa2"));
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 		setBorder(new EmptyBorder(10, 20, 10, 20));
 		addMouseListener(new MouseAdapter() {

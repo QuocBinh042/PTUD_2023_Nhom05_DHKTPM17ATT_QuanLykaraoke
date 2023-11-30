@@ -21,13 +21,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 
 public class Card extends JFrame{
 	private JButton btnTrangChu, btnPhongHat, btnPhong, btnDichVu, btnKhachHang, btnNhanVien, btnHoaDon, btnKhuyenMai,
-	btnThongKe, btnTroGiup;
+	btnThongKe, btnTroGiup, btnDangXuat;
 	private JPanel pnl = new JPanel(new CardLayout());
 	private TrangChu tc = new TrangChu();
 	private DatPhong dp = new DatPhong();
@@ -54,8 +55,8 @@ public class Card extends JFrame{
 		JLabel label = new JLabel(icon);
 		pnlLogo.add(Box.createVerticalStrut(50));
 		pnlLogo.add(label);		
-		pnlLogo.setBackground(Color.decode("#e6dbd1"));
-		
+		pnlLogo.setBackground(Color.decode("#990447"));
+		pnlButton.setBackground(Color.decode("#990447"));
 		pnl.add(tc, "tc");
 		pnl.add(dp, "dp");
 		pnl.add(dv, "dv");
@@ -66,6 +67,7 @@ public class Card extends JFrame{
 		pnl.add(km, "km");
 		pnl.add(tk, "tk");
 		pnl.add(tg, "tg");
+		pnl.add(tg, "dx");
 		
         addButton(btnTrangChu = new JButton("TRANG CHỦ"));
         addButton(btnPhongHat = new JButton("PHÒNG HÁT"));
@@ -77,6 +79,8 @@ public class Card extends JFrame{
         addButton(btnKhuyenMai = new JButton("KHUYẾN MÃI"));
         addButton(btnThongKe = new JButton("THỐNG KÊ DOANH THU"));
         addButton(btnTroGiup = new JButton("TRỢ GIÚP"));
+        addButton(btnDangXuat = new JButton("ĐĂNG XUẤT"));
+        
 		pnlButton.setPreferredSize(new Dimension(200, 720));		
 		btnTrangChu.addMouseListener(new MouseListener() {			
 			@Override
@@ -398,7 +402,7 @@ public class Card extends JFrame{
 			}
 		});
 	
-		pnlButton.setBackground(Color.decode("#e6dbd1"));
+		
 		
 		pnlLeft.add(pnlLogo, BorderLayout.NORTH);
 		pnlLeft.add(pnlButton, BorderLayout.CENTER);
@@ -417,6 +421,17 @@ public class Card extends JFrame{
 		btnThongKe.addActionListener(e -> xuLyThongKe());
 		btnTroGiup.addActionListener(e -> xuLyTroGiup());
 		btnTrangChu.addActionListener(e -> xuLyTrangChu());
+		btnDangXuat.addActionListener(e ->{
+			int i = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn đăng xuất khỏi hệ thống không?", "Chú ý",
+					JOptionPane.YES_NO_OPTION);
+			if (i == JOptionPane.YES_OPTION) {
+				dispose();
+				new app.Login().setVisible(true);
+			}
+			else {
+				
+			}
+		});
 	}
 	
 	private void addButton(JButton button) {
@@ -426,8 +441,8 @@ public class Card extends JFrame{
 	    button.setFocusPainted(false);
 	    button.setBorderPainted(false);
 	    button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-	    button.setPreferredSize(new Dimension(200, 40));
-	    pnlButton.add(Box.createVerticalStrut(20));
+	    button.setPreferredSize(new Dimension(180, 40));
+//	    pnlButton.add(Box.createVerticalStrut(20));
 	    pnlButton.add(button);
     }
 
