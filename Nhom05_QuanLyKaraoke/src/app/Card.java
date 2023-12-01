@@ -53,20 +53,21 @@ public class Card extends JFrame {
 		// Create components
 		btnTrangChu = createButton(" TRANG CHỦ ", "src/img/home.png");
 		btnPhongHat = createButton(" PHÒNG HÁT ", "src/img/karaoke.png");
-		btnPhong =    createButton(" PHÒNG          ", "src/img/room.png");
-		btnDichVu =   createButton(" DỊCH VỤ         ", "src/img/service.png");
-		btnKhachHang =createButton(" KHÁCH HÀNG", "src/img/client.png");
+		btnPhong = createButton(" PHÒNG          ", "src/img/room.png");
+		btnDichVu = createButton(" DỊCH VỤ         ", "src/img/service.png");
+		btnKhachHang = createButton(" KHÁCH HÀNG", "src/img/client.png");
 		btnNhanVien = createButton(" NHÂN VIÊN ", "src/img/staff.png");
-		btnHoaDon =   createButton(" HÓA ĐƠN   ", "src/img/invoice.png");
-		btnKhuyenMai =createButton(" KHUYẾN MÃI", "src/img/discount.png");
-		btnThongKe =  createButton(" THỐNG KÊ  ", "src/img/statistical.png");
-		btnTroGiup =  createButton(" TRỢ GIÚP  ", "src/img/help.png");
+		btnHoaDon = createButton(" HÓA ĐƠN   ", "src/img/invoice.png");
+		btnKhuyenMai = createButton(" KHUYẾN MÃI", "src/img/discount.png");
+		btnThongKe = createButton(" THỐNG KÊ  ", "src/img/statistical.png");
+		btnTroGiup = createButton(" TRỢ GIÚP  ", "src/img/help.png");
 		btnDangXuat = createButton(" ĐĂNG XUẤT ", "src/img/out.png");
 		createPanelLayout();
 
 		// Add components to the frame
 		add(createLeftPanel(), BorderLayout.WEST);
 		add(pnl, BorderLayout.CENTER);
+//		add(createNVPanel(), BorderLayout.SOUTH);
 	}
 
 	private JButton createButton(String text, String iconPath) {
@@ -102,7 +103,8 @@ public class Card extends JFrame {
 		JPanel pnlLeft = new JPanel(new BorderLayout());
 		pnlLeft.add(createLogoPanel(), BorderLayout.NORTH);
 		pnlLeft.add(pnlButton, BorderLayout.CENTER);
-		pnlLeft.setBorder(BorderFactory.createLineBorder(Color.black));
+		pnlLeft.add(createNVPanel(), BorderLayout.SOUTH);
+//		pnlLeft.setBorder(BorderFactory.createLineBorder(Color.black));
 		pnlButton.setPreferredSize(new Dimension(200, 700));
 		return pnlLeft;
 	}
@@ -117,6 +119,20 @@ public class Card extends JFrame {
 		return pnlLogo;
 	}
 
+	private JPanel createNVPanel() {
+		JPanel pnlNV = new JPanel();
+		ImageIcon icon = new ImageIcon("src/img/consultant.png");
+		JLabel label = new JLabel(icon);
+		JLabel lblTenNV = new JLabel("Tran Le Quoc Binh");
+		lblTenNV.setFont(new Font("Arial", Font.BOLD, 12));
+		lblTenNV.setForeground(Color.white);
+		pnlNV.setLayout(new BorderLayout());
+		pnlNV.add(label, BorderLayout.WEST);
+		pnlNV.add(lblTenNV, BorderLayout.CENTER);
+		pnlNV.setBackground(Color.decode("#990447"));
+		return pnlNV;
+	}
+
 	private void addEventListeners() {
 		List<JButton> buttons = Arrays.asList(btnTrangChu, btnPhongHat, btnPhong, btnDichVu, btnKhachHang, btnNhanVien,
 				btnHoaDon, btnKhuyenMai, btnThongKe, btnTroGiup, btnDangXuat);
@@ -124,17 +140,21 @@ public class Card extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				button.setBackground(Color.decode("#e6dbd1"));
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				button.setBackground(Color.decode("#B5B5B5"));
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			}
