@@ -164,7 +164,7 @@ public class Login extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin đăng nhập!");
 			} else if (daoDN.kiemTraTK(username, pass) != null) {
 				JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
-				new Tab().setVisible(true);
+				new Card(username).setVisible(true);
 				 dispose();
 			}
 			

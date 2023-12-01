@@ -1,4 +1,4 @@
-package app;
+ package app;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -7,9 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.*;
 
+import dao.DAONhanVien;
+
 public class Card extends JFrame {
 	private JButton btnTrangChu, btnPhongHat, btnPhong, btnDichVu, btnKhachHang, btnNhanVien, btnHoaDon, btnKhuyenMai,
 			btnThongKe, btnTroGiup, btnDangXuat;
+	private JLabel lbTenNV;
 	private JPanel pnl = new JPanel(new CardLayout());
 	private TrangChu tc = new TrangChu();
 	private DatPhong dp = new DatPhong();
@@ -22,8 +25,11 @@ public class Card extends JFrame {
 	private ThongKe tk = new ThongKe();
 	private TroGiup tg = new TroGiup();
 	private JPanel pnlButton = new JPanel();
-
-	public Card() {
+	private String maNV;
+	private DAONhanVien daoNV = new DAONhanVien();
+	
+	public Card(String maNV) {
+		this.maNV = maNV;
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException e1) {
@@ -120,17 +126,22 @@ public class Card extends JFrame {
 	}
 
 	private JPanel createNVPanel() {
+		entity.NhanVien nv = daoNV.timKiemNhanVienTheoMa(maNV).get(0); 
 		JPanel pnlNV = new JPanel();
-		ImageIcon icon = new ImageIcon("src/img/consultant.png");
+		lbTenNV = new JLabel();
+		lbTenNV.setText(nv.getTenNV().trim());
+		JPanel pnlMain = new JPanel();
+		ImageIcon icon = new ImageIcon("src/img/logo2.png");
 		JLabel label = new JLabel(icon);
-		JLabel lblTenNV = new JLabel("Tran Le Quoc Binh");
-		lblTenNV.setFont(new Font("Arial", Font.BOLD, 12));
-		lblTenNV.setForeground(Color.white);
+		lbTenNV.setFont(new Font("Sanserif", Font.BOLD, 14));
+		lbTenNV.setForeground(Color.white);
 		pnlNV.setLayout(new BorderLayout());
 		pnlNV.add(label, BorderLayout.WEST);
-		pnlNV.add(lblTenNV, BorderLayout.CENTER);
+		pnlNV.add(lbTenNV, BorderLayout.CENTER);
 		pnlNV.setBackground(Color.decode("#990447"));
-		return pnlNV;
+		pnlMain.add(pnlNV);
+		pnlMain.setBackground(Color.decode("#990447"));
+		return pnlMain;
 	}
 
 	private void addEventListeners() {
@@ -229,9 +240,5 @@ public class Card extends JFrame {
 			dispose();
 			new app.Login().setVisible(true);
 		}
-	}
-
-	public static void main(String[] args) {
-		new Card().setVisible(true);
 	}
 }
