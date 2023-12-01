@@ -36,6 +36,28 @@ public class DAONhanVien{
 		return dsNV;
 	}
 	
+	public ArrayList<NhanVien> timKiemNhanVienTheoMa(String maNV) {
+		// TODO Auto-generated method stubArrayList<HoaDonDichVuPhong> dsDVP = new ArrayList<HoaDonDichVuPhong>();
+		ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		try {
+			PreparedStatement statement = null;
+			String sql = "select * from NhanVien where MaNV = ?";
+			statement = con.prepareStatement(sql);
+			statement.setString(1, maNV);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				dsNV.add(new NhanVien(rs.getString(1), rs.getString(2), rs.getDate(3), rs.getBoolean(4),
+						rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getBoolean(9)));
+			}
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsNV;
+	}
+	
 	// Lay chuc vu theo combobox
 		public static ArrayList<NhanVien> getChucVuCB(String chucVu) {
 			ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();

@@ -70,6 +70,8 @@ public class DAOCTHD {
 		return str;
 	}
 	
+	
+	
 	public ArrayList<ChiTietHoaDon> timKiemCTHDTheoTenPhong(String tenPhong) {
 		ArrayList<ChiTietHoaDon> dsCTHD = new ArrayList<>();
 		try {
@@ -82,6 +84,36 @@ public class DAOCTHD {
 					+ "where TenPhong = ?";
 			statement = connect.prepareStatement(sql);
 			statement.setString(1, tenPhong);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next()) {
+				LoaiPhong lp = new LoaiPhong(rs.getString(10), rs.getString(11), rs.getInt(12), rs.getDouble(13));
+				Phong p = new Phong(rs.getString(5), rs.getString(6), lp, rs.getString(8), rs.getString(9));
+				ChiTietHoaDon cthd = new ChiTietHoaDon(p, new HoaDon(rs.getString(2)), rs.getTimestamp(3), rs.getTimestamp(4));
+				dsCTHD.add(cthd);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			e.printStackTrace();
+		}
+		return dsCTHD;
+	}
+	
+
+	public ArrayList<ChiTietHoaDon> timKiemCTHDTheoMaHD(String maHD) {
+		ArrayList<ChiTietHoaDon> dsCTHD = new ArrayList<>();
+		try {
+			ConnectDB.getInstance();
+			Connection connect = ConnectDB.getConnection();
+			PreparedStatement statement = null;
+			String sql = "select * from ChiTietHoaDon cthd "
+					+ "inner join Phong p on cthd.MaPhong = p.MaPhong "
+					+ "inner join LoaiPhong lp on p.MaLP = lp.MaLP "
+					+ "where MaHD = ?";
+			statement = connect.prepareStatement(sql);
+			statement.setString(1, maHD);
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next()) {
