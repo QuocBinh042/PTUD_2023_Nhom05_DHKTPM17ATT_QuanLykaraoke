@@ -11,7 +11,7 @@ import connectDB.ConnectDB;
 import entity.DichVu;
 import entity.LoaiPhong;
 
-public class daoLoaiPhong {
+public class DAOLoaiPhong {
 	// lay toan bo loai phong
 	public ArrayList<LoaiPhong> getAllLoaiPhong() {
 		ArrayList<LoaiPhong> dsLoaiPhong = new ArrayList<LoaiPhong>();

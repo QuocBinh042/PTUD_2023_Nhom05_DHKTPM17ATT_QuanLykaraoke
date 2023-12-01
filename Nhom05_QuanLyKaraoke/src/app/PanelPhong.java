@@ -9,8 +9,8 @@ import com.toedter.calendar.JDateChooser;
 
 import app.LoaiPhong;
 import connectDB.ConnectDB;
-import dao.daoLoaiPhong;
-import dao.daoPhong;
+import dao.DAOLoaiPhong;
+import dao.DAOPhong;
 import dao.MaTuDong;
 import entity.*;
 
@@ -23,7 +23,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public class Phong extends JPanel implements MouseListener {
+public class PanelPhong extends JPanel implements MouseListener {
 
 	private JLabel lblTenPhong, lblLoaiPhong, lblSucChua, lblGiaPhong, lblMoTa, lblTimMaPhong, lblTinhTrang,
 			lblMaLoaiPhong, lblMaPhong;
@@ -34,14 +34,14 @@ public class Phong extends JPanel implements MouseListener {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private LoaiPhong quanlyLP;
-	private daoPhong daoPhong;
+	private DAOPhong daoPhong;
 	private ArrayList<entity.Phong> dsPhong;
 	private ArrayList<entity.LoaiPhong> dsLP;
-	private daoLoaiPhong daoLP;
+	private DAOLoaiPhong daoLP;
 	private MaTuDong maPTD = new MaTuDong();
 	private DecimalFormat formatter = new DecimalFormat("###");
 
-	public Phong() {
+	public PanelPhong() {
 		try {
 			ConnectDB.getInstance().connect();
 
@@ -65,8 +65,8 @@ public class Phong extends JPanel implements MouseListener {
 			e1.printStackTrace();
 		}
 
-		daoPhong = new daoPhong();
-		daoLP = new daoLoaiPhong();
+		daoPhong = new DAOPhong();
+		daoLP = new DAOLoaiPhong();
 
 		createUI();
 //		// add event button

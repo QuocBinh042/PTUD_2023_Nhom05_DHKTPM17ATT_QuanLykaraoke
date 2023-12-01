@@ -15,14 +15,14 @@ public class Card extends JFrame {
 	private JLabel lbTenNV;
 	private JPanel pnl = new JPanel(new CardLayout());
 	private TrangChu tc = new TrangChu();
-	private DatPhong dp = new DatPhong();
-	private Phong phong = new Phong();
-	private DichVu dv = new DichVu();
-	private NhanVien nv = new NhanVien();
-	private KhachHang kh = new KhachHang();
-	private HoaDon hd = new HoaDon();
-	private KhuyenMai km = new KhuyenMai();
-	private ThongKe tk = new ThongKe();
+	private PanelDatPhong dp = new PanelDatPhong();
+	private PanelPhong phong = new PanelPhong();
+	private PanelDichVu dv = new PanelDichVu();
+	private PanelNhanVien nv = new PanelNhanVien();
+	private PanelKhachHang kh = new PanelKhachHang();
+	private PanelHoaDon hd = new PanelHoaDon();
+	private PanelKhuyenMai km = new PanelKhuyenMai();
+	private PanelThongKe tk = new PanelThongKe();
 	private TroGiup tg = new TroGiup();
 	private JPanel pnlButton = new JPanel();
 	private String maNV;
@@ -238,7 +238,7 @@ public class Card extends JFrame {
 				"Chú ý", JOptionPane.YES_NO_OPTION);
 		if (result == JOptionPane.YES_OPTION) {
 			dispose();
-			new app.Login().setVisible(true);
+			new app.DangNhap().setVisible(true);
 		}
 	}
 }

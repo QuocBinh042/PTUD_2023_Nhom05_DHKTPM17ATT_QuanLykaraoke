@@ -19,11 +19,11 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 import connectDB.ConnectDB;
-import dao.daoKhachHang;
+import dao.DAOKhachHang;
 import dao.MaTuDong;
-import dao.daoDichVu;
+import dao.DAODichVu;
 
-public class KhachHang extends JPanel implements MouseListener {
+public class PanelKhachHang extends JPanel implements MouseListener {
 	private JLabel lblTenKhachHang, lblGioiTinh, lblSoDienThoai, lblEmail, lblGhiChu, lblLoaiKhachHang, lblMaKH;
 	private JTextField txtTenKhachHang, txtSoDienThoai, txtEmail, txtTimSDT, txtTimTenKH, txtMaKH;
 	private JTextArea txaGhiChu;
@@ -33,12 +33,12 @@ public class KhachHang extends JPanel implements MouseListener {
 			"Email", "Số giờ đã thuê", "Ghi chú" };
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private daoKhachHang daoKH = new daoKhachHang();
+	private DAOKhachHang daoKH = new DAOKhachHang();
 	private ArrayList<entity.KhachHang> dsKH = new ArrayList<>();
 	private MaTuDong maKhachHang = new MaTuDong();
 	private Boolean gt;
 
-	public KhachHang() {
+	public PanelKhachHang() {
 		try {
 			ConnectDB.getInstance().connect();
 		} catch (SQLException e) {
@@ -60,7 +60,7 @@ public class KhachHang extends JPanel implements MouseListener {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		daoKH = new daoKhachHang();
+		daoKH = new DAOKhachHang();
 
 		createUI();
 		dsKH = daoKH.getAll();
@@ -238,9 +238,9 @@ public class KhachHang extends JPanel implements MouseListener {
 	// Xu ly combobox loai khach hang
 	private void xuLyCBLoaiKH() {
 		if (cbLoaiKhachHang.getSelectedItem().toString().equalsIgnoreCase("VIP")) {
-			dsKH = daoKhachHang.getKhachHangCB(true);
+			dsKH = DAOKhachHang.getKhachHangCB(true);
 		} else if (cbLoaiKhachHang.getSelectedItem().toString().equalsIgnoreCase("Thường")) {
-			dsKH = daoKhachHang.getKhachHangCB(false);
+			dsKH = DAOKhachHang.getKhachHangCB(false);
 		} else
 			dsKH = daoKH.getAll();
 		layDanhSachKH(dsKH);

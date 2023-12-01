@@ -21,7 +21,7 @@ import com.twilio.rest.api.v2010.account.Message;
 
 import dao.DAONhanVien;
 
-public class ForgotPassword extends JFrame {
+public class QuenMatKhau extends JFrame {
 	private static String ACCOUNT_SID = "AC4d68f5344f866140494be07649cb767c"; // Thay bằng ACCOUNT_SID
 	private static String AUTH_TOKEN = "5c6f9e637b1129231ef148b3cd7e3ec6"; // Thay bằng AUTH_TOKEN
 	private static String TWILIO_PHONE_NUMBER = "+19185057094"; // Thay bằng số điện thoại Twilio
@@ -32,7 +32,7 @@ public class ForgotPassword extends JFrame {
 	private static String generatedCode;
 	private DAONhanVien daoNV;
 
-	public ForgotPassword() {
+	public QuenMatKhau() {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException e1) {

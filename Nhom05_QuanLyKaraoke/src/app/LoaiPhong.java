@@ -29,7 +29,7 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 import connectDB.ConnectDB;
-import dao.daoLoaiPhong;
+import dao.DAOLoaiPhong;
 import dao.MaTuDong;
 import entity.*;
 
@@ -41,7 +41,7 @@ public class LoaiPhong extends JFrame implements MouseListener {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private ArrayList<entity.LoaiPhong> dsLP;
-	private daoLoaiPhong daoLP;
+	private DAOLoaiPhong daoLP;
 	private entity.LoaiPhong lp;
 	private MaTuDong maLPTD = new MaTuDong();
 	private DecimalFormat formatter = new DecimalFormat("###");
@@ -69,7 +69,7 @@ public class LoaiPhong extends JFrame implements MouseListener {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		daoLP = new daoLoaiPhong();
+		daoLP = new DAOLoaiPhong();
 
 		setSize(780, 350);
 		setTitle("Quản lý loại phòng");

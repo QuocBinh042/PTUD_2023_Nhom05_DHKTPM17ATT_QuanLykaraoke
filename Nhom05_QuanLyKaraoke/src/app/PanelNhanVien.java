@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-public class NhanVien extends JPanel implements MouseListener {
+public class PanelNhanVien extends JPanel implements MouseListener {
 
 	private JLabel lblMaNhanVien, lblTenNhanVien, lblNamSinh, lblGioiTinh, lblSoDienThoai, lblCCCD, lblChucVu,
 			lblMatKhau, lblTinhTrang;
@@ -42,7 +42,7 @@ public class NhanVien extends JPanel implements MouseListener {
 	private ArrayList<entity.NhanVien> dsNV = new ArrayList<>();
 	private MaTuDong maNhanVien = new MaTuDong();
 
-	public NhanVien() {
+	public PanelNhanVien() {
 
 		try {
 			ConnectDB.getInstance().connect();

@@ -30,7 +30,7 @@ import com.toedter.calendar.JDateChooser;
 
 import dao.DAOHoaDon;
 
-public class HoaDon extends JPanel {
+public class PanelHoaDon extends JPanel {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private String[] headers = { "Mã hoá đơn", "Ngày thanh toán", "Giờ thanh toán", "Tên nhân viên",
@@ -44,7 +44,7 @@ public class HoaDon extends JPanel {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private DecimalFormat formatter = new DecimalFormat("###,###,### VNĐ");
 
-	public HoaDon() {
+	public PanelHoaDon() {
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException e1) {

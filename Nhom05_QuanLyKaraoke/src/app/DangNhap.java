@@ -22,17 +22,17 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import connectDB.ConnectDB;
-import dao.DAODangNhap;
+import dao.DAONhanVien;
 
-public class Login extends JFrame implements ActionListener {
+public class DangNhap extends JFrame implements ActionListener {
 	private JLabel lblUser, lblPass, lblPicture;
 	private JTextField txtUser;
 	private JPasswordField txtPass;
 	private JButton btnLogin, btnExit, btnShowPass, btnHidePass, btnForgetPass;
-	private DAODangNhap daoDN = new DAODangNhap();
-	private ForgotPassword forgotPassword;
+	private DAONhanVien daoNV = new DAONhanVien();
+	private QuenMatKhau forgotPassword;
 
-	public Login() {
+	public DangNhap() {
 		try {
 			ConnectDB.getInstance().connect();
 		} catch (SQLException e) {
@@ -44,7 +44,7 @@ public class Login extends JFrame implements ActionListener {
 
 	
 	public static void main(String[] args) {
-		new Login().setVisible(true);
+		new DangNhap().setVisible(true);
 	}
 
 	public void createGUI() {
@@ -162,7 +162,7 @@ public class Login extends JFrame implements ActionListener {
 			String pass = new String(txtPass.getPassword());
 			if (username.equals("") || pass.equals("")) {
 				JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin đăng nhập!");
-			} else if (daoDN.kiemTraTK(username, pass) != null) {
+			} else if (daoNV.kiemTraTK(username, pass) != null) {
 				JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
 				new Card(username).setVisible(true);
 				 dispose();
@@ -182,7 +182,7 @@ public class Login extends JFrame implements ActionListener {
 			txtPass.setEchoChar('*');
 		}
 		if (o.equals(btnForgetPass)) {
-			forgotPassword = new ForgotPassword();
+			forgotPassword = new QuenMatKhau();
 			forgotPassword.setVisible(true);
 			forgotPassword.setLocationRelativeTo(null);
 		}

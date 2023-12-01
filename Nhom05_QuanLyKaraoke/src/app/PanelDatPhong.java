@@ -46,9 +46,9 @@ import dao.DAOCTHD;
 import dao.DAOHoaDon;
 import dao.DAOPhieuDatPhong;
 import dao.MaTuDong;
-import dao.daoDichVu;
-import dao.daoKhachHang;
-import dao.daoPhong;
+import dao.DAODichVu;
+import dao.DAOKhachHang;
+import dao.DAOPhong;
 import entity.CTDVPhong;
 import entity.ChiTietHoaDon;
 import entity.DichVu;
@@ -59,7 +59,7 @@ import entity.NhanVien;
 import entity.PhieuDatPhong;
 import entity.Phong;
 
-public class DatPhong extends JPanel {
+public class PanelDatPhong extends JPanel {
 	private JButton thuePBtn, phieuDatPhongBtn, datPBtn, chuyenPBtn, chiTietPBtn, dichVuPBtn, tinhTienPBtn, timKiemPBtn, lamMoiBtn;
 	private JComboBox<String> tinhTrangB, soNguoiB, loaiPhongB;
 	private JTextField phongF, giaPhongF;
@@ -74,14 +74,14 @@ public class DatPhong extends JPanel {
 	private TinhTien tinhTien;
 	private PhongCho phieuDatPhong;
 	private JLabel lbPhongTrong, lbPhongCho, lbPhongDangThue;
-	private daoPhong phongDao = new daoPhong();
+	private DAOPhong phongDao = new DAOPhong();
 	private DAOCTHD cthdDao = new DAOCTHD();
 	private DAOHoaDon hdDAO = new DAOHoaDon();
-	private daoDichVu dvDAO = new daoDichVu();
+	private DAODichVu dvDAO = new DAODichVu();
 	private DAOCTDVPhong ctdvPhongDAO = new DAOCTDVPhong();
 	private DecimalFormat formatter = new DecimalFormat("###,###,### VNĐ");
 
-	public DatPhong() {
+	public PanelDatPhong() {
 		try {
 			ConnectDB.getInstance().connect();
 		} catch (Exception e) {
@@ -577,8 +577,8 @@ public class DatPhong extends JPanel {
 		private JButton kiemTraBtn, quayLaiBtn, thuePhongBtn;
 		private JComboBox<String> cbLuaChon;
 		private String tenP;
-		private daoPhong pdao;
-		private daoKhachHang kdao;
+		private DAOPhong pdao;
+		private DAOKhachHang kdao;
 		private DAOPhieuDatPhong pdpDao;
 		private DAOHoaDon hdDao;
 		private DAOCTHD cthdDao;
@@ -591,8 +591,8 @@ public class DatPhong extends JPanel {
 		public ThuePhong() {
 			setSize(650, 550);
 			hdDao = new DAOHoaDon();
-			pdao = new daoPhong();
-			kdao = new daoKhachHang();
+			pdao = new DAOPhong();
+			kdao = new DAOKhachHang();
 			pdpDao = new DAOPhieuDatPhong();
 			cthdDao = new DAOCTHD();
 			try {
@@ -915,8 +915,8 @@ public class DatPhong extends JPanel {
 		private JTable tablePhongTrong;
 		private DefaultTableModel modelPhongTrong;
 		private String tenPhong;
-		private daoPhong pdao;
-		private daoKhachHang kdao;
+		private DAOPhong pdao;
+		private DAOKhachHang kdao;
 		private DAOPhieuDatPhong pdpDao;
 		private DAOHoaDon hdDao;
 		private DAOCTHD cthdDao;
@@ -932,8 +932,8 @@ public class DatPhong extends JPanel {
 
 		public ChuyenPhong(String tenPhong) {
 			hdDao = new DAOHoaDon();
-			pdao = new daoPhong();
-			kdao = new daoKhachHang();
+			pdao = new DAOPhong();
+			kdao = new DAOKhachHang();
 			pdpDao = new DAOPhieuDatPhong();
 			cthdDao = new DAOCTHD();
 			try {
@@ -1263,8 +1263,8 @@ public class DatPhong extends JPanel {
 		private  DefaultTableModel phieuDatPModel;
 		private JTextField sdtF;
 		private JComboBox<String> tinhTrangPhieuB;
-		private daoPhong pdao;
-		private daoKhachHang kdao;
+		private DAOPhong pdao;
+		private DAOKhachHang kdao;
 		private DAOPhieuDatPhong pdpDao;
 		private DAOHoaDon hdDao;
 		private DAOCTHD cthdDao;
@@ -1282,7 +1282,7 @@ public class DatPhong extends JPanel {
 			pdpDao = new DAOPhieuDatPhong();
 			hdDao = new DAOHoaDon();
 			cthdDao = new DAOCTHD();
-			pdao = new daoPhong();
+			pdao = new DAOPhong();
 			
 			try {
 				ConnectDB.getInstance().connect();

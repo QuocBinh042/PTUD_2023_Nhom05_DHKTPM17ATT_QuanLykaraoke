@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
 
 import connectDB.ConnectDB;
-import dao.daoDichVu;
+import dao.DAODichVu;
 import dao.MaTuDong;
 
 import java.awt.*;
@@ -21,7 +21,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-public class DichVu extends JPanel implements MouseListener {
+public class PanelDichVu extends JPanel implements MouseListener {
 
 	private JLabel lblTenDichVu, lblDonGia, lblDonVi, lblSoLuong, lblTinhTrang, lblLocTinhTrang, lblTimDV, lblMaDV;
 	private JTextField txtTenDichVu, txtDonGia, txtDonVi, txtSoLuong, txtTimDV, txtMaDV, txtTinhTrang;
@@ -31,19 +31,19 @@ public class DichVu extends JPanel implements MouseListener {
 	private DefaultTableModel tableModel;
 	private Box bLeft, bRight;
 	private ArrayList<entity.DichVu> dsDichVu;
-	private daoDichVu daoDV;
+	private DAODichVu daoDV;
 	private DecimalFormat formatter = new DecimalFormat("###");
 	private static int maDVTT = 0;
 	private MaTuDong maDVTD = new MaTuDong();
 
-	public DichVu() {
+	public PanelDichVu() {
 
 		try {
 			ConnectDB.getInstance().connect();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		daoDV = new daoDichVu();
+		daoDV = new DAODichVu();
 
 		createUI();
 

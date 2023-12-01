@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.DichVu;
 
-public class daoDichVu {
+public class DAODichVu {
 	
 	// Lay toan bo dich vu
 	public ArrayList<DichVu> getAllDichVu() {

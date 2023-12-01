@@ -11,7 +11,7 @@ import java.util.List;
 import entity.KhachHang;
 import connectDB.ConnectDB;
 
-public class daoKhachHang {
+public class DAOKhachHang {
 
 	public ArrayList<KhachHang> getAll() {
 		// TODO Auto-generated method stubArrayList<HoaDonDichVuPhong> dsDVP = new

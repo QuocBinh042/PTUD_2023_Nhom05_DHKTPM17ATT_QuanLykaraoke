@@ -12,8 +12,8 @@ import entity.KhuyenMai;
 import entity.LoaiPhong;
 import entity.Phong;
 
-public class daoPhong {
-	public daoPhong() {}
+public class DAOPhong {
+	public DAOPhong() {}
 	
 	public ArrayList<Phong> getAllPhong() {
 	//Lay toan bo phong

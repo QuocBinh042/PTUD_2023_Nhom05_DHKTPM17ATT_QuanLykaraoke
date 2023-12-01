@@ -44,7 +44,7 @@ import connectDB.ConnectDB;
 import dao.DAOKhuyenMai;
 import dao.MaTuDong;
 
-public class KhuyenMai extends JPanel implements MouseListener {
+public class PanelKhuyenMai extends JPanel implements MouseListener {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private String[] headers = { "Mã khuyến mãi", "Phần trăm giảm", "Ngày bắt đầu", "Ngày kết thúc", "Mô tả",
@@ -59,7 +59,7 @@ public class KhuyenMai extends JPanel implements MouseListener {
 	private ArrayList<entity.KhuyenMai> dsKM = new ArrayList<>();
 	private MaTuDong maKhuyenMai = new MaTuDong();
 
-	public KhuyenMai() {
+	public PanelKhuyenMai() {
 		try {
 			ConnectDB.getInstance().connect();
 		} catch (SQLException e) {

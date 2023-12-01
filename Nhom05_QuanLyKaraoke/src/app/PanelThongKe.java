@@ -54,7 +54,7 @@ import com.toedter.calendar.JDateChooser;
 import dao.DAOHoaDon;
 import entity.HoaDon;
 
-public class ThongKe extends JPanel {
+public class PanelThongKe extends JPanel {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private String[] headers = { "Mã hoá đơn", "Tên khách hàng", "Tên nhân viên", "Ngày thanh toán",
@@ -77,7 +77,7 @@ public class ThongKe extends JPanel {
 	private JPanel pnlLuaChonTK = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	private JPanel pnlThoiGian = new JPanel();
 
-	public ThongKe() {
+	public PanelThongKe() {
 		createUI();
 		thongKeTheoNgay();
 		// Sự kiện

@@ -13,14 +13,14 @@ public class Tab extends JFrame{
 		setLocationRelativeTo(null);
 		
 		TrangChu tc = new TrangChu();
-		DatPhong dp = new DatPhong();
-		Phong phong = new Phong();
-		DichVu dv = new DichVu();
-		NhanVien nv = new NhanVien();
-		KhachHang kh = new KhachHang();
-		HoaDon hd = new HoaDon();
-		KhuyenMai km = new KhuyenMai();
-		ThongKe tk = new ThongKe();
+		PanelDatPhong dp = new PanelDatPhong();
+		PanelPhong phong = new PanelPhong();
+		PanelDichVu dv = new PanelDichVu();
+		PanelNhanVien nv = new PanelNhanVien();
+		PanelKhachHang kh = new PanelKhachHang();
+		PanelHoaDon hd = new PanelHoaDon();
+		PanelKhuyenMai km = new PanelKhuyenMai();
+		PanelThongKe tk = new PanelThongKe();
 		TroGiup tg = new TroGiup();
 		
 		tp.add("Trang Chủ", tc);
