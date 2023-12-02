@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -127,7 +128,7 @@ public class PanelKhuyenMai extends JPanel implements MouseListener {
 		pnlInput.add(createPanel(lblTrangThai = new JLabel("Trạng thái"), txtTrangThai = new JTextField()));
 		pnlInput.add(createPanel(lblNgayKetThuc = new JLabel("Ngày kết thúc"), dateKT = new JDateChooser()));
 		pnlInput.add(createPanel(lblMoTa = new JLabel("Mô tả"), txaMoTa = new JTextArea()));
-
+		
 		// Nút chức năng
 		JPanel pnlChucNang = new JPanel();
 		pnlChucNang.setBackground(Color.decode("#cccccc"));
@@ -143,7 +144,7 @@ public class PanelKhuyenMai extends JPanel implements MouseListener {
 		bThongTinKM.add(Box.createHorizontalStrut(50));
 		bThongTinKM.add(pnlChucNang);
 		JPanel pnlThongTinKM = new JPanel();
-		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
+		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder("Thông tin khuyến mãi"));
 		pnlThongTinKM.add(bThongTinKM);
 
 		// Set kích thước
@@ -168,6 +169,7 @@ public class PanelKhuyenMai extends JPanel implements MouseListener {
 		JPanel pnlTimKM = new JPanel();
 		JPanel pnlLoc = new JPanel(new GridLayout(1, 2, 20, 0));
 		bLoc1 = Box.createHorizontalBox();
+		bLoc1.add(Box.createHorizontalStrut(10));
 		bLoc1.add(lblNgayBatDau = new JLabel("Từ ngày"));
 		bLoc1.add(Box.createHorizontalStrut(10));
 		bLoc1.add(dateBDTim = new JDateChooser());
@@ -175,6 +177,7 @@ public class PanelKhuyenMai extends JPanel implements MouseListener {
 		bLoc2.add(lblNgayKetThuc = new JLabel("Đến ngày"));
 		bLoc2.add(Box.createHorizontalStrut(10));
 		bLoc2.add(dateKTTim = new JDateChooser());
+		bLoc2.add(Box.createHorizontalStrut(10));
 		pnlLoc.add(bLoc1);
 		pnlLoc.add(bLoc2);
 		pnlTimKM.add(lblMaKM = new JLabel("Mã khuyến mãi"));
@@ -182,14 +185,18 @@ public class PanelKhuyenMai extends JPanel implements MouseListener {
 		pnlTimKM.add(btnTimKM = new ButtonGradient("Tìm kiếm", img_search));
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlLoc, pnlTimKM);
 		splitPane.setDividerLocation(700);
-
+		lblMaKM.setFont(new Font("Sanserif", Font.BOLD, 13));
+		lblNgayBatDau.setFont(new Font("Sanserif", Font.BOLD, 13));
+		lblNgayKetThuc.setFont(new Font("Sanserif", Font.BOLD, 13));
+		
+		
 		// Table
 		JPanel pnlTable = new JPanel();
-		pnlTable.setBorder(BorderFactory.createTitledBorder("Danh sách khuyến mãi"));
+		pnlTable.setBorder(BorderFactory.createTitledBorder(line,"Danh sách khuyến mãi"));
 		table = new JTable();
 		tableModel = new DefaultTableModel(headers, 0);
 		table.setModel(tableModel);
-		table.setRowHeight(25);
+		table.setRowHeight(30);
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -198,7 +205,7 @@ public class PanelKhuyenMai extends JPanel implements MouseListener {
 		pnlTable.setLayout(new BorderLayout());
 		pnlTable.add(splitPane, BorderLayout.NORTH);
 		pnlTable.add(scroll, BorderLayout.CENTER);
-
+		
 		// Set editable
 		txtMaKM.setEnabled(false);
 		txtTrangThai.setEnabled(false);
@@ -207,17 +214,25 @@ public class PanelKhuyenMai extends JPanel implements MouseListener {
 		setLayout(new BorderLayout());
 		add(pnlThongTinKM, BorderLayout.NORTH);
 		add(pnlTable, BorderLayout.CENTER);
-		pnlInput.setBackground(Color.decode("#e6dbd1"));
-		pnlChucNang.setBackground(Color.decode("#e6dbd1"));
-		pnlThongTinKM.setBackground(Color.decode("#e6dbd1"));
+		dateBD.setBackground(Color.decode("#B099BC"));
+		dateBDTim.setBackground(Color.decode("#B099BC"));
+		dateKT.setBackground(Color.decode("#B099BC"));
+		dateKTTim.setBackground(Color.decode("#B099BC"));
+		pnlLoc.setBackground(Color.decode("#B099BC"));
+		pnlTimKM.setBackground(Color.decode("#B099BC"));
+		pnlTable.setBackground(Color.decode("#B099BC"));
+		pnlInput.setBackground(Color.decode("#B099BC"));
+		pnlChucNang.setBackground(Color.decode("#B099BC"));
+		pnlThongTinKM.setBackground(Color.decode("#B099BC"));
 	}
 
 	private JPanel createPanel(JLabel label, JComponent component) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		panel.add(label);
+		panel.add(label);		
 		panel.add(component);
-		panel.setBackground(Color.decode("#e6dbd1"));
+		label.setFont(new Font("Sanserif", Font.BOLD, 13));
+		panel.setBackground(Color.decode("#B099BC"));
 		return panel;
 	}
 

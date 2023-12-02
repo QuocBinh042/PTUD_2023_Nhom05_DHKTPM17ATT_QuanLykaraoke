@@ -86,7 +86,7 @@ public class PanelKhachHang extends JPanel implements MouseListener {
 		Icon img_refresh = new ImageIcon("src/img/refresh16.png");
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
 
-		// Thông tin khuyến mãi
+		// Thông tin kháchh hàng
 		JPanel pnlInput = new JPanel();
 		pnlInput.setLayout(new GridLayout(3, 2, 40, 0));
 		pnlInput.add(createPanel(lblMaKH = new JLabel("Mã khách hàng"), txtMaKH = new JTextField()));
@@ -112,7 +112,7 @@ public class PanelKhachHang extends JPanel implements MouseListener {
 		bThongTinKM.add(Box.createHorizontalStrut(50));
 		bThongTinKM.add(pnlChucNang);
 		JPanel pnlThongTinKM = new JPanel();
-		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
+		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder("Thông tin khách hàng"));
 		pnlThongTinKM.add(bThongTinKM);
 
 		// Set kích thước
@@ -150,7 +150,7 @@ public class PanelKhachHang extends JPanel implements MouseListener {
 
 		// Table
 		JPanel pnlTable = new JPanel();
-		pnlTable.setBorder(BorderFactory.createTitledBorder("Danh sách khuyến mãi"));
+		pnlTable.setBorder(BorderFactory.createTitledBorder(line,"Danh sách khuyến mãi"));
 		table = new JTable();
 		tableModel = new DefaultTableModel(headers, 0);
 		table.setModel(tableModel);
@@ -171,9 +171,12 @@ public class PanelKhachHang extends JPanel implements MouseListener {
 		setLayout(new BorderLayout());
 		add(pnlThongTinKM, BorderLayout.NORTH);
 		add(pnlTable, BorderLayout.CENTER);
-		pnlInput.setBackground(Color.decode("#e6dbd1"));
-		pnlChucNang.setBackground(Color.decode("#e6dbd1"));
-		pnlThongTinKM.setBackground(Color.decode("#e6dbd1"));
+		pnlLoc.setBackground(Color.decode("#B099BC"));
+		pnlTim.setBackground(Color.decode("#B099BC"));
+		pnlTable.setBackground(Color.decode("#B099BC"));
+		pnlInput.setBackground(Color.decode("#B099BC"));
+		pnlChucNang.setBackground(Color.decode("#B099BC"));
+		pnlThongTinKM.setBackground(Color.decode("#B099BC"));
 	}
 
 	private JPanel createPanel(JLabel label, JComponent component) {
@@ -181,7 +184,8 @@ public class PanelKhachHang extends JPanel implements MouseListener {
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panel.add(label);
 		panel.add(component);
-		panel.setBackground(Color.decode("#e6dbd1"));
+		label.setFont(new Font("Sanserif", Font.BOLD, 13));
+		panel.setBackground(Color.decode("#B099BC"));
 		return panel;
 	}
 

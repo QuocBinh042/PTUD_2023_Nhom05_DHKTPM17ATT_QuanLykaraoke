@@ -3,6 +3,7 @@ package app;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -105,6 +106,7 @@ public class PanelHoaDon extends JPanel {
 		bSDT = Box.createHorizontalBox();
 
 		bThoiGian.add(lblThoiGian = new JLabel("Thời gian"));
+		lblThoiGian.setFont(new Font("Sanserif", Font.BOLD, 13));
 		bThoiGian.add(cbLuaChon = new JComboBox<>());
 		cbLuaChon.addItem("Tất cả");
 		cbLuaChon.addItem("Ngày hiện tại");
@@ -112,19 +114,20 @@ public class PanelHoaDon extends JPanel {
 		cbLuaChon.addItem("Năm hiện tại");
 
 		bNgayBD.add(lblNgayBatDau = new JLabel("Từ ngày"));
+		lblNgayBatDau.setFont(new Font("Sanserif", Font.BOLD, 13));
 		bNgayBD.add(dateBDTim = new JDateChooser());
-
 		bNgayKT.add(lblNgayKetThuc = new JLabel("Đến ngày"));
+		lblNgayKetThuc.setFont(new Font("Sanserif", Font.BOLD, 13));
 		bNgayKT.add(Box.createHorizontalStrut(5));
 		bNgayKT.add(dateKTTim = new JDateChooser());
-
 		bMaHD.add(lblMaHD = new JLabel("Mã hoá đơn"));
+		lblMaHD.setFont(new Font("Sanserif", Font.BOLD, 13));
 		bMaHD.add(txtTimMaHD = new JTextField(10));
-
 		bTenNV.add(lblTenNV = new JLabel("Tên nhân viên"));
+		lblTenNV.setFont(new Font("Sanserif", Font.BOLD, 13));
 		bTenNV.add(txtTimNV = new JTextField(10));
-
 		bSDT.add(lblSđtKH = new JLabel("Số điện thoại khách"));
+		lblSđtKH.setFont(new Font("Sanserif", Font.BOLD, 13));
 		bSDT.add(Box.createHorizontalStrut(5));
 		bSDT.add(txtTimKH = new JTextField(10));
 
@@ -139,12 +142,14 @@ public class PanelHoaDon extends JPanel {
 		pnlNorth.add(bMaHD);
 		pnlNorth.add(bTenNV);
 		pnlNorth.add(bSDT);
-		pnlNorth.setBorder(BorderFactory.createTitledBorder("Tra cứu"));
+		pnlNorth.setBorder(BorderFactory.createTitledBorder("Tra cứu"));		
 		bb.add(pnlNorth);
-		bb.add(Box.createHorizontalStrut(20));
 		bb.add(pnlChucNang);
-		bb.add(Box.createHorizontalStrut(20));
-
+		dateBDTim.setBackground(Color.decode("#B099BC"));
+		dateKTTim.setBackground(Color.decode("#B099BC"));
+		pnlNorth.setBackground(Color.decode("#B099BC"));
+		pnlChucNang.setBackground(Color.decode("#B099BC"));
+		
 		cbLuaChon.setPreferredSize(dimension);
 		dateBDTim.setPreferredSize(dimension);
 		dateKTTim.setPreferredSize(dimension);
@@ -171,6 +176,7 @@ public class PanelHoaDon extends JPanel {
 		this.setLayout(new BorderLayout());
 		this.add(bb, BorderLayout.NORTH);
 		this.add(scroll, BorderLayout.CENTER);
+		
 	}
 
 	public void loadData(ArrayList<entity.HoaDon> dsHD) {

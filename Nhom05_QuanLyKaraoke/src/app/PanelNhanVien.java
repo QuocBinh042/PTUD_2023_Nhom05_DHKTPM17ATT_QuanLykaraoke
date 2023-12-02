@@ -123,7 +123,6 @@ public class PanelNhanVien extends JPanel implements MouseListener {
 
 		// Nút chức năng
 		JPanel pnlChucNang = new JPanel();
-		pnlChucNang.setBackground(Color.decode("#cccccc"));
 		pnlChucNang.setLayout(new GridLayout(3, 2));
 		pnlChucNang.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
 		pnlChucNang.add(btnLuu = new ButtonGradient("Lưu", img_add));
@@ -136,7 +135,7 @@ public class PanelNhanVien extends JPanel implements MouseListener {
 		bThongTinKM.add(Box.createHorizontalStrut(50));
 		bThongTinKM.add(pnlChucNang);
 		JPanel pnlThongTinKM = new JPanel();
-		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder(line, "Thông tin khuyến mãi"));
+		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder("Thông tin nhân viên"));
 		pnlThongTinKM.add(bThongTinKM);
 
 		// Set kích thước
@@ -192,7 +191,7 @@ public class PanelNhanVien extends JPanel implements MouseListener {
 
 		// Table
 		JPanel pnlTable = new JPanel();
-		pnlTable.setBorder(BorderFactory.createTitledBorder("Danh sách khuyến mãi"));
+		pnlTable.setBorder(BorderFactory.createTitledBorder(line,"Danh sách nhân viên"));
 		table = new JTable();
 		tableModel = new DefaultTableModel(headers, 0);
 		table.setModel(tableModel);
@@ -213,9 +212,13 @@ public class PanelNhanVien extends JPanel implements MouseListener {
 		setLayout(new BorderLayout());
 		add(pnlThongTinKM, BorderLayout.NORTH);
 		add(pnlTable, BorderLayout.CENTER);
-		pnlInput.setBackground(Color.decode("#e6dbd1"));
-		pnlChucNang.setBackground(Color.decode("#e6dbd1"));
-		pnlThongTinKM.setBackground(Color.decode("#e6dbd1"));
+		dateNamSinh.setBackground(Color.decode("#B099BC"));
+		pnlLoc.setBackground(Color.decode("#B099BC"));
+		pnlTim.setBackground(Color.decode("#B099BC"));
+		pnlTable.setBackground(Color.decode("#B099BC"));
+		pnlInput.setBackground(Color.decode("#B099BC"));
+		pnlChucNang.setBackground(Color.decode("#B099BC"));
+		pnlThongTinKM.setBackground(Color.decode("#B099BC"));
 	}
 
 	private JPanel createPanel(JLabel label, JComponent component) {
@@ -223,7 +226,8 @@ public class PanelNhanVien extends JPanel implements MouseListener {
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panel.add(label);
 		panel.add(component);
-		panel.setBackground(Color.decode("#e6dbd1"));
+		label.setFont(new Font("Sanserif", Font.BOLD, 13));
+		panel.setBackground(Color.decode("#B099BC"));
 		return panel;
 	}
 

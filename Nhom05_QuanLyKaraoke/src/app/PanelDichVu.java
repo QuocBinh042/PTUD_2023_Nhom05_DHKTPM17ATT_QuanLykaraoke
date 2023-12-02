@@ -73,7 +73,6 @@ public class PanelDichVu extends JPanel implements MouseListener {
 		// Thông tin khuyến mãi
 		JPanel pnlInput = new JPanel();
 		pnlInput.setLayout(new GridLayout(3, 2, 40, 0));
-
 		pnlInput.add(createPanel(lblMaDV = new JLabel("Mã dịch vụ"), txtMaDV = new JTextField()));
 		pnlInput.add(createPanel(lblTenDichVu = new JLabel("Tên dịch vụ"), txtTenDichVu = new JTextField()));
 		pnlInput.add(createPanel(lblDonVi = new JLabel("Đơn vị"), txtDonVi = new JTextField()));
@@ -83,7 +82,6 @@ public class PanelDichVu extends JPanel implements MouseListener {
 
 		// Nút chức năng
 		JPanel pnlChucNang = new JPanel();
-		pnlChucNang.setBackground(Color.decode("#cccccc"));
 		pnlChucNang.setLayout(new GridLayout(3, 2, 0, 10));
 		pnlChucNang.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
 		pnlChucNang.add(btnLuu = new ButtonGradient("Lưu", img_add));
@@ -96,12 +94,11 @@ public class PanelDichVu extends JPanel implements MouseListener {
 		bThongTinKM.add(Box.createHorizontalStrut(50));
 		bThongTinKM.add(pnlChucNang);
 		JPanel pnlThongTinKM = new JPanel();
-		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder(line, "Thông tin dịch vụ"));
+		pnlThongTinKM.setBorder(BorderFactory.createTitledBorder("Thông tin dịch vụ"));
 		pnlThongTinKM.add(bThongTinKM);
 
 		// Set kích thước
 		Dimension dimension = new Dimension(250, 30);
-
 		txtTenDichVu.setPreferredSize(dimension);
 		txtDonGia.setPreferredSize(dimension);
 		txtSoLuong.setPreferredSize(dimension);
@@ -133,7 +130,7 @@ public class PanelDichVu extends JPanel implements MouseListener {
 
 		// Table
 		JPanel pnlTable = new JPanel();
-		pnlTable.setBorder(BorderFactory.createTitledBorder("Danh sách dịch vụ"));
+		pnlTable.setBorder(BorderFactory.createTitledBorder(line, "Danh sách dịch vụ"));
 		table = new JTable();
 		String[] headers = "Mã dịch vụ;Tên dịch vụ;Đơn giá;Đơn vị;Số lượng;Tình trạng".split(";");
 		tableModel = new DefaultTableModel(headers, 0);
@@ -156,9 +153,12 @@ public class PanelDichVu extends JPanel implements MouseListener {
 		setLayout(new BorderLayout());
 		add(pnlThongTinKM, BorderLayout.NORTH);
 		add(pnlTable, BorderLayout.CENTER);
-		pnlInput.setBackground(Color.decode("#e6dbd1"));
-		pnlChucNang.setBackground(Color.decode("#e6dbd1"));
-		pnlThongTinKM.setBackground(Color.decode("#e6dbd1"));
+		pnlLoc.setBackground(Color.decode("#B099BC"));
+		pnlTim.setBackground(Color.decode("#B099BC"));
+		pnlTable.setBackground(Color.decode("#B099BC"));
+		pnlInput.setBackground(Color.decode("#B099BC"));
+		pnlChucNang.setBackground(Color.decode("#B099BC"));
+		pnlThongTinKM.setBackground(Color.decode("#B099BC"));
 	}
 
 	private JPanel createPanel(JLabel label, JComponent component) {
@@ -166,7 +166,8 @@ public class PanelDichVu extends JPanel implements MouseListener {
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panel.add(label);
 		panel.add(component);
-		panel.setBackground(Color.decode("#e6dbd1"));
+		label.setFont(new Font("Sanserif", Font.BOLD, 13));
+		panel.setBackground(Color.decode("#B099BC"));
 		return panel;
 	}
 

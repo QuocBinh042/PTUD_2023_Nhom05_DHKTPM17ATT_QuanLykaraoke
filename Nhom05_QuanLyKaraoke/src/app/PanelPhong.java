@@ -289,10 +289,10 @@ public class PanelPhong extends JPanel implements MouseListener {
 		bThongTinPhong.add(Box.createHorizontalStrut(20));
 		bThongTinPhong.add(pnlChucNang);
 		JPanel pnlThongTinPhong = new JPanel();
-		pnlThongTinPhong.setBorder(BorderFactory.createTitledBorder(line, "Thông tin phòng"));
+		pnlThongTinPhong.setBorder(BorderFactory.createTitledBorder("Thông tin phòng"));
 		pnlThongTinPhong.add(bThongTinPhong);
 
-		Dimension dimension = new Dimension(250, 30);
+		Dimension dimension = new Dimension(240, 30);
 		lblMaPhong.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
 		lblTenPhong.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
 		lblTinhTrang.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
@@ -317,7 +317,6 @@ public class PanelPhong extends JPanel implements MouseListener {
 		String cblp[] = { "Tất cả", "Thường", "VIP" };
 		Box bLoc1, bLoc2;
 		JPanel pnlLoc = new JPanel(new GridLayout(1, 2, 0, 0));
-
 		bLoc1 = Box.createHorizontalBox();
 		bLoc1.add(Box.createHorizontalStrut(20));
 		bLoc1.add(lblTinhTrang = new JLabel("Tình trạng"));
@@ -330,25 +329,24 @@ public class PanelPhong extends JPanel implements MouseListener {
 		bLoc2.add(cbLoaiPhong = new JComboBox<>(cblp));
 		pnlLoc.add(bLoc1);
 		pnlLoc.add(bLoc2);
-
 		JPanel pnlTim = new JPanel();
 		pnlTim.add(Box.createVerticalStrut(25));
 		pnlTim.add(lblTimMaPhong = new JLabel("Tìm theo mã phòng"));
 		pnlTim.add(txtTimMaPhong = new JTextField(20));
 		txtTimMaPhong.setPreferredSize(dimension);
 		pnlTim.add(btnTim = new ButtonGradient("Tìm", img_search));
-
+		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlLoc, pnlTim);
 		splitPane.setDividerLocation(600);
 
 		JPanel pnlTable = new JPanel();
-		pnlTable.setBorder(BorderFactory.createTitledBorder("Danh sách phòng"));
+		pnlTable.setBorder(BorderFactory.createTitledBorder(line,"Danh sách phòng"));
 		table = new JTable();
 		String[] headers = "Mã phòng;Tên phòng;Mã loại phòng;Loại phòng;Sức chứa;Giá phòng;Tình trạng;Mô tả"
 				.split(";");
 		tableModel = new DefaultTableModel(headers, 0);
 		table.setModel(tableModel);
-		table.setRowHeight(25);
+		table.setRowHeight(30);
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -366,9 +364,12 @@ public class PanelPhong extends JPanel implements MouseListener {
 		setLayout(new BorderLayout());
 		add(pnlThongTinPhong, BorderLayout.NORTH);
 		add(pnlTable, BorderLayout.CENTER);
-		pnlInput.setBackground(Color.decode("#e6dbd1"));
-		pnlChucNang.setBackground(Color.decode("#e6dbd1"));
-		pnlThongTinPhong.setBackground(Color.decode("#e6dbd1"));
+		pnlLoc.setBackground(Color.decode("#B099BC"));
+		pnlTim.setBackground(Color.decode("#B099BC"));
+		pnlTable.setBackground(Color.decode("#B099BC"));
+		pnlInput.setBackground(Color.decode("#B099BC"));
+		pnlChucNang.setBackground(Color.decode("#B099BC"));
+		pnlThongTinPhong.setBackground(Color.decode("#B099BC"));
 	}
 
 	private JPanel createPanel(JLabel label, JComponent component) {
@@ -376,7 +377,8 @@ public class PanelPhong extends JPanel implements MouseListener {
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panel.add(label);
 		panel.add(component);
-		panel.setBackground(Color.decode("#e6dbd1"));
+		label.setFont(new Font("Sanserif", Font.BOLD, 13));
+		panel.setBackground(Color.decode("#B099BC"));
 		return panel;
 	}
 

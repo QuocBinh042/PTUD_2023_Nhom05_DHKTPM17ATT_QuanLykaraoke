@@ -139,6 +139,9 @@ public class DangNhap extends JFrame implements ActionListener {
 		btnExit.setBounds(320, 155, 155, 50);
 		panel.add(btnExit);
 
+		//
+		txtUser.setText("NV0001");
+		txtPass.setText("123456789");
 		// add event
 		lblPass.setPreferredSize(lblUser.getPreferredSize());
 		btnExit.addActionListener(this);
