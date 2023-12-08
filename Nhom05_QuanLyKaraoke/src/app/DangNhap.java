@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 
 import java.sql.SQLException;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -42,7 +41,6 @@ public class DangNhap extends JFrame implements ActionListener {
 		createGUI();
 	}
 
-	
 	public static void main(String[] args) {
 		new DangNhap().setVisible(true);
 	}
@@ -139,9 +137,6 @@ public class DangNhap extends JFrame implements ActionListener {
 		btnExit.setBounds(320, 155, 155, 50);
 		panel.add(btnExit);
 
-		//
-		txtUser.setText("NV0001");
-		txtPass.setText("123456789");
 		// add event
 		lblPass.setPreferredSize(lblUser.getPreferredSize());
 		btnExit.addActionListener(this);
@@ -149,6 +144,11 @@ public class DangNhap extends JFrame implements ActionListener {
 		btnShowPass.addActionListener(this);
 		btnHidePass.addActionListener(this);
 		btnForgetPass.addActionListener(this);
+
+		txtUser.setText("NV0001");
+		txtPass.setText("123456789");
+		txtUser.setFont(new Font("Sanserif", Font.PLAIN, 15));
+		txtPass.setFont(new Font("Sanserif", Font.PLAIN, 15));
 	}
 
 	@Override
@@ -168,9 +168,9 @@ public class DangNhap extends JFrame implements ActionListener {
 			} else if (daoNV.kiemTraTK(username, pass) != null) {
 				JOptionPane.showMessageDialog(null, "Đăng nhập thành công!");
 				new Card(username).setVisible(true);
-				 dispose();
+				dispose();
 			}
-			
+
 		}
 		// Event show pass
 		if (o.equals(btnShowPass)) {

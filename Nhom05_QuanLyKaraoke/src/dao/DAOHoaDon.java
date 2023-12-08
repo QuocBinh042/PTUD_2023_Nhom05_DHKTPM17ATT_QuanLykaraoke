@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import connectDB.ConnectDB;
+import entity.ChiTietHoaDon;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.KhuyenMai;
@@ -42,6 +43,27 @@ public class DAOHoaDon {
 			pre.setString(6, hoaDon.getKm().getMaKM());
 			pre.setDouble(7, hoaDon.getTongHoaDon());
 			n = pre.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return n > 0;
+	}
+	
+	public boolean capNhatHoaDonSauKhiThanhToan(HoaDon hd) {
+		ConnectDB.getInstance();
+		Connection connect = ConnectDB.getConnection();
+		PreparedStatement statement = null;
+		int n = 0;
+		try {
+			String sql = "update HoaDon set GioThanhToan = ?, NgayThanhToan = ?, TongHoaDon = ? where MaHD = ?";
+			statement = connect.prepareStatement(sql);
+			statement.setTime(1, Time.valueOf(hd.getGioThanhToan())); 
+			statement.setTimestamp(2, new Timestamp(hd.getNgayThanhToan().getTime()));
+			statement.setDouble(3, hd.getTongHoaDon());
+			statement.setString(4, hd.getMaHoaDon());
+			n = statement.executeUpdate();
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

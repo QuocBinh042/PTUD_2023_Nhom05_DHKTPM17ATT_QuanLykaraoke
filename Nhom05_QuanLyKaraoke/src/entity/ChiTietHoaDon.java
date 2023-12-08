@@ -66,13 +66,13 @@ public class ChiTietHoaDon implements Serializable {
 		tien = phong.getLoaiPhong().getGiaLoaiPhong() * (tinhThoiLuong() / 60);
 		long TGdu = tinhThoiLuong() % 60;
 		if (TGdu > 0 && TGdu < 15) {
-			tien = +phong.getLoaiPhong().getGiaLoaiPhong() * 0.25;
+			tien += phong.getLoaiPhong().getGiaLoaiPhong() * 0.25;
 		} else if (TGdu >= 15 && TGdu < 30) {
-			tien = +phong.getLoaiPhong().getGiaLoaiPhong() * 0.5;
+			tien += phong.getLoaiPhong().getGiaLoaiPhong() * 0.5;
 		} else if (TGdu >= 30 && TGdu < 45) {
-			tien = +phong.getLoaiPhong().getGiaLoaiPhong() * 0.75;
+			tien += phong.getLoaiPhong().getGiaLoaiPhong() * 0.75;
 		} else {
-			tien = +phong.getLoaiPhong().getGiaLoaiPhong();
+			tien += phong.getLoaiPhong().getGiaLoaiPhong();
 		}
 		return tien;
 	}

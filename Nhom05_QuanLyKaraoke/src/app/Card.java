@@ -1,4 +1,4 @@
- package app;
+package app;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -15,7 +15,7 @@ public class Card extends JFrame {
 	private JLabel lbTenNV;
 	private JPanel pnl = new JPanel(new CardLayout());
 	private TrangChu tc = new TrangChu();
-	private PanelDatPhong dp = new PanelDatPhong();
+	private PanelDatPhong dp;
 	private PanelPhong phong = new PanelPhong();
 	private PanelDichVu dv = new PanelDichVu();
 	private PanelNhanVien nv = new PanelNhanVien();
@@ -27,9 +27,18 @@ public class Card extends JFrame {
 	private JPanel pnlButton = new JPanel();
 	private String maNV;
 	private DAONhanVien daoNV = new DAONhanVien();
-	
+
+	public String getMaNV() {
+		return maNV;
+	}
+
+	public void setMaNV(String maNV) {
+		this.maNV = maNV;
+	}
+
 	public Card(String maNV) {
 		this.maNV = maNV;
+		dp = new PanelDatPhong(maNV);
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException e1) {
@@ -126,7 +135,7 @@ public class Card extends JFrame {
 	}
 
 	private JPanel createNVPanel() {
-		entity.NhanVien nv = daoNV.timKiemNhanVienTheoMa(maNV).get(0); 
+		entity.NhanVien nv = daoNV.timKiemNhanVienTheoMa(maNV).get(0);
 		JPanel pnlNV = new JPanel();
 		lbTenNV = new JLabel();
 		lbTenNV.setText(nv.getTenNV().trim());
