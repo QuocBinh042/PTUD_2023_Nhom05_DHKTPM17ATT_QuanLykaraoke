@@ -14,7 +14,7 @@ public class Card extends JFrame {
 			btnThongKe, btnTroGiup, btnDangXuat;
 	private JLabel lbTenNV;
 	private JPanel pnl = new JPanel(new CardLayout());
-	private TrangChu tc = new TrangChu();
+	private PanelTrangChu tc = new PanelTrangChu();
 	private PanelDatPhong dp;
 	private PanelPhong phong = new PanelPhong();
 	private PanelDichVu dv = new PanelDichVu();
@@ -91,6 +91,7 @@ public class Card extends JFrame {
 		button.setFont(new Font("Arial", Font.BOLD, 12));
 //		button.setHorizontalAlignment(SwingConstants.LEFT);
 		button.setBackground(Color.decode("#e6dbd1"));
+		
 		button.setForeground(Color.BLACK);
 		button.setFocusPainted(false);
 		button.setBorderPainted(false);

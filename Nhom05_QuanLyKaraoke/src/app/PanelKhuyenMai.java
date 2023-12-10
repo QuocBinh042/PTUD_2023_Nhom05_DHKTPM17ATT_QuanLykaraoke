@@ -214,16 +214,16 @@ public class PanelKhuyenMai extends JPanel implements MouseListener {
 		setLayout(new BorderLayout());
 		add(pnlThongTinKM, BorderLayout.NORTH);
 		add(pnlTable, BorderLayout.CENTER);
-		dateBD.setBackground(Color.decode("#B099BC"));
-		dateBDTim.setBackground(Color.decode("#B099BC"));
-		dateKT.setBackground(Color.decode("#B099BC"));
-		dateKTTim.setBackground(Color.decode("#B099BC"));
-		pnlLoc.setBackground(Color.decode("#B099BC"));
-		pnlTimKM.setBackground(Color.decode("#B099BC"));
-		pnlTable.setBackground(Color.decode("#B099BC"));
-		pnlInput.setBackground(Color.decode("#B099BC"));
-		pnlChucNang.setBackground(Color.decode("#B099BC"));
-		pnlThongTinKM.setBackground(Color.decode("#B099BC"));
+		dateBD.setBackground(Color.decode("#D0BAFB"));
+		dateBDTim.setBackground(Color.decode("#D0BAFB"));
+		dateKT.setBackground(Color.decode("#D0BAFB"));
+		dateKTTim.setBackground(Color.decode("#D0BAFB"));
+		pnlLoc.setBackground(Color.decode("#D0BAFB"));
+		pnlTimKM.setBackground(Color.decode("#D0BAFB"));
+		pnlTable.setBackground(Color.decode("#D0BAFB"));
+		pnlInput.setBackground(Color.decode("#D0BAFB"));
+		pnlChucNang.setBackground(Color.decode("#D0BAFB"));
+		pnlThongTinKM.setBackground(Color.decode("#D0BAFB"));
 	}
 
 	private JPanel createPanel(JLabel label, JComponent component) {
@@ -232,7 +232,7 @@ public class PanelKhuyenMai extends JPanel implements MouseListener {
 		panel.add(label);		
 		panel.add(component);
 		label.setFont(new Font("Sanserif", Font.BOLD, 13));
-		panel.setBackground(Color.decode("#B099BC"));
+		panel.setBackground(Color.decode("#D0BAFB"));
 		return panel;
 	}
 

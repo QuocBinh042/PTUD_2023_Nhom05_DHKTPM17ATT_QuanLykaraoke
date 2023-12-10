@@ -69,7 +69,6 @@ public class PanelDatPhong extends JPanel {
 	private DefaultTableModel phongModel;
 	private DigitalClock clock;
 	private ThuePhong thuePhong;
-	private DatTruocPhong datTruocPhong;
 	private ChuyenPhong chuyenPhong;
 	private ChiTietPhong chiTietPhong;
 	private DichVuPhong dichVuPhong;
@@ -145,7 +144,7 @@ public class PanelDatPhong extends JPanel {
 		GridLayout grid = new GridLayout(7, 0);
 		grid.setVgap(20);
 		JPanel btnMainPane = new JPanel(grid);
-		btnMainPane.setBackground(Color.decode("#B099BC"));
+		btnMainPane.setBackground(Color.decode("#D0BAFB"));
 		btnMainPane.add(thuePBtn = new ButtonGradient("Thuê Phòng"));
 //		btnMainPane.add(datPBtn = new ButtonGradient("Đặt Phòng"));
 		btnMainPane.add(phieuDatPhongBtn = new ButtonGradient("Phòng Chờ"));
@@ -179,7 +178,7 @@ public class PanelDatPhong extends JPanel {
 
 		btnPane.add(btnMainPane);
 //		btnPane.setBorder(border);
-		btnPane.setBackground(Color.decode("#B099BC"));
+		btnPane.setBackground(Color.decode("#D0BAFB"));
 
 		GridLayout gridForPane = new GridLayout(3, 0);
 		gridForPane.setVgap(2);
@@ -187,7 +186,7 @@ public class PanelDatPhong extends JPanel {
 		pane.add(lbPhongCho = new JLabel("Phòng Chờ ()"));
 		pane.add(lbPhongTrong = new JLabel("Phòng Trống ()"));
 		pane.add(lbPhongDangThue = new JLabel("Phòng Đang Thuê ()"));
-		pane.setBackground(Color.decode("#B099BC"));
+		pane.setBackground(Color.decode("#D0BAFB"));
 
 		Box leftBox = Box.createVerticalBox();
 //		leftBox.add(clock = new DigitalClock());
@@ -196,7 +195,7 @@ public class PanelDatPhong extends JPanel {
 		leftBox.add(Box.createVerticalStrut(5));
 		leftBox.add(pane);
 		leftPane.add(leftBox);
-		leftPane.setBackground(Color.decode("#B099BC"));
+		leftPane.setBackground(Color.decode("#D0BAFB"));
 
 		// Pane Right
 		panePhong = new JPanel();
@@ -237,7 +236,7 @@ public class PanelDatPhong extends JPanel {
 		JScrollPane scrollPhongTable = new JScrollPane(phongTable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPhongTable.setBorder(BorderFactory.createTitledBorder(blackLine, "Danh sách thông tin phòng"));
-		scrollPhongTable.setBackground(Color.decode("#B099BC"));
+		scrollPhongTable.setBackground(Color.decode("#D0BAFB"));
 		JPanel pnlForTablePhong = new JPanel(new BorderLayout());
 		pnlForTablePhong.add(scrollPhongTable, BorderLayout.CENTER);
 		pnlForTablePhong.add(leftPane, BorderLayout.EAST);
@@ -266,12 +265,12 @@ public class PanelDatPhong extends JPanel {
 		Box traCuuB2 = Box.createHorizontalBox();
 
 		JPanel panePhongLb = new JPanel();
-		panePhongLb.setBackground(Color.decode("#B099BC"));
+		panePhongLb.setBackground(Color.decode("#D0BAFB"));
 		panePhongLb.add(phongLb = new JLabel("Phòng"));
 		traCuuB1.add(panePhongLb);
 
 		JPanel panePhongF = new JPanel();
-		panePhongF.setBackground(Color.decode("#B099BC"));
+		panePhongF.setBackground(Color.decode("#D0BAFB"));
 		panePhongF.add(phongF = new JTextField(10));
 		phongF.setFont(new Font("Arial", Font.PLAIN, 16));
 		traCuuB1.add(panePhongF);
@@ -279,12 +278,12 @@ public class PanelDatPhong extends JPanel {
 		traCuuB1.add(timKiemPBtn = new ButtonGradient("Tìm kiếm", imgSearch));
 
 		JPanel paneGiaLb = new JPanel();
-		paneGiaLb.setBackground(Color.decode("#B099BC"));
+		paneGiaLb.setBackground(Color.decode("#D0BAFB"));
 		paneGiaLb.add(giaPLb = new JLabel("Giá phòng"));
 		traCuuB2.add(paneGiaLb);
 
 		JPanel paneGiaPhongF = new JPanel();
-		paneGiaPhongF.setBackground(Color.decode("#B099BC"));
+		paneGiaPhongF.setBackground(Color.decode("#D0BAFB"));
 		paneGiaPhongF.add(giaPhongF = new JTextField(10));
 		giaPhongF.setFont(new Font("Arial", Font.PLAIN, 16));
 		traCuuB2.add(paneGiaPhongF);
@@ -295,7 +294,7 @@ public class PanelDatPhong extends JPanel {
 		traCuuB.add(Box.createVerticalStrut(10));
 		traCuuB.add(traCuuB2);
 		paneTraCuuP.add(traCuuB);
-		paneTraCuuP.setBackground(Color.decode("#B099BC"));
+		paneTraCuuP.setBackground(Color.decode("#D0BAFB"));
 		paneTraCuuP.setBorder(BorderFactory.createTitledBorder(blackLine, "Tra cứu"));
 
 		phongLb.setPreferredSize(giaPLb.getPreferredSize());
@@ -311,7 +310,7 @@ public class PanelDatPhong extends JPanel {
 		btnPhongBox1.add(tinhTrangLb = new JLabel("Tình trạng phòng "));
 		btnPhongBox1.add(tinhTrangB = new JComboBox<>(headersTinhTrang));
 		JPanel paneCBTinhTrang = new JPanel();
-		paneCBTinhTrang.setBackground(Color.decode("#B099BC"));
+		paneCBTinhTrang.setBackground(Color.decode("#D0BAFB"));
 		paneCBTinhTrang.add(btnPhongBox1);
 		btnPhongBox.add(paneCBTinhTrang);
 		btnPhongBox.add(Box.createHorizontalStrut(5));
@@ -321,7 +320,7 @@ public class PanelDatPhong extends JPanel {
 		btnPhongBox2.add(soNguoiLb = new JLabel("Số người "));
 		btnPhongBox2.add(soNguoiB = new JComboBox<>(headersSoNguoi));
 		JPanel paneCBSoNguoi = new JPanel();
-		paneCBSoNguoi.setBackground(Color.decode("#B099BC"));
+		paneCBSoNguoi.setBackground(Color.decode("#D0BAFB"));
 		paneCBSoNguoi.add(btnPhongBox2);
 		btnPhongBox.add(paneCBSoNguoi);
 		btnPhongBox.add(Box.createHorizontalStrut(5));
@@ -331,7 +330,7 @@ public class PanelDatPhong extends JPanel {
 		btnPhongBox3.add(loaiPLb = new JLabel("Loại phòng "));
 		btnPhongBox3.add(loaiPhongB = new JComboBox<>(headersLoaiPhong));
 		JPanel paneCBLoaiPhong = new JPanel();
-		paneCBLoaiPhong.setBackground(Color.decode("#B099BC"));
+		paneCBLoaiPhong.setBackground(Color.decode("#D0BAFB"));
 		paneCBLoaiPhong.add(btnPhongBox3);
 		btnPhongBox.add(paneCBLoaiPhong);
 		btnPhongBox.add(Box.createHorizontalStrut(5));
@@ -344,11 +343,11 @@ public class PanelDatPhong extends JPanel {
 
 		paneBtnPhong.add(clock = new DigitalClock(), BorderLayout.WEST);
 		paneBtnPhong.add(btnPhongBox, BorderLayout.CENTER);
-		paneBtnPhong.setBackground(Color.decode("#B099BC"));
+		paneBtnPhong.setBackground(Color.decode("#D0BAFB"));
 
 		panePhong.add(paneBtnPhong, BorderLayout.NORTH);
 //		panePhong.setBorder(BorderFactory.createTitledBorder(blackLine, "Thông tin phòng"));
-		panePhong.setBackground(Color.decode("#B099BC"));
+		panePhong.setBackground(Color.decode("#D0BAFB"));
 
 //		Box rightBox = Box.createVerticalBox();
 //		rightBox.add(panePhong);
@@ -773,8 +772,8 @@ public class PanelDatPhong extends JPanel {
 
 			bottomPanelLeft.add(quayLaiBtn = new ButtonGradient("Quay lại", imgBack));
 			bottomPanelRight.add(thuePhongBtn = new ButtonGradient("Xác nhận", imgCheck));
-			bottomPanelRight.setBackground(Color.decode("#B099BC"));
-			bottomPanelLeft.setBackground(Color.decode("#B099BC"));
+			bottomPanelRight.setBackground(Color.decode("#D0BAFB"));
+			bottomPanelLeft.setBackground(Color.decode("#D0BAFB"));
 			bottomPanel.add(bottomPanelLeft);
 			bottomPanel.add(bottomPanelRight);
 
@@ -1346,7 +1345,7 @@ public class PanelDatPhong extends JPanel {
 			locTinhTrangBox.add(Box.createHorizontalStrut(5));
 			locTinhTrangBox.add(tinhTrangPhieuB = new JComboBox<>(headersTinhTrangPDP));
 			JPanel paneForLocBox = new JPanel();
-			paneForLocBox.setBackground(Color.decode("#B099BC"));
+			paneForLocBox.setBackground(Color.decode("#D0BAFB"));
 			paneForLocBox.add(locTinhTrangBox);
 			btnPDPBox.add(paneForLocBox);
 			btnPDPBox.add(Box.createHorizontalStrut(150));
@@ -1356,26 +1355,26 @@ public class PanelDatPhong extends JPanel {
 
 			JPanel paneForSdtLb = new JPanel();
 			paneForSdtLb.add(sdtLb = new JLabel("SĐT Khách hàng"));
-			paneForSdtLb.setBackground(Color.decode("#B099BC"));
+			paneForSdtLb.setBackground(Color.decode("#D0BAFB"));
 			sdtBox.add(paneForSdtLb);
 
 			JPanel paneForSdtF = new JPanel();
 			paneForSdtF.add(sdtF = new JTextField(15));
-			paneForSdtF.setBackground(Color.decode("#B099BC"));
+			paneForSdtF.setBackground(Color.decode("#D0BAFB"));
 			sdtBox.add(paneForSdtF);
 			sdtBox.add(timKiemSDTBtn = new ButtonGradient("Tìm kiếm", imgSearch));
-			timKiemSDTBtn.setBackground(Color.decode("#B099BC"));
+			timKiemSDTBtn.setBackground(Color.decode("#D0BAFB"));
 
 			JPanel paneForSdtBox = new JPanel();
-			paneForSdtBox.setBackground(Color.decode("#B099BC"));
+			paneForSdtBox.setBackground(Color.decode("#D0BAFB"));
 			paneForSdtBox.add(sdtBox);
 			btnPDPBox.add(paneForSdtBox);
 			paneBtnPDP.add(btnPDPBox);
-			paneBtnPDP.setBackground(Color.decode("#B099BC"));
+			paneBtnPDP.setBackground(Color.decode("#D0BAFB"));
 
 			panePDP.add(paneBtnPDP, BorderLayout.NORTH);
 			panePDP.setBorder(BorderFactory.createTitledBorder(blackLine, "Danh sách phiếu đặt phòng"));
-			panePDP.setBackground(Color.decode("#B099BC"));
+			panePDP.setBackground(Color.decode("#D0BAFB"));
 
 			// Box nút hủy, nhận phòng
 //			Box btnNhanHuyBox = Box.createHorizontalBox();
@@ -1388,7 +1387,7 @@ public class PanelDatPhong extends JPanel {
 			paneForBtnNhanHuyBox.add(huyPBtn = new ButtonGradient("Hủy", imgCancel));
 			paneForBtnNhanHuyBox.add(Box.createHorizontalStrut(50));
 			paneForBtnNhanHuyBox.add(nhanPBtn = new ButtonGradient("Nhận", imgCheck));
-			paneForBtnNhanHuyBox.setBackground(Color.decode("#B099BC"));
+			paneForBtnNhanHuyBox.setBackground(Color.decode("#D0BAFB"));
 			panePDP.add(paneForBtnNhanHuyBox, BorderLayout.SOUTH);
 
 			JPanel pnlMain = new JPanel(new BorderLayout());
@@ -1396,8 +1395,8 @@ public class PanelDatPhong extends JPanel {
 			pnlMain.add(panePDP, BorderLayout.CENTER);
 			this.getContentPane().add(pnlMain);
 
-			huyPBtn.setBackground(Color.decode("#B099BC"));
-			nhanPBtn.setBackground(Color.decode("#B099BC"));
+			huyPBtn.setBackground(Color.decode("#D0BAFB"));
+			nhanPBtn.setBackground(Color.decode("#D0BAFB"));
 
 			readDateToTablePhongCho();
 
@@ -1535,16 +1534,16 @@ public class PanelDatPhong extends JPanel {
 			box2.add(boxForSDT);
 			box2.add(Box.createVerticalStrut(10));
 
-			tfMaPDP.setBackground(Color.decode("#B099BC"));
+			tfMaPDP.setBackground(Color.decode("#D0BAFB"));
 			tfMaPDP.setBorder(null);
 			tfMaPDP.setEditable(false);
-			tfTenPhong.setBackground(Color.decode("#B099BC"));
+			tfTenPhong.setBackground(Color.decode("#D0BAFB"));
 			tfTenPhong.setBorder(null);
 			tfTenPhong.setEditable(false);
-			tfTenKH.setBackground(Color.decode("#B099BC"));
+			tfTenKH.setBackground(Color.decode("#D0BAFB"));
 			tfTenKH.setBorder(null);
 			tfTenKH.setEditable(false);
-			tfSDT.setBackground(Color.decode("#B099BC"));
+			tfSDT.setBackground(Color.decode("#D0BAFB"));
 			tfSDT.setBorder(null);
 			tfSDT.setEditable(false);
 
@@ -1555,13 +1554,13 @@ public class PanelDatPhong extends JPanel {
 			boxForThongTin.add(Box.createHorizontalStrut(50));
 
 			JPanel paneForBackBtn = new JPanel();
-			paneForBackBtn.setBackground(Color.decode("#B099BC"));
+			paneForBackBtn.setBackground(Color.decode("#D0BAFB"));
 			paneForBackBtn.add(btnQuayLai = new ButtonGradient("Quay Lại", imgBack));
 			btnQuayLai.setBackground(Color.decode("#6fa8dc"));
 
 			thongTinPane.add(boxForThongTin, BorderLayout.CENTER);
 			thongTinPane.add(paneForBackBtn, BorderLayout.EAST);
-			thongTinPane.setBackground(Color.decode("#B099BC"));
+			thongTinPane.setBackground(Color.decode("#D0BAFB"));
 			bottomPane.add(thongTinPane, BorderLayout.NORTH);
 
 			// Pane for table
@@ -1570,11 +1569,11 @@ public class PanelDatPhong extends JPanel {
 			// Table dịch vụ kho
 			paneForTableDV = new JPanel(new BorderLayout());
 			paneForTableDV.setBorder(BorderFactory.createTitledBorder(border, "Danh Sách Dịch Vụ"));
-			paneForTableDV.setBackground(Color.decode("#B099BC"));
+			paneForTableDV.setBackground(Color.decode("#D0BAFB"));
 			JPanel paneForBtnTableDV = new JPanel();
 			Box boxForPaneForBtnTableDV = Box.createHorizontalBox();
 			JPanel paneForTimKiemDV1 = new JPanel();
-			paneForTimKiemDV1.setBackground(Color.decode("#B099BC"));
+			paneForTimKiemDV1.setBackground(Color.decode("#D0BAFB"));
 			paneForTimKiemDV1.add(lbTimKiemDV1 = new JLabel("Tìm Kiếm Dịch Vụ: "));
 			paneForTimKiemDV1.add(tfTimKiemDV1 = new JTextField(15));
 			boxForPaneForBtnTableDV.add(paneForTimKiemDV1);
@@ -1582,7 +1581,7 @@ public class PanelDatPhong extends JPanel {
 			boxForPaneForBtnTableDV.add(btnThem = new ButtonGradient("Thêm", imgAdd));
 			btnThem.setBackground(Color.decode("#6fa8dc"));
 			paneForBtnTableDV.add(boxForPaneForBtnTableDV);
-			paneForBtnTableDV.setBackground(Color.decode("#B099BC"));
+			paneForBtnTableDV.setBackground(Color.decode("#D0BAFB"));
 
 			String[] headers1 = { "STT", "Tên Dịch Vụ", "Đơn Giá", "Đơn Vị", "Số Lượng Tồn" };
 			model1 = new DefaultTableModel(headers1, 0);
@@ -1598,19 +1597,19 @@ public class PanelDatPhong extends JPanel {
 			// Table dịch vụ phòng
 			paneForTableDVPhong = new JPanel(new BorderLayout());
 			paneForTableDVPhong.setBorder(BorderFactory.createTitledBorder(border, "Dịch Vụ Đã Thêm"));
-			paneForTableDVPhong.setBackground(Color.decode("#B099BC"));
+			paneForTableDVPhong.setBackground(Color.decode("#D0BAFB"));
 			JPanel paneForBtnTableDVP = new JPanel();
 			Box boxForPaneForBtnTableDVP = Box.createHorizontalBox();
 			JPanel paneForTimKiemDV2 = new JPanel();
 			paneForTimKiemDV2.add(lbTimKiemDV2 = new JLabel("Tìm Kiếm Dịch Vụ: "));
 			paneForTimKiemDV2.add(tfTimKiemDV2 = new JTextField(15));
-			paneForTimKiemDV2.setBackground(Color.decode("#B099BC"));
+			paneForTimKiemDV2.setBackground(Color.decode("#D0BAFB"));
 			boxForPaneForBtnTableDVP.add(paneForTimKiemDV2);
 			boxForPaneForBtnTableDVP.add(Box.createHorizontalStrut(100));
 			boxForPaneForBtnTableDVP.add(btnXoa = new ButtonGradient("Xóa", imgDel));
 			btnXoa.setBackground(Color.decode("#6fa8dc"));
 			paneForBtnTableDVP.add(boxForPaneForBtnTableDVP);
-			paneForBtnTableDVP.setBackground(Color.decode("#B099BC"));
+			paneForBtnTableDVP.setBackground(Color.decode("#D0BAFB"));
 
 			String[] headers2 = { "STT", "Tên Dịch Vụ", "Đơn Giá", "Số Lượng", "Thành Tiền" };
 			model2 = new DefaultTableModel(headers2, 0);

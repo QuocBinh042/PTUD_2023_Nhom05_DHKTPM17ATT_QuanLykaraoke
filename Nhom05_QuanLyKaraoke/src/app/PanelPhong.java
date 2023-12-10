@@ -78,7 +78,7 @@ public class PanelPhong extends JPanel implements MouseListener {
 		btnQLLoaiPhong.addActionListener(e -> xuLyChuyen());
 		btnLamMoi.addActionListener(e -> xuLyLamMoi());
 		btnThemMoi.addActionListener(e -> xuLyThemMoi());
-		btnLuu.addActionListener(e->xuLyLuu());
+		btnLuu.addActionListener(e -> xuLyLuu());
 		btnXoa.addActionListener(e -> xuLyXoa());
 		btnCapNhat.addActionListener(e -> xuLyCapNhat());
 		btnTim.addActionListener(e -> xuLyTimKiem());
@@ -96,163 +96,6 @@ public class PanelPhong extends JPanel implements MouseListener {
 		Icon img_search = new ImageIcon("src/img/search.png");
 		Icon img_transfer = new ImageIcon("src/img/change16.png");
 		Border line = BorderFactory.createLineBorder(Color.BLACK);
-//		Box b1, b2, b3, b4, b5, b6;
-//		Box bLeft, bRight;
-		
-//		Dimension dimension = new Dimension(110, 25);
-//
-//		JPanel pnlLeft = new JPanel();
-//		JPanel pnlRight = new JPanel();
-//
-//		bLeft = Box.createVerticalBox();
-//		bRight = Box.createVerticalBox();
-//		pnlLeft.add(bLeft);
-//		pnlRight.add(bRight);
-//
-//		bLeft.setBorder(BorderFactory.createTitledBorder(line, "Thông tin phòng"));
-//		bLeft.add(Box.createVerticalStrut(5));
-//		JPanel pnlTenPhong = new JPanel();
-//		pnlTenPhong.setBackground(Color.decode("#cccccc"));
-//		pnlTenPhong.add(lblTenPhong = new JLabel("Tên phòng"));
-//		pnlTenPhong.add(txtTenPhong = new JTextField(15));
-//		bLeft.add(b1 = Box.createHorizontalBox());
-//		b1.add(pnlTenPhong);
-//		bLeft.add(Box.createVerticalStrut(10));
-//
-//		JPanel pnlMaLP = new JPanel();
-//		// Lay danh sach MaLP do vao comboBox
-//		String ds = "";
-//		dsLP = daoLP.getAllLoaiPhong();
-//		for (entity.LoaiPhong lp : dsLP) {
-//			ds += lp.getMaLoaiPhong().toString() + ";";
-//		}
-//		String[] cb = ds.split(";");
-//		pnlMaLP.setBackground(Color.decode("#cccccc"));
-//		pnlMaLP.add(lblMaLoaiPhong = new JLabel("Mã loại phòng"));
-//		pnlMaLP.add(cbMaLoaiPhong = new JComboBox<>(cb));
-//		bLeft.add(b2 = Box.createHorizontalBox());
-//		b2.add(pnlMaLP);
-//		bLeft.add(Box.createVerticalStrut(10));
-//
-//		JPanel pnlLoaiPhong = new JPanel();
-//		pnlLoaiPhong.setBackground(Color.decode("#cccccc"));
-//		pnlLoaiPhong.add(lblLoaiPhong = new JLabel("Loại phòng"));
-//		pnlLoaiPhong.add(txtLoaiPhong = new JTextField(15));
-//		txtLoaiPhong.setEditable(false);
-//		bLeft.add(b3 = Box.createHorizontalBox());
-//		b3.add(pnlLoaiPhong);
-//		bLeft.add(Box.createVerticalStrut(10));
-//
-//		JPanel pnlSucChua = new JPanel();
-//		pnlSucChua.setBackground(Color.decode("#cccccc"));
-//		pnlSucChua.add(lblSucChua = new JLabel("Sức chứa"));
-//		pnlSucChua.add(txtSucChua = new JTextField(15));
-//		txtSucChua.setEditable(false);
-//		bLeft.add(b4 = Box.createHorizontalBox());
-//		b4.add(pnlSucChua);
-//		bLeft.add(Box.createVerticalStrut(10));
-//
-//		JPanel pnlGiaPhong = new JPanel();
-//		pnlGiaPhong.setBackground(Color.decode("#cccccc"));
-//		pnlGiaPhong.add(lblGiaPhong = new JLabel("Giá phòng"));
-//		pnlGiaPhong.add(txtGiaPhong = new JTextField(15));
-//		txtGiaPhong.setEditable(false);
-//		bLeft.add(b5 = Box.createHorizontalBox());
-//		b5.add(pnlGiaPhong);
-//		bLeft.add(Box.createVerticalStrut(10));
-//
-//		JPanel pnlMoTa = new JPanel();
-//		pnlMoTa.setBackground(Color.decode("#cccccc"));
-//		pnlMoTa.add(lblMoTa = new JLabel("Mô tả"));
-//		pnlMoTa.add(txtaMoTa = new JTextArea(3, 15));
-//		txtGiaPhong.setEditable(false);
-//		bLeft.add(b6 = Box.createHorizontalBox());
-//		b6.add(pnlMoTa);
-//		txtaMoTa.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-//		JScrollPane scroll1 = new JScrollPane(txtaMoTa);
-//		scroll1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-//		scroll1.setBorder(null);
-//		b6.add(scroll1);
-//		b6.add(Box.createHorizontalStrut(5));
-//
-//		lblTenPhong.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
-//		lblLoaiPhong.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
-//		lblSucChua.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
-//		lblGiaPhong.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
-//		lblMoTa.setPreferredSize(lblMaLoaiPhong.getPreferredSize());
-//		txtTenPhong.setPreferredSize(dimension);
-//		cbMaLoaiPhong.setPreferredSize(txtTenPhong.getPreferredSize());
-//		txtLoaiPhong.setPreferredSize(dimension);
-//		txtSucChua.setPreferredSize(dimension);
-//		txtGiaPhong.setPreferredSize(dimension);
-//
-//		bLeft.add(Box.createVerticalStrut(50));
-//		JPanel pnlKM = new JPanel();
-//		pnlKM.setBackground(Color.decode("#cccccc"));
-//		GridLayout gridKM = new GridLayout(2, 2);
-//		pnlKM.setLayout(gridKM);
-//		gridKM.setHgap(20);
-//		gridKM.setVgap(20);
-//		pnlKM.add(btnThemMoi = new ButtonGradient("Thêm mới", img_add));
-//		pnlKM.add(btnCapNhat = new ButtonGradient("Cập nhật", img_edit));
-//		pnlKM.add(btnXoa = new ButtonGradient("     Xóa     ", img_del));
-//		pnlKM.add(btnLamMoi = new ButtonGradient("Làm mới", img_reset));
-//		bLeft.add(pnlKM);
-//
-//		bLeft.add(Box.createVerticalStrut(20));
-//		JPanel pnlKM2 = new JPanel();
-//		pnlKM2.setBackground(Color.decode("#cccccc"));
-//		GridLayout gridKM2 = new GridLayout(2, 1);
-//		pnlKM2.setLayout(gridKM2);
-//		gridKM2.setVgap(20);
-//		pnlKM2.add(btnQuanLyChiTiet = new ButtonGradient("Quản lý loại phòng", img_transfer));
-//		pnlKM2.add(btnThoat = new ButtonGradient("Thoát", img_out));
-//		bLeft.add(pnlKM2);
-//		bLeft.add(Box.createVerticalStrut(60));
-//
-//		// Set size
-//		bLeft.setMaximumSize(new Dimension(Integer.MAX_VALUE, bLeft.getPreferredSize().height));
-//
-//		// Right box
-//		Box bTacVu = Box.createHorizontalBox();
-//		JPanel pnlTacVu = new JPanel();
-//		pnlTacVu.add(bTacVu);
-//		bTacVu.setOpaque(true);
-//		bTacVu.setBackground(Color.decode("#e6dbd1"));
-//		bTacVu.add(Box.createHorizontalStrut(200));
-//		// Panel Loc
-//		JPanel pnlLoc = new JPanel();
-//		String cbtt[] = { "Tất cả", "Còn trống", "Đã đặt trước", "Đang thuê", "Đã xóa" };
-//		String cblp[] = { "Tất cả", "Thường", "VIP" };
-//		pnlLoc.setBackground(Color.decode("#cccccc"));
-//		GridLayout gridLoc = new GridLayout(2, 2);
-//		Dimension dmsBtnLoc = new Dimension(120, 25);
-//		gridLoc.setVgap(10);
-//		pnlLoc.setLayout(gridLoc);
-//		pnlLoc.setBorder(BorderFactory.createTitledBorder(line, "Lọc"));
-//		pnlLoc.add(lblTinhTrang = new JLabel("Tình trạng"));
-//		pnlLoc.add(cbTinhTrang = new JComboBox<>(cbtt));
-//		cbTinhTrang.setPreferredSize(dmsBtnLoc);
-//		pnlLoc.add(lblLoaiPhong = new JLabel("Loại phòng"));
-//		pnlLoc.add(cbLoaiPhong = new JComboBox<>(cblp));
-//		cbLoaiPhong.setPreferredSize(dmsBtnLoc);
-//		bTacVu.add(pnlLoc);
-//		bTacVu.add(Box.createHorizontalStrut(200));
-//
-//		// Panel Tra cuu
-//		JPanel pnlTim = new JPanel();
-//		pnlTim.setBackground(Color.decode("#cccccc"));
-//		pnlTim.add(Box.createVerticalStrut(25));
-//		pnlTim.setBorder(BorderFactory.createTitledBorder(line, "Tra cứu"));
-//		pnlTim.add(lblTimMaPhong = new JLabel("Mã phòng"));
-//		pnlTim.add(Box.createHorizontalStrut(30));
-//		pnlTim.add(txtTimMaPhong = new JTextField(20));
-//		txtTimMaPhong.setPreferredSize(dimension);
-//		pnlTim.add(Box.createHorizontalStrut(30));
-//		pnlTim.add(btnTim = new ButtonGradient("Tìm", img_search));
-//		btnTim.setPreferredSize(new Dimension(100, 25));
-//		bTacVu.add(pnlTim);
-//		bTacVu.add(Box.createHorizontalStrut(100));
 
 		// Thông tin phòng
 		JPanel pnlInput = new JPanel();
@@ -335,12 +178,12 @@ public class PanelPhong extends JPanel implements MouseListener {
 		pnlTim.add(txtTimMaPhong = new JTextField(20));
 		txtTimMaPhong.setPreferredSize(dimension);
 		pnlTim.add(btnTim = new ButtonGradient("Tìm", img_search));
-		
+
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlLoc, pnlTim);
 		splitPane.setDividerLocation(600);
 
 		JPanel pnlTable = new JPanel();
-		pnlTable.setBorder(BorderFactory.createTitledBorder(line,"Danh sách phòng"));
+		pnlTable.setBorder(BorderFactory.createTitledBorder(line, "Danh sách phòng"));
 		table = new JTable();
 		String[] headers = "Mã phòng;Tên phòng;Mã loại phòng;Loại phòng;Sức chứa;Giá phòng;Tình trạng;Mô tả"
 				.split(";");
@@ -364,12 +207,12 @@ public class PanelPhong extends JPanel implements MouseListener {
 		setLayout(new BorderLayout());
 		add(pnlThongTinPhong, BorderLayout.NORTH);
 		add(pnlTable, BorderLayout.CENTER);
-		pnlLoc.setBackground(Color.decode("#B099BC"));
-		pnlTim.setBackground(Color.decode("#B099BC"));
-		pnlTable.setBackground(Color.decode("#B099BC"));
-		pnlInput.setBackground(Color.decode("#B099BC"));
-		pnlChucNang.setBackground(Color.decode("#B099BC"));
-		pnlThongTinPhong.setBackground(Color.decode("#B099BC"));
+		pnlLoc.setBackground(Color.decode("#D0BAFB"));
+		pnlTim.setBackground(Color.decode("#D0BAFB"));
+		pnlTable.setBackground(Color.decode("#D0BAFB"));
+		pnlInput.setBackground(Color.decode("#D0BAFB"));
+		pnlChucNang.setBackground(Color.decode("#D0BAFB"));
+		pnlThongTinPhong.setBackground(Color.decode("#D0BAFB"));
 	}
 
 	private JPanel createPanel(JLabel label, JComponent component) {
@@ -378,7 +221,7 @@ public class PanelPhong extends JPanel implements MouseListener {
 		panel.add(label);
 		panel.add(component);
 		label.setFont(new Font("Sanserif", Font.BOLD, 13));
-		panel.setBackground(Color.decode("#B099BC"));
+		panel.setBackground(Color.decode("#D0BAFB"));
 		return panel;
 	}
 
@@ -407,13 +250,13 @@ public class PanelPhong extends JPanel implements MouseListener {
 	private void xuLyThemMoi() {
 		String maP = maPTD.formatMa(daoPhong.getAllPhong().get(daoPhong.getAllPhong().size() - 1).getMaPhong());
 		txtMaPhong.setText(maP);
-		
+
 	}
-	
+
 	private void xuLyLuu() {
 		if (kiemTraThongTin()) {
 			if (validData() == true) {
-				String maP =txtMaPhong.getText();
+				String maP = txtMaPhong.getText();
 				String tenP = txtTenPhong.getText();
 				String maLP = cbMaLoaiPhong.getSelectedItem().toString();
 				String loaiP = txtLoaiPhong.getText();

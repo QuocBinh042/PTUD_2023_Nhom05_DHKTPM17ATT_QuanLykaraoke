@@ -145,10 +145,10 @@ public class PanelHoaDon extends JPanel {
 		pnlNorth.setBorder(BorderFactory.createTitledBorder("Tra cứu"));		
 		bb.add(pnlNorth);
 		bb.add(pnlChucNang);
-		dateBDTim.setBackground(Color.decode("#B099BC"));
-		dateKTTim.setBackground(Color.decode("#B099BC"));
-		pnlNorth.setBackground(Color.decode("#B099BC"));
-		pnlChucNang.setBackground(Color.decode("#B099BC"));
+		dateBDTim.setBackground(Color.decode("#D0BAFB"));
+		dateKTTim.setBackground(Color.decode("#D0BAFB"));
+		pnlNorth.setBackground(Color.decode("#D0BAFB"));
+		pnlChucNang.setBackground(Color.decode("#D0BAFB"));
 		
 		cbLuaChon.setPreferredSize(dimension);
 		dateBDTim.setPreferredSize(dimension);

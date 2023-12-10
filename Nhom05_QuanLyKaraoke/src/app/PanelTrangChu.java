@@ -8,8 +8,8 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-public class TrangChu extends JPanel {
-	public TrangChu() {
+public class PanelTrangChu extends JPanel {
+	public PanelTrangChu() {
 		ImageIcon icon = new ImageIcon("src/img/trangChu.jpg");
 		Image image = icon.getImage();
 		JLabel label = new JLabel(icon);
