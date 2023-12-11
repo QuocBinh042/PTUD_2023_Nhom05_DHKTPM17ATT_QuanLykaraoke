@@ -443,7 +443,7 @@ INSERT INTO HoaDon VALUES (N'HD0015', '12:30', '2023-11-21', N'NV0003', N'KH0010
 -----------------------------------CHI TIET HOA DON-----------------------------------
 ----INSERT INTO ChiTietHoaDon(MaPhong, MaHD, ThoiGianNhanPhong, ThoiGianTraPhong)
 INSERT INTO ChiTietHoaDon VALUES (N'P0001', N'HD0001', '2022-09-01 12:00:00', '2022-09-01 15:30:00')
-INSERT INTO ChiTietHoaDon VALUES (N'P0002', N'HD0002', '2023-09-03 12:00:00', '2023-09-02 15:45:00')
+INSERT INTO ChiTietHoaDon VALUES (N'P0002', N'HD0002', '2023-09-02 12:00:00', '2023-09-02 15:45:00')
 INSERT INTO ChiTietHoaDon VALUES (N'P0003', N'HD0003', '2023-10-03 20:30:00', '2023-10-03 21:30:00')
 
 INSERT INTO ChiTietHoaDon VALUES (N'P0004', N'HD0004', '2023-10-05 12:00:00', '2023-10-04 13:30:00')
@@ -502,9 +502,24 @@ INSERT INTO CTDVPhong VALUES (N'HD0009', N'DV0005', 1)
 
 --INSERT INTO CTDVPhong VALUES (N'HD0015', N'DV0006', 2);
 
+SELECT SUM(DATEDIFF(day, ThoiGianTraPhong, ThoiGianNhanPhong) * lp.GiaPhong) AS TotalCost
+FROM ChiTietHoaDon cthd INNER JOIN Phong p ON cthd.MaPhong = p.MaPhong
+INNER JOIN LoaiPhong lp ON p.MaLP = lp.MaLP WHERE MONTH(ThoiGianTraPhong) = MONTH('2023-10-03 21:30:00')
+
+SELECT 
+  SUM(
+    DATEDIFF(HOUR, cthd.ThoiGianNhanPhong, cthd.ThoiGianTraPhong)*lp.GiaPhong 
+  ) AS GrandTotalInHours
+FROM ChiTietHoaDon cthd 
+INNER JOIN Phong p ON cthd.MaPhong = p.MaPhong
+INNER JOIN LoaiPhong lp ON p.MaLP = lp.MaLP
+WHERE MONTH(ThoiGianTraPhong) = MONTH('2023-10-03 21:30:00')
 
 
 
-
-
+SELECT SUM( dv.DonGia * ctdvp.SoLuong) AS TotalCount 
+FROM CTDVPhong ctdvp 
+INNER JOIN DichVu dv ON dv.MaDV = ctdvp.MaDV
+INNER JOIN HoaDon hd ON hd.MaHD = ctdvp.MaHD
+WHERE CONVERT(DATE, hd.NgayThanhToan) = ?
 

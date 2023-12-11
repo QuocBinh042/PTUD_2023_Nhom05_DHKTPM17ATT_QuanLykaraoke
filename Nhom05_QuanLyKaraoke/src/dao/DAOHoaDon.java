@@ -49,7 +49,7 @@ public class DAOHoaDon {
 		}
 		return n > 0;
 	}
-	
+
 	public boolean capNhatHoaDonSauKhiThanhToan(HoaDon hd) {
 		ConnectDB.getInstance();
 		Connection connect = ConnectDB.getConnection();
@@ -58,12 +58,12 @@ public class DAOHoaDon {
 		try {
 			String sql = "update HoaDon set GioThanhToan = ?, NgayThanhToan = ?, TongHoaDon = ? where MaHD = ?";
 			statement = connect.prepareStatement(sql);
-			statement.setTime(1, Time.valueOf(hd.getGioThanhToan())); 
+			statement.setTime(1, Time.valueOf(hd.getGioThanhToan()));
 			statement.setTimestamp(2, new Timestamp(hd.getNgayThanhToan().getTime()));
 			statement.setDouble(3, hd.getTongHoaDon());
 			statement.setString(4, hd.getMaHoaDon());
 			n = statement.executeUpdate();
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -212,13 +212,12 @@ public class DAOHoaDon {
 		Connection connect = ConnectDB.getConnection();
 
 		try {
-			// Truncate the timestamp to the month level
 			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
 			String sql = "SELECT * FROM HoaDon hd " + "INNER JOIN NhanVien nv ON hd.MaNV = nv.MaNV "
 					+ "INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH " + "INNER JOIN KhuyenMai km ON hd.MaKM = km.MaKM "
-					+ "WHERE MONTH(NgayThanhToan) = MONTH(?)";
+					+ "WHERE MONTH(NgayThanhToan) = MONTH(?) AND hd.TongHoaDon != 0 ";
 
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			preparedStatement.setDate(1, sqlNgay);
@@ -251,7 +250,7 @@ public class DAOHoaDon {
 		try {
 			String sql = "SELECT * FROM HoaDon hd " + "INNER JOIN NhanVien nv ON hd.MaNV = nv.MaNV "
 					+ "INNER JOIN KhachHang kh ON hd.MaKH = kh.MaKH " + "INNER JOIN KhuyenMai km ON hd.MaKM = km.MaKM "
-					+ "WHERE YEAR(NgayThanhToan) = ?";
+					+ "WHERE YEAR(NgayThanhToan) = ? AND hd.TongHoaDon != 0";
 
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			preparedStatement.setInt(1, nam);
@@ -404,7 +403,7 @@ public class DAOHoaDon {
 		try {
 			String sql = "select * from HoaDon hd inner join NhanVien nv on hd.MaNV = nv.MaNV "
 					+ "inner join KhachHang kh on hd.MaKH = kh.MaKH " + "inner join KhuyenMai km on hd.MaKM = km.MaKM "
-					+ "WHERE NgayThanhToan BETWEEN ? AND ?";
+					+ "WHERE hd.TongHoaDon != 0 AND NgayThanhToan BETWEEN ? AND ?";
 
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			java.sql.Date sqlNgayBD = new java.sql.Date(date.getTime());
@@ -443,7 +442,7 @@ public class DAOHoaDon {
 			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
-			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE DAY(NgayThanhToan) = DAY(?)";
+			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE TongHoaDon != 0 AND DAY(NgayThanhToan) = DAY(?)";
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			preparedStatement.setDate(1, sqlNgay);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -469,7 +468,7 @@ public class DAOHoaDon {
 			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
-			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE MONTH(NgayThanhToan) = MONTH(?)";
+			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE TongHoaDon != 0 AND MONTH(NgayThanhToan) = MONTH(?)";
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			preparedStatement.setDate(1, sqlNgay);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -495,7 +494,7 @@ public class DAOHoaDon {
 			int year = Integer.parseInt(yearString);
 			LocalDate localDate = LocalDate.of(year, 1, 1);
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
-			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE YEAR(NgayThanhToan) = YEAR(?)";
+			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE TongHoaDon != 0 AND YEAR(NgayThanhToan) = YEAR(?)";
 			try (PreparedStatement preparedStatement = connect.prepareStatement(sql)) {
 				preparedStatement.setDate(1, sqlNgay);
 				try (ResultSet rs = preparedStatement.executeQuery()) {
@@ -515,7 +514,7 @@ public class DAOHoaDon {
 		try {
 			ConnectDB.getInstance();
 			Connection connect = ConnectDB.getConnection();
-			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE NgayThanhToan BETWEEN ? AND ?";
+			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE TongHoaDon != 0 AND NgayThanhToan BETWEEN ? AND ?";
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			java.sql.Date sqlNgayBD = new java.sql.Date(date.getTime());
 			java.sql.Date sqlNgayKT = new java.sql.Date(date2.getTime());
@@ -537,7 +536,7 @@ public class DAOHoaDon {
 		try {
 			ConnectDB.getInstance();
 			Connection connect = ConnectDB.getConnection();
-			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE NgayThanhToan BETWEEN ? AND ?";
+			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE hd.TongHoaDon != 0 AND NgayThanhToan BETWEEN ? AND ?";
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			java.sql.Date sqlNgayBD = new java.sql.Date(date.getTime());
 			java.sql.Date sqlNgayKT = new java.sql.Date(date2.getTime());
@@ -565,7 +564,7 @@ public class DAOHoaDon {
 			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
-			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE DAY(NgayThanhToan) = DAY(?) AND MONTH(NgayThanhToan) = MONTH(?) AND YEAR(NgayThanhToan) = YEAR(?)";
+			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE TongHoaDon!=0 AND DAY(NgayThanhToan) = DAY(?) AND MONTH(NgayThanhToan) = MONTH(?) AND YEAR(NgayThanhToan) = YEAR(?)";
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			preparedStatement.setDate(1, sqlNgay);
 			preparedStatement.setDate(2, sqlNgay);
@@ -592,7 +591,7 @@ public class DAOHoaDon {
 			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
-			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE MONTH(NgayThanhToan) = MONTH(?) AND YEAR(NgayThanhToan) = YEAR(?)";
+			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE TongHoaDon!=0 AND MONTH(NgayThanhToan) = MONTH(?) AND YEAR(NgayThanhToan) = YEAR(?)";
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			preparedStatement.setDate(1, sqlNgay);
 			preparedStatement.setDate(2, sqlNgay);
@@ -619,7 +618,7 @@ public class DAOHoaDon {
 			LocalDate localDate = LocalDate.of(year, 1, 1);
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
-			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE DATEPART(YEAR, NgayThanhToan) = DATEPART(YEAR, ?)";
+			String sql = "SELECT Count(*) AS TotalCount FROM HoaDon WHERE TongHoaDon!=0 AND DATEPART(YEAR, NgayThanhToan) = DATEPART(YEAR, ?)";
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			preparedStatement.setDate(1, sqlNgay);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -660,7 +659,7 @@ public class DAOHoaDon {
 			ConnectDB.getInstance();
 			Connection connect = ConnectDB.getConnection();
 			if (date != null && date2 != null) {
-				String sql = "SELECT CONVERT(VARCHAR(7), NgayThanhToan, 120) AS Month, SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE NgayThanhToan BETWEEN ? AND ? GROUP BY CONVERT(VARCHAR(7), NgayThanhToan, 120)";
+				String sql = "SELECT CONVERT(VARCHAR(7), NgayThanhToan, 120) AS Month, SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE TongHoaDon!=0 AND NgayThanhToan BETWEEN ? AND ? GROUP BY CONVERT(VARCHAR(7), NgayThanhToan, 120)";
 				PreparedStatement preparedStatement = connect.prepareStatement(sql);
 				java.sql.Date sqlNgayBD = new java.sql.Date(date.getTime());
 				java.sql.Date sqlNgayKT = new java.sql.Date(date2.getTime());
@@ -680,7 +679,6 @@ public class DAOHoaDon {
 		return monthlyTotal;
 	}
 
-
 	public Map<Integer, Double> ThongKeHoaDonNam(Integer year) {
 		Map<Integer, Double> monthlyTotal = new HashMap<>();
 		try {
@@ -689,7 +687,7 @@ public class DAOHoaDon {
 			if (year != null) {
 				// Loop through all 12 months
 				for (int month = 1; month <= 12; month++) {
-					String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE YEAR(NgayThanhToan) = ? AND MONTH(NgayThanhToan) = ?";
+					String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE TongHoaDon!=0 AND YEAR(NgayThanhToan) = ? AND MONTH(NgayThanhToan) = ?";
 					PreparedStatement preparedStatement = connect.prepareStatement(sql);
 					preparedStatement.setInt(1, year);
 					preparedStatement.setInt(2, month);
@@ -727,7 +725,7 @@ public class DAOHoaDon {
 				int daysInMonth = yearMonth.lengthOfMonth();
 
 				for (int day = 1; day <= daysInMonth; day++) {
-					String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE YEAR(ngayThanhToan) = ? AND MONTH(ngayThanhToan) = ? AND DAY(ngayThanhToan) = ?";
+					String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE TongHoaDon!=0 AND YEAR(ngayThanhToan) = ? AND MONTH(ngayThanhToan) = ? AND DAY(ngayThanhToan) = ?";
 					PreparedStatement preparedStatement = connect.prepareStatement(sql);
 					preparedStatement.setInt(1, year);
 					preparedStatement.setInt(2, monthValue);
