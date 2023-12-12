@@ -97,20 +97,29 @@ public class PanelThongKe extends JPanel {
 	public PanelThongKe() {
 		setLayout(new BorderLayout());
 		add(createUIThongKeTheoTG(), BorderLayout.CENTER);
-
+		btnChart.enable(false);
+		btnTable.setBackground(Color.GRAY);
 		thongKeTheoNgay();
 		cbLuaChonTG.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				btnChart.enable(true);
+
 				Component selectedComponent = null;
 				pnlThoiGian.removeAll();
 				if (cbLuaChonTG.getSelectedItem().equals("Ngày")) {
+					btnChart.enable(false);
+					btnTable.setBackground(Color.GRAY);
 					selectedComponent = dcChonNgay;
 				} else if (cbLuaChonTG.getSelectedItem().equals("Tháng")) {
 					selectedComponent = dcChonThang;
+					btnChart.enable(true);
+					btnChart.setBackground(Color.GRAY);
+					btnTable.setBackground(getBackground());
 				} else {
 					selectedComponent = cbChonNam;
+					btnChart.enable(true);
+					btnChart.setBackground(Color.GRAY);
+					btnTable.setBackground(getBackground());
 				}
 				pnlThoiGian.add(selectedComponent);
 			}
@@ -120,20 +129,18 @@ public class PanelThongKe extends JPanel {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				thongKeTheoNgay();
-				btnChart.enable(false);
+
 			}
 		});
 		dcChonThang.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				btnChart.enable(true);
 				thongKeTheoThang();
 			}
 		});
 		cbChonNam.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				btnChart.enable(true);
 				thongKeTheoNam();
 				cbChonNam.addActionListener(e -> thongKeTheoNam());
 			}

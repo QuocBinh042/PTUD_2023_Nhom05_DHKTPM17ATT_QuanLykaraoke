@@ -517,9 +517,11 @@ WHERE MONTH(ThoiGianTraPhong) = MONTH('2023-10-03 21:30:00')
 
 
 
-SELECT SUM( dv.DonGia * ctdvp.SoLuong) AS TotalCount 
+SELECT SUM( dv.DonGia * ctdvp.SoLuong ) AS TotalCount 
 FROM CTDVPhong ctdvp 
 INNER JOIN DichVu dv ON dv.MaDV = ctdvp.MaDV
 INNER JOIN HoaDon hd ON hd.MaHD = ctdvp.MaHD
-WHERE CONVERT(DATE, hd.NgayThanhToan) = ?
+INNER JOIN KhuyenMai km ON hd.MaKH = km.MaKM
+WHERE  hd.TongHoaDon != 0 
 
+SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE (TongHoaDon != 0) AND (MONTH(NgayThanhToan) = MONTH('2023-10-03 21:30:00'))
