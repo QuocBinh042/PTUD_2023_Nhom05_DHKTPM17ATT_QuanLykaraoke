@@ -384,18 +384,18 @@ public class PanelNhanVien extends JPanel implements MouseListener {
 	}
 
 	private void xuLyTimKiem() {
-		String tenNVTim = txtTimNhanVien.getText();
+		String tenNVTim = txtTimSDT.getText();
 		int n = 0;
 		for (int i = 0; i < table.getRowCount(); i++) {
-			if (table.getValueAt(i, 1).toString().equalsIgnoreCase(tenNVTim)) {
+			if (table.getValueAt(i, 4).toString().equalsIgnoreCase(tenNVTim)) {
 				table.setRowSelectionInterval(i, i);
 				n = 1;
 			}
 		}
 		if (n == 1) {
-			JOptionPane.showMessageDialog(null, "Tên nhân viên được tìm thấy!");
+			JOptionPane.showMessageDialog(null, "Đã tìm thấy nhân viên!");
 		} else {
-			JOptionPane.showMessageDialog(null, "Tên nhân viên không tồn tại!");
+			JOptionPane.showMessageDialog(null, "Không tìm thấy nhân viên!");
 		}
 	}
 

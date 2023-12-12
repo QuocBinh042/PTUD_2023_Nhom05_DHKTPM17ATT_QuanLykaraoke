@@ -177,7 +177,7 @@ public class PanelPhong extends JPanel implements MouseListener {
 		pnlTim.add(lblTimMaPhong = new JLabel("Tìm theo mã phòng"));
 		pnlTim.add(txtTimMaPhong = new JTextField(20));
 		txtTimMaPhong.setPreferredSize(dimension);
-		pnlTim.add(btnTim = new ButtonGradient("Tìm", img_search));
+		pnlTim.add(btnTim = new ButtonGradient("Tìm kiếm", img_search));
 
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlLoc, pnlTim);
 		splitPane.setDividerLocation(600);
