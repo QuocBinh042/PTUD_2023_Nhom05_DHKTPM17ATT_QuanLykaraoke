@@ -370,7 +370,7 @@ public class PanelThongKe extends JPanel {
 	private void addKetQua(Double dt, Integer slhd, Double tienPhong, Double tienDV) {
 		lblDoanhThuValue.setText(formatter.format(dt));
 		lblSoLuongHDValue.setText(slhd.toString());
-		lblTienPhongValue.setText(formatter.format(tienPhong));
+		lblTienPhongValue.setText(formatter.format(dt-tienDV));
 		lblTienDVValue.setText(formatter.format(tienDV));
 	}
 

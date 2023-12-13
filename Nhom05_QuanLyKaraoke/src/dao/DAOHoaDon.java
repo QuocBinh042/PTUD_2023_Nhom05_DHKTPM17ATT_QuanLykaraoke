@@ -442,7 +442,7 @@ public class DAOHoaDon {
 			LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			java.sql.Date sqlNgay = java.sql.Date.valueOf(localDate);
 
-			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE TongHoaDon != 0 AND DAY(NgayThanhToan) = DAY(?)";
+			String sql = "SELECT SUM(TongHoaDon) AS TotalCount FROM HoaDon WHERE TongHoaDon != 0 AND NgayThanhToan = ?";
 			PreparedStatement preparedStatement = connect.prepareStatement(sql);
 			preparedStatement.setDate(1, sqlNgay);
 			ResultSet rs = preparedStatement.executeQuery();
