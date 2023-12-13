@@ -7,15 +7,18 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -359,8 +362,18 @@ public class PanelDatPhong extends JPanel {
 
 		readDataToTablePhong();
 
+		thuePBtn.setMnemonic(KeyEvent.VK_F1);
+		thuePBtn.setToolTipText("Click ALT F1");
+		chuyenPBtn.setMnemonic(KeyEvent.VK_F2);
+		chuyenPBtn.setToolTipText("Click ALT F2");
+		chiTietPBtn.setMnemonic(KeyEvent.VK_F3);
+		chiTietPBtn.setToolTipText("Click ALT F3");
+		dichVuPBtn.setMnemonic(KeyEvent.VK_F4);
+		dichVuPBtn.setToolTipText("Click ALT F4");
+		tinhTienPBtn.setMnemonic(KeyEvent.VK_F5);
+		tinhTienPBtn.setToolTipText("Click ALT F5");
+
 		thuePBtn.addActionListener(e -> xuLyThuePhong());
-//		datPBtn.addActionListener(e -> xuLyDatPhong());
 		chuyenPBtn.addActionListener(e -> xuLyChuyenPhong());
 		chiTietPBtn.addActionListener(e -> xuLyChiTietPhong());
 		dichVuPBtn.addActionListener(e -> xuLyDichVuPhong());
@@ -569,7 +582,8 @@ public class PanelDatPhong extends JPanel {
 		for (Phong p : dsP) {
 			if (p.getTinhTrangPhong().equalsIgnoreCase("Còn Trống"))
 				phongModel.addRow(new Object[] { p.getTenPhong(), p.getLoaiPhong().getTenLoaiPhong(),
-						p.getLoaiPhong().getSucChua(), p.getTinhTrangPhong(), p.getLoaiPhong().getGiaLoaiPhong() });
+						p.getLoaiPhong().getSucChua(), p.getTinhTrangPhong(),
+						formatter.format(p.getLoaiPhong().getGiaLoaiPhong()) });
 		}
 	}
 
@@ -583,7 +597,7 @@ public class PanelDatPhong extends JPanel {
 		private String tenP;
 		private DAOPhong pdao;
 		private DAOKhachHang kdao;
-		private DAONhanVien nvDAO;
+		private DAONhanVien nvDAO = new DAONhanVien();
 		private DAOPhieuDatPhong pdpDao;
 		private DAOHoaDon hdDao;
 		private DAOCTHD cthdDao;
@@ -595,7 +609,7 @@ public class PanelDatPhong extends JPanel {
 		SimpleDateFormat dayFormat2 = new SimpleDateFormat("dd/MM/yyyy");
 
 		public ThuePhong() {
-			setSize(650, 550);
+			setSize(700, 550);
 			hdDao = new DAOHoaDon();
 			pdao = new DAOPhong();
 			kdao = new DAOKhachHang();
@@ -646,6 +660,7 @@ public class PanelDatPhong extends JPanel {
 			tenPhongF.setFont(new Font("Arial", Font.PLAIN, 16));
 			tenPhongF.setBorder(null);
 			tenPhongF.setEditable(false);
+			tenPhongLb.setFont(new Font("Arial", Font.BOLD, 16));
 
 			Box loaiPhongBox = Box.createHorizontalBox();
 			loaiPhongBox.add(loaiPhongLb = new JLabel("Loại phòng:"));
@@ -654,6 +669,7 @@ public class PanelDatPhong extends JPanel {
 			loaiPhongF.setFont(new Font("Arial", Font.PLAIN, 16));
 			loaiPhongF.setBorder(null);
 			loaiPhongF.setEditable(false);
+			loaiPhongLb.setFont(new Font("Arial", Font.BOLD, 16));
 
 			Box giaPhongBox = Box.createHorizontalBox();
 			giaPhongBox.add(giaPhongLb = new JLabel("Giá phòng:"));
@@ -662,6 +678,7 @@ public class PanelDatPhong extends JPanel {
 			giaPhongF.setFont(new Font("Arial", Font.PLAIN, 16));
 			giaPhongF.setBorder(null);
 			giaPhongF.setEditable(false);
+			giaPhongLb.setFont(new Font("Arial", Font.BOLD, 16));
 
 			Box sucChuaBox = Box.createHorizontalBox();
 			sucChuaBox.add(sucChuaLb = new JLabel("Sức chứa:"));
@@ -670,6 +687,7 @@ public class PanelDatPhong extends JPanel {
 			sucChuaF.setFont(new Font("Arial", Font.PLAIN, 16));
 			sucChuaF.setBorder(null);
 			sucChuaF.setEditable(false);
+			sucChuaLb.setFont(new Font("Arial", Font.BOLD, 16));
 
 			Box tinhTrangBox = Box.createHorizontalBox();
 			tinhTrangBox.add(tinhTrangLb = new JLabel("Tình trạng:"));
@@ -678,6 +696,7 @@ public class PanelDatPhong extends JPanel {
 			tinhTrangF.setFont(new Font("Arial", Font.PLAIN, 16));
 			tinhTrangF.setBorder(null);
 			tinhTrangF.setEditable(false);
+			tinhTrangLb.setFont(new Font("Arial", Font.BOLD, 16));
 
 			tenPhongF.setBackground(Color.decode("#cccccc"));
 			loaiPhongF.setBackground(Color.decode("#cccccc"));
@@ -710,6 +729,7 @@ public class PanelDatPhong extends JPanel {
 			boxForLuaChon.add(luaChonLb = new JLabel("Lựa Chọn:"));
 			boxForLuaChon.add(Box.createHorizontalStrut(5));
 			boxForLuaChon.add(cbLuaChon);
+			luaChonLb.setFont(new Font("Arial", Font.BOLD, 14));
 
 			Box sdtKhachBox = Box.createHorizontalBox();
 			sdtKhachBox.add(sdtKhachLb = new JLabel("SĐT Khách:"));
@@ -720,31 +740,37 @@ public class PanelDatPhong extends JPanel {
 			sdtKhachBox.add(Box.createHorizontalStrut(5));
 			sdtKhachBox.add(kiemTraBtn = new ButtonGradient("Kiểm tra", imgCheck));
 			kiemTraBtn.setBackground(Color.decode("#6fa8dc"));
+			sdtKhachLb.setFont(new Font("Arial", Font.BOLD, 14));
 
 			Box tenKhachBox = Box.createHorizontalBox();
 			tenKhachBox.add(tenKhachLb = new JLabel("Tên khách:"));
 			tenKhachBox.add(Box.createHorizontalStrut(5));
 			tenKhachBox.add(tenKhachF = new JTextField(15));
+			tenKhachLb.setFont(new Font("Arial", Font.BOLD, 14));
 
 			Box soLuongBox = Box.createHorizontalBox();
 			soLuongBox.add(soLuongLb = new JLabel("Số lượng khách:"));
 			soLuongBox.add(Box.createHorizontalStrut(5));
 			soLuongBox.add(soLuongF = new JTextField(15));
+			soLuongLb.setFont(new Font("Arial", Font.BOLD, 14));
 
 			Box ngayNhanBox = Box.createHorizontalBox();
 			ngayNhanBox.add(ngayNhanPhongLb = new JLabel("Ngày nhận phòng:"));
 			ngayNhanBox.add(Box.createHorizontalStrut(5));
 			ngayNhanBox.add(ngayNhanCD = new JDateChooser());
+			ngayNhanPhongLb.setFont(new Font("Arial", Font.BOLD, 14));
 
 			Box gioNhanBox = Box.createHorizontalBox();
 			gioNhanBox.add(gioNhanPhongLb = new JLabel("Giờ nhận phòng:"));
 			gioNhanBox.add(Box.createHorizontalStrut(5));
 			gioNhanBox.add(gioNhanTP = new TimePicker());
+			gioNhanPhongLb.setFont(new Font("Arial", Font.BOLD, 14));
 
 			Box ghiChuBox = Box.createHorizontalBox();
 			ghiChuBox.add(ghiChuLb = new JLabel("Ghi chú:"));
 			ghiChuBox.add(Box.createHorizontalStrut(5));
 			ghiChuBox.add(ghiChuA = new JTextArea(3, 15));
+			ghiChuLb.setFont(new Font("Arial", Font.BOLD, 14));
 
 			thongTinThuePhongBox.add(boxForLuaChon);
 			thongTinThuePhongBox.add(Box.createVerticalStrut(20));
@@ -816,7 +842,7 @@ public class PanelDatPhong extends JPanel {
 					.get(0);
 			tenPhongF.setText(phong.getTenPhong());
 			loaiPhongF.setText(phong.getLoaiPhong().getTenLoaiPhong());
-			giaPhongF.setText(phong.getLoaiPhong().getGiaLoaiPhong() + "");
+			giaPhongF.setText(formatter.format(phong.getLoaiPhong().getGiaLoaiPhong()) + "");
 			sucChuaF.setText(phong.getLoaiPhong().getSucChua() + "");
 			tinhTrangF.setText(phong.getTinhTrangPhong());
 		}
@@ -831,81 +857,166 @@ public class PanelDatPhong extends JPanel {
 		}
 
 		private void xuLyKiemTraSDT() {
-			tenKH = tenKhachF.getText().trim();
-			sdtKH = sdtKhachF.getText().trim();
-			List<KhachHang> dsKH = kdao.timKiemKHTheoSDT(sdtKhachF.getText());
-			if (dsKH.size() > 0) {
-				tenKhachF.setText(dsKH.get(0).getTenKH());
-				maKH = kdao.timKiemKHTheoSDT(sdtKH).get(0).getMaKH();
-			} else {
-				JOptionPane.showMessageDialog(this, "Khách hàng mới");
-				List<KhachHang> dsKH2 = kdao.getAllDataKH().stream()
-						.sorted((kh1, kh2) -> kh1.getMaKH().compareTo(kh2.getMaKH())).toList();
-				String str = dsKH2.get(dsKH2.size() - 1).getMaKH();
-				maKH = maTuDong.formatMa(str);
+			Pattern pattern = Pattern.compile("^\\d{10}$");
+			Matcher matcher = pattern.matcher(sdtKhachF.getText().trim());
+			if (matcher.matches()) {
+				tenKH = tenKhachF.getText().trim();
+				sdtKH = sdtKhachF.getText().trim();
+				List<KhachHang> dsKH = kdao.timKiemKHTheoSDT(sdtKhachF.getText());
+				if (dsKH.size() > 0) {
+					tenKhachF.setText(dsKH.get(0).getTenKH());
+					maKH = kdao.timKiemKHTheoSDT(sdtKH).get(0).getMaKH();
+				} else {
+					JOptionPane.showMessageDialog(this, "Khách hàng mới");
+					List<KhachHang> dsKH2 = kdao.getAllDataKH().stream()
+							.sorted((kh1, kh2) -> kh1.getMaKH().compareTo(kh2.getMaKH())).toList();
+					String str = dsKH2.get(dsKH2.size() - 1).getMaKH();
+					maKH = maTuDong.formatMa(str);
 
+				}
+			} else {
+				sdtKhachF.selectAll();
+				sdtKhachF.requestFocus();
+				JOptionPane.showMessageDialog(this, "Số điện thoại phải gồm 10 chữ số");
 			}
 		}
 
+		private boolean matchPhone() {
+			Pattern pattern = Pattern.compile("^\\d{10}$");
+			Matcher matcher = pattern.matcher(sdtKhachF.getText().trim());
+			if (!matcher.matches()) {
+				sdtKhachF.selectAll();
+				sdtKhachF.requestFocus();
+				JOptionPane.showMessageDialog(this, "Số điện thoại phải gồm 10 chữ số");
+			}
+			return matcher.matches();
+		}
+
+		private boolean matchSoNguoi() {
+			Phong phong = pdao.timKiemPhongTheoTenPhong((String) phongModel.getValueAt(phongTable.getSelectedRow(), 0))
+					.get(0);
+			Pattern p = Pattern.compile("^\\d+$");
+			Matcher matcher = p.matcher(soLuongF.getText().trim());
+			if (!matcher.matches()) {
+				soLuongF.selectAll();
+				soLuongF.requestFocus();
+				JOptionPane.showMessageDialog(this, "Số người phải là số!!");
+			} else {
+				if (Integer.valueOf(soLuongF.getText()) > phong.getLoaiPhong().getGiaLoaiPhong()) {
+					soLuongF.selectAll();
+					soLuongF.requestFocus();
+					JOptionPane.showMessageDialog(this, "Số người không phù hợp với sức chứa của phòng!!");
+					return false;
+
+				}
+			}
+			return matcher.matches();
+		}
+
+		private boolean matchNgayDatPhong() {
+			String s = ((JTextField) ngayNhanCD.getDateEditor().getUiComponent()).getText();
+			String[] s1 = s.split(" ");
+			if (Integer.valueOf(s1[0]) < LocalDate.now().getDayOfMonth()) {
+				JOptionPane.showMessageDialog(this, "Ngày đặt phòng không phù hợp!!");
+				return false;
+			}
+			if (Integer.valueOf(s1[0]) - LocalDate.now().getDayOfMonth() > 1) {
+				JOptionPane.showMessageDialog(this, "Chỉ được đặt phòng trong hôm nay hoặc ngày mai!!!");
+				return false;
+			}
+			return true;
+		}
+
+		private boolean matchGioNhanPhong() {
+			String[] s = gioNhanTP.getText().split(":");
+			int hour = Integer.valueOf(s[0]);
+			String str = String.valueOf(gioNhanTP.getText().charAt(gioNhanTP.getText().length() - 2));
+			if (str.equalsIgnoreCase("p") && hour != 12)
+				hour = hour + 12;
+
+			if (((String) cbLuaChon.getSelectedItem()).equalsIgnoreCase("Thuê liền")) {
+				if (hour < LocalTime.now().getHour() || hour > 22 || hour < 9) {
+					JOptionPane.showMessageDialog(this, "giờ thuê phòng không hợp lệ!!!");
+					return false;
+				}
+			} else if (((String) cbLuaChon.getSelectedItem()).equalsIgnoreCase("Đặt trước")) {
+				if (hour > 21) {
+					JOptionPane.showMessageDialog(this, "Không được đặt phòng sau 9g tối!!!");
+					return false;
+				}
+				if (hour < 9) {
+					JOptionPane.showMessageDialog(this, "Không được đặt phòng trước 9g sáng!!!");
+					return false;
+				}
+			}
+			return true;
+		}
+
 		private void xuLyThuePhong() throws NumberFormatException, ParseException {
-			String hour = gioNhanTP.getTime().toString().substring(0, 2);
-			String minute = gioNhanTP.getTime().toString().substring(3, 5);
-			String time = hour + ":" + minute + ":" + "00";
-			String date = dayFormat.format(ngayNhanCD.getDate());
-			tenKH = tenKhachF.getText().trim();
-			sdtKH = sdtKhachF.getText().trim();
+			if (matchPhone() && matchSoNguoi() && matchNgayDatPhong() && matchGioNhanPhong()) {
+				String hour = gioNhanTP.getTime().toString().substring(0, 2);
+				String minute = gioNhanTP.getTime().toString().substring(3, 5);
+				String time = hour + ":" + minute + ":" + "00";
+				String date = dayFormat.format(ngayNhanCD.getDate());
+				tenKH = tenKhachF.getText().trim();
+				sdtKH = sdtKhachF.getText().trim();
 
-			List<KhachHang> dsKH = kdao.timKiemKHTheoSDT(sdtKhachF.getText());
-			if (dsKH.size() == 0) {
-				KhachHang kh = new KhachHang(maKH, sdtKH, tenKH);
-				kdao.createKhach(kh);
-			}
+				List<KhachHang> dsKH = kdao.timKiemKHTheoSDT(sdtKhachF.getText());
+				if (dsKH.size() == 0) {
+					KhachHang kh = new KhachHang(maKH, sdtKH, tenKH);
+					kdao.createKhach(kh);
+				}
+				if (((String) cbLuaChon.getSelectedItem()).equalsIgnoreCase("Đặt trước")) {
+					List<PhieuDatPhong> dsPDP = pdpDao.getAllDataPDP().stream()
+							.sorted((pdp1, pdp2) -> pdp1.getMaPDP().compareTo(pdp2.getMaPDP())).toList();
+					String s = dsPDP.get(dsPDP.size() - 1).getMaPDP();
+					String maKM = maTuDong.formatMa(s);
+					Phong phong = pdao.timKiemPhongChinhXacTheoTenPhong(tenPhongF.getText().trim()).get(0);
+					PhieuDatPhong pdp = new PhieuDatPhong(maKM, new KhachHang(maKH, sdtKH, tenKH),
+							nvDAO.timKiemNhanVienTheoMa(manNV).get(0), phong, dateFormat.parse(date + " " + time),
+							dateFormat.parse(date + " " + time), Integer.valueOf(soLuongF.getText()), 1,
+							ghiChuA.getText());
+					try {
+						if (pdpDao.createPDP(pdp)
+								&& pdao.capNhatPhongTheoTinhTrang("Đã đặt trước", phong.getMaPhong())) {
+							JOptionPane.showMessageDialog(this, "Đặt phòng thành công!!!");
+							this.dispose();
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
 
-			if (((String) cbLuaChon.getSelectedItem()).equalsIgnoreCase("Đặt trước")) {
-				List<PhieuDatPhong> dsPDP = pdpDao.getAllDataPDP().stream()
-						.sorted((pdp1, pdp2) -> pdp1.getMaPDP().compareTo(pdp2.getMaPDP())).toList();
-				String s = dsPDP.get(dsPDP.size() - 1).getMaPDP();
-				String maKM = maTuDong.formatMa(s);
-				Phong phong = pdao.timKiemPhongChinhXacTheoTenPhong(tenPhongF.getText().trim()).get(0);
-				PhieuDatPhong pdp = new PhieuDatPhong(maKM, new KhachHang(maKH, sdtKH, tenKH),
-						nvDAO.timKiemNhanVienTheoMa(manNV).get(0), phong, dateFormat.parse(date + " " + time),
-						dateFormat.parse(date + " " + time), Integer.valueOf(soLuongF.getText()), 1, ghiChuA.getText());
-				try {
-					if (pdpDao.createPDP(pdp) && pdao.capNhatPhongTheoTinhTrang("Đã đặt trước", phong.getMaPhong())) {
-						JOptionPane.showMessageDialog(this, "Đặt phòng thành công!!!");
 					}
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-
 				}
-			}
 
-			else {
-				List<HoaDon> dsHD = hdDao.getAllDataHD().stream()
-						.sorted((hd1, hd2) -> hd1.getMaHoaDon().compareTo(hd2.getMaHoaDon())).toList();
-				String s = "";
-				if (dsHD.size() != 0) {
-					s = dsHD.get(dsHD.size() - 1).getMaHoaDon();
-				} else {
-					s = "HD0001";
-				}
-				String maHD = maTuDong.formatMa(s);
-				HoaDon hd = new HoaDon(maHD, gioNhanTP.getTime(), dateFormat.parse(date + " " + time),
-						nvDAO.timKiemNhanVienTheoMa(manNV).get(0), new KhachHang(maKH, sdtKH, tenKH),
-						new KhuyenMai("KM0001"));
-				Phong phong = pdao.timKiemPhongChinhXacTheoTenPhong(tenPhongF.getText().trim()).get(0);
-				ChiTietHoaDon cthd = new ChiTietHoaDon(phong, hd, new Date(), new Date());
-				try {
-					if (hdDao.createHD(hd) && cthdDao.createCTPhong(cthd)
-							&& pdao.capNhatPhongTheoTinhTrang("Đang thuê", phong.getMaPhong())) {
-						JOptionPane.showMessageDialog(this, "Thuê phòng thành công!!!");
-						readAllDateToTablePhong2();
+				else {
+					List<HoaDon> dsHD = hdDao.getAllDataHD().stream()
+							.sorted((hd1, hd2) -> hd1.getMaHoaDon().compareTo(hd2.getMaHoaDon())).toList();
+					String s = "";
+					if (dsHD.size() != 0) {
+						s = dsHD.get(dsHD.size() - 1).getMaHoaDon();
+					} else {
+						s = "HD0001";
 					}
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
+					String maHD = maTuDong.formatMa(s);
+					HoaDon hd = new HoaDon(maHD, gioNhanTP.getTime(), dateFormat.parse(date + " " + time),
+							nvDAO.timKiemNhanVienTheoMa(manNV).get(0), new KhachHang(maKH, sdtKH, tenKH),
+							new KhuyenMai("KM0001"));
+					Phong phong = pdao.timKiemPhongChinhXacTheoTenPhong(tenPhongF.getText().trim()).get(0);
+					ChiTietHoaDon cthd = new ChiTietHoaDon(phong, hd, new Date(), new Date());
+					try {
+						if (hdDao.createHD(hd) && cthdDao.createCTPhong(cthd)
+								&& pdao.capNhatPhongTheoTinhTrang("Đang thuê", phong.getMaPhong())) {
+							JOptionPane.showMessageDialog(this, "Thuê phòng thành công!!!");
+							readAllDateToTablePhong2();
+							this.dispose();
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
 				}
+			} else {
 			}
 		}
 	}
@@ -1327,6 +1438,8 @@ public class PanelDatPhong extends JPanel {
 			// Table PDP
 			phieuDatPModel = new DefaultTableModel(headersTablePDP, 0);
 			phieuDatPTable = new JTable(phieuDatPModel);
+			phieuDatPTable.setRowHeight(30);
+			phieuDatPTable.setFont(new Font("serif", Font.PLAIN, 15));
 			phieuDatPTable.setAutoCreateRowSorter(true);
 			phieuDatPTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			phieuDatPTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -1413,7 +1526,7 @@ public class PanelDatPhong extends JPanel {
 				String date = formatDate.format(pdp.getThoiGianDatPhong());
 				String time = formatTime.format(pdp.getThoiGianDatPhong());
 				String tinhTrang = "";
-				if (pdp.getTinhTrangPDP() == 1)
+				if (pdp.getTinhTrangPDP() == 0)
 					tinhTrang = "Chưa nhận";
 				else
 					tinhTrang = "Nhận rồi";
@@ -2704,7 +2817,9 @@ public class PanelDatPhong extends JPanel {
 			List<ChiTietHoaDon> dsCTHD = cthdDao.timKiemCTHDTheoMaHD(tfMaPDP.getText().trim());
 			double tongTienPhong = dsCTHD.stream().mapToDouble(cthd -> cthd.tinhTienPhong()).sum();
 			double tienPhongHienTai = dsCTHD.get(dsCTHD.size() - 1).tinhTienPhong();
-			double tienPhongCu = dsCTHD.get(dsCTHD.size() - 2).tinhTienPhong();
+			double tienPhongCu = 0;
+			if (dsCTHD.size() > 1)
+				tienPhongCu = dsCTHD.get(dsCTHD.size() - 2).tinhTienPhong();
 			tfTongTienPhong.setText(formatter.format(tongTienPhong) + "");
 			List<CTDVPhong> dsCTDVP = ctdvPhongDAO.timKiemCTDVPhongTheoMaHD(tfMaPDP.getText().trim());
 			double tongTienDV = dsCTDVP.stream().mapToDouble(ctdv -> ctdv.tinhTienDV()).sum();

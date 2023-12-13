@@ -33,11 +33,11 @@ public class DAOPhieuDatPhong {
 			pre.setString(2, pdp.getNhanVien().getMaNV());
 			pre.setString(3, pdp.getKhachHang().getMaKH());
 			pre.setString(4, pdp.getPhong().getMaPhong());
-			pre.setTimestamp(4, timeStamp);
-			pre.setTimestamp(5, timeStamp2);
-			pre.setInt(6, pdp.getSoLuongKhach());
-			pre.setInt(7, pdp.getTinhTrangPDP());
-			pre.setString(8, pdp.getMoTa());
+			pre.setTimestamp(5, timeStamp);
+			pre.setTimestamp(6, timeStamp2);
+			pre.setInt(7, pdp.getSoLuongKhach());
+			pre.setInt(8, pdp.getTinhTrangPDP());
+			pre.setString(9, pdp.getMoTa());
 			n = pre.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception

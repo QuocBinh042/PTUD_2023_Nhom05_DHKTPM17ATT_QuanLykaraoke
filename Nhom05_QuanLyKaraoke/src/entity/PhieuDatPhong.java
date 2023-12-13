@@ -14,9 +14,7 @@ public class PhieuDatPhong {
 	private int soLuongKhach;
 	private int tinhTrangPDP;
 	private String moTa;
-	
-	
-	
+
 	public PhieuDatPhong() {
 		setMaPDP("");
 		setThoiGianDatPhong(new Date());
@@ -28,8 +26,6 @@ public class PhieuDatPhong {
 		setMoTa("");
 	}
 
-	
-	
 	public PhieuDatPhong(String maPDP, KhachHang khachHang, NhanVien nhanVien, Phong phong, Date thoiGianDatPhong,
 			Date thoiGianNhanPhong, int soLuongKhach, int tinhTrangPDP, String moTa) {
 		super();
@@ -51,55 +47,67 @@ public class PhieuDatPhong {
 	public void setPhong(Phong phong) {
 		this.phong = phong;
 	}
-	
-
 
 	public Date getThoiGianDatPhong() {
 		return thoiGianDatPhong;
 	}
+
 	public void setThoiGianDatPhong(Date thoiGianDatPhong) {
 		this.thoiGianDatPhong = thoiGianDatPhong;
 	}
+
 	public Date getThoiGianNhanPhong() {
 		return thoiGianNhanPhong;
 	}
+
 	public void setThoiGianNhanPhong(Date thoiGianNhanPhong) {
 		this.thoiGianNhanPhong = thoiGianNhanPhong;
 	}
+
 	public String getMaPDP() {
 		return maPDP;
 	}
+
 	private void setMaPDP(String maPDP) {
 		this.maPDP = maPDP;
 	}
-	
+
 	public NhanVien getNhanVien() {
 		return nhanVien;
 	}
+
 	public void setNhanVien(NhanVien nhanVien) {
 		this.nhanVien = nhanVien;
 	}
+
 	public KhachHang getKhachHang() {
 		return khachHang;
 	}
+
 	public void setKhachHang(KhachHang khachHang) {
 		this.khachHang = khachHang;
 	}
+
 	public int getSoLuongKhach() {
 		return soLuongKhach;
 	}
+
 	public void setSoLuongKhach(int soLuongKhach) {
 		this.soLuongKhach = soLuongKhach;
 	}
+
 	public int getTinhTrangPDP() {
 		return tinhTrangPDP;
 	}
+
 	public void setTinhTrangPDP(int tinhTrangPDP) {
 		this.tinhTrangPDP = tinhTrangPDP;
 	}
+
 	public String getMoTa() {
 		return moTa;
 	}
+
 	public void setMoTa(String moTa) {
 		this.moTa = moTa;
 	}
@@ -123,8 +131,8 @@ public class PhieuDatPhong {
 
 	@Override
 	public String toString() {
-		return "PhieuDatPhong [maPDP=" + maPDP + ", ngayDatPhong=" + thoiGianDatPhong + ", gioDatPhong=" + thoiGianNhanPhong
-				+ ", nhanVien=" + nhanVien + ", khachHang=" + khachHang + ", soLuongKhach=" + soLuongKhach
-				+ ", tinhTrangPDP=" + tinhTrangPDP + ", moTa=" + moTa + "]";
+		return "PhieuDatPhong [maPDP=" + maPDP + ", ngayDatPhong=" + thoiGianDatPhong + ", gioDatPhong="
+				+ thoiGianNhanPhong + ", nhanVien=" + nhanVien + ", khachHang=" + khachHang + ", soLuongKhach="
+				+ soLuongKhach + ", tinhTrangPDP=" + tinhTrangPDP + ", moTa=" + moTa + "]";
 	}
 }

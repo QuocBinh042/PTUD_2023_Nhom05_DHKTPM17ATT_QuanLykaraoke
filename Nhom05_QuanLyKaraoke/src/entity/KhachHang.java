@@ -12,8 +12,7 @@ public class KhachHang implements Serializable {
 	private String email;
 	private int soGioDaThue;
 	private String ghiChu;
-	
-	
+
 	public int getSoGioDaThue() {
 		return soGioDaThue;
 	}
@@ -21,18 +20,18 @@ public class KhachHang implements Serializable {
 	public void setSoGioDaThue(int soGioDaThue) {
 		this.soGioDaThue = soGioDaThue;
 	}
-	
+
 	public KhachHang(String maKH) {
 		setMaKH(maKH);
 	}
-	
+
 	public KhachHang(String SDT, String TenKH) {
 		setTenKH(TenKH);
 		setSdthoai(SDT);
 	}
 
-	public KhachHang(String maKH, String tenKH, Boolean loaiKH, Boolean gioiTinh, String sdthoai, String email, int soGioDaThue,
-			String ghiChu) {
+	public KhachHang(String maKH, String tenKH, Boolean loaiKH, Boolean gioiTinh, String sdthoai, String email,
+			int soGioDaThue, String ghiChu) {
 		this.maKH = maKH;
 		this.tenKH = tenKH;
 		this.loaiKH = loaiKH;
@@ -42,7 +41,7 @@ public class KhachHang implements Serializable {
 		this.soGioDaThue = soGioDaThue;
 		this.ghiChu = ghiChu;
 	}
-	
+
 	public KhachHang(String maKH, String SDT, String TenKH) {
 		setTenKH(TenKH);
 		setSdthoai(SDT);
@@ -133,5 +132,5 @@ public class KhachHang implements Serializable {
 		return "KhachHang [tenKH=" + tenKH + ", gioiTinh=" + gioiTinh + ", sdthoai=" + sdthoai + ", email=" + email
 				+ ", ghiChu=" + ghiChu + "]";
 	}
-	
+
 }
