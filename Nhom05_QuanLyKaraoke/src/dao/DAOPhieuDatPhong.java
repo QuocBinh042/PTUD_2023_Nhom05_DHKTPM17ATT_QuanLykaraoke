@@ -19,6 +19,24 @@ public class DAOPhieuDatPhong {
 		
 	}
 	
+	public boolean delete(String maPDP) {
+		ConnectDB.getInstance();
+		Connection connect = ConnectDB.getConnection();
+		PreparedStatement statement = null;
+		int n = 0;
+		try {
+			String sql = "delete from PhieuDatPhong where MaPDP = ?";
+			statement = connect.prepareStatement(sql);
+			statement.setString(1, maPDP);
+			n = statement.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return n > 0;
+	}
+	
 	public boolean createPDP(PhieuDatPhong pdp) {
 		ConnectDB.getInstance();
 		Connection connect = ConnectDB.getConnection();
