@@ -57,7 +57,7 @@
 				<text><![CDATA[Tên Nhân Viên:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="110" y="0" width="115" height="31" uuid="b90b07b3-0288-4bcc-89fd-801db2926b78"/>
+				<reportElement x="129" y="0" width="115" height="31" uuid="b90b07b3-0288-4bcc-89fd-801db2926b78"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
@@ -82,7 +82,7 @@
 				<text><![CDATA[Tên Khách Hàng:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="40" width="100" height="30" uuid="fa0849e3-81f2-4bd6-9edb-d08db28265bd"/>
+				<reportElement x="0" y="40" width="130" height="30" uuid="fa0849e3-81f2-4bd6-9edb-d08db28265bd"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
@@ -96,21 +96,21 @@
 				<text><![CDATA[SĐT Khách:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="330" y="40" width="100" height="30" uuid="14ec16b7-7b07-4e96-95e1-90a8a4c7ae53"/>
+				<reportElement x="330" y="40" width="110" height="30" uuid="14ec16b7-7b07-4e96-95e1-90a8a4c7ae53"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Giờ Thanh Toán:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="110" y="0" width="115" height="30" uuid="f44bf9e1-157a-4a51-8f54-39ae2473dfcf"/>
+				<reportElement x="129" y="0" width="115" height="30" uuid="f44bf9e1-157a-4a51-8f54-39ae2473dfcf"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{tenKH}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="110" y="40" width="114" height="30" uuid="8cb60608-2519-4f41-8cd0-e3926cd52b0a"/>
+				<reportElement x="130" y="40" width="114" height="30" uuid="8cb60608-2519-4f41-8cd0-e3926cd52b0a"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
@@ -124,7 +124,7 @@
 				<textFieldExpression><![CDATA[$P{soDienThoaiKhach}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="430" y="40" width="130" height="30" uuid="cc25e170-9c46-47db-85ab-5aadfd9ce673"/>
+				<reportElement x="440" y="40" width="130" height="30" uuid="cc25e170-9c46-47db-85ab-5aadfd9ce673"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
@@ -142,7 +142,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="14"/>
 				</textElement>
-				<text><![CDATA[Tên Dịch Vụ]]></text>
+				<text><![CDATA[Tên Món]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="166" y="100" width="104" height="30" uuid="288f8430-a8d2-4038-b4f9-7fb9da0d39f5"/>

@@ -2344,6 +2344,14 @@ public class PanelDatPhong extends JPanel {
 			ArrayList<inforUsingService>list = new ArrayList<inforUsingService>();
 			modelDichVu = (DefaultTableModel) tableDichVu.getModel();
 			int n = tableDichVu.getRowCount();
+			int m = tablePhong.getRowCount();
+			for(int i = 0; i < m; i++) {
+				list.add(new inforUsingService("Phòng" + modelPhong.getValueAt(i, 0).toString(),
+						"",
+						modelPhong.getValueAt(i, 4).toString() + " Phút",
+						modelPhong.getValueAt(i, 5).toString(),
+						modelPhong.getValueAt(i, 6).toString()));
+			}
 			for(int i = 0; i < n; i++) {
 				list.add(new inforUsingService(modelDichVu.getValueAt(i, 1).toString(),
 						modelDichVu.getValueAt(i, 2).toString(),
@@ -2351,6 +2359,7 @@ public class PanelDatPhong extends JPanel {
 						modelDichVu.getValueAt(i, 4).toString(),
 						modelDichVu.getValueAt(i, 5).toString()));
 			}
+			
 			return list;
 		}
 		
